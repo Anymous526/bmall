@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amall.core.dao.KuaiDiResultItemMapper">
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.KuaiDiResultItem">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="kuaidiNum" jdbcType="VARCHAR" property="kuaidinum" />
+    <result column="context" jdbcType="VARCHAR" property="context" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+  </resultMap>
+ 
+  
+  <select   id="selectByExample" parameterType="java.lang.String" flushCache="true"  resultMap="BaseResultMap">
+    select id, kuaidiNum, context,time from  amall_kuaidi_resultitem where kuaidiNum = #{kuaidiNum,jdbcType=VARCHAR}
+  </select>
+ 
+
+  <delete id="deleteByExample" parameterType="java.lang.String">
+    delete from amall_kuaidi_resultitem where kuaidiNum = #{kuaidiNum,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.KuaiDiResultItem">
+    insert into amall_kuaidi_resultitem (kuaidiNum, context, 
+      time)
+    values ( #{kuaidinum,jdbcType=VARCHAR}, #{context,jdbcType=VARCHAR}, 
+      #{time,jdbcType=VARCHAR})
+  </insert>
+  
+  
+ 
+</mapper>

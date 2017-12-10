@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.RefundGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.RefundGoods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="refund" property="refund" jdbcType="DECIMAL" />
+    <result column="refund_log" property="refundLog" jdbcType="VARCHAR" />
+    <result column="refund_type" property="refundType" jdbcType="VARCHAR" />
+    <result column="of_id" property="ofId" jdbcType="BIGINT" />
+    <result column="refund_user_id" property="refundUserId" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="img_paths" property="imgPaths" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="fact_refund" property="factRefund" jdbcType="DECIMAL" />
+    <result column="kuaidi_num" property="kuaidiNum" jdbcType="VARCHAR" />
+    <result column="kuaidi_id" property="kuaidiId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, deleteStatus, refund, refund_log, refund_type, of_id, refund_user_id, 
+    goods_id, img_paths, status, fact_refund, kuaidi_num, kuaidi_id
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.RefundGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_refund_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_refund_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_refund_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.RefundGoodsExample" >
+    delete from amall_refund_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.RefundGoods" >
+    insert into amall_refund_goods (id, addTime, deleteStatus, 
+      refund, refund_log, refund_type, 
+      of_id, refund_user_id, goods_id, 
+      img_paths, status, fact_refund,kuaidi_num,kuaidi_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{refund,jdbcType=DECIMAL}, #{refundLog,jdbcType=VARCHAR}, #{refundType,jdbcType=VARCHAR}, 
+      #{ofId,jdbcType=BIGINT}, #{refundUserId,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, 
+      #{imgPaths,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{factRefund,jdbcType=DECIMAL},
+      #{kuaidiNum,jdbcType=VARCHAR},#{kuaidiId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.RefundGoods" >
+    insert into amall_refund_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="refund != null" >
+        refund,
+      </if>
+      <if test="refundLog != null" >
+        refund_log,
+      </if>
+      <if test="refundType != null" >
+        refund_type,
+      </if>
+      <if test="ofId != null" >
+        of_id,
+      </if>
+      <if test="refundUserId != null" >
+        refund_user_id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="imgPaths != null" >
+        img_paths,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="factRefund != null" >
+        fact_refund,
+      </if>
+      <if test="kuaidiNum != null" >
+        kuaidi_num,
+      </if>
+      <if test="kuaidiId != null" >
+        kuaidi_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="refund != null" >
+        #{refund,jdbcType=DECIMAL},
+      </if>
+      <if test="refundLog != null" >
+        #{refundLog,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null" >
+        #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="ofId != null" >
+        #{ofId,jdbcType=BIGINT},
+      </if>
+      <if test="refundUserId != null" >
+        #{refundUserId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="imgPaths != null" >
+        #{imgPaths,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="factRefund != null" >
+        #{factRefund,jdbcType=DECIMAL},
+      </if>
+      <if test="kuaidiNum != null" >
+        #{kuaidiNum,jdbcType=VARCHAR},
+      </if>
+       <if test="kuaidiId != null" >
+        #{kuaidiId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.RefundGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from amall_refund_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_refund_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.refund != null" >
+        refund = #{record.refund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundLog != null" >
+        refund_log = #{record.refundLog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundType != null" >
+        refund_type = #{record.refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ofId != null" >
+        of_id = #{record.ofId,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundUserId != null" >
+        refund_user_id = #{record.refundUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.imgPaths != null" >
+        img_paths = #{record.imgPaths,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.factRefund != null" >
+        fact_refund = #{record.factRefund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.kuaidiNum != null" >
+        kuaidi_num = #{record.kuaidiNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kuaidiId != null" >
+        kuaidi_id = #{record.kuaidiId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_refund_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      refund = #{record.refund,jdbcType=DECIMAL},
+      refund_log = #{record.refundLog,jdbcType=VARCHAR},
+      refund_type = #{record.refundType,jdbcType=VARCHAR},
+      of_id = #{record.ofId,jdbcType=BIGINT},
+      refund_user_id = #{record.refundUserId,jdbcType=BIGINT},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      img_paths = #{record.imgPaths,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      fact_refund = #{record.factRefund,jdbcType=DECIMAL},
+      kuaidi_num = #{record.kuaidiNum,jdbcType=VARCHAR},
+      kuaidi_id = #{record.kuaidiId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.RefundGoods" >
+    update amall_refund_goods
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="refund != null" >
+        refund = #{refund,jdbcType=DECIMAL},
+      </if>
+      <if test="refundLog != null" >
+        refund_log = #{refundLog,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null" >
+        refund_type = #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="ofId != null" >
+        of_id = #{ofId,jdbcType=BIGINT},
+      </if>
+      <if test="refundUserId != null" >
+        refund_user_id = #{refundUserId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="imgPaths != null" >
+        img_paths = #{imgPaths,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="factRefund != null" >
+        fact_refund = #{factRefund,jdbcType=DECIMAL},
+      </if>
+      <if test="kuaidiNum != null" >
+        kuaidi_num = #{kuaidiNum,jdbcType=VARCHAR},
+      </if>
+      <if test="kuaidiId != null" >
+        kuaidi_id = #{kuaidiId,jdbcType=BIGINT}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.RefundGoods" >
+    update amall_refund_goods
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      refund = #{refund,jdbcType=DECIMAL},
+      refund_log = #{refundLog,jdbcType=VARCHAR},
+      refund_type = #{refundType,jdbcType=VARCHAR},
+      of_id = #{ofId,jdbcType=BIGINT},
+      refund_user_id = #{refundUserId,jdbcType=BIGINT},
+      goods_id = #{goodsId,jdbcType=BIGINT},
+      img_paths = #{imgPaths,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      fact_refund = #{factRefund,jdbcType=DECIMAL},
+      kuaidi_num = #{kuaidiNum,jdbcType=VARCHAR},
+      kuaidi_id = #{kuaidiId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

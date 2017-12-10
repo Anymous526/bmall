@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>兑换记录</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc1.amallcdn.cn/assets/css/duigou.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<style>
+.orderul li{color: #333}
+
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+<div class="s_m">  
+  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>兑换记录</span> > <span>进行中</span></div></div>
+  <div class="productmain" style="width:953px;padding: 0;border-bottom: 0;"> 
+	 <div class="container"  >
+            <ul class="section" style="padding: 0;" >
+          <li  class="li_this"><a href="$!webPath/my_angel_exchang_list_ing.htm" style="color: #dd2726">进行中<span class="b_record_block01">$!totalCount</span></a></li>
+          <li class=""><a href="$!webPath/my_angel_exchang_list_ed.htm">已揭晓<span class="b_record_block02">$!winCount</span></a></li>
+        </ul>
+	</div>
+      
+	<div class="ordercon" style="width: 836px;">
+		<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+		<tbody>
+		#if($!objs.size()>0)
+			<tr class="b_part_title">
+				<th class="b_th1">商品图片</th>
+				<th class="b_th2">商品名称</th>
+				<th class="b_th3">互助兑状态</th>
+				<th class="b_th4">购买数量</th>
+				<th class="b_th5">购买详情</th>
+				<th class="b_th6">操作</th>
+			</tr>
+		<!-- 循环 -->	
+		#foreach($obj in $!objs)
+		<tr style="border-bottom: 1px solid #d8d8d8;">
+			<td style="width: 110px;text-align: center;padding: 10px;">
+				<a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id">
+					<img src="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name" alt="" width="100%" style="padding: 1px;border: 1px solid #d8d8d8;">
+				</a>
+			</td>
+			<td style="padding: 20px 0;">
+				<div class="b_goods_name">
+					<span class="b_goods_name02"><a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id">(序号:$obj.cloudGoods.id)$obj.cloudGoods.goodsName</a></span>
+					<b class="b_all_require">总需：$obj.cloudGoods.goodsCount人次</b>
+					<div class="b_progress_bar"><em id="$obj.id"></em></div>
+					<dl class="b_progress">
+						<dd class="b_progress_left"><span>$obj.cloudGoods.buyerCodeCount</span><br/><font>已参与</font></dd>
+						<dd class="b_progress_right"><span>#set($count=$obj.cloudGoods.goodsCount - $obj.cloudGoods.buyerCodeCount)$!count</span><br/><font>剩余</font></dd>
+					</dl>
+					<font style="color:#888;" class="time0">夺宝时间：$CommUtil.formatLongDate($obj.addtime)</font>
+				</div>
+				
+			</td>
+			<td class="b_color">正在进行...</td>
+			<td>
+				<tt class="times0">$obj.buyCounts（个）</tt>
+			</td>
+			<td>
+				<a href="$!webPath/my_angel_exchang_list_xq.htm?cloudGoodsId=$obj.cloudGoods.id">购买详情&gt;</a>
+			</td>
+			<td>
+			     
+				<tt>
+				<a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id">商品详情&gt;</a>
+				</tt>
+				<!--<a href="$!webPath/buyer/my_angel_exchang_orderdetails.htm">查看订单&gt;</a>
+					<a href="$!webPath/buyer/my_angel_exchang_goreceive.htm">立即领取&gt;</a> -->
+			</td>
+		</tr>
+		#end
+		#else
+		<div style="height:250px;text-align:center;line-height:150px;border-bottom:1px solid #CCC;">暂无<span style="color:red">互助兑信息</span>哦,先去看看吧~ </div>
+		#end
+		</tbody>
+
+           
+       </table>
+       </div>
+        #if($!objs.size()>0)
+		        <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageHTML
+				</div>
+		  #end
+     </div>
+        </div>
+</div>
+<script type="text/javascript">  
+$(document).ready(function(){ 
+	#set($i=1);
+	#foreach($obj in $!objs) 
+	 var we22_$i=Math.round(($obj.cloudGoods.buyerCodeCount/$obj.cloudGoods.goodsCount)*100); 
+	 $('#$obj.id').css("width",we22_$i+"%");
+	 #set($i=$i+1)
+	 #end
+})   
+</script> 
+<script type="text/javascript"> 
+$(document).ready(function(){  
+	#set($k=1) 
+	#foreach($obj in $!objs)
+	 var codenum_$k=$(".$obj.id .b_cloud_code i").length;  
+	  if(codenum_$k>12){   
+		   $(".$obj.id").children("#cods").html("查看全部");  
+	  }  
+	  $(".$obj.id").children("#cods").click(function(){
+		   $(".$obj.id").children("#cods").html("");
+		   $(".$obj.id .b_cloud_code").css("height","auto");
+	  })
+	 #set($k=$k+1)
+	#end 
+	
+	
+})  
+ 
+</script>  
+$!httpInclude.include("/footer.htm")
+
+</body>
+</html>

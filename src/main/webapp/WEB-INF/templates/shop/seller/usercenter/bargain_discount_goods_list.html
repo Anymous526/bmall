@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>折扣特价 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=bargain") 
+<div class="s_m">   
+         <div class="buyer_position"><div class="buyer_p_box1"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>特价商品列表</span></div></div>
+        <div class="productmain">
+            <div class="container">
+               <ul class="section" style="padding: 0;">
+                <li class="other"><a href="$!webPath/seller/bargain_discount.htm">折扣特价</a></li>
+                 <li class="li_this"><a href="javascript:void(0);">特价商品</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <form method="post" name="ListForm" id="ListForm">
+                <div class="operation">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                    <tr id="opertitle">
+                      <td width="240">商品名称</td>
+                      <td width="100">特价时间段</td>
+                      <td width="100" align="left" style="padding-left:30px;">审核状态</td>
+                      <td width="100">开启状态</td>
+                      <td width="100">操作</td>
+                    </tr>
+                    #foreach($obj in $objs)
+                    <tr >
+                      <td ><a href="$!webPath/goods_$!{obj.bgGoods.id}.htm" target="_blank">$!obj.bgGoods.goodsName</a></td>
+                      <td>$!CommUtil.formatLongDate($!obj.bgTime)--$!CommUtil.formatLongDate($!obj.bgEndTime)</td>
+                      #set($time=$!CommUtil.formatShortDate($!obj.addtime))   #set($bgStatus="等待审核")
+                      #if($!obj.bgStatus==1)
+                        #set($bgStatus="审核通过")
+                      #end
+                      #if($!obj.bgStatus==-1)
+                        #set($bgStatus="拒绝通过")
+                      #end
+                      <td align="">$!bgStatus</td>
+                      <td align="">
+						#if($!obj.bargainGoodsStatus=="1")
+                        	正常
+                      	#else
+                        	关闭
+                      	#end
+					  </td>
+					  <td>
+					  	#if($!obj.bargainGoodsStatus==1)
+			        		<a href="javascript:void(0);" onclick="if(confirm('是否继续修改状态？'))window.location.href='$!webPath/seller/bargain_discount_goods_status_save.htm?id=$!obj.id&bargainGoodsStatus=0&bargainTime=$!bargain_time&bargainEndTime=$!bargain_end_time'" class="blue">关闭</a>
+			        	#else
+			        		<a href="javascript:void(0);" onclick="if(confirm('是否继续修改状态？'))window.location.href='$!webPath/seller/bargain_discount_goods_status_save.htm?id=$!obj.id&bargainGoodsStatus=1&bargainTime=$!bargain_time&bargainEndTime=$!bargain_end_time'" class="blue">开启</a>
+			        	#end
+					  </td>
+                    </tr>
+                    #end
+                  </table>
+                </div>
+                <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+              </form>
+            </div>
+          </div>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

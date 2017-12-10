@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!config.title </title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+  $!httpInclude.include("/seller/seller_head.htm")
+<div class="main">
+  <div class="index">
+    <div class="index2">
+      <div class="openshop">
+        <div class="openshopstep">
+          <div class="openstep1"></div>
+          <div class="openstep2"></div>
+          <div class="openstep3"></div>
+        </div>
+        <div class="stepdetail">
+          #foreach($sg in $sgs)
+          <div class="stepdetailleft">
+            <div class="system"> <span><strong>$!sg.gradename</strong></span> </div>
+            <div class="systemdetail">
+              <ul>
+                <li><span class="hui2">商品数量：</span><span>#if($!sg.goodscount==0)不限#else $!{sg.goodscount}#end</span></li>
+                <li><span class="hui2">模板套数：</span><span>$!{CommUtil.splitLength("$!sg.templates",",")}套</span></li>
+				<li><span class="hui2">附件空间：</span><span>$!{sg.spacesize}M</span></li>
+                <li><span class="hui2">收费标准：</span><span class="red">￥$!sg.price</span></li>
+                <li><span class="hui2">需要审核：</span><span>#if($!{sg.audit}==true)是#else 否#end</span></li>
+              </ul>
+            </div>
+            <div class="system_other"><span>附加功能：$!storeTools.genericFunction($!sg)</span></div>
+            <div class="system_trans"><span>$!sg.content</span></div>
+            <div class="system_btn"> <span class="sysbtn">
+              <input name="" type="button" onclick="window.location.href='$!webPath/seller/store_create_second.htm?grade_id=$sg.id'"  value="立即开店"/>
+              </span></div>
+          </div>
+		  #end
+          <div class="system_back"><span>
+            <input name="" type="button" value="返回" onclick="window.location.href='$!webPath/seller/seller_index.htm'" />
+            </span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

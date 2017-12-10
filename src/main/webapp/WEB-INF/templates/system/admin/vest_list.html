@@ -1,0 +1,491 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link href="http://pc2.amallcdn.cn/assets/css/user.css"  rel="stylesheet" type="text/css"/>
+<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script type="text/javascript" src="$!webPath/resources/uploadify/jquery.uploadify2.js"></script>
+<style>
+#uploadify{text-align:center;background:#f4f4f4;border:1px solid #CCC;}
+.swfupload{margin-left:-50px;}
+.allmem_search:after,.xu_fenlei:after{display:block;content:'';clear:both;}
+.xu_fenlei{float:left;width:55%;}
+.xu_fentext h3{height: 25px;line-height: 25px;padding-left: 10px;background: #f6f6f6;margin: 5px 0;}
+.xu_fendetail{padding-left:10px;}
+.xu_checkbox{vertical-align:middle}
+.uploadify-button .uploadify-button-text{width:88px;}
+.swfupload{margin-left:0;}
+.pingfen1,.pingfen2,.pingfen3{font-size:16px;color:#c00;padding-right:4px;}
+</style>
+<script type="text/javascript">
+var swf_upload;
+var photo_count=0;
+$(function($){
+	$(".evaPublish").click(function(){
+		var goodIds=$("#goodIds").val();
+		
+		var reg=/^[\d]+$/;
+		if(!reg.test(goodIds)){
+			$("#goodIds").val("");
+			$("#goodIds").attr("placeholder","商品ID只能是数字");
+			$("#goodIds").focus();
+		}else if($("#evaluate_info").val()==""){
+			$("#evaluate_info").attr("placeholder","评价内容不能为空");
+			$("#evaluate_info").focus();
+		}else if($(".star ul li#description_evaluate").hasClass("on")==false){
+			alert("记得评价商品描述相符这一项哦");
+		}else if($(".star ul li#service_evaluate").hasClass("on")==false){
+			alert("记得评价商家服务态度这一项哦");
+		}else if($(".star ul li#ship_evaluate").hasClass("on")==false){
+			alert("记得评价物流发货速度这一项哦");
+		}else
+		if(confirm("评价后不可修改，是否确定评价？")){
+			var chk_value =[];
+		    var xu_a,xu_b;
+		    $(".xu_checkbox:checked").each(function(){ 
+		    var xu_a=chk_value.push($(this).parent().text());
+		    });
+		    jQuery.each(chk_value,function(i,v){
+		      $("#xu_checkboxs").append("<input type='hidden' name='info' value="+v+">");
+		    });
+		    var userIds = $("#userIds option:selected").val();
+		    $("#userIDs").val(userIds).val();
+		    //alert($("#userIDs").val());
+		    $("#ListForm").submit();
+		    
+		}
+	});
+	
+	$("#appUpload").uploadify({
+        //指定swf文件
+        'swf': '$!webPath/resources/uploadify/uploadify.swf',
+        //后台处理的页面
+        'uploader': '$!webPath/buyer/buyer_upload_evaluate.htm',
+        //按钮显示的文字
+        'buttonText': '选择图片上传',
+        'method': 'post',
+        'formData'		   : {"isCheckWithHeight":0},
+        //显示的高度和宽度，默认 height 30；width 120
+        //'height': 15,
+        //'width': 80,
+        //上传文件的类型  默认为所有文件    'All Files'  ;  '*.*'
+        //在浏览窗口底部的文件类型下拉菜单中显示的文本
+        'fileTypeDesc': 'Image Files',
+        //允许上传的文件后缀
+        'fileTypeExts': '*.png;*.jpg;',
+        //发送给后台的其他参数通过formData指定
+        //'formData': { 'someKey': '123', 'someOtherKey': 1 },
+        //上传文件页面中，你想要用来作为文件队列的元素的id, 默认为false  自动生成,不带#
+        //'queueID': 'fileQueue',
+        'fileSizeLimit': '2000KB',
+        //选择文件后自动上传
+        'auto': true,
+        //设置为true将允许多文件上传
+        'multi': true,
+        'queueSizeLimit': 3,
+        onUploadStart :function(){
+        	var imgsLen = $(".re_img").children().length;
+        	if(imgsLen > 2){
+        		alert("最多只能上传3张图片");
+        		$('#appUpload').uploadify('cancel', '*');
+        	}
+        	
+        },
+        onUploadSuccess: function(event, data) {
+       	 if(data != "null") 
+            {
+       		 data = eval('('+data+')');
+       		// var dt = data.split(",");
+       		 var imgHtml='<li><span class="rem"></span>'+
+				 '<img src="'+data.imagePath+'" width="100" height="100" />'+
+				 '<input id="imgs" name="imgs" type="hidden" value="'+data.pass+'">'+
+			     '</li>';
+			     $(".re_img").append(imgHtml);
+			     var imgIds = $("#imgIds").val();
+			     var value = data.imgId+","+imgIds;
+			     $("#imgIds").val(value);
+            }
+        }
+    });
+	
+	
+	
+	var lis = jQuery(".tools ul li");
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+	
+	//var goodsName = $("#goodsName").val();
+	/* var userId = $("#userId option:selected").val();*/
+	$("#goodIds").focus(function(){
+		$(".xu_fentext").html('');
+	});
+	 $("#goodIds").blur(function(){
+		 var goodsId = $("#goodIds").val();
+		jQuery.ajax({
+			type:"post",
+			url:"$!webPath/admin/specification.htm",
+			data:{'goodsId':goodsId},
+			success:function(data){
+				var json = eval('('+data+')');
+				if(json=="1")
+				{  alert("该商品没有规格");
+					
+					return;
+				}else if(json=="2"){
+					alert("没有该商品");
+					return;
+				}
+				for(var i=0;i<json.length;i++){
+					jQuery(".xu_fentext").append("<h3>"+json[i].name+"</h3>");
+				    for (var j = 0; j < json[i].properties.length; j++) {
+						//console.log(json[i].properties[j].value);
+						jQuery(".xu_fentext").append("<label class='xu_fendetail'><input type='radio' class='xu_checkbox' name='infos"+i+"' value='i_j'>"+json[i].properties[j].value+"</label>");
+						
+					}
+				    
+				 }
+		},
+	});  
+});
+	$(".rem").on("click",function(){
+		$(this).parent().remove();
+	});
+});
+
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">马甲管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a  href="javascript:void(0);" class="this">&nbsp;所有评价&nbsp;</a> </span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/buyer_orderCommentSave.htm" method="post" id="ListForm">
+  <div class="consultation">
+     <!-- <form action="$!webPath/admin/OrderGenerated.htm" method="post" id="theList"> -->
+     <div class="allmem_search">
+      <ul class="xu_ul" style="float:left;width:49%">
+        <li> <span>商品ID:</span> <span class="allmen size4">
+          <input type="text" id="goodIds" value="" name="goodsId" placeholder="商品ID只能是数字" style="width:184px">
+          </span> 
+          <span>用户名:</span> 
+          <span class="allmen size4">
+          	<!-- <input name="userName" type="text" id="userName"> -->
+          	<select style="width:200px;" id="userIds" value="">
+          	 #foreach($!obj in $user)
+          		<option value="$!obj.id">$!obj.truename</option>
+          	 #end
+          	</select>
+          </span> 
+          <div class="ordercon" style="margin-top:20px;">
+              <p>用户头像:</p>
+              <div class="addnav">
+                <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                  <tr>
+                  #if($!user.photo)
+				  #set($avatar = "$!{config.imagewebserver}/$!user.photo.path/$!user.photo.name")
+				  #else
+				  #set($avatar = "$!webPath/assets/img/user2.jpg")
+				  #end
+                  <div class="inf_t_img" style="margin-left:140px;margin-bottom:20px;">
+		           <img src="$!avatar" width="100%" height="100%" id="people_img"/> 
+		          </div>
+                    <td style="padding-left:140px;margin-bottom:20px;">
+  						<input type="file" accept="image/jpeg/jpg/png" name="uploadify" id="uploadify" style="height: 30px;text-align:center;padding:0;  border:0;"/>
+  						<br/>(上传图片规格80*80px,支持png、gif和jpg格式)
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <div class="bigImg">
+                    	<img  id="target" style="display:block"/>
+ 					</div>	
+                    </td>
+                    </tr>
+                    <tr>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <!-- <span class="xu_chuan">
+          	<input name="" type="file" value="上传头像">
+          </span> -->
+          <!-- <span class="allmen size4">
+          	<input name="xu_order" type="button" id=xu_order value="自动生成订单" class="xu_order">
+          </span> -->
+        </li>
+      </ul>
+      <div class="xu_fenlei" style="width:50%">
+      	<div class="xu_fentext">
+      	</div>
+      	<div class="xu_fendetail"></div>
+      </div>
+     </div>
+     <!-- </form> -->
+     <input type="hidden" name="userIds" id="userIDs"/>
+     <div id="xu_checkboxs"></div>
+     <!-- <input type=checkbox name="info" id="xu_checks"/> -->
+     <input name="imgIds" id="imgIds" type="hidden" value="" />
+     <input type="hidden" name="userId" id="userID"/>
+     <div class="xu_good">
+     	  <span> 
+     	  <label style="cursor:pointer"> 
+     	  <input name="evaluate_buyer_val" type="radio" value="5" checked="checked" /> 
+     	  <em style="float:left;font-style:normal;">好评</em>
+     	  <i class="hui2" style="float:left">(加1分)</i> 
+     	  </label> 
+     	  </span>
+     	  <span>
+		  <label style="cursor:pointer">
+		  <input name="evaluate_buyer_val" type="radio" value="3">
+		  <em>中评</em><i class="hui2">(不加分)</i>
+		  </label>
+		  </span>
+		  <span>
+		  <label style="cursor:pointer">
+		  <input name="evaluate_buyer_val" type="radio" value="0">
+		  <em>差评</em><i class="hui2">(减1分)</i>	
+		  </label>
+		  </span>
+     </div>
+     <div class="xu_content">
+     	<table class="commenttable" width="100%" border="0" cellspacing="0" cellpadding="0">	
+							<tbody>
+							<tr>      
+							</tr>
+							  
+							<tr>
+							  	<td align="right">商品评价：</td>
+					    		<td><textarea name="evaluate_info" id="evaluate_info" rows="10" cols="15"style="width:45%;"></textarea> </td>
+							</tr>
+							<tr>
+							    <td align="right">添加图片：</td>
+							    <td>
+							    	<input type="file" accept="image/jpeg/jpg/png" name="uploadify" id="appUpload" />
+							    	
+							    	<span style="font-size:12px; color:#999">最多3张图片，支持JPEG,PNG格式</span> 
+							    </td>
+					  		</tr>
+					  		  
+					  		<tr>
+			          			<td class="taleft" width="100" align="right"></td>
+			          			<td>
+			          				<ul class="re_img">
+			          				
+			          				</ul>
+			          			</td>
+			          		</tr>
+			          		
+					  <tr>
+					    <td align="right">满意度评价</td>
+					    <td>
+					    	<ul class="orcomst">
+					    	
+					    		<li><span>商品描述相符<input type="hidden" id="description_evaluate" class="description_evaluate" name="description_evaluate" value=""></span>
+						    		<div class="star"style="top:9px;">
+										<ul>
+											<li id="description_evaluate" value="1" title="1分">1</li>
+											<li id="description_evaluate" value="2" title="2分">2</li>
+											<li id="description_evaluate" value="3" title="3分">3</li>
+											<li id="description_evaluate" value="4" title="4分">4</li>
+											<li id="description_evaluate" value="5" title="5分">5</li>
+										</ul>
+										<span>您的评分：</span><span class="pingfen1"></span><span>分</span>
+										<p></p>
+									</div>
+								</li>
+								
+								
+					    		<li><span>商家服务态度<input type="hidden" id="service_evaluate" class="service_evaluate" name="service_evaluate" value=""></span>
+					    			<div class="star">
+										<ul>
+											<li id="service_evaluate" value="1" title="1分">1</li>
+											<li id="service_evaluate" value="2" title="2分">2</li>
+											<li id="service_evaluate" value="3" title="3分">3</li>
+											<li id="service_evaluate" value="4" title="4分">4</li>
+											<li id="service_evaluate" value="5" title="5分">5</li>
+										</ul>
+										<span>您的评分：</span><span class="pingfen2"></span><span>分</span>
+										<p></p>
+									</div>
+					    		</li>
+					    		
+					    		<li><span>物流发货速度<input type="hidden" id="ship_evaluate" class="ship_evaluate" name="ship_evaluate" value=""></span>
+					    			<div class="star">
+										<ul>
+											<li id="ship_evaluate" value="1" title="1分">1</li>
+											<li id="ship_evaluate" value="2" title="2分">2</li>
+											<li id="ship_evaluate" value="3" title="3分">3</li>
+											<li id="ship_evaluate" value="4" title="4分">4</li>
+											<li id="ship_evaluate" value="5" title="5分">5</li>
+										</ul>
+										<span>您的评分：</span><span class="pingfen3"></span><span>分</span>
+										<p></p>
+									</div>
+					    		</li>
+					    		
+					    	</ul>
+					    </td>
+					  </tr>  
+						</tbody></table>
+     </div>
+     <div class="xu_vest_btn">
+     	<input type="button" class="evaPublish" value="提交评论" >
+     </div>
+      <div class="fenye">
+        <input name="consult_user_userName" type="hidden" id="consult_user_userName" value="$!consult_user_userName" />
+        <input name="consult_content" type="hidden" id="consult_content" value="$!consult_content" />
+        <input type="hidden" name="currentPage" id="currentPage" value="$!currentPage" />
+	  <input name="mulitId" type="hidden" id="mulitId" />
+	  $!gotoPageFormHTML</div>	  
+  </div>
+  </form>
+</div>
+<script type="text/javascript"> 
+window.onload = function (){
+	var oStars = $(".star");
+	jQuery.each(oStars,function(i,v){
+		var showTip = false;
+		if(i == 0){
+			showTip = true;
+		}
+		var oStar = $(v);
+		var aLi = oStar.find("li");
+		var oUl = oStar.find("ul");
+		var oSpan = oStar.find("span");
+		var oP = oStar.find("p");
+		var i = iScore = iStar = 0;
+		var aMsg = [
+					"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+					"不满意|部分有破损，与卖家描述的不符，不满意",
+					"一般|质量一般，没有卖家描述的那么好",
+					"满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+					"非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+					]
+		for (i = 1; i <= aLi.get().length; i++){
+			aLi[i - 1].index = i;
+			//鼠标移过显示分数
+			this.onmouseover = function(){
+			
+			}
+			//点击后进行评分处理
+			aLi[i - 1].onclick = function (){
+				fnPoint(this.index);
+				var aLi_id=this.id;
+				if(aLi_id=="ship_evaluate"){
+					jQuery(".ship_evaluate").val(this.index);
+					jQuery(".pingfen3").html(this.index);
+				}
+				if(aLi_id=="description_evaluate"){
+					jQuery(".description_evaluate").val(this.index);
+					jQuery(".pingfen1").html(this.index);
+				}
+				if(aLi_id=="service_evaluate"){
+					jQuery(".service_evaluate").val(this.index);
+					jQuery(".pingfen2").html(this.index);
+				}
+				iStar = this.index;
+				oP.hide();
+				/* if(showTip){
+					oSpan.get(0).innerHTML = "<strong>" + (this.index) + " 分</strong> (" + aMsg[this.index - 1].match(/\|(.+)/)[1] + ")";	
+				} */
+				
+			}
+		}
+		//评分处理
+		function fnPoint(iArg){
+			//分数赋值
+			iScore = iArg || iStar;
+			for (i = 0; i < aLi.get().length; i++) aLi.get()[i].className = i < iScore ? "on" : "";	
+		}
+		
+		
+	});		
+}
+</script>
+<script>
+	
+</script>
+<script type="text/javascript">
+jQuery(function($){
+	var userId = $("#userIds>option:selected").val();
+	var bind_up = function(){
+		$ ("#uploadify").uploadify({
+	         //指定swf文件
+	         'swf': '$!webPath/resources/uploadify/uploadify.swf',
+	         //后台处理的页面
+	         'uploader': "$!webPath/buyer/buyer_upload_avatars.htm",
+	         //按钮显示的文字
+	         'buttonText': '图片上传',
+	         'method': 'post',
+	         //显示的高度和宽度，默认 height 30；width 120
+	         'height': 30,
+	         'width': 100,
+	         //上传文件的类型  默认为所有文件    'All Files'  ;  '*.*'
+	         //在浏览窗口底部的文件类型下拉菜单中显示的文本
+	         'fileTypeDesc': 'Image Files',
+	         //允许上传的文件后缀
+	         'fileTypeExts': '*.jpg;*.png;*.gif',
+	         //发送给后台的其他参数通过formData指定
+	         'formData': { 'userId':userId},
+	         //上传文件页面中，你想要用来作为文件队列的元素的id, 默认为false  自动生成,  不带#
+	         //'queueID': 'fileQueue',
+	         'fileSizeLimit': '1024KB',
+	          'queueSizeLimit': 3,    	// 一个队列上传文件数限制
+	          'uploadLimit'     : 99,                 //允许上传的最多张数 
+	         //选择文件后自动上传
+	         'auto': true,
+	         //设置为true将允许多文件上传
+	         'multi': false,
+	         onUploadSuccess: function(event, data) {
+	        	 if(data != "null") 
+	             { 
+	        		 var dt = data.split(",");
+	        		 $("#target").css("display", "block");
+	            	 /* $("#target").attr("src", '$!{config.imagewebserver}' + dt[1]); */
+	            	 /* $("#uploadify").css("display", "none"); */
+	            	 $("#people_img").attr("src",'$!{config.imagewebserver}' + dt[1]);
+	             }
+	         }
+     	});
+	}
+	bind_up();
+	document.getElementById("userIds").addEventListener('change',function(e){
+        userId = e.target.value;
+        $("#uploadify").uploadify("destroy");
+        bind_up();
+    })
+ });
+</script>
+<script>
+$(function(){
+	$("#uploadify").find("object").css("left","1px");
+	$("#uploadify").css("border","none");
+	
+	$("#goodIds").keydown(function(e){
+		if(e.keyCode==13){
+			return false;
+		}
+	});
+})
+</script>
+</body>
+</html>

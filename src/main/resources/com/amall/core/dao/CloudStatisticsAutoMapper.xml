@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.CloudStatisticsAutoMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.CloudStatisticsAuto" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="cloud_goods_id" property="cloudGoodsId" jdbcType="BIGINT" />
+    <result column="cloud_goods_auto_id" property="cloudGoodsAutoId" jdbcType="BIGINT" />
+    <result column="is_open" property="isOpen" jdbcType="BIT" />
+    <result column="is_pass" property="isPass" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, cloud_goods_id, cloud_goods_auto_id, is_open, is_pass
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CloudStatisticsAutoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_cloud_statistics_auto
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_cloud_statistics_auto
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_cloud_statistics_auto
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.CloudStatisticsAutoExample" >
+    delete from amall_cloud_statistics_auto
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.CloudStatisticsAuto" >
+    insert into amall_cloud_statistics_auto (id, cloud_goods_id, cloud_goods_auto_id, 
+      is_open, is_pass)
+    values (#{id,jdbcType=BIGINT}, #{cloudGoodsId,jdbcType=BIGINT}, #{cloudGoodsAutoId,jdbcType=BIGINT}, 
+      #{isOpen,jdbcType=BIT}, #{isPass,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.CloudStatisticsAuto" >
+    insert into amall_cloud_statistics_auto
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cloudGoodsId != null" >
+        cloud_goods_id,
+      </if>
+      <if test="cloudGoodsAutoId != null" >
+        cloud_goods_auto_id,
+      </if>
+      <if test="isOpen != null" >
+        is_open,
+      </if>
+      <if test="isPass != null" >
+        is_pass,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cloudGoodsId != null" >
+        #{cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="cloudGoodsAutoId != null" >
+        #{cloudGoodsAutoId,jdbcType=BIGINT},
+      </if>
+      <if test="isOpen != null" >
+        #{isOpen,jdbcType=BIT},
+      </if>
+      <if test="isPass != null" >
+        #{isPass,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.CloudStatisticsAutoExample" resultType="java.lang.Integer" >
+    select count(*) from amall_cloud_statistics_auto
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_cloud_statistics_auto
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.cloudGoodsId != null" >
+        cloud_goods_id = #{record.cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cloudGoodsAutoId != null" >
+        cloud_goods_auto_id = #{record.cloudGoodsAutoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.isOpen != null" >
+        is_open = #{record.isOpen,jdbcType=BIT},
+      </if>
+      <if test="record.isPass != null" >
+        is_pass = #{record.isPass,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_cloud_statistics_auto
+    set id = #{record.id,jdbcType=BIGINT},
+      cloud_goods_id = #{record.cloudGoodsId,jdbcType=BIGINT},
+      cloud_goods_auto_id = #{record.cloudGoodsAutoId,jdbcType=BIGINT},
+      is_open = #{record.isOpen,jdbcType=BIT},
+      is_pass = #{record.isPass,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.CloudStatisticsAuto" >
+    update amall_cloud_statistics_auto
+    <set >
+      <if test="cloudGoodsId != null" >
+        cloud_goods_id = #{cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="cloudGoodsAutoId != null" >
+        cloud_goods_auto_id = #{cloudGoodsAutoId,jdbcType=BIGINT},
+      </if>
+      <if test="isOpen != null" >
+        is_open = #{isOpen,jdbcType=BIT},
+      </if>
+      <if test="isPass != null" >
+        is_pass = #{isPass,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.CloudStatisticsAuto" >
+    update amall_cloud_statistics_auto
+    set cloud_goods_id = #{cloudGoodsId,jdbcType=BIGINT},
+      cloud_goods_auto_id = #{cloudGoodsAutoId,jdbcType=BIGINT},
+      is_open = #{isOpen,jdbcType=BIT},
+      is_pass = #{isPass,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

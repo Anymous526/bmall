@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">兑换商城</h1>
+  <div class="settab"><span class="tab-one"></span> 
+  					<span class="tabs"> 
+	  					<a href="$!webPath/admin/cloud_goods.htm">兑换商品列表</a> | 
+	  					<a href="$!webPath/admin/cloud_goods_add.htm">新增兑换商品</a> | 
+	  					<a href="$!webPath/admin/cloud_order.htm">兑换列表</a> | 
+	  					<a href="$!webPath/admin/cloud_goods_winner.htm">开奖列表</a> |
+	  					<a href="$!webPath/admin/cloud_pass.htm" class="this">流拍列表</a>
+  					</span> 
+  					<span class="tab-two"></span>
+  </div>
+  <form method="post" id="queryForm">
+  <div class="allpro_search">
+    <ul>
+      <li> <span>礼品名称</span><span class="allpro size3">
+        <input name="goodsName" type="text" id="goodsName" />
+        </span> <span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+        </span> </li>
+    </ul>
+  </div>
+  </form>
+  <form method="post" id="ListForm" name="ListForm">
+  <div class="allpro_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="2%">&nbsp;</td>
+        <td width="13%">商品名称</td>
+        <td width="8%">商品分类</td>
+        <td width="8%" align="center">商品编号</td>
+        <td width="8%" align="center">兑换礼品金</td>
+        <td width="8%" align="center">礼品原价</td>
+        <td width="6%" align="center">浏览</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td><input name="checkbox" type="checkbox" id="checkbox" value="$!obj.id" /></td>
+        <td><a href="$!webPath/cloud_view_$!{obj.id}.htm" target="_blank">$!{obj.goodsName}</a></td>
+        <td><a href="$!webPath/store_goods_list.htm?gc_id=$!{obj.gc.id}" target="_blank">$!{obj.gc.classname}</a></td>
+        <td align="center">$!{obj.goodsSn}</td>
+        <td align="center">$!{obj.goodsNumber}</td>
+        <td align="center">$!{obj.goodsPrice}</td>
+        <td align="center">$!{obj.clickCount}</td>
+      </tr>
+      #end
+     <!--  <tr style="background:#F2F2F2; height:30px;">
+        <td colspan="11"><div class="shopbtn shopfx">
+            <input type="checkbox" name="all" id="all" value="" onclick="selectAll(this)"/>
+            &nbsp;&nbsp;全部</div>
+          <div class="shop_btn_del shopbtn">
+            <input name="" type="button" value="删除" onclick="cmd('$!webPath/admin/cloud_goods_del.htm');" style="cursor:pointer;"/>
+          </div></td>
+      </tr> -->
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="goodsName" type="hidden" id="goodsName" value="$!goodsName" />
+<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    <input type="hidden" name="mulitId" id="mulitId" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

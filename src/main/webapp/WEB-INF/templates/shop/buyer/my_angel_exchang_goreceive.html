@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>立即领取</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc1.amallcdn.cn/assets/css/duigou.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<style>
+.orderul li{color: #333}
+p{margin: 0;padding: 0;line-height: 18px;}
+
+
+.address{width: 98%!important;}/* 不要放到样式表里 */
+</style>
+<script type="text/javascript">
+/*弹窗 */
+$(document).ready(function(){
+	$(".goreceive_btn").click(function(){
+		$(".editbg").show();
+		$(".sure_block").show();
+	  });
+	$(".goreceive_btn_no").click(function(){
+		$(".editbg").hide();
+		$(".sure_block").hide();
+	  });
+	
+	$(".goreceive_btn_ok").click(function(){
+		
+		if($("#addressId").val() == "")
+		{
+			alert("请选择收货地址");
+			$(".editbg").hide();
+			$(".sure_block").hide();
+			return false;
+		}
+		
+		$("#cartForm").submit();
+	  });
+	
+});
+
+
+</script>
+</head>
+<body>
+<!-- 弹窗  -->
+<div class="sure_block">
+	<div class="sure_block_tit">提示</div>
+	<div class="sure_block_text">是否确认收货地址？</div>
+	<div>
+		<a class="goreceive_btn_no">取消</a>
+		<a class="goreceive_btn_ok">确定</a>
+	</div>
+</div>
+<div class="editbg"></div>
+
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m" style="float: left; margin-left: 10px; margin-top: 20px;">  
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>中奖记录</span> > <span>立即领取</span></div></div>
+	<div class="productmain" style="width:821px; padding: 0 10px 80px;"> 
+	<div style="padding: 10px 0px">$!httpInclude.include("/cart/cart_confirm_order_address.htm")</div>
+	<div class="ordercon" style="border: 1px solid #bcd7ec;border-bottom: 0;">
+		<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+		<tbody>
+			<tr class="b_part_title">
+				<th class="b_th1">商品图片</th>
+				<th class="b_th2">商品名称</th>
+				<th class="b_th3">互助兑状态</th>
+				<th class="b_th4">购买数量</th>
+				<th class="b_th5">幸运号</th>
+			</tr>
+		<tr style="border-bottom: 1px solid #d8d8d8;">
+			<td style="width: 110px;text-align: center;padding: 10px;">
+				<a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id">
+					<img src="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name" alt="" width="100%" style="padding: 1px;border: 1px solid #d8d8d8;">
+				</a>
+			</td>
+			<td style="padding: 20px 0;">
+				<div class="b_goods_name">
+					<span class="b_goods_name02"><a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id">(序号:$obj.cloudGoods.id)$obj.cloudGoods.goodsName</a></span>
+					<p>幸运星：<a href="#">$obj.cloudGoods.user.truename</a></p>
+					<p class="c_know_time">揭晓时间：<i>$CommUtil.formatLongDate($obj.cloudGoods.openWinnerTime)</i></p>
+				</div>
+			</td>
+			<td class="b_color">已揭晓</td>
+			<td>
+				<tt class="times0">$obj.buyCount（个）</tt>
+			</td>
+			<td>
+				<tt>$obj.cloudCode</tt>
+			</td>
+		</tr>
+		</tbody>
+       </table>
+       </div>
+     <div class="goreceive_btn" >确定领取</div>
+      <form action="$!webPath/my_angex_order_save.htm" method="post" id="cartForm"> 
+ 		<input type="hidden" id="addressId" name="addressId"/>
+ 		<input type="hidden" id="openId" name="openId" value="$!obj.id"/>
+ 	  </form>
+	</div>
+</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

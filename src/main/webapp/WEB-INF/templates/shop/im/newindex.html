@@ -1,0 +1,356 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>聊天室登录</title>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico"
+	type="image/x-icon">
+<link rel="stylesheet" type="text/css"
+	href="$!webPath/assets/css/reset.css">
+<link rel="stylesheet" type="text/css"
+	href="$!webPath/assets/css/main.css">
+<link
+	href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/briberymoney.css"
+	type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/bootstrap.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/strophe.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/easemob.im-1.1.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/angular.min.js"></script>
+<script type="text/javascript"
+	src="$!webPath/im/js/easemob.im-1.1.shim.js"></script>
+<!-- 表情 -->
+<script type="text/javascript" src="$!webPath/service/js/rl_exp.js"></script>
+<script type="text/javascript"
+	src="$!webPath/im/js/easemob.im.config.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/im.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(e) {
+		$("#rl_exp_input").on("input", function(evt) {
+			if ($("#rl_exp_input").val().trim().length > 0) {
+				$(".btn_send").css({
+					"background" : "#35b12c",
+					"border" : "1px solid #35b12c",
+					"color" : "#fefefe"
+				});
+			} else {
+				$(".btn_send").css({
+					"background" : "#fff",
+					"border" : "1px solid #c1c1c1",
+					"color" : "#222"
+				});
+			}
+		});
+		$(".w321").click(function() {
+			$("#bghei").show();
+			$(".sh212w").show();
+
+		})
+		$("#sh212_right li").click(function() {
+			var obj_class = $(this).attr("id");
+			$(this).addClass("sele21").siblings().removeClass("sele21");
+			$(".sh212_left").hide();
+			$("#" + obj_class + "_co").show();
+		})
+		$(".sa21").click(function() {
+			$("#bghei").hide();
+			$(".sh212w").hide();
+		});
+		$("#felweoxx").click(function() {
+			$(".frm_search21").val("");
+			$("#felweo").hide();
+			$("#felweoxx").hide();
+		})
+		$(".frm_search21").on("input", function(evt) {
+			if ($(".frm_search21").val().trim().length > 0) {
+				$("#felweo").show();
+				$("#felweoxx").show();
+			} else {
+				$("#felweo").hide();
+				$("#felweoxx").hide();
+			}
+		});
+		$("#wei_3_co li").click(function() {
+			$(".mb_bg").show();
+			$(".mb_dioalog02").show();
+		})
+		$(".mb_okbtn02").click(function() {
+			alert("添加成功");
+			$(".mb_bg").hide();
+			$(".mb_dioalog02").hide();
+		});
+
+		$(".mb_nobtn02").click(function() {
+			$(".mb_bg").hide();
+			$(".mb_dioalog02").hide();
+			return false;
+		})
+		$(".butok01").click(function() {
+			$('input[name="wyfrend"]:checked').each(function() {
+				alert(this.value);
+			});
+		})
+		$(".butno01").click(function() {
+			$("[name='wyfrend']:checked").removeAttr("checked");
+			$(".butok01").css({
+				"color" : "#999",
+				"background" : "#ccc"
+			})
+		})
+		$("input[name='wyfrend']:checkbox").each(function() {
+			$(this).click(function() {
+				if ($("input[name='wyfrend']:checked").length > 0) {
+					$(".butok01").css({
+						"color" : "#FFF",
+						"background" : "#35B12C"
+					})
+				} else {
+					$(".butok01").css({
+						"color" : "#999",
+						"background" : "#ccc"
+					})
+				}
+			});
+		});
+	});
+
+	$(document).ready(function() {
+		$("#login").trigger('click');
+	});
+
+	//禁止浏览器F5刷新
+	document.onkeydown = function(e) {
+		var ev = window.event || e;
+		var code = ev.keyCode || ev.which;
+		if (code == 116) {
+			ev.keyCode ? ev.keyCode = 0 : ev.which = 0;
+			cancelBubble = true;
+			return false;
+		}
+		if (code == 13) {
+			var text = $('#rl_exp_input').val();
+			if (null != text && trim(text).length > 0) {
+				sendText();
+				return false;
+			}
+		}
+	};
+	
+	//去空格
+	var trim = function(str){
+		 return str.replace(/(^\s*)|(\s*$)/g, ""); 
+	}
+	var onclickFile = function() {
+		$("#fileInput").trigger('click');
+	};
+</script>
+</head>
+<body>
+	<!-- login -->
+	<div id="wei2201"></div>
+	<div class="loginmodal" id="loginmodal" name="loginmodal"
+		style="visibility: hidden;">
+		<div>
+			<h3>用户登录</h3>
+		</div>
+
+		<div>
+			<table>
+				<tr>
+					<td width="50%"><label>用户名：</label> <input type="text"
+						id="username" placeholder="请输入用户名" name="username"
+						value="$!obj.username" tabindex="1" /><br> <label>密
+							码：</label> <input type="password" id="password" placeholder="请输入密码"
+						name="password" value="$!obj.password" tabindex="2" /> <label
+						style="display: none">令牌：</label><input type="hidden" id="token"
+						name="token" value="$!obj.token" disabled="disabled" tabindex="3" /></td>
+				</tr>
+			</table>
+
+			<label style="display: none"><input type="hidden"
+				name="usetoken" id="usetoken" tabindex="4" />使用令牌登录 </label>
+		</div>
+		<div>
+			<button id="login" onclick="login()" tabindex="3">登 录</button>
+		</div>
+	</div>
+
+	<!-- 登录图片 -->
+	<div id="waitLoginmodal" name="waitLoginmodal">
+		<img src="$!webPath/service/img/waitting.gif" /><br>
+		<br>加载中...
+	</div>
+
+	<!-- 主页 -->
+	<div class="main_inner" id="main_inner" style="display: none">
+		<div class="panel">
+			<div class="header">
+				<div class="avatar">
+					<img class="img" src="$!webPath/assets/img/webwxgeticon.jpg" />
+				</div>
+				<div class="info">
+					<span class="display_name" id="user_name" name="user_name"></span>
+					<!-- 好友模块 暂时屏蔽 -->
+					<!--  <span class="w321"></span> -->
+				</div>
+			</div>
+			<div class="search_bar">
+				<input class="frm_search" type="text" placeholder="搜索">
+			</div>
+
+			<div class="tab">
+				<div class="tab_item">
+					<a class="chat" title="通讯录" href="#"> <i
+						class="web_wechat_tab_friends"></i>
+					</a>
+				</div>
+				<div class="tab_item">
+					<a class="chat" title="阅读" href="#"> <i
+						class="web_wechat_tab_public"></i>
+					</a>
+				</div>
+				<div class="tab_item">
+					<a class="chat" title="聊天" href="#"> <i
+						class="web_wechat_tab_chat web_wechat_tab_chat_hl"></i>
+					</a>
+				</div>
+
+			</div>
+
+			<div class="chat-list">
+				<ul id="contact_list" class="user_list">
+
+				</ul>
+			</div>
+
+		</div>
+		<div class="box" id="null-nouser">
+			<div class="name_header">
+				<div class="title">
+					<a class="title_name" href="#" id="title_name" name="title_name"></a>
+				</div>
+			</div>
+
+			<!-- 聊天内容 -->
+			<div id="chat_main" name="chat_main">
+				<div id="chat_txt" class="chat_content"></div>
+			</div>
+			<div class="toolbar">
+				<div class="toolbar_title">
+					<!-- 表情和截图先屏蔽。 -->
+					<!-- <a class="web_wechat_face" href="javascript:void(0);"
+						id="rl_exp_btn"></a> -->
+					<!-- 截图 -->
+					<!-- <a class="web_wechat_screencut" href="#"></a> -->
+					<!-- 选择图片 -->
+					<a class="web_wechat_pic" href="#" title="选择图片" type="img"
+						onclick="onclickFile()"></a> <input type='file' id="fileInput"
+						style='display: none;' onchange="sendPic()" />
+				</div>
+			</div>
+
+			<div class="edit_content">
+				<textarea id="rl_exp_input" name="" class="edit_area"
+					placeholder="请输入..."></textarea>
+			</div>
+
+			<div class="rl_exp" id="rl_bq" style="display: none;">
+				<ul class="rl_exp_tab clearfix">
+					<li><a href="javascript:void(0);" class="selected">默认</a></li>
+					<li><a href="javascript:void(0);">拜年</a></li>
+					<li><a href="javascript:void(0);">浪小花</a></li>
+					<li><a href="javascript:void(0);">暴走漫画</a></li>
+				</ul>
+				<ul class="rl_exp_main clearfix rl_selected"></ul>
+				<ul class="rl_exp_main clearfix" style="display: none;"></ul>
+				<ul class="rl_exp_main clearfix" style="display: none;"></ul>
+				<ul class="rl_exp_main clearfix" style="display: none;"></ul>
+				<a href="javascript:void(0);" class="closeface">×</a>
+			</div>
+
+			<div class="action" onclick="sendText()">
+				<span class="desc">按下Enter发送</span> <label><a
+					class="btn btn_send" href="javascript:void(0)">发送(S)</a></label>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="bghei" style="display: none"></div>
+	<div style="display: none" class="sh212w">
+		<span class="sa21"></span>
+		<div class="sh212_left" id="wei_1_co">
+			<div class="search_bar21" ng-app="">
+				<input class="frm_search21" name="frm_search21" id="frm_search21"
+					ng-model="frm_search21" type="text" placeholder="请输入用户名/手机号" />
+				<div id="felweoxx" style="display: none"></div>
+				<ul id="felweo" style="display: none">
+					<li onclick="search_user()">搜索：<span>{{frm_search21}}</span></li>
+				</ul>
+			</div>
+		</div>
+		<div class="sh212_left" id="wei_2_co" style="display: none">
+			<div class="search_bar22">
+				<input class="frm_search22" naem="frm_search22" type="text"
+					placeholder="请输入用户名/手机号" />
+				<div class="hite21">请勾选需要删除的联系人</div>
+			</div>
+			<div id="htew21">
+				<ul>
+					<label><li><img src="assets/img/webwxgeticon.jpg" /><span>sdjksdjsd</span><input
+							name="wyfrend" type="checkbox" value="1" /></li></label>
+					<label><li><img src="assets/img/webwxgeticon.jpg" /><span>都是实打实的都是的</span><input
+							name="wyfrend" type="checkbox" value="2" /></li></label>
+				</ul>
+			</div>
+			<div id="weokw21">
+				<button class="butok01">确定</button>
+				<button class="butno01">取消</button>
+			</div>
+		</div>
+
+		<div class="sh212_left" id="wei_3_co" style="display: none">
+			<ul>
+				<li><img src="assets/img/webwxgeticon.jpg" />
+					<div>
+						<span>刘德华</span><span>hi可以交个朋友吗</span>
+					</div></li>
+			</ul>
+		</div>
+		<div id="sh212_right">
+			<ul>
+				<li id="wei_1" class="sele21">添加好友</li>
+				<li id="wei_2">删除好友</li>
+				<li id="wei_3">添加信息</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="mb_bg" style="opacity: 0.4;"></div>
+	<div class="mb_dioalog02" style="width: 300px; margin-left: -180px;">
+		<div class="mb_tit02">消息提示</div>
+		<div style="text-align: center; font-size: 14px;">是否确定添加为好友？</div>
+		<div style="margin-top: 10px;">
+			<span class="mb_nobtn02" style="cursor: pointer">拒绝</span> <span
+				class="mb_okbtn02" style="cursor: pointer">添加</span>
+		</div>
+	</div>
+
+</body>
+</html>
+<link rel="stylesheet" type="text/css"
+	href="$!webPath/assets/css/jquery.mCustomScrollbar.css">
+<script src="$!webPath/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+<script>
+	(function($) {
+		$(window)
+				.load(
+						function() {
+							$(
+									"#mCSB_1,.chat-list,.user_list,#htew21,#chat_main,.chat_content")
+									.mCustomScrollbar({
+										theme : "minimal"
+									});
+						});
+	})(jQuery);
+</script>

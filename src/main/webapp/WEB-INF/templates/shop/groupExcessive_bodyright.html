@@ -1,0 +1,26 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+ <div class="right_tit"><span>精品推荐</span></div>
+	<ul class="tuijian">
+		#foreach($goods in $goods_recommend_list)   
+		#if($!goods.goodsMainPhoto)
+		#set($img="$!imageWebServer/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+		#else
+		#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+		#end
+		<li>
+			<a href="$!webPath/goods.htm?id=$!{goods.id}">
+				<img style="width:80px; height:80px;" alt="" src="$!{img}" original="$!img" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" />
+			</a>
+			<div><p class="fb"><a href="$!webPath/goods.htm?id=$!{goods.id}">$!goods.goodsName</a></p><label><i>¥</i>$!goods.goodsPrice</label><p>$!goods.goodsSalenum 人已购买</p></div>
+		</li>
+		#end
+	</ul>
+</body>
+</html>

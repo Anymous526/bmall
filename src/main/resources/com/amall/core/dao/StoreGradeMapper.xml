@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.StoreGradeMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.StoreGrade" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="add_funciton" property="addFunciton" jdbcType="VARCHAR" />
+    <result column="audit" property="audit" jdbcType="BIT" />
+    <result column="goodsCount" property="goodscount" jdbcType="INTEGER" />
+    <result column="gradeLevel" property="gradelevel" jdbcType="INTEGER" />
+    <result column="gradeName" property="gradename" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="spaceSize" property="spacesize" jdbcType="REAL" />
+    <result column="sysGrade" property="sysgrade" jdbcType="BIT" />
+    <result column="templates" property="templates" jdbcType="VARCHAR" />
+    <result column="acount_num" property="acountNum" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.StoreGrade" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, add_funciton, audit, goodsCount, gradeLevel, gradeName, 
+    price, sequence, spaceSize, sysGrade, templates, acount_num
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <cache/>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.StoreGradeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_storegrade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.StoreGradeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_storegrade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.StoreGradeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_storegrade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_storegrade
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_storegrade
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.StoreGradeExample" >
+    delete from amall_storegrade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.StoreGrade" >
+    insert into amall_storegrade (  id, addTime, deleteStatus, 
+      add_funciton, audit, goodsCount, 
+      gradeLevel, gradeName, price, 
+      sequence, spaceSize, sysGrade, 
+      templates, acount_num, content
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{addFunciton,jdbcType=VARCHAR}, #{audit,jdbcType=BIT}, #{goodscount,jdbcType=INTEGER}, 
+      #{gradelevel,jdbcType=INTEGER}, #{gradename,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, 
+      #{sequence,jdbcType=INTEGER}, #{spacesize,jdbcType=REAL}, #{sysgrade,jdbcType=BIT}, 
+      #{templates,jdbcType=VARCHAR}, #{acountNum,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.StoreGrade" >
+    
+    insert into amall_storegrade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="addFunciton != null" >
+        add_funciton,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="goodscount != null" >
+        goodsCount,
+      </if>
+      <if test="gradelevel != null" >
+        gradeLevel,
+      </if>
+      <if test="gradename != null" >
+        gradeName,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="spacesize != null" >
+        spaceSize,
+      </if>
+      <if test="sysgrade != null" >
+        sysGrade,
+      </if>
+      <if test="templates != null" >
+        templates,
+      </if>
+      <if test="acountNum != null" >
+        acount_num,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="addFunciton != null" >
+        #{addFunciton,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=BIT},
+      </if>
+      <if test="goodscount != null" >
+        #{goodscount,jdbcType=INTEGER},
+      </if>
+      <if test="gradelevel != null" >
+        #{gradelevel,jdbcType=INTEGER},
+      </if>
+      <if test="gradename != null" >
+        #{gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="spacesize != null" >
+        #{spacesize,jdbcType=REAL},
+      </if>
+      <if test="sysgrade != null" >
+        #{sysgrade,jdbcType=BIT},
+      </if>
+      <if test="templates != null" >
+        #{templates,jdbcType=VARCHAR},
+      </if>
+      <if test="acountNum != null" >
+        #{acountNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.StoreGradeExample" resultType="java.lang.Integer" >
+    select count(*) from amall_storegrade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_storegrade
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.addFunciton != null" >
+        add_funciton = #{record.addFunciton,jdbcType=VARCHAR},
+      </if>
+      <if test="record.audit != null" >
+        audit = #{record.audit,jdbcType=BIT},
+      </if>
+      <if test="record.goodscount != null" >
+        goodsCount = #{record.goodscount,jdbcType=INTEGER},
+      </if>
+      <if test="record.gradelevel != null" >
+        gradeLevel = #{record.gradelevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.gradename != null" >
+        gradeName = #{record.gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null" >
+        price = #{record.price,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequence != null" >
+        sequence = #{record.sequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.spacesize != null" >
+        spaceSize = #{record.spacesize,jdbcType=REAL},
+      </if>
+      <if test="record.sysgrade != null" >
+        sysGrade = #{record.sysgrade,jdbcType=BIT},
+      </if>
+      <if test="record.templates != null" >
+        templates = #{record.templates,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acountNum != null" >
+        acount_num = #{record.acountNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_storegrade
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      add_funciton = #{record.addFunciton,jdbcType=VARCHAR},
+      audit = #{record.audit,jdbcType=BIT},
+      goodsCount = #{record.goodscount,jdbcType=INTEGER},
+      gradeLevel = #{record.gradelevel,jdbcType=INTEGER},
+      gradeName = #{record.gradename,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      spaceSize = #{record.spacesize,jdbcType=REAL},
+      sysGrade = #{record.sysgrade,jdbcType=BIT},
+      templates = #{record.templates,jdbcType=VARCHAR},
+      acount_num = #{record.acountNum,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_storegrade
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      add_funciton = #{record.addFunciton,jdbcType=VARCHAR},
+      audit = #{record.audit,jdbcType=BIT},
+      goodsCount = #{record.goodscount,jdbcType=INTEGER},
+      gradeLevel = #{record.gradelevel,jdbcType=INTEGER},
+      gradeName = #{record.gradename,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=VARCHAR},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      spaceSize = #{record.spacesize,jdbcType=REAL},
+      sysGrade = #{record.sysgrade,jdbcType=BIT},
+      templates = #{record.templates,jdbcType=VARCHAR},
+      acount_num = #{record.acountNum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.StoreGrade" >
+    update amall_storegrade
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="addFunciton != null" >
+        add_funciton = #{addFunciton,jdbcType=VARCHAR},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=BIT},
+      </if>
+      <if test="goodscount != null" >
+        goodsCount = #{goodscount,jdbcType=INTEGER},
+      </if>
+      <if test="gradelevel != null" >
+        gradeLevel = #{gradelevel,jdbcType=INTEGER},
+      </if>
+      <if test="gradename != null" >
+        gradeName = #{gradename,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="spacesize != null" >
+        spaceSize = #{spacesize,jdbcType=REAL},
+      </if>
+      <if test="sysgrade != null" >
+        sysGrade = #{sysgrade,jdbcType=BIT},
+      </if>
+      <if test="templates != null" >
+        templates = #{templates,jdbcType=VARCHAR},
+      </if>
+      <if test="acountNum != null" >
+        acount_num = #{acountNum,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.StoreGrade" >
+    update amall_storegrade
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      add_funciton = #{addFunciton,jdbcType=VARCHAR},
+      audit = #{audit,jdbcType=BIT},
+      goodsCount = #{goodscount,jdbcType=INTEGER},
+      gradeLevel = #{gradelevel,jdbcType=INTEGER},
+      gradeName = #{gradename,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=INTEGER},
+      spaceSize = #{spacesize,jdbcType=REAL},
+      sysGrade = #{sysgrade,jdbcType=BIT},
+      templates = #{templates,jdbcType=VARCHAR},
+      acount_num = #{acountNum,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.StoreGrade" >
+    update amall_storegrade
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      add_funciton = #{addFunciton,jdbcType=VARCHAR},
+      audit = #{audit,jdbcType=BIT},
+      goodsCount = #{goodscount,jdbcType=INTEGER},
+      gradeLevel = #{gradelevel,jdbcType=INTEGER},
+      gradeName = #{gradename,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=INTEGER},
+      spaceSize = #{spacesize,jdbcType=REAL},
+      sysGrade = #{sysgrade,jdbcType=BIT},
+      templates = #{templates,jdbcType=VARCHAR},
+      acount_num = #{acountNum,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

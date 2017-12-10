@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Amall商城官方网站—正品低价,又省又赚—www.Amall.com</title> 
+<meta name="baidu-site-verification" content="u7KaeCBGVW" />
+<meta name="keywords" content="天使Amall,amall商城,深圳市天使互助网络有限公司,Amall商城,免费开店,网上购物,网上商城,免费注册,商家联盟,海外精品,中国特产,厂家直供,店主直播" />
+<meta name="description" content="深圳市天使互助网络有限公司于2010年9月成立,坐落于繁华的华南城交易中心,公司主要从事网络平台建设与运营及软件开发等。天使Amallwww.Amall.com定位电商·精品汇。网站以精品正品购物为核心理念，以创造一个丰盛富足的电商世界为使命。让实体插上翅膀，让消费创造价值。" />
+<meta name="copyright" content="深圳市天使互助网络有限公司  版权所有" />
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/xqt.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/specialty.css" /> 
+</head>
+<style>
+.slideBox,#wei21tc li{height:400px!important;}/* 这条样式不要放到样式表里 */
+</style>
+<script>
+	$(function(){
+		$(".ltz-righ ul:nth-child(4)").find(".ltz-righsp").css("")
+	})
+</script>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/specialpricehead.htm")
+<!-- 
+<div class="xtqtop100">
+ <div class="xqt_menu">
+	<ul class="ce">
+		#if($!floorList.size()>0)
+			#foreach($floor in $floorList)
+				#set($num = $!velocityCount - 1)
+				<li><a id="navon$!num" 
+				#if($!num==0)
+					class="xz"
+				#end 
+				href="javascript:void(0)">$!floor.floorname</a> 
+				</li>
+			#end
+		#end
+	</ul>
+</div>
+</div>
+ -->
+<div class="w100 bg_fff"> 
+    <div class="slideBox">
+      <div class="hd">
+        <ul>
+        #if($obj)
+  		#foreach($adv in $obj.advs)
+          <li></li>
+        #end
+        #end  
+        </ul>
+      </div>
+      <div class="bd">
+        <ul id="wei21tc">
+        #if($obj)
+  		#foreach($adv in $obj.advs)
+          <li style="background: url($!{config.imagewebserver}/$!adv.adAcc.path/$!adv.adAcc.name) 50% 0px no-repeat;height: 400px!important;"></li>
+        #end
+        #end  
+        </ul>
+      </div>
+    </div> 
+</div>
+
+<ul>
+	#if($!floorList.size()>0)
+			#foreach($floor in $!floorList)
+			    #set($num = $!velocityCount - 1)
+			    #if($!floor.goodsList.size()>0)
+	<li class="xqt_list" id="div${num}">
+    <div class="ltz-div">
+		<a href="$!webPath/xqt_list.htm?floorId=$!floor.id">
+		<div class="ltz-left">
+      	<span class="chekmore" >查看更多</span>
+        <img src="$!webPath/assets/img/xqtl${num}.jpg">
+        </a>
+	</div>
+     <div class="ltz-right">
+        <div class="ltz-righ">
+        <ul>
+        #foreach($goods in $floor.goodsList)
+        	#set($gmp = $!goods.goodsMainPhoto)
+          	#set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+          	#if($!velocityCount<5) 
+          
+	          <li>
+	          <a href="$!goods_url">
+	            <div class="ltz-righsp">   
+		            <div class="ltzright-goos" style="z-index:40;"><img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" style="z-index:40;"></div>
+		            <div class="ltzright-goostit" style="z-index:40;">
+		              <h1 class="xql_h1">$goods.goodsName</h1>
+		              <!-- <p>$goods.goodsInfo</p> -->
+		              <span class="in_goods_price in_over_purcha" style="padding-left:22px;font-size:20px;">
+                	 #if($!goods.goodsCurrentPrice)
+          				<i>¥</i>$!goods.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!goods.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!goods.goodsPrice</span>		
+                	</span>
+		            </div>
+                </div> 
+				</a>
+				
+	        	</li>
+            
+            #end
+           #end
+        </ul>
+      </div>    
+      <div class="ltz-rig">
+        <ul>
+        #foreach($goods in $floor.goodsList)
+        	#set($gmp = $!goods.goodsMainPhoto)
+          	#set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+          	#if($!velocityCount>=5 && $!velocityCount<=6)
+          
+          <li>
+           <a href="$!goods_url">
+			<div class="ltz-righsp">
+            	<div class="ltzright-goos"><img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}"></div>
+            	<div class="ltzright-goostit">
+              		<h1 class="xql_h1">$goods.goodsName</h1>
+              		<!-- <p>$goods.goodsInfo</p> -->
+              		<span class="in_goods_price in_over_purcha" style="padding-left:22px;font-size:20px;">
+                	 #if($!goods.goodsCurrentPrice)
+          				<i>¥</i>$!goods.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!goods.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!goods.goodsPrice</span>		
+                	</span>
+                </div>
+            </div>
+                
+                </a>
+          </li>
+          
+          #elseif($!velocityCount==7)
+          
+	          <li>
+	          <a href="$!goods_url">
+				<div class="ltz-righspbig">
+					<div class="ltzrigh-tit">
+						<h2 >$goods.goodsName</h2>
+						<!-- <p>$goods.goodsInfo</p> -->
+						<span class="in_goods_price in_over_purcha" style="padding-left:22px;font-size:20px;">
+                	 #if($!goods.goodsCurrentPrice)
+          				<i>¥</i>$!goods.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!goods.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!goods.goodsPrice</span>		
+                	</span>
+					</div>
+					<div class="ltzrigh-timg">
+						<img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}">
+					</div>
+				</div> 
+				 
+			 
+				</a>
+	    	</li>
+    	
+          #end	
+        #end
+        </ul>
+      </div> 
+      </div>  
+     <div class="ltz-bottom">
+      <ul class="ltz_ul">
+      #foreach($goods in $floor.goodsList)
+        	#set($gmp = $!goods.goodsMainPhoto)
+          	#set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+          	#if($!velocityCount>=8)
+        <li>
+        <a href="$!goods_url">
+        	<div class="ltz-righsp">
+              <div class="ltzright-goos"><img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}"></div>
+            <div class="ltzright-goostit">
+              <h1 class="xql_h1">$goods.goodsName</h1>
+              <!-- <p>$goods.goodsInfo</p> -->
+              <span class="in_goods_price in_over_purcha" style="padding-left:22px;font-size:20px;">
+                	 #if($!goods.goodsCurrentPrice)
+          				<i>¥</i>$!goods.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!goods.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!goods.goodsPrice</span>		
+                	</span>
+                </div>
+                 
+                </a>  
+          </div>    
+        </li>
+        #end
+     #end   
+      </ul>
+      </div>    
+   </div>
+  </li>
+  			#end
+  		#end
+	#end
+
+</ul>
+$!httpInclude.include("/footer.htm") 
+
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" type="text/javascript"></script>
+<script src="$!webPath/assets/js/main.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script>
+<script src="$!webPath/assets/js/jquery.SuperSlide.2.1.1.js"></script> 
+<script type="text/javascript">
+    $(".slideBox,.slideBox2").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,});
+</script>
+<script type="text/javascript" src="$!webPath/assets/js/animatescroll.js"></script><!-- 顺序别乱动哈 ，必须放低部-->
+<script>
+$(document).ready(function(e) {
+    $(".ltz-righsp img").hover(function(){
+		$(this).animate({"opacity":"0.8"},500); 
+		$(this).animate({"opacity":"1"},500); 
+		},function(){
+			//$(this).animate({"opacity":"0.8"},300); 
+		   // $(this).animate({"opacity":"1"},300); 
+			})
+});
+</script>
+</body>
+</html>

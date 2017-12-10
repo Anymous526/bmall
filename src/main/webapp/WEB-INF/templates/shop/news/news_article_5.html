@@ -1,0 +1,210 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var typeId = "$!typeId";
+	
+	//console.info("isPartner -> "+isPartner);
+	$("#myIntegral").mouseover(function(){
+		$("#ingeralBox").css("display","block");
+	}).mouseout(function(){
+		$("#ingeralBox").css("display","none");
+	});
+	
+	$("#share_a").click(function(){
+		if(typeId == "3"){
+			alert("请到会员中心去分享.");
+		}else{
+			$("#share_ar").show();	
+		}
+	});
+	
+	$("#share_b1").click(function(){
+		if(typeId == "4"){
+			alert("商家不能申请成为会员");
+			return false;
+		}
+	});
+	
+	$(".share_close").bind("click",function(){
+		$("#share_ar").hide();
+	});
+	
+	var lis = $(".share_icon ul li");
+	var length = lis.size();
+	jQuery.each(lis,function(index,val){
+		var t = (index+1)%7;
+		if(t == 0){
+			/* console.info($(this)); */
+			$(this).css("margin-right","0px");
+		}
+	});
+	
+	var appShareUrl = $("#appRegUrl").val();
+	//console.info("appShareUrl -> "+appShareUrl);
+	window._bd_share_config={
+		"share":{
+			"bdText":"天使红包分享",
+			"bdMini":"1",
+			"bdMiniList":false,
+			"bdPic":"",
+			"bdUrl":appShareUrl,
+			"bdStyle":"1",
+			"bdSize":"32",
+		}
+	};
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	
+});
+</script>  
+ 
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div id="rightBody">
+	
+<!--  中央区  -->
+    <div class="news_article_box" id="" style="border: 1px solid #ddd;width: 828px;float:left; margin-left:10px;  display:block; overflow:hidden;">
+    	<div class="news_article_titlebox" style="width: 788px;height: 60px;margin-left: 20px;border-bottom: 1px solid #e04646;">
+    		<span class="news_article_title" style="width: 788px;height:36px;line-height:36px; font-size: 18px;">天使2015年招商资质细则</span>
+    		<br/><span style="width: 150px;display: inline-block;">日期：2015.10.20</span>
+    		<span style="width: 150px;display: inline-block;">来源：<i style="color: #000;">Amall商城</i></span>
+    	</div>
+    	
+    	<div class="news_article_content" style="width: 788px;margin: 20px;">
+     	
+		    <!-- <div style="margin-top:20px";>
+		    内容
+     
+     <h1>旗舰店(保证金10000元人民币)</h1>
+     <p><strong>含义：</strong>商家以自有品牌（商标为R或TM状态）入驻天使开设的店铺。</p>
+     <p>旗舰店可以有以下几种类型：</p>
+     <p>1.经营一个自有品牌商品的品牌旗舰店；</p>
+     <p>2.经营多个自有品牌商品且各品牌归同一实际控制人的品牌旗舰店</p>
+     <p>3.卖场型品牌（服务类商标）所有者开设的品牌旗舰店</p>
+     <p><strong>4.开店主体必须是品牌（商标）权利人或持有权利人出具的开设天使品牌旗舰店排他
+
+性授权文件的企业。</strong></p><br>
+     <p><strong>旗舰店店铺资质: </strong></p>
+     <p class="c_blu">1.企业营业执照副本复印件</p>
+     （根据2014年10月1日生效的《企业经营异常名录管理暂行办法》，需确保未在企业经营异常名录
+
+中且所售商品属于经营范围内）
+  	 <p class="c_blu">2.企业税务登记证复印件</p>（国税、地税均可）
+  	 <p class="c_blu">3.组织机构代码证复印件</p>
+     <p>4.银行开户许可证复印件</p>
+     <p>5.法定代表人身份证正反面复印件</p>
+     <p>6.店铺负责人身份证正反面复印件</p>
+  	 <p class="c_blu">7.由国家商标总局颁发的商标 <strong>或</strong> 商标注册申请受理通
+
+知书复印件</p>
+  	 （若办理过变更、转让、续展，请一并提供商标总局颁发的变更、转让、续展证明或受理通知
+
+书）
+  	 <p>8.产品清单</p>
+  	 <p>* 若由权利人授权开设旗舰店，需提供独占授权书（如果商标权人为自然人，则需同时提
+
+供其亲笔签名的身份证复印件）。</p>
+     <p>* 服饰、家用电器、运动户外类目：若商标权人为境内企业或个人，请下载中文版独占授权书
+
+。若商标权人为境外企业或个人，可选择下载中文版或英文版独占授权书。（如果商标权人为境内自然
+
+人，则需同时提供其亲笔签名的身份证复印件。如果商标权人为境外自然人，则需同时提供其亲笔签名
+
+的护照复印件）。</p>
+      <p>* 若经营出售多个自有品牌的旗舰店，需提供品牌属于同一实际控制人的证明材料，此类店铺
+
+主动招商。</p>
+      <p>* 若申请卖场型旗舰店，需提供服务类商标注册证或商标注册申请受理通知书，此类店铺主动
+
+招商。</p><br><br>	
+
+  
+    
+    <h1>品牌店（保证金10000元人民币）</h1>
+    <p><strong>含义：</strong>商家持品牌授权文件在天使开设的店铺。</p>
+    <p>品牌店有以下几种类型：</p>
+    <p>1.经营一个授权销售品牌商品的品牌店；</p>
+    <p>2.经营多个授权销售品牌的商品且各品牌归同一实际控制人的品牌店。
+    <p><strong>• 品牌（商标）权利人出具的授权文件不得有地域限制，且授权有效期不得早于2015年
+
+12月31日。</strong></p></p><br>
+    <p><strong>品牌店店铺资质:</strong></p>
+    <p class="c_blu">1.企业营业执照副本复印件</p>
+    （根据2014年10月1日生效的《企业经营异常名录管理暂行办法》，需确保未在企业经营异常名录中
+
+且所售商品属于经营范围内）
+    <p class="c_blu">2.企业税务登记证复印件</p>（国税、地税均可）
+    <p class="c_blu">3.组织机构代码证复印件</p>
+    <p>4.银行开户许可证复印件</p>
+    <p>5.法定代表人身份证正反面复印件</p>
+    <p>6.店铺负责人身份证正反面复印件</p>
+    <p class="c_blu">7.由国家商标总局颁发的商标注册证<strong> 或</strong> 商标注册申请受理
+
+通知书复印件</p>（若办理过变更、转让、续展，请一并提供商标总局颁发的变更、转让、续展证明或
+
+受理通知书）
+    <p>8.商标权人出具的授权书（若商标权人为自然人，则需同时提供其亲笔签名的身份证复印件）
+
+</p>
+    <p>· 产品清单</p>
+    <p>* 品牌属于同一实际控制人的证明材料（出售多品牌的专卖店），此类店铺主动招商。
+
+</p><br><br>
+ 
+ 
+ 	<h1>专营店（保证金10000元人民币）</h1>
+    <p><strong>含义：</strong>经营天使同一招商大类下两个及以上品牌商品的店铺。</p>
+    <p>专营店有以下几种类型：</p>
+    <p>1.经营两个及以上他人品牌商品的专营店；</p>
+    <p>2.既经营他人品牌商品又经营自有品牌商品的专营店；</p>
+    <p>3.经营两个及以上自有品牌商品的专营店。</p>
+    <p><strong>• 一个招商大类下专营店只能申请一家。</strong></p><br>
+    <p><strong>专营店店铺资质:</strong></p>
+    <p >1.企业营业执照副本复印件</p>
+    （根据2014年10月1日生效的《企业经营异常名录管理暂行办法》，需确保未在企业经营异常名录中
+
+且所售商品属于经营范围内）
+    <p >2.企业税务登记证复印件</p>（国税、地税均可）
+    <p>3.组织机构代码证复印件</p>
+    <p>4.银行开户许可证复印件</p>
+    <p>5.法定代表人身份证正反面复印件
+    <p>6.店铺负责人身份证正反面复印件
+    <p>7.自有品牌：</p>
+    <p>商标注册证<strong> 或 </strong>商标注册申请受理通知书复印件</p>
+    <p>代理品牌：</p>
+    <p>（1）商标注册证 <strong>或</strong> 商标注册申请受理通知书复印件</p>
+    <p>（2）上一级的正规品牌授权文件或正规采购合同及进货发票，若上一级的授权方或供货商为自
+
+然人，则需同时提供其亲笔签名的身份证复印件</p>
+    <p>8.产品清单</p>
+
+		
+		内容结束
+		</div>
+    	 -->
+    	</div>
+    	
+    </div>
+
+</div>
+</div>	
+	
+	
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

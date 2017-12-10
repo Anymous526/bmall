@@ -1,0 +1,62 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>物流工具</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/kindeditor.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/lang/zh_CN.js"></script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods")
+<div class="s_m">  
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">物流工具</a> > <span>物流工具</span></div></div>
+        <div class="productmain">
+	     <div class="container" style="height:37px">
+           <ul class="section" style="padding: 0;">
+                <li><a href="$!webPath/seller/logistics_tool.htm">物流公司</a></li>
+                <li class="li_this"><a href="$!webPath/seller/logistics_query.htm">物流查询</a></li> 
+              </ul>
+            </div>
+        <div class="ordercon">
+            <div class="kuaidi">
+            <form action="#">
+             <div id="kd01">
+                            物流公司：
+             <select>
+                <option>请选择</option>
+                <option>圆通速递</option>
+                <option>申通快递</option>
+                <option>天天快递</option>
+             </select>
+             </div>
+             <div id="kd01">
+                            快递单号：
+              <input type="text" placeholder="请输入快递单号"/>
+             </div>
+             <input type="submit" id="submit" value="查询"/> 
+             </form>
+             </div>
+             </div>
+          </div>
+  </div>
+  </div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

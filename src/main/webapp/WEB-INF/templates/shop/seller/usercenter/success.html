@@ -1,0 +1,41 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统提示 - $!config.title -</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+  $!httpInclude.include("/seller/seller_head.htm")
+<div class="main">
+  <div class="index" style="height:300px;">
+    <div style="height:280px;border:1px solid #CCCCCC;overflow:hidden; margin-left:auto; margin-right:auto; margin-top:10px;">
+      <div style="font-size:16px; color:#666666;margin-top:100px; padding-left:40%;">
+      <span style="float:left;">
+      <img src="$!webPath/resources/style/common/images/icon/succeed.png" />
+      </span>
+      <span style=" padding-top:10px; line-height:30px; float:left;">$!{op_title}！</span>
+      </div>
+    </div>
+  </div>
+<script>
+	  var count=3;
+	  window.setInterval(go,1000);
+	  function go(){
+	    count--;
+	    if(count==0) window.location.href="$!url";
+	  }
+	</script>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

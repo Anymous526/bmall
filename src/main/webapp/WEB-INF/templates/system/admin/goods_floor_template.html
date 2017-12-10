@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/indexTemplate.css"  rel="stylesheet" type="text/css"/>
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery(".floorul li").attr("cursor","pointer").click(function(){
+	var gc_id=jQuery(this).attr("gc_id");
+	jQuery(".floorul li").removeClass("this");
+	jQuery(this).addClass("this");
+    jQuery(".ftab").hide();
+	jQuery("#gc_"+gc_id).show();
+  });
+  #if($!tab)
+	jQuery(".floorul li").removeClass("this");
+	jQuery(".floorul li[gc_id=$!tab]").addClass("this");
+    jQuery(".ftab").hide();
+	jQuery("#gc_$!{tab}").show();
+  #end
+});
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">首页楼层</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/goods_floor_list.htm">管理</a> | <a href="$!webPath/admin/goods_floor_add.htm">新增</a> | <a href="$!webPath/admin/goods_floor_template.htm?id=$!obj.id" class="this">楼层模板</a> </span> <span class="tab-two"></span></div>
+  <div class="floor_editor">
+  <!--楼层样式0-->
+     <div class="floor_m">经典楼层</div>
+    <div class="floor_rel">
+      <div class="floor">
+        <div class="floor_box">
+          <div class="floor_menu">
+            <h3><a href="javascript:void(0);"  dialog_uri="$!webPath/admin/goods_floor_class.htm?id=$!{obj.id}" dialog_title="编辑分类" dialog_width="700" dialog_height="100" dialog_top="100"  dialog_id="goods_floor_cat" class="edfloor">编辑新增商品类别+</a></h3>
+            <div class="flr_m_details"> 								
+              <ul class="flr_m_du">
+              
+                #foreach($gc in $gcsByJson)
+                <li>
+                  <h4><a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">$!gc.classname</a></h4>
+                  <p>
+                  #foreach($c_gc in $gc.childs) 
+                  <span><a href="$!webPath/store_goods_list.htm?gc_id=$!c_gc.id" target="_blank">$!c_gc.classname</a></span>
+					#end
+                  </p>
+                </li>
+                #end
+              </ul>
+              
+              <div class="flr_advertisment">
+              		<div>
+              			<a href="javascript:void(0);"  dialog_uri="$!webPath/admin/goods_floor_brand.htm?id=$!obj.id" dialog_title="编辑193*193广告信息" dialog_width="700" dialog_height="100" dialog_top="100"  dialog_id="goods_floor_left_adv" class="edafloor">编辑新增商品品牌+</a>
+              		</div>
+              		<div style="position: relative;top:40px;width: 100%">
+              		
+              		#foreach($brand in $brands)	
+              			
+              				<span><a href="$!webPath/store_goods_list.htm?brand_ids=$!brand.id|" target="_blank" style="color:#888;margin: 5px;">$!brand.name</a></span>
+              		#end
+              			
+              		</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="ranking" style="margin-left: 10px">	
+            <h1><a href="javascript:void(0);"  dialog_uri="$!webPath/admin/goods_floor_main_photo.htm?id=$!obj.id" dialog_title="编辑列表信息" dialog_width="750" dialog_height="100" dialog_top="100"  dialog_id="goods_floor_cat"  class="edfloor">编辑商品主打图片+</a></h1>
+            #if($!photo)
+            #set($img1 = "$!{config.imagewebserver}/$!{photo.path}/$!{photo.name}")
+            <div>
+            	<img src="$!img1"/>
+            </div>
+		    #end        										
+          </div>
+          
+          <div class="floorclass">
+            <ul class="floorul">
+              <div style="background-color: #EEEEEE"><a href="javascript:void(0);" 
+               dialog_uri="$!webPath/admin/goods_floor_list_goods.htm?id=$!obj.id" dialog_title="编辑右侧商品信息" 
+               dialog_width="750" dialog_height="100" dialog_top="30"  
+               dialog_id="goods_floor_left_adv" class="edafloor1">编辑商品列表+</a></div>
+            </ul>
+            
+            <div id="gc_$!{info.id}" class="ftab" #if($!{velocityCount}>1)style="display:none;"#end>
+              <div class="ftabone">
+                <div class="classpro">
+                 #foreach($goods in $goodsByJson)
+                     #if($!goods.goodsMainPhoto)               #set($img="$!{config.imagewebserver}/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+                  #else
+                  #set($img="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+                  #end
+                  <div class="productone">
+                    <ul>
+                      <li><span class="center_span">
+                        <p><a href="$!webPath/goods.htm?id=$!{goods.id}" target="_blank"><img src="$!img" width="147" height="147" /></a></p>
+                      </span></li>
+                      <li class="pronames"><a href="$!webPath/goods.htm?id=$!{goods.id}" target="_blank">$!goods.goodsName</a></li>
+                      <li><span class="hui2">市场价：</span><span class="through hui">￥$!{goods.goodsPrice}</span></li>
+                    </ul>
+                  </div>
+              #end
+                  
+                </div>
+              </div>
+            </div>
+ 
+          </div>
+          
+          
+          
+          
+          
+        </div>
+        <div class="floor_brand" style="position:relative;top:-450px;">
+        	<span class="fl_brand_sp"><b></b>
+        	<a href="javascript:void(0);"  dialog_uri="$!webPath/admin/goods_floor_left_down_class.htm?id=$!{obj.id}" dialog_title="编辑分类" dialog_width="700" dialog_height="100" dialog_top="100"  dialog_id="goods_floor_cat" class="edfloor" style="position:relative;left:46px;top:-8px;width:100px;">编辑左下角类别 +</a></span>
+        	<span class="flr_sp_brand" style="height: 180px;width: 202px;position: relative;top: 22px;">
+        		#foreach($!gc in $!leftGcs)
+        			#foreach($!c_gc in $!gc.childs)
+        			<a href="$!webPath/store_goods_list.htm?gc_id=$!c_gc.id" target="_blank" style="width:50px;text-align: center;margin-left: 20px;margin-right: 20px;height:20px;">$!c_gc.classname</a>
+        			#end
+        		#end
+        	</span>
+        </div>
+            
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

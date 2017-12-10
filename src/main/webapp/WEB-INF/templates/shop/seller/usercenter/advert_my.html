@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的广告 </title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+function ajaxPage(url,currentPage,obj) {
+	var currPage = currentPage;
+	var totalPages = jQuery("#totalPages").val();
+	if(currPage < 1) {
+		currPage = 1;
+	}else if(currPage > totalPages) {
+		currPage = totalPages;
+	}
+	jQuery.ajax({
+				 type:'POST',
+				 url:url,
+				 data:{"currentPage":currPage},
+				 success :　function(data) {
+					 $(".main_t").html(data);
+				 },
+				 error : function(){
+					 alert("已到第一页");
+				 }
+				});
+}
+</script>
+</head>
+<body>
+<div class="main_t">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">   
+  <div class="buyer_position"><div class="buyer_p_box1"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>我的广告</span></div></div>
+        <div class="productmain">
+        	<div class="container" style="height:37px">
+              <ul class="section"  style="padding: 0;">
+                <li class=""><a href='$!webPath/seller/advert_list.htm' >广告列表</a></li>
+                <li class="li_this"><a href='$!webPath/seller/advert_my.htm' >我的广告</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="operation">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width="20%">广告标题</td>
+                    <td width="10%">广告类型</td>
+                    <td  width="15%">开始时间</td>
+                    <td width="15%">结束时间</td>
+                    <td width="10%">广告状态</td>
+                    <td align="left" width="10%">点击数</td>
+                    <td align="left">操作</td>
+                  </tr>
+                  #foreach($obj in $objs)
+                  <tr class="opertr">
+                    <td>$!obj.adTitle</td>
+                    #if($!obj.adAp.apType=="img")
+                      #set($type="图片")
+                    #end
+                   #if($!obj.adAp.apType=="scroll")
+                      #set($type="滚动")
+                   #end
+                   #if($!obj.adAp.apType=="slide")
+                     #set($type="幻灯")
+                  #end
+                  #if($!obj.adAp.apType=="text")
+                     #set($type="文字")
+                  #end
+                    <td>$!type</td>
+                    <td>$!CommUtil.formatLongDate($!obj.adBeginTime) </td>
+                    <td>$!CommUtil.formatLongDate($!obj.adEndTime)</td> 
+                    #if($!obj.adStatus==0)
+                      #set($adStatus="待审核")
+                    #end
+                    #if($!obj.adStatus==1)
+                      #set($adStatus="审核通过")
+                    #end
+                    #if($!obj.adStatus==-1)
+                      #set($adStatus="审核失败")
+                    #end 
+                    <td>$!adStatus</td>
+                    #if($!obj.apShowType==0)
+                      #set($apShowType="固定广告")
+                    #end
+                    #if($!obj.apShowType==1)
+                      #set($apShowType="随机广告")
+                    #end
+                    <td align="left">$!obj.adClickNum</td>
+                    <td align="left"><a href="$!webPath/seller/advert_apply_edit.htm?id=$!obj.id">编辑</a> <a href="$!webPath/seller/advert_delay.htm?id=$!obj.id">延时</a></td>
+                  </tr>
+                  #end
+                </table>
+              </div>
+              <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+            </div>
+          </div></td>
+      </tr>
+    </table>
+    </form>
+  </div>
+   </div>
+$!httpInclude.include("/footer.htm")
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+#if($!chattings)
+     	#foreach($c  in  $chattings)
+     		#foreach($log in $c.chattingLogs)
+     		#set($photo = $log.user.photo)
+     		#if($photo)
+     			#set($img = "$!{config.imagewebserver}/$!photo.path/$!photo.name")
+     		#else
+     			#set($img = "")
+     		#end
+     		#if($!log.userId != $!user.id)
+	      	<input type="hidden" name="seller" id="seller" value="$!log.userId"/>
+	      	<div id="adm" class="" name="msg">
+	        	<div class="admimg">
+	        		
+	            	<img src="$!img" />
+	            </div>
+	        	<div class="info">
+	        		$!log.content
+	            </div>
+	        </div>
+	       	#else
+	       <input type="hidden" name="buyer" id="buyer" value="$!user.id"/>
+	       <div id="gue" class="" name="msg">
+	        	<div class="info">
+	        		$!log.content
+	            </div>
+	            <div class="admimg">
+	            	<img src="$!img" />
+	            </div>
+	            <div style="clear:both;"></div>
+	        </div>
+	        #end
+	       #end
+	    #end
+       
+     #end

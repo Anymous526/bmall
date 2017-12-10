@@ -1,0 +1,108 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>金币兑换日志</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/nav_head.htm")
+<div class="main"> 
+  <div class="user_center">
+    <table width="800" border="0" cellspacing="0" cellpadding="0" class="user_table">
+      <tr> $!httpInclude.include("/seller/nav.htm?op=gold_record")
+        <td id="centerbg" valign="top">
+         <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/index.htm">卖家中心</a> > <span>金币日志</span></div></div>
+        <div class="productmain">
+        	<div class="container">
+            <ul class="section" style="padding: 0;">
+                <li class=""><a href='$!webPath/seller/gold_record.htm' >金币兑换</a></li>
+                <li class=""><a href='$!webPath/seller/gold_record_list.htm' >兑换列表</a></li>
+                <li class="li_this"><a href='$!webPath/seller/gold_log.htm'>金币日志</a></li>
+              </ul>
+            </div>
+            <form action="$!webPath/seller/gold_log.htm" method="post" id="ListForm">
+            <div class="ordercon">
+              <div class="operation">
+              <h1 style="padding:10px;">当前账户金币:$!{user.gold}金币</h1>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width="120">操作时间</td>
+                    <td width="80">金币</td>
+                    <td  width="60">类型</td>
+                    <td>描述</td>
+                    </tr>
+                  #foreach($obj in $objs)
+                  <tr class="opertr">
+                    <td>$!CommUtil.formatLongDate($!obj.addtime)</td>
+                    <td>$!obj.glCount</td>
+                    #if($!obj.glType==0)
+                      #set($type="增加")
+                    #end
+                    #if($!obj.glType==-1)
+                      #set($type="减少")
+                    #end
+                    <td>$!type</td>
+                    #if($!obj.pdPayment=="alipay")
+                      #set($pdPayment="支付宝")
+                    #end
+                    #if($!obj.pdPayment=="bill")
+                      #set($pdPayment="快钱")
+                    #end
+                    #if($!obj.pdPayment=="chinabank")
+                      #set($pdPayment="网银在线")
+                    #end
+                    #if($!obj.pdPayment=="tenpay")
+                      #set($pdPayment="财付通")
+                    #end
+                    #if($!obj.pdPayment=="outline")
+                      #set($pdPayment="线下支付")
+                    #end
+                    <td>$!obj.glContent</td>
+                    #if($!obj.pdPayment==0)
+                      #set($pdPayment="等待支付")
+                    #end
+                    #if($!obj.pdStatus==1)
+                      #set($pdStatus="支付完成")
+                    #end                    #if($!obj.pdPayStatus==0)
+                      #set($pdPayStatus="等待支付")
+                    #end
+                    #if($!obj.pdPayStatus==1)
+                      #set($pdPayStatus="等待审核")
+                    #end
+                    #if($!obj.pdPayStatus==2)
+                      #set($pdPayStatus="支付完成")
+                  #end                  </tr>
+                  #end
+                </table>
+              </div>
+              <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+            </div>
+            </form>
+          </div></td>
+      </tr>
+    </table>
+  </div>
+</div>
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>

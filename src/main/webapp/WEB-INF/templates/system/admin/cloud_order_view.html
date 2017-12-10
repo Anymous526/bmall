@@ -1,0 +1,139 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script>
+// 查看物流
+function showWuLiu(orderId,goodsId){
+	var url = "$!webPath/buyer/buyer_ship_view.htm";
+	jQuery.post(url,{id:orderId,goodsId:goodsId},function(jsonData){
+		var data = JSON.parse(jsonData);
+		if(data.status==false){
+			alert(data.msg);
+		}else{
+			if(goodsId != 0){
+				// 退货物流
+				jQuery("#dialog_orderId").text(data.obj.orderId);
+				jQuery("#dialog_address").text(data.obj.addr.province+""+data.obj.addr.city+""+data.obj.addr.area+""+data.obj.addr.areaInfo);
+				jQuery("#dialog_companyName").text(data.obj.returnEc.companyName);
+				jQuery("#dialog_spipCode").text(data.obj.returnShipcode);
+			}else{
+				//正常商家发货物流
+				jQuery("#dialog_orderId").text(data.obj.orderId);
+				jQuery("#dialog_address").text(data.obj.addr.province+""+data.obj.addr.city+""+data.obj.addr.area+""+data.obj.addr.areaInfo);
+				jQuery("#dialog_companyName").text(data.obj.ec.companyName);
+				jQuery("#dialog_spipCode").text(data.obj.shipcode);
+			}
+			 
+			jQuery(".bg_black").css("display","block");
+			$("#share_ar").hide();//防止分享框弹出
+			var html="";
+			for(var i=0; i<data.transInfo.length;i++){
+			    html += '<section><span class="point-time point-green"></span><aside>';
+				html += '<p class="things">'+data.transInfo[i].context+'</p>';
+				html += '<p class="things">快递公司：'+data.expressCompany.companyName+'</p>';
+				html += '<p class="things">快递单号：'+data.kuaidiNum+'</p>';
+				if(i==data.transInfo.length-1){
+					html+='<p class="brief"><span class="text-red">'+data.transInfo[i].time+'</span></p>';
+				}else{
+					html+='<p class="brief"><span class="text-green">'+data.transInfo[i].time+'</span></p>';
+				}
+				html+='<aside></section>';
+			}
+			if(data.transInfo.length == 0){
+				html='<p class="brief"><span class="text-green">暂无物流信息</span></p>';
+			}
+			jQuery("#content").html(html);
+		}
+	});
+	
+}
+</script>
+</head>
+<body>
+<div class="cont">
+  <div class="orderdetail">
+    <div class="orderh">兑换信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">兑换单号:</span><span>$!obj.orderId</span></li>
+                #if($!obj.orderStatus==20)
+                  #set($status="已付款，待发货")
+                #end
+                #if($!obj.orderStatus==30)
+                  #set($status="已发货")        
+                #end                
+                #if($!obj.orderStatus==40)
+                #set($status="已收货完成")
+                #end     
+        <li><span class="ordertitle">订单状态:</span><span>$!status</span>#if($!obj.orderStatus > 20)<a href="javascript:void(0);"  onclick="showWuLiu($!obj.id,0)" style="color:blue">查看物流</a>#end</li>
+        <li><span class="ordertitle">运费金额:</span><span><strong class="orange" style="padding-right:10px;">¥$!{obj.shipTransFee}</strong></span></li>
+        <li><span class="ordertitle">下单时间:</span><span>$!CommUtil.formatLongDate($!obj.addTime)</span></li>
+      </ul>
+    </div>
+    <div class="orderh">兑换详情</div>
+    <div class="orderhh">会员信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">会员名:</span><span>$!{obj.user.username}</span></li>
+        <li><span class="ordertitle">会员Email:</span><span>$!{obj.user.email}</span></li>
+      </ul>
+    </div>
+   <div class="orderhh">支付信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">支付方式:</span><span>礼品金</span></li>
+      </ul>
+    </div>
+    <div class="orderhhh">收货人及发货信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">收货人姓名:</span><span>$!{obj.address.truename}</span></li>
+        <li><span class="ordertitle">所在地区:</span><span>$!{obj.address.province} $!{obj.igoAddr.city} $!{obj.igoAddr.area}</span></li>
+        <li><span class="ordertitle">邮政编码:</span><span>$!{obj.address.zip}</span></li>
+        <li><span class="ordertitle">电话号码:</span><span>$!{obj.address.telephone}</span></li>
+        <li><span class="ordertitle">手机号码:</span><span>$!{obj.address.mobile}</span></li>
+        <li><span class="ordertitle">详细地址:</span><span>$!{obj.address.areaInfo}</span></li>
+        #if($!obj.shipTime)
+        <li><span class="ordertitle">发货时间:</span><span>$!CommUtil.formatLongDate($!{obj.shipTime})</span></li>
+        #end
+        #if($!obj.ec)
+        	<li><span class="ordertitle">物流公司:</span><span>$!{obj.ec.companyName}</span></li>
+        #end
+        
+        #if($!obj.shipCode)
+        <li><span class="ordertitle">物流单号:</span><span>$!{obj.shipCode}</span></li>
+        #end
+        #if($!obj.shipContent)
+        <li><span class="ordertitle">发货说明:</span><span>$!{obj.shipContent}</span></li>
+        #end
+      </ul>
+    </div>
+    <div class="orderhhh">兑换商品信息</div>
+    <div class="ordetable">
+      <table width="95%" border="0" cellspacing="0" cellpadding="0" class="orde_table">
+        <tr style="border-bottom:1px dotted #CCEAF4">
+          <td width="15%">&nbsp;</td>
+          <td width="40%"><strong>礼品信息</strong></td>
+          <td width="15%"><strong>礼品价格</strong></td>
+          <td><strong>总共云码</strong></td>
+        </tr>
+        <tr style="border-bottom:1px dotted #CCEAF4"> 
+             #set($img="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name")
+          <td><img src="$!img" width="45" height="45" /></td>
+          <td><a href="$!webPath/angel_exchange_detail.htm?id=$!obj.cloudGoods.id" target="_blank" class="blue2">$!obj.cloudGoods.goodsName</a></td>
+          <td>$!obj.cloudGoods.goodsNumber</td>
+          <td>$!obj.cloudGoods.goodsCount</td>
+        </tr>
+      </table>
+    </div>
+<div class="submit">
+    <input name="go" type="button" value="返回列表" onclick="window.location.href='$!webPath/admin/cloud_order.htm'" />
+  </div>
+  </div>
+</div>
+</body>
+</html>

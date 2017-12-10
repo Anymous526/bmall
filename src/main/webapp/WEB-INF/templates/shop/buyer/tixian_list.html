@@ -1,0 +1,28 @@
+
+	$!httpInclude.include("/buyer/my_benefit_head.htm")		
+		<div class="productmain" style="border:1px solid #acc7e2;padding-bottom: 0;">
+			<div class="tixian_tit"><b style="font-size:14px">平台公司：深圳市天使互助网络有限公司</b></div>
+			<div class="tixian_tit02">交易记录</div>
+			<ul id="wadt21">
+			 #foreach($obj in $objs)
+			      <li class="tixian_listyle">
+				      <div class="wadt_1">$CommUtil.formatLongDate($obj.addTime)</div>
+				      <div class="wadt_2">#if($obj.cardType == "alipay") 支付宝 #else $obj.address #end ($obj.cardId)</div>
+				      <div class="wadt_3">-$obj.fee</div>
+				      <div class="wadt_4">#if($obj.isWithdraw == "true")交易单号 :$obj.id #elseif($!obj.refuseMessage) <font color="red">提现拒绝原因:$!obj.refuseMessage</font> #else 等待转账 #end</div>
+			      </li>
+			 #end     	
+			 </ul>
+        </div>
+         #if($!objs.size()>0)
+		        <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageHTML
+				</div>
+		  #end
+	</div>
+</div>
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>

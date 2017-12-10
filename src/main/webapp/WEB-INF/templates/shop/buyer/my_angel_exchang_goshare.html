@@ -1,0 +1,202 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>晒单分享</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/resources/style/common/css/window.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css"/>
+<link href="http://pc1.amallcdn.cn/assets/css/duigou.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/uploadifive/uploadifive.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="$webPath/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="$!webPath/resources/uploadifive/jquery.uploadifive1.js"></script> 
+<script type="text/javascript"> 
+$(function($){  
+	var imgSize = 1;
+	$('#file_upload').uploadifive({
+		'auto'             : true,
+		'multi'            : false, 
+		'queueID'          : 'queue',
+		'uploadScript'     : '$!webPath/buyer/buyer_upload_evaluate.htm',
+		'formData'		   : {"isCheckWithHeight":0},
+		'onUploadComplete' : function(file, data, response) {
+			data = eval( '('+ data +')');
+			if(data.pass == 'yes'){
+				if(imgSize == 4)
+				{
+					alert("最多只能上传3张图片");
+					return false;
+				}
+				else
+				{
+					$("#img" + imgSize).attr("src",data.imagePath);
+					$("#img" + imgSize).show();
+					imgSize = imgSize + 1;
+					if($("#imgIds").val() == "")
+					{
+						$("#imgIds").val(data.imgId);
+					}
+					else
+					{
+						$("#imgIds").val($("#imgIds").val() + "," + data.imgId);
+					}
+					
+				}
+			}
+		},
+		'onError'          : function(file, fileType, data) {
+			alert("图片上传异常,请稍后尝试!");
+		}
+	});
+	
+	$(".flo1").click(function(){
+		$(".flo1").removeClass("chhe");
+		$(this).addClass("chhe");
+		$("#evaluate_buyer_val").val($(this).attr("id"));
+	});
+	
+	$(".curSolid1").click(function(){
+		
+		$(".curSolid1").addClass("level_solid");
+		$(".curSolid1").removeClass("level_hollow");
+		$("#description_evaluate").val($(this).attr("value"));
+		$(this).nextAll().addClass("level_hollow");
+	});
+	
+	$(".curSolid2").click(function(){
+		
+		$(".curSolid2").addClass("level_solid");
+		$(".curSolid2").removeClass("level_hollow");
+		$("#service_evaluate").val($(this).attr("value"));
+		$(this).nextAll().addClass("level_hollow");
+	});
+	
+	$(".curSolid3").click(function(){
+		
+		$(".curSolid3").addClass("level_solid");
+		$(".curSolid3").removeClass("level_hollow");
+		$("#ship_evaluate").val($(this).attr("value"));
+		$(this).nextAll().addClass("level_hollow");
+	});
+
+	$(".evaPublish").click(function(){
+		if(confirm("评价后不可修改，是否确定评价？")){
+			var resub = jQuery("#resub").val();
+			if(resub=="false"){
+				jQuery("#resub").val("true");
+		    	jQuery("#theForm").submit();
+			}else{
+				alert("不能重复提交");
+			}
+		}
+	});
+});
+</script>
+<style type="text/css"> 
+.setneiye{width:600px;text-align:center;}
+.user_img{width:80px; height:80px; float:left}
+.addbtn{width:100%; height:190px;margin-left:8px; float:left;}
+.up_loadimg{cursor:pointer;width:100px;clear:both;height:30px;margin:0 auto;z-index:999;}
+.tips{text-align:center;display: block; width:80%; margin:0 auto; overflow: hidden; color:#666; font-size:.8rem; margin-top: -3rem;}
+.showg_okbtn{padding:7px 20px 7px 20px;float:right; color:#fff;margin-right:18px; background-color: #ff7928; border:1px;cursor:pointer;}
+.showg_text01{resize: none;padding: 8px;line-height: 16px;width:600px;max-width:600px; height: 200px;max-height: 200px; }
+</style>
+</head>
+
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<input type="hidden" value="false" id="resub"/>
+	<div class="s_m" style="float: left; margin-left: 10px;">		
+		<div class="ydcomment">
+			欢迎你分享关于互助兑体验<br/>
+			你还可以通过推广获取更多礼品金参与互助兑活动！
+		</div>
+		
+		<div class="comment_title">
+			<span class="comment_tit">晒单分享</span>
+			<span class="comm_contact"></span>
+		</div>
+		<div class="comment_a">
+			<dl>
+				<dd>
+					<div class="com_shop" style="width: 714px;margin-bottom: 20px;">
+						<div style="display: inline-block;float: left;margin-left: 115px;">
+						<a href="#" ><img src="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name" width="130" height="130" /></a>
+						</div>
+						<div class="b_goods_name" style="display: inline-block;float:left; width:450px; margin-left: 10px;">
+							<span class="b_goods_name02"><a href="#" style="font-size: 16px;">(序号:$obj.cloudGoods.id)$obj.cloudGoods.goodsName</a></span>
+							<p style="margin-top: 10px;">购买数量：<i style="color: #dd2726" >$obj.buyCount</i>份</p>
+							<p>幸运号码：<i style="color: #dd2726" >$obj.cloudCode</i></p>
+							<p class="c_know_time">揭晓时间：<i>$CommUtil.formatLongDate($obj.addtime)</i></p>
+						</div>
+					</div>
+					<form action="$!webPath/my_angel_exchang_share_save.htm" method="post" id="theForm" enctype="multipart/form-data">
+					<input name="id" type="hidden" value="$!obj.id" />
+					<input name="imgIds" id="imgIds" type="hidden" value="" />
+					<input name="evaluate_buyer_val" id="evaluate_buyer_val" type="hidden" />
+					
+					<div class="com_edit" style="width: 714px;">
+						<table class="commenttable" width="100%" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+							  	<td align="right" style="vertical-align: top;">分享心情：</td>
+					    		<td><textarea name="context" rows="6" cols="15" class="showg_text01"></textarea> </td>
+							</tr>
+							<tr style="height: 20px;"></tr>
+							<tr>
+							    <td align="right" style="vertical-align: top;">添加图片：</td>
+							    <td>
+							    
+			 <div class="setneiye">
+			   <div class="addbtn"> 
+				<img id="img1" style="width:180px;height:180px;overflow:hidden;float:left;margin-left:1.16%;margin-right:1.16%;display: none"/>
+				<img id="img2" style="width:180px;height:180px;overflow:hidden;float:left;margin-left:1.16%;margin-right:1.16%;display: none"/>
+				<img id="img3" style="width:180px;height:180px;overflow:hidden;float:left;margin-left:1.16%;margin-right:1.16%;display: none"/>
+			  </div>
+			 <div class="up_loadimg" style="clear:both">
+				<input id="file_upload" name="file_upload" type="file" multiple="true">
+			 </div>
+	         </div> 
+		     <div class="tips" style="clear:both;margin-top: 10px;">提示：大小勿超过2M，格式限为JPG,GIF和PNG。</div>
+								<div id="queue" style="margin-left:-.7rem;width:80%"></div>
+							    
+							    </td>
+					  		</tr>
+					  		<tr>
+			          			<td class="taleft" width="100" align="right"></td>
+			          			<td>
+			          				<ul class="re_img">
+			          				</ul>
+			          			</td>
+			          		</tr>
+  						</table>
+					</div>
+				</dd>
+			</dl>
+			<div class="ml50 mb50"><input type="button" class="evaPublish showg_okbtn" value="提交分享"/></div>
+		</div>
+		
+		</form>
+	</div>
+</div> 
+        
+        
+  
+
+
+
+
+$!httpInclude.include("/footer.htm")	<!-- 底部页脚 -->
+
+
+
+
+
+
+</body>
+</html>

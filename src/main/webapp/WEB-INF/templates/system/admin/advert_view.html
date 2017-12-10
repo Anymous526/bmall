@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+ 	//改变系统提示的样式
+  jQuery("span .w").mousemove(function(){
+	var id=jQuery(this.parentNode).attr("id");
+	if(id="nothis"){
+	   jQuery(this.parentNode).attr("id","this")
+	}
+  }).mouseout(function(){
+     var id=jQuery(this.parentNode).attr("id");
+	 if(id="this"){
+	   jQuery(this.parentNode).attr("id","nothis")
+	 }
+  }); 
+});
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">广告管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/advert_list.htm">所有广告</a>| <a href="$!webPath/admin/advert_list_audit.htm" >未审核广告</a> | <a href="$!webPath/admin/advert_add.htm" #if(!$!edit)class="this"#end>新增广告</a>| <a href="$!webPath/admin/adv_pos_list.htm">所有广告位</a>| <a href="$!webPath/admin/adv_pos_add.htm">新增广告位</a>#if($!edit) | 
+	   <a href="javascript:void(0);" class="this">广告详情</a>
+	   #end</span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/advert_audit.htm" method="post" enctype="multipart/form-data" id="theForm">
+  <div class="setcont">
+    <ul class="set1">
+      <li>广告名称</li>
+      <li><span class="webname">
+        $!obj.adTitle
+        </span></li>
+    </ul>
+    <ul class="set1">
+      <li>广告位置</li>
+      <li><span class="webnamesec sizese">
+        $!obj.adAp.apTitle
+        </span></li>
+    </ul>
+    <ul class="set1">
+      <li>开始时间</li>
+      <li><span class="webname">
+        $!CommUtil.formatShortDate($!obj.adBeginTime)
+        </span></li>
+    </ul>
+    <ul class="set1">
+      <li>结束时间</li>
+      <li><span class="webname">
+        $!CommUtil.formatShortDate($!obj.adEndTime)
+        </span></li>
+    </ul>
+    <ul class="set1" id="advert_img">
+        <li>广告图片</li>
+        <li>
+          #set($rate=$!CommUtil.div($!obj.adAcc.width,200))
+          #set($height=$!CommUtil.div($!obj.adAcc.height,$!rate))
+          <div id="logoImg"><img src="$!{config.imagewebserver}/$!obj.adAcc.path/$!obj.adAcc.name"  width="200" height="$!height" /> </div>
+        </li>
+      </ul>
+    #if($!obj.adAp.apType=="text")
+     <ul class="set1" id="advert_text">
+      <li>广告文字：</li>
+      <li><span class="webname">
+        $!obj.adText
+        </span></li>
+    </ul> 
+    #end
+     <ul class="set1" id="advert_url">
+      <li>广告链接：</li>
+      <li><span class="webname">
+       $!obj.adUrl
+        </span></li>
+     </ul> 
+    #if($!obj.adSp.apType=="slide")
+    <ul class="set1" id="advert_slide">
+      <li>幻灯片序号：</li>
+      <li><span class="webname">
+        $!obj.adSlideSequence
+        </span></li>
+    </ul>
+    #end  
+    <ul class="set1">
+        <li>广告状态 </li>
+        <li>
+          <input name="adStatus"  type="radio" id="ad_status" style="border:none; height:16px; width:16px;" value="1" checked="checked" />
+          审核通过
+        </li>
+        <li>
+          <input style="border:none; height:16px; width:16px;"type="radio" id="ad_status" name="adStatus" value="0" />
+          等待审核
+         </li>
+         <li>
+          <input style="border:none; height:16px; width:16px;"type="radio" id="ad_status" name="adStatus" value="-1" />
+          审核失败
+          </li>
+      </ul>
+  </div>
+  <div class="submit">
+    <input name="" type="submit" value="提交" style="cursor:pointer;" />
+    <input name="id" type="hidden" id="id" value="$!obj.id" />
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+  </div>
+  </form>
+</div>
+</body>
+</html>

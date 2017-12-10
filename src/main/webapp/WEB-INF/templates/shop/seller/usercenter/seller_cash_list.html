@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>提现申请列表</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){	
+   //
+});
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=buyer_cash")
+<div class="s_m"> 
+	<div class="buyer_position">
+		<div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">我的账户</a> > <span>提现申请列表</span></div>
+	</div>
+    <div class="productmain">
+	<div class="container" style="height:37px">
+        <ul class="section"  style="padding: 0;">
+				<li class=""><a href='$!webPath/seller/seller_cash.htm' >提现申请</a></li>
+                <li class="li_this"><a href='$!webPath/seller/seller_cash_list.htm'>申请列表</a></li>
+            </ul>
+        </div>
+        <div class="ordercon">
+			<div class="operation">
+                <table width="1009" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width="100">编号</td>
+                    <td width="130">申请时间</td>
+                    <td  width="60">提现金额</td>
+                    <td width="80">支付方式</td>
+                    <td width="88">提现状态</td>
+                    <td width="80" align="left">支付状态</td>
+                    <td align="left">操作</td>
+                  </tr>
+               #if($objs.size()>0)      
+                  #foreach($obj in $objs)
+                  <tr class="opertr">
+                    <td>$!obj.cashSn</td>
+                    <td>$!CommUtil.formatLongDate($!obj.addtime)</td>
+                    <td>$!obj.cashAmount </td>
+                    #if($!obj.cashPayment=="alipay")
+                      #set($cashPayment="支付宝")
+                    #end
+                    #if($!obj.cashPayment=="chinabank")
+                      #set($cashPayment="网银在线")
+                    #end
+                    #if($!obj.cashPayment=="tenpay")
+                      #set($cashPayment="财付通")
+                    #end
+                    #if($!obj.cashPayment=="outline")
+                      #set($cashPayment="线下支付")
+                    #end
+                    <td>$!cashPayment</td>
+                    #if($!obj.cashStatus==0)
+                      #set($cashStatus="申请中")
+                    #end
+                    #if($!obj.cashStatus==1)
+                      #set($cashStatus="审核通过")
+                    #end
+                    #if($!obj.cashStatus==2)
+                      #set($cashStatus="拒绝申请")
+                    #end
+                   <!--  #if($!obj.cashStatus==-1)
+                      #set($cashStatus="已关闭")
+                    #end -->
+                    <td>$!cashStatus</td>
+                    #if($!obj.cashPayStatus==0)
+                      #set($cashPayStatus="等待支付")
+                    #end
+                   <!--  #if($!obj.cash_pay_status==1)
+                      #set($cashPayStatus="等待审核")
+                    #end -->
+                    #if($!obj.cashPayStatus==2)
+                      #set($cashPayStatus="支付完成")
+                    #end
+                    <td>$!cashPayStatus</td>
+                    <td align="left"><a href="$!webPath/seller/seller_cash_view.htm?id=$!obj.id">查看</a></td>
+                  </tr>
+                  #end
+                    #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">提现申请</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end    
+                </table>
+              </div>
+              <div class="bottom_page">
+				<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+				<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+				$!gotoPageHTML
+			</div>
+            </div>
+          </div>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

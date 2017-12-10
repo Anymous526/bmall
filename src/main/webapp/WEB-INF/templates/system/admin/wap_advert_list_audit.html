@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">WAP广告管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/wap_advert_list.htm">所有广告</a>| <a href="$!webPath/admin/wap_advert_list_audit.htm" class="this">未审核广告</a> | <a href="$!webPath/admin/wap_advert_add.htm" >新增广告</a>| <a href="$!webPath/admin/wap_adv_pos_list.htm">所有广告位</a>| <a href="$!webPath/admin/wap_adv_pos_add.htm">新增广告位</a> </span> <span class="tab-two"></span></div>
+  <form method="post" id="queryForm">
+  <div class="orders">
+    <ul>
+      <li><span>广告名称</span> <span class="allmen size6">
+        <input name="adTitle" type="text" id="ad_title" />
+        </span><span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+        </span></li>
+    </ul>
+  </div>
+  </form>
+  <form method="post" id="ListForm">
+  <div class="allshop_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="yhj_table">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+       <td width="18%">广告名称</td>
+        <td  width="10%">所属广告位</td>
+        <td width="8%">广告位位置</td>
+        <td  width="8%" align="center">类别</td>
+        <td  width="8%" align="center">开始时间</td>
+        <td  width="8%" align="center">结束时间</td>
+        <td  width="8%" align="center"><span class="djl">点击率</span></td>
+        <td  width="8%">广告用户</td>
+        <td  align="center">操作</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td>$!obj.adTitle</td>
+        <td >$!obj.adAp.apTitle</td>
+        #if($!obj.adAp.apMark=="index1")
+          #set($mark="首页位置一")
+        #end
+        #if($!obj.adAp.apMark=="index2")
+          #set($mark="首页位置二")
+        #end
+        #if($!obj.adAp.apMark=="new")
+          #set($mark="新品")
+        #end
+        #if($!obj.adAp.apMark=="sale")
+          #set($mark="特价")
+        #end
+        #if($!obj.adAp.apMark=="groupbuy1")
+          #set($mark="团购位置一")
+        #end
+        #if($!obj.adAp.apMark=="groupbuy2")
+          #set($mark="团购位置二")
+        #end
+        #if($!obj.adAp.apMark=="groupbuy3")
+          #set($mark="团购位置三")
+        #end
+        #if($!obj.adAp.apMark=="customize")
+          #set($mark="订制")
+        #end
+        <td>$!mark</td>
+        #set($mark="")
+       #if($!obj.adAp.apType=="img")
+          #set($type="图片")
+        #end
+        #if($!obj.adAp.apType=="scroll")
+          #set($type="滚动")
+        #end
+        #if($!obj.adAp.apType=="slide")
+          #set($type="幻灯")
+        #end
+        #if($!obj.adAp.apType=="text")
+          #set($type="文字")
+        #end 
+        <td align="center">$!type</td>
+        <td align="center">$!CommUtil.formatLongDate($!obj.adBeginTime)</td>
+        <td align="center">$!CommUtil.formatLongDate($!obj.adEndTime)</td>
+        <td align="center" class="blue">$!obj.adClickNum</td>
+        <td >$!obj.adUser.username</td>
+        <td  align="center" class="aoprater"><a href="$!webPath/admin/wap_advert_view.htm?id=$!obj.id&currentPage=$!currentPage" class="blue">审核</a>|<a href="javascript:void(0);" onclick="if(confirm('删除后不可恢复，是否继续?'))window.location.href='$!webPath/admin/wap_advert_del.htm?mulitId=$!obj.id'" class="blue">删除</a></td>
+      </tr>
+      #end
+      <tr style="background:#F2F2F2; height:30px;">
+        <td colspan="8"><div class="fenye3">
+          <input name="adStatus" type="hidden" id="ad_status" value="$!adStatus" />
+          <input name="adTitle" type="hidden" id="ad_title" value="$!adTitle" />
+          <input type="hidden" name="mulitId" id="mulitId" />
+<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+          $!gotoPageFormHTML</div></td>
+      </tr>
+    </table>
+  </div>
+  </form>
+</div>
+</body>
+</html>

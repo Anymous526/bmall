@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css" />
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/specialty.css" /> 
+
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script>
+$(document).ready(function(e) {
+     $("#ttc-wei2 li:eq(3),#ttc-wei2 li:eq(7)").css("margin-right","0");
+}); 
+</script>
+<script type="text/javascript">
+$(function(){
+	$("#wei32 dd").mouseenter(function(){ 
+		$(this).addClass("hover");
+	});
+	$("#wei32 dd").mouseleave(function(){
+		$(this).removeClass("hover");
+	});
+});
+</script>
+<script type="text/javascript">
+	$(function(){		
+		var weittc = $("#wei32 dd"); 
+		jQuery.each(weittc,function(index,val){//index为遍历的索引值，val为该索引的对象值			
+			var t = (index+1)%4;//能被4整除
+			if(t == 0){
+				$(this).css("margin-right","0px");
+			}
+		});
+
+	});
+</script> 
+<script type="text/javascript">
+$(function(){
+var imgWid = 0 ;
+var imgHei = 0 ; //变量初始化
+var big = 1.2;//放大倍数
+
+$("#wei32 dd").hover(function(){
+	
+     $(this).find("img").stop(true,true);
+ 
+     imgWid=270;imgHei=270;
+     
+	imgWid2 = imgWid * big;//放大后的宽度
+	imgHei2 = imgHei * big;
+  
+    $(this).find("img").css({"z-index":2});
+
+    $(this).find("img").animate({"width":310,"height":310,"margin-left":-20,"margin-top":-20});
+
+ },function(){$(this).find("img").stop().animate({"width":270,"height":270,"margin-left":0,"margin-top":0,"z-index":1});});
+})
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")   
+$!httpInclude.include("/specialpricehead.htm")
+<div class="shop_menu default_color">
+	<div class="shop_menu_nav" style="width:1200px; margin:0 auto">
+        <ul>
+          <li><a href="$!webPath/specialty.htm">特产首页</a></li>
+          <li><a href="$!webPath/specialty_northeast.htm">东北特产</a></li>
+          <li><a href="$!webPath/specialty_northchina.htm">华北特产</a></li>
+          <li><a href="$!webPath/specialty_centralchina.htm">华中特产</a></li>
+          <li><a href="$!webPath/specialty_eastchina.htm">华东特产</a></li>
+          <li><a href="$!webPath/specialty_western.htm">西北特产</a></li>
+          <li><a href="$!webPath/specialty_southwest.htm">西南特产</a></li>
+          <li><a href="$!webPath/specialty_southchina.htm">华南特产</a></li>
+          <li><a href="$!webPath/specialty_hmt.htm">港澳台特产</a></li>
+          <li><a href="$!webPath/specialty_overseas.htm">海外特产</a></li>
+        </ul>
+	</div>
+</div>  
+ 
+<div class="w100 bg_fff" style="width:1200px; margin:10px auto"> 
+    <div class="slideBox">
+      <div class="hd" style="margin-top:55px;">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <div class="bd">
+        <ul id="wei21tc">
+          <li style="background: url($!webPath/assets/img/ttcbanner1.jpg) 50% 0px no-repeat;"></li>
+          <li style="background: url($!webPath/assets/img/ttcbanner2.jpg) 50% 0px no-repeat;"></li>
+          <li style="background: url($!webPath/assets/img/ttcbanner3.jpg) 50% 0px no-repeat;"></li>
+        </ul>
+      </div>
+    </div> 
+</div>  
+<div class="w100 bg_fff" style="margin-top:-20px;"> 
+  <div class="w1200 we21">  
+    <div class="hwfloor21 theme3"> 
+      <div class="ttc-weil"><span class="ttc-wei1"><div id="louhd"></div>华东特产</span><span class="ttc-wei0"><a href="#">上海</a><a href="#">山东</a><a href="#">江苏</a><a href="#">安徽</a><a href="#">浙江</a><a href="#">福建</a></span></div>
+ 
+        <dl id="wei32">
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm1.jpg" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm2.png" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm3.png" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm4.png" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm5.png" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm6.png" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm7.png" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          <dd><div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+          	<a href="#">
+            	<span class="h_list_img1"><img src="$!webPath/assets/img/ttcwm8.png" /></span>
+                <span>美国 / Neocell 蛋白粉</span>
+                <span><i class="a_pri">¥148</i><i class="y_pri">¥198</i></span>
+            </a>
+          </dd>
+          
+        </dl>
+    </div>
+
+ 
+
+  </div>
+</div> 
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script>
+<script src="$!webPath/assets/js/jquery.SuperSlide.2.1.1.js"></script> 
+  <script type="text/javascript">
+    $(".slideBox,.slideBox2").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,});
+  </script>
+<script type="text/javascript" src="$!webPath/assets/js/animatescroll.js"></script><!-- 顺序别乱动哈 ，必须放低部-->
+
+$!httpInclude.include("/footer.htm")
+
+</body>
+</html>
+<<script type="text/javascript">
+ $(document).ready(function(){
+	 
+ })
+</script>
+

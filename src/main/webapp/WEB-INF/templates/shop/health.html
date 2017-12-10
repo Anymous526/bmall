@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8">   
+<title>天使Amall大健康</title> 
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/area_sale.css" media="all">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css" />
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/specialty.css" />
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/hwa.css" />
+<style>.shop_menu_nav li a{font-size:16px;}</style>
+</head>
+<body>  
+$!httpInclude.include("/top.htm")   
+$!httpInclude.include("/specialpricehead.htm")
+<div class="shop_menu default_color">
+	<div class="shop_menu_nav" style="width:1142px; margin:0 auto">
+        <ul class="area_nav">
+        <li><a href="#" id="xu_health_index">大健康首页</a></li>
+        #if($!floorList.size()>0)
+		#foreach($floor in $floorList)
+		   <li><a href="#$!{floor.id}">$!{floor.floorname}</a></li>
+		#end
+		#end
+        </ul>
+	</div>
+</div>   
+   
+<div id="main" class="main w1170">  
+
+    <div class="slideBox"> 
+      <div class="hd" style="margin-top:-260px;">
+        <ul>
+           <li class="on"></li>
+           <li class=""></li>
+           <li class=""></li>
+        </ul>
+      </div>
+      
+      <div class="bd">
+        <div class="tempWrap" style="overflow:hidden; position:relative; width:1920px">
+        <ul>
+        <li style="background: url(http://pig.amall.com/upload/mvert/cc8f6f07-9ed8-4653-be72-2553439d42dc.jpg) 50% 0px no-repeat;"></li> 
+        <li style="background: url(http://pig.amall.com/upload/mvert/4b520140-0bda-4fe1-9a95-f1fc23189b15.jpg) 50% 0px no-repeat;"></li> 
+        <li style="background: url(http://pig.amall.com/upload/mvert/37a4dc96-d1cf-4429-9ec5-9d13dbd54280.jpg) 50% 0px no-repeat;"></li> 
+        </ul>
+       </div>
+      </div>
+      
+    </div>
+    
+    <!-- 轮播end -->
+  <div class="main-inner"> 
+  
+        <div class="goods">
+            <p class="goods_title"><span>猜您喜欢</span></p>
+            <div id="goods_wrap" class="goods-wrap">
+                <div id="topic_pre"  class="pre"></div>
+                <div id="topic_next"  class="next"></div>
+                <div class="goods-inner goods-inner2">
+                    <ul style="width: 4000px; margin-left: 0px;" class="goods-slide-list clearfix" id="adv1">  
+                           #if($!goodsList.size()>0)
+							#foreach($flools in $goodsList)
+							#if(${velocityCount} < 16)
+							#foreach($goods in $flools.goodsList)
+	                        #set($gmp = $!goods.goodsMainPhoto)
+	          				#set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+	          				<a href="$!goods_url"  target="_top" title="$goods.goodsName">
+                         <li class="goods-item J-bc-120505754" id="J_bc_120505754" data-pid="120505754" data-brand="843089">
+                             <span class="goods-tip-5 goods-tip"></span>
+                                <img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}"  alt="$goods.goodsName">
+                              <div class="goods-info"> 
+                                <p class="goods-name">$goods.goodsName</p>
+                                <p class="price-box">
+                                   #if($!goods.goodsCurrentPrice)
+                                    <span class="goods-price">¥$!goods.goodsCurrentPrice</span>
+                                    <span class="market-price">¥$!goods.goodsPrice</span>
+                                    #else
+                                      <span class="goods-price">¥$!goods.goodsPrice</span> 
+                                      <!-- <span class="market-price">¥$!goods.goodsPrice</span> -->
+                                    #end
+                                </p>
+                            </div>
+                        </li>
+                      </a>
+                      #end
+                         #end
+                          #end
+                           #end
+    			</ul>
+                </div>
+            </div> 
+        </div>       
+        #if($!floorList.size()>0)
+		#foreach($floor in $floorList)
+		#if(${velocityCount} < 9)
+		#if($!floor.goodsList.size()>0)
+		
+        <div class="category">
+            <div id="category_inner" class="category-inner" > 
+            <div class="category-item clearfix category-beauty"page-data="1" id="$!{floor.id}" style="padding-top: 62px;margin-top:-62px;">
+    	   <div class="category-item-title clearfix category-title2">
+            <h3 class="category-item-title-text">$!{floor.floorname}</h3>
+            <div class="xu_more">
+            	<a href="$!webPath/health_saleList.htm?floorId=$!floor.id" class="xu_moreText xu_hover">更多>></a>
+            </div>
+           </div>
+           
+        <div class="category-item-left">
+            <div class="category-item-bottom">
+                <div class="category-slide">
+                
+                    <ul style="width: 1250px; margin-left: 0px;" class="category-slide-list clearfix"> 
+                        #foreach($goods in $floor.goodsList)
+	                        #set($gmp = $!goods.goodsMainPhoto)
+	          				#set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+	          				 
+                        <a href="$!goods_url"  target="_top" title="$goods.goodsName"> 
+                        <li class="goods-item J-bc-119955967" id="J_cg_119955967" data-pid="119955967" data-brand="842852">
+                           <div class="health_border_top"></div><div class="health_border_right"></div><div class="health_border_bottom"></div><div class="health_border_left"></div>
+                           <img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" alt="$goods.goodsName">
+                            <div class="goods-info">
+                                <p class="goods-name">$goods.goodsName</p>
+                                <p class="price-box">
+                                	#if($!goods.goodsCurrentPrice)
+                                    <span class="goods-price">¥$!goods.goodsCurrentPrice</span>
+                                    <span class="market-price">¥$!goods.goodsPrice</span>
+                                    #else
+                                     <span class="goods-price">¥$!goods.goodsPrice</span>
+                                     <span class="market-price">¥$!goods.goodsPrice</span>
+                                    #end
+                                </p>
+                            </div>
+                        </li>
+                        </a>
+                        #end
+    				</ul>
+                </div>
+            </div>
+        </div>
+        
+    </div>   
+    </div>
+    </div>
+    #end
+    #end
+    #end
+    </div>
+    
+    #end
+</div>  
+
+</body>
+</html>
+$!httpInclude.include("/footer.htm") 
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script>
+<script src="$!webPath/assets/js/jquery.SuperSlide.2.1.1.js"></script>  
+  <script type="text/javascript">
+    $(".slideBox,.slideBox2").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,});
+  </script> 
+<script>
+//1.轮播切换  
+$(function () {
+	var a = 0;
+	var loop;
+	// 初始化图片位置，默认打开就从最左边开始
+	$(".goods-inner").scrollLeft(0);
+	// 定时轮播函数
+    function loopfun(){
+    	loop = setInterval(function () {
+    	    a++;
+    	    if (a > $(".goods-slide-list li").length - 5) { a = 0 };
+    	    $(".goods-inner").stop().animate({ scrollLeft: ($(".goods-slide-list li").width()+40) * a }, 1000);
+    	    //console.log(a)
+    	}, 3000);
+    }
+    // 执行轮播函数
+    loopfun();
+    // 鼠标hover事件
+    $(".goods-inner").hover(function(){
+    	clearInterval(loop);
+    },function(){
+    	loopfun();
+    });
+
+    // 左边切换按钮
+    $(".pre").click(function () {
+        clearInterval(loop);
+        a--;
+        if (a < 0) { a = $(".goods-slide-list li").length - 5};
+        $(".goods-inner").stop().animate({ scrollLeft: ($(".goods-slide-list li").width()+40) * a }, 1000);
+    });
+    // 右边切换按钮
+    $(".next").click(function () {
+        clearInterval(loop);
+        a++;
+        if (a > $(".goods-slide-list li").length - 5) { a = 0 };
+        $(".goods-inner").stop().animate({ scrollLeft: ($(".goods-slide-list li").width()+40) * a }, 1000);
+    });   
+}); 
+</script> 
+<script>
+$(document).ready(function(e) {
+    $(".goods-item img").hover(function(){
+		$(this).animate({"opacity":"0.8"},500); 
+		$(this).animate({"opacity":"1"},500); 
+		},function(){
+			$(this).animate({"opacity":"0.8"},500); 
+		    $(this).animate({"opacity":"1"},500); 
+			});
+			 
+    	$(".category-slide-list .goods-item").hover(function(){
+    		$(this).addClass("hover");
+    	},function(){ 
+    		$(this).removeClass("hover");
+    	});
+     
+});
+</script>
+<script>
+$(window).scroll(function(){
+	t=$(document).scrollTop();
+	if(t>100){
+		$('.shop_menu').addClass('shop_menu2');
+		$('.shop_menu_nav').css("width","1042px");
+	}else{
+		$('.shop_menu').removeClass('shop_menu2');
+		$(".area_nav li").removeClass('curren_li');
+		$('.shop_menu_nav').css("width","1142px");
+	}
+});
+$("#xu_health_index").click(function(){
+	$("html,body").animate({scrollTop:0},200);
+	return false;
+});
+$(".area_nav li a").click(function(){
+	$("html,body").animate({ scrollTop:$($(this).attr("href")).offset().top + "px"},800);
+	$(this).parent().addClass('curren_li').siblings().removeClass('curren_li');
+	return false;
+});
+</script>    

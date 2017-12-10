@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.VerifyMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Verify" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="photo_id" property="photoId" jdbcType="BIGINT" />
+    <result column="verify_name" property="verifyName" jdbcType="VARCHAR" />
+    <result column="verify_code" property="verifyCode" jdbcType="VARCHAR" />
+    <result column="verify_status" property="verifyStatus" jdbcType="BIGINT" />
+    <result column="verify_remark" property="verifyRemark" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <association property="photo" column="photo_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, photo_id, verify_name, verify_code, verify_status, verify_remark, user_id
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.VerifyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_verify
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long"  >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_verify
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_verify
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.VerifyExample" >
+    delete from amall_verify
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.Verify" >
+    insert into amall_verify (id, photo_id, verify_name, 
+      verify_code, verify_status, verify_remark, 
+      user_id)
+    values (#{id,jdbcType=BIGINT}, #{photoId,jdbcType=BIGINT}, #{verifyName,jdbcType=VARCHAR}, 
+      #{verifyCode,jdbcType=VARCHAR}, #{verifyStatus,jdbcType=BIGINT}, #{verifyRemark,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.Verify" useGeneratedKeys="true" keyProperty="id">
+    insert into amall_verify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="photoId != null" >
+        photo_id,
+      </if>
+      <if test="verifyName != null" >
+        verify_name,
+      </if>
+      <if test="verifyCode != null" >
+        verify_code,
+      </if>
+      <if test="verifyStatus != null" >
+        verify_status,
+      </if>
+      <if test="verifyRemark != null" >
+        verify_remark,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="photoId != null" >
+        #{photoId,jdbcType=BIGINT},
+      </if>
+      <if test="verifyName != null" >
+        #{verifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyStatus != null" >
+        #{verifyStatus,jdbcType=BIGINT},
+      </if>
+      <if test="verifyRemark != null" >
+        #{verifyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.VerifyExample" resultType="java.lang.Integer"  >
+    select count(*) from amall_verify
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.VerifyExample"  >
+	select
+	<if test="distinct" >
+	  distinct
+	</if>
+	<include refid="Base_Column_List" />
+	from amall_verify
+	<if test="_parameter != null" >
+	  <include refid="Example_Where_Clause" />
+	</if>
+	<if test="orderByClause != null" >
+	  order by ${orderByClause}
+	</if>
+	<if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select> 
+  
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_verify
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.photoId != null" >
+        photo_id = #{record.photoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.verifyName != null" >
+        verify_name = #{record.verifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyCode != null" >
+        verify_code = #{record.verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.verifyStatus != null" >
+        verify_status = #{record.verifyStatus,jdbcType=BIGINT},
+      </if>
+      <if test="record.verifyRemark != null" >
+        verify_remark = #{record.verifyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_verify
+    set id = #{record.id,jdbcType=BIGINT},
+      photo_id = #{record.photoId,jdbcType=BIGINT},
+      verify_name = #{record.verifyName,jdbcType=VARCHAR},
+      verify_code = #{record.verifyCode,jdbcType=VARCHAR},
+      verify_status = #{record.verifyStatus,jdbcType=BIGINT},
+      verify_remark = #{record.verifyRemark,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.Verify" >
+    update amall_verify
+    <set >
+      <if test="photoId != null" >
+        photo_id = #{photoId,jdbcType=BIGINT},
+      </if>
+      <if test="verifyName != null" >
+        verify_name = #{verifyName,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyCode != null" >
+        verify_code = #{verifyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="verifyStatus != null" >
+        verify_status = #{verifyStatus,jdbcType=BIGINT},
+      </if>
+      <if test="verifyRemark != null" >
+        verify_remark = #{verifyRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Verify" >
+    update amall_verify
+    set photo_id = #{photoId,jdbcType=BIGINT},
+      verify_name = #{verifyName,jdbcType=VARCHAR},
+      verify_code = #{verifyCode,jdbcType=VARCHAR},
+      verify_status = #{verifyStatus,jdbcType=BIGINT},
+      verify_remark = #{verifyRemark,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

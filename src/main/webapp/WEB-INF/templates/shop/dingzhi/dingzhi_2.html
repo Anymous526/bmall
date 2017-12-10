@@ -1,0 +1,46 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="assets/css/index.css"/> <!--基本样式-->
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="assets/js/yg.union.js"></script> 
+<link href="assets/css/amall_big_banner.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="assets/js/fwslider.js"></script>
+</head>
+<body>
+<div class="yg_header" id="yg_header">
+#foreach($obj in $objs)
+
+#foreach($gc in $!obj.gcs)
+<div class="Custom">
+  <div class="hd">$!gc.classname <span>EXCHANGE</span> </div>
+  <div class="CustomList">
+    <ul>
+    #foreach($c_gc in $gc.childs) 
+   	 <li>
+    	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_gc.id">
+    		<img src="$!{config.imagewebserver}/$!c_gc.secondGcImg.path/$!c_gc.secondGcImg.name" width="210" height="160"/>
+    	</a>
+    </li>
+    #end
+    </ul>
+  </div>
+</div>
+#end
+#end 
+<script type="text/javascript">
+	jQuery(function(){
+		jQuery(".pullDown").mouseover(function(){
+			jQuery(".pullDownList").show();
+		});
+		jQuery(".pullDownList").mouseleave(function(){
+			jQuery(".pullDownList").hide();
+		});
+	});
+</script> 
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+
+</head>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+	
+});
+
+function saveForm(){
+   jQuery("#theForm").submit();
+   
+
+}
+
+
+</script>
+<body>
+<div class="cont">
+  <h1 class="seth1">实名认证审核</h1>
+
+ 
+ 
+  <div class="setcont">
+    <!--鼠标经过样式-->
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>用户名</li>
+      <li><span class="webname">
+      $!verify.user.username
+      </span></li>
+    </ul>
+      <ul class="set1">
+      <li>真实姓名</li>
+      <li>
+      	<span class="webname">
+      		$!verify.verifyName
+        </span>
+      </li>
+    </ul>
+    <ul class="set1">
+      <li>身份证号码</li>
+      <li><span class="webname">
+        $!verify.verifyCode
+      </span></li>
+    </ul>
+	<ul class="set1">
+      <li>手持身份证照片</li>
+      <li>
+      	<span class="webname">
+	        <img src="$!{config.imagewebserver}/$!verify.photo.path/$!verify.photo.name"/>
+	    </span>
+	  </li>
+	</ul>
+	
+	<form name="theForm" id="theForm" action="$!webPath/admin/user_verify_upd.htm" method="post">
+  		<input type="hidden" name="id" value="$!verify.id"/>
+	   	 <ul class="set1">
+	        <li><strong class="orange fontsize20">*</strong>审核状态</li>
+	        <li><span class="webname">
+	          <select name="verifyStatus">
+	          	<option value="1">审核通过</option>
+	          	<option value="0">审核不通过</option>
+	          </select>
+	          </span></li>
+	      </ul>
+	      <ul class="set1">
+	        <li><strong class="orange fontsize20">*</strong>操作说明</li>
+	        <li><span class="webname">
+	          <textarea name="verifyRemark" cols="40" rows="4" id="verifyRemark"></textarea>
+	          </span></li>
+	      </ul>
+      
+	  </form>
+  
+    </div>
+    
+  
+  
+  <div class="submit">
+    <input name="save" type="button" value="提交" onclick="saveForm()" />
+  </div>
+</div>
+</body>
+</html>

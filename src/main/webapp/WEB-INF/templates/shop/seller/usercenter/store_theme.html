@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>主题设置 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css">
+<link href="$!webPath/resources/style/common/css/jquery.fancybox-1.3.4.css" type="text/css" rel="stylesheet"  media="screen" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="$!webPath/resources/js/jquery.fancybox-1.3.4.pack.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery("a[id^=store_image_]").fancybox({
+	'overlayShow'	: false,
+    'transitionIn'	: 'elastic',
+	'transitionOut'	: 'elastic'
+  });
+});
+</script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m" style="float: left; margin-left: 10px;">   
+        <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>店铺主题</span></div></div>
+        <div class="productmain">
+            <div class="pdctitle blue2">主题设置</div>
+            <div class="themeset">
+              <div class="themeset_l">
+                <ul>
+                  <li>店铺名称：<strong class="blue2"><a href="$!webPath/store.htm?id=$!store.id" target="_blank">$!store.storeName</a></strong></li>
+                  #set($template="$!store.template")
+                  #if(!$!store.template)
+                  #set($template="default")
+                  #end
+                  <li>店铺模板名称：<strong class="blue2">$!template</strong></li>
+                  <li style="display:none;">店铺风格名称：<strong class="blue2"></strong></li>
+                  <li><a href="$!webPath/store.htm?id=$!store.id" target="_blank" class="shopindex">店铺首页</a></li>
+                </ul>
+              </div>
+          #*    <div class="themeset_r">
+                <div class="shops"><a href="$!webPath/store.htm?id=$!store.id" target="_blank"><img src="$!webPath/resources/style/shop/$!{template}/images/thumb.jpg" width="124" height="101" /></a></div>
+              </div>   *#
+            </div>
+            <div class="abletheme blue2">可用主题</div>
+            
+            <div class="zx wrapper">    
+            <div class="zx_list image">
+
+                <ul>
+                	<li>
+                        <div class="p-img"><a href="$!webPath/assets/img/theme4.jpg"><img src="$!webPath/assets/img/theme3.jpg"></a></div>
+                        <div class="p_tx">
+                            <p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+                            <p class="fr">#if($!template=="default")
+                            			 当前使用中模板 
+                            			 #else
+                            			 <a style="color:#ff7928" href="$!webPath/seller/store_theme_save.htm?theme= default">使用该模板</a>
+                            			 #end</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="p-img"><a href="$!webPath/assets/img/theme2.jpg"><img src="$!webPath/assets/img/theme1.jpg"></a></div>
+                        <div class="p_tx">
+                            <p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+                            <p class="fr">#if($!template=="pink")
+                            				当前使用中模板 
+                            			 #else
+                            			 <a style="color:#ff7928" href="$!webPath/seller/store_theme_save.htm?theme= pink">使用该模板</a>
+                            			 #end</p>
+                        </div>
+                    </li>
+                    
+                    
+                    <li>
+                        <div class="p-img"><a href=""><img src="$!webPath/assets/img/mo3.jpg"></a></div>
+                        <div class="p_tx">
+                            <p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+                            <p class="fr"><a style="color:red" href="#">模板暂未开放</a></p>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <div class="p-img"><a href=""><img src="$!webPath/assets/img/mo4.jpg"></a></div>
+                        <div class="p_tx">
+                            <p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+                            <p class="fr"><a style="color:red" href="#">模板暂未开放</a></p>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <div class="p-img"><a href=""><img src="$!webPath/assets/img/mo5.jpg"></a></div>
+                        <div class="p_tx">
+                            <p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+                            <p class="fr"><a style="color:red" href="#">模板暂未开放</a></p>
+                        </div>
+                    </li>
+                    
+                    <li>
+                        <div class="p-img"><a href=""><img src="$!webPath/assets/img/mo6.jpg"></a></div>
+                        <div class="p_tx">
+                            <p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+                            <p class="fr"><a style="color:red" href="#">模板暂未开放</a></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+            
+            
+            
+          </div>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm") 
+
+
+<script type="text/javascript" src="$!webPath/assets/js/jquery.fullscreenslides.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('.image img').fullscreenslides();
+	var $container = $('#fullscreenSlideshowContainer');
+	$container
+	.bind("init", function() { 
+		$container
+		.append('<div class="ui" id="fs-close">&times;</div>')
+		.append('<div class="ui" id="fs-loader">Loading...</div>')
+		.append('<div class="ui" id="fs-prev">&lt;</div>')
+		.append('<div class="ui" id="fs-next">&gt;</div>')
+		.append('<div class="ui" id="fs-caption"><span></span></div>');
+		$('#fs-prev').click(function(){
+			$container.trigger("prevSlide");
+		});
+		$('#fs-next').click(function(){
+			$container.trigger("nextSlide");
+		});
+		$('#fs-close').click(function(){
+			$container.trigger("close");
+		});
+	})
+	
+	.bind("startLoading", function() { 
+		$('#fs-loader').show();
+	})
+	.bind("stopLoading", function() { 
+		$('#fs-loader').hide();
+	})
+	.bind("startOfSlide", function(event, slide) { 
+
+		$('#fs-caption span').text(slide.title);
+		$('#fs-caption').show();
+	})
+	.bind("endOfSlide", function(event, slide) { 
+		$('#fs-caption').hide();
+	});
+});
+</script>
+</body>
+</html>

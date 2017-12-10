@@ -1,0 +1,430 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/font-awesome.css" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>
+<script src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+
+<!-- 图片延迟加载 -->
+<script src="http://pc5.amallcdn.cn/assets/js/function.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/jquery.lazyload.mini.js"></script>
+<script type="text/javascript">
+        var jq=jQuery.noConflict();jq(function(){jq("img").lazyload({placeholder:"images/T16WJqXaXeXXXXXXXX-32-32.gif",effect:"fadeIn"});});
+    </script>
+<!-- 图片延迟加载 -->
+<style>
+.brand_wrap{padding:0 10px;}
+.brand_txt{text-align:left;}
+.in_goodsC_price{position:relative;right:-4px;text-decoration:line-through;color:#9a9a9a;font-weight:100;}
+.in_goods_price{text-align:left;font-size:18px; margin-top:-6px;}
+.in_goods_price i{font-size:14px;font-weight:300;margin-right:2px;}
+</style>
+
+<script type="text/javascript">
+  $(function() {  
+	  var lis = $(".hotbrand ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%4;
+			if(t == 0){
+				$(this).css("margin-right","0px");
+			}
+		});
+		
+	  $(".index_nav li a").click(function(event) { 
+	      var index=this.name
+	      var id='#'+'index_'+index
+	     $("html,body").animate({scrollTop: $(id).offset().top}, 400);
+	   });
+	   $(".taoba").click(function(event){ 
+	      var indexs=$(this).attr("name");
+	     $("html,body").animate({scrollTop: $(indexs).offset().top}, 400);
+	      return false;
+	     
+	   });
+	   function a(x,y){
+	    l = $('#main').offset().left;
+	    w = $('#main').width();
+	    $('#tbox').css('left',(l  + x) + 'px');
+	    $('#tbox').css('top',y + 'px');
+	}
+	    
+	    $(window).scroll(function(){
+	    t = $(document).scrollTop();
+	    if(t>500){
+	      $('#tbox').show();
+	    }else{
+	      $('#tbox').hide();
+	    }
+	    if(t>=650){
+	      var index=Math.floor(t/650);
+	      $(".fl_nav a").eq(index-1).addClass("active").parent().siblings().find(".active").removeClass("active");
+	    }
+	    
+	    if(t > 50){
+	        $('#gotop').fadeIn('slow');
+	    }else{
+	        $('#gotop').fadeOut('slow');
+	    }       
+	})   
+	    a(-30,100);//#tbox的div距浏览器底部和页面内容区域右侧的距离
+	    $('#gotop').click(function(){ 
+	        $('body,html').animate({
+	            scrollTop: 0
+	        },
+	        800);//点击回到顶部按钮，缓懂回到顶部,数字越小越快
+	        return false;  
+	    })
+	    
+	    
+	    var floors = $(".hd");
+	    var floorArray = new Array();
+	    jQuery.each(floors,function(i,v){
+	    	
+	    		floorArray.push($(v));
+	    	
+	    });
+	    
+	  /*   jQuery.each(floorArray,function(i,v){
+	    	var content = $(v).text();
+	    	var ref = "#hd_"+i;
+	    	/* var item_a = "<a class='taoba' href="+ref+" name="+i+">"+content+"</a>";  
+	    	var item_a = "<a class='taoba' href="+ref+" name="+i+">"+"<span class='nav-icon'></span>"+"<span class='nav-title'>"+content+"</span>"+"</a>";
+	    	$(".fl_nav").append(item_a);
+	    }); */
+	});
+</script> <!--楼层循环--> 
+<!-- $("#tbox").append(item_end_a);-->
+</head>
+<body>
+
+<div id="tbox" style="z-index:9999">
+	    #set($wei=0)
+		#foreach($floor in $floors)  
+		<div class="fl_nav">
+		<a class="taoba" href="#hd_$wei" name="#hd_$wei"><em class="ng-iconfont" id="hi_$wei">&#xe610;</em><span class="nav-title"> $!floor.gfName </span></a>
+		</div> 
+		#set($wei=$wei+1)
+        #end 
+
+</div> 
+<!--楼层1   start -->
+#set($i=0)
+#foreach($floor in $floors)
+<div id="main" class="hotbrand indxfloor">
+  #set($photoMap = $!gf_tools.generic_gfMainPhotoList("$!floor.gfMainPhoto"))
+  #set($photo = $!photoMap.get("acc"))
+  #set($url = $!photoMap.get("acc_url"))
+  #if($!photo)
+	#set($mainImg = "$!{config.imagewebserver}/$!{photo.path}/$!{photo.name}")
+  #else
+    #set($mainImg = "")
+  #end
+	
+  #if($!url)
+  	#set($mainUrl = $!url)
+  #else
+  	#set($mainUrl = "")
+  #end	
+	
+  <div class="hd" id="hd_$i"> <span>$!floor.gfName</span> </div>
+  <div class="bd clearfix">
+    <div class="lft">
+      <div class="hotlink vs-hook-imgmanage" style="height:80px"> 
+      #if($!{floor.gcs.size()}>0)  
+	      #if($!{floor.gcs.get(0).childs.size()}==3)
+	        #foreach($gc in $floor.gcs.get(0).childs)
+	        	#set($img = "$!{config.imagewebserver}/$!{gc.iconAcc.path}/$!{gc.iconAcc.name}")
+	        	<div id="floor_div" >
+	        		<div id="floor_div2">
+	        			<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">
+	        				<img alt="" src="$!img" width="60px" height="60px">
+	        			</a>
+	        		</div>
+	        		<div id="floor_div3">$!gc.classname</div>
+	        	</div>
+	        #end
+	      #end
+	      
+	      #if($!{floor.gcs.get(0).childs.size()}==2)
+	      	#foreach($gc in $floor.gcs.get(0).childs)
+	        	#set($img = "$!{config.imagewebserver}/$!{gc.iconAcc.path}/$!{gc.iconAcc.name}")
+	        	<div id="floor_sdiv" >
+	        		<div id="floor_sdiv2">
+	        			<a  href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">
+	        				<img alt="" src="$!img" width="60px" height="60px">
+	        			</a>
+	        		</div>
+	        		<div id="floor_sdiv3">$!gc.classname</div>
+	        	</div>
+	        #end     
+	      #end
+      
+	       #if($!{floor.gcs.get(0).childs.size()}==1)
+	      	#foreach($gc in $floor.gcs.get(0).childs)
+	        	#set($img = "$!{config.imagewebserver}/$!{gc.iconAcc.path}/$!{gc.iconAcc.name}")
+	        	<div id="floor_divs1">
+	        		<div id="floor_divs2">
+	        			<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">
+	        				<img alt="" src="$!img" width="60px" height="60px">
+	        			</a>
+	        		</div>
+	        		<div id="floor_divs3">$!gc.classname</div>
+	        	</div>
+	        #end     
+	      #end
+	 #end
+        
+      </div>
+      <div class="brand_wall">
+        <ul class="brandBox">
+          <li> 
+			#foreach($brand in $floor.brands)
+         		#set($img = "$!{config.imagewebserver}/$!{brand.brandLogo.path}/$!{brand.brandLogo.name}")
+         	 	<a href="$!webPath/brand_goods.htm?id=$!{brand.id}" target="_blank"><img width="85" height="40" src="$!img"></a> 
+			#end
+         </li>
+        </ul>
+      </div>
+      <div class="hotword">
+        <ul>
+         #foreach($!leftGc in $!floor.leftGcs)
+          <li><a href="$!webPath/store_goods_list.htm?gc_id=$!leftGc.id" target="_blank">$!leftGc.classname </a> </li>
+         #end
+        </ul>
+      </div>
+    </div>
+    <div class="rgt">
+      <div class="mainimg fl" style="height:548px;"><a href="$!mainUrl" target="_blank"><img width="360" height="548" src="$!mainImg">
+  <!--     	<div class="maining_wrap">
+      		<p class="maining_txt">新西兰天然有机口红</p>
+      		<p class="maining_price">天使价：￥164</p>
+      	</div> -->
+      </a> </div>
+      <div class="subimg fr">
+        <div class="subimgwrap"> 
+        	#set($map =  $gf_tools.generic_goods_list("$!floor.gfListGoods"))  
+        	
+        	#set($obj = $map.get("goods1"))
+        	#if($!obj) 
+        	
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj.goodsMainPhoto.path}/$!{obj.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj.id}" target="_blank" class="a_index">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj.goodsCurrentPrice)
+          				<i>¥</i>$!obj.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">$!obj.goodsPrice</span></p>
+        				
+   						
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj2 = $map.get("goods2"))
+        	#if($!obj2)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj2.goodsMainPhoto.path}/$!{obj2.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj2.id}" target="_blank">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj2.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj2.goodsCurrentPrice)
+          				<i>¥</i>$!obj2.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj2.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj2.goodsPrice</span></p>
+        				
+        				<!-- <p class="brand_price">￥$!{obj.goodsPrice}</p> -->
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj3 = $map.get("goods3"))
+        	#if($!obj3)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj3.goodsMainPhoto.path}/$!{obj3.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj3.id}" target="_blank">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj3.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj3.goodsCurrentPrice)
+          				<i>¥</i>$!obj3.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj3.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj3.goodsPrice</span></p>
+        				<!-- <p class="brand_price">￥$!{obj.goodsPrice}</p> -->
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj4 = $map.get("goods4"))
+        	#if($!obj4)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj4.goodsMainPhoto.path}/$!{obj4.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj4.id}" target="_blank">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj4.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj4.goodsCurrentPrice)
+          				<i>¥</i>$!obj4.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj4.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj4.goodsPrice</span></p>
+        				
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj5 = $map.get("goods5"))
+        	#if($!obj5)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj5.goodsMainPhoto.path}/$!{obj5.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj5.id}" target="_blank">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj5.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj5.goodsCurrentPrice)
+          				<i>¥</i>$!obj5.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj5.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj5.goodsPrice</span></p>
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj6 = $map.get("goods6"))
+        	#if($!obj6)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj6.goodsMainPhoto.path}/$!{obj6.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj6.id}" target="_blank">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj6.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj6.goodsCurrentPrice)
+          				<i>¥</i>$!obj6.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj6.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj6.goodsPrice</span></p>
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj7 = $map.get("goods7"))
+        	#if($!obj7)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj7.goodsMainPhoto.path}/$!{obj7.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj7.id}" target="_blank">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj7.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj7.goodsCurrentPrice)
+          				<i>¥</i>$!obj7.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj7.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj7.goodsPrice</span></p>
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj8 = $map.get("goods8"))
+        	#if($!obj8)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj8.goodsMainPhoto.path}/$!{obj8.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj8.id}" target="_blank">
+					<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj8.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj8.goodsCurrentPrice)
+          				<i>¥</i>$!obj8.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj8.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj8.goodsPrice</span></p>
+        				
+        			</div>
+				</a> 
+        	#end
+        	
+        	#set($obj9 = $map.get("goods9"))
+        	#if($!obj9)
+        		#set($objImg = "$!{config.imagewebserver}/$!{obj9.goodsMainPhoto.path}/$!{obj9.goodsMainPhoto.name}")
+        		<a href="$!webPath/goods.htm?id=$!{obj9.id}" target="_blank">
+        			<!-- <img width="150" height="150" src="$!objImg"> -->
+        			<img width="130" height="130" original="$!objImg" src="$!webPath/assets/img/32-32.gif" />
+        			<div class="brand_wrap">
+        				<p class="brand_txt">$!{obj9.goodsName}</p>
+        				<p class="in_goods_price">
+        				#if($!obj9.goodsCurrentPrice)
+          				<i>¥</i>$!obj9.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!obj9.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!obj9.goodsPrice</span></p>
+        				
+        			</div>
+        			
+        		</a> 
+        	#end
+        	#set($map =  $gf_tools.setNull())
+        </div>   
+      </div>
+    </div>
+  </div>
+</div>
+#set($i=$i+1)
+#end 
+<!--楼层1   end -->
+<!--底部广告-->
+#if($!advert)
+<div class="bottomjpg">
+<a href="$!webPath/advert_redirect.htm?url=$!advert.adUrl&id=$!advert.id"><img src="$!{config.imagewebserver}/$!advert.adAcc.path/$!advert.adAcc.name"  width='$!advertPosition.apWidth' height='$!advertPosition.apHeight'/></a>
+</div>
+#end
+<script src="$!webPath/assets/js/goto_top.js" type="text/javascript"></script> <!-- 返回页面顶部 -->
+<script>
+$(document).ready(function(e) {
+      /* $(".subimgwrap img").hover(function(){
+		$(this).animate({"opacity":"0.8"},500); 
+		$(this).animate({"opacity":"1"},500); 
+		}); */ 
+   $("#hi_0").html("&#xe610;");
+   $("#hi_1").html("&#xe611;");$("#hi_2").html("&#xe604;");$("#hi_3").html("&#xe614;");$("#hi_4").html("&#xe607;");$("#hi_5").html("&#xe617;");$("#hi_6").html("&#xe60e;");$("#hi_7").html("&#xe625;"); 
+});
+</script>
+<script>
+$(function(){
+	$('.subimgwrap a').hover(function(){
+		var a=$(this).find('.brand_list').show();
+	},function(){
+		var a=$(this).find('.brand_list').hide();
+	});
+});
+</script>
+</body>
+</html>

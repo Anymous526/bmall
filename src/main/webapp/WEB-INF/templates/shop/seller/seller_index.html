@@ -1,0 +1,356 @@
+<!DOCTYPE  html>
+<head>
+<title>卖家中心-$!{config.title}</title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/jquery.rating.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+
+<!-- <script type="text/javascript" src="assets/js/jquery.js" charset="UTF-8"></script>
+<script type="text/javascript" src="assets/js/jquery.min.js"></script> -->
+
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/commodity.js"></script> <!--底层切换-->
+
+
+
+</head>
+<body>
+	
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+#if($!store) 
+<div style="width:1200px; margin: 0 auto;"> 
+$!httpInclude.include("/seller/seller_nav.htm")  
+<div class="s_m" style="margin-top: 20px;">
+	<div class="sel_top box_sha">
+		<div class="top_le">
+			<div class="sell_tt">
+				<div class="seer_img">
+					
+					#if($!store.storeLogo)
+						#set($store_logo="$!{config.imagewebserver}/$!{store.storeLogo.path}/$!{store.storeLogo.name}")
+					#else
+						#set($store_logo="$!webPath/assets/img/user1.jpg")
+					#end <img src="$!store_logo" style="height:90px;width:90px;" />
+				</div>
+				<div class="seer_info">
+					<span class="fb f14">$!{user.store.storeName} </span> <span
+						class="">
+						#set($credit=$!storeViewTools.generic_store_credit("$!store.id"))
+						#set($img="$!imageWebServer/resources/style/common/images/level_0.gif")
+						#if($credit<10 && $credit>0) #set($credit=${credit} / 2)
+						#set($credit=$credit+1) #end #if($credit>=20)
+						#set($img="$!imageWebServer/resources/style/common/images/level_2.gif")
+						#set($credit=($credit - 20)/2) #set($credit=$credit+1) #end
+						#if($credit>=10)
+						#set($img="$!imageWebServer/resources/style/common/images/level_1.gif")
+						#set($credit=($credit - 10)/2) #set($credit=$credit+1) #end
+						#if($credit>5)#set($credit=5)#end <i>卖家信誉：#if($!credit==0) <img
+							src="$!webPath/resources/style/common/images/level_-1.gif" />
+							#else #foreach($count in [1..$!credit])<img
+							style="margin-left: 1px;" src="$!img" />#end #end
+					</i>
+					</span> <span class=""> <span style="float: left">资料完善度：</span>
+						<div class="Bars">
+							<div style="width: 33%;"></div>
+						</div> <span class="ml20"><a href="$webPath/seller/store_set.htm"
+							style="color: #275274">立即完善>> </a></span>
+					</span>
+				</div>
+			</div>
+			<div class="sell_tb">
+				<ul>
+					<li><a href="$!webPath/seller/order.htm?beginTime=$!{curTime1}&endTime=$!{curTime2}"><img src="$!webPath/assets/img/431.png"/>
+							今日订单：$!count1 </a></li>
+					<li><a href="$!webPath/seller/order.htm?order_status=20"><img src="$!webPath/assets/img/432.png" />
+							待发货订单：$!count3 </a></li>
+					<li><a href="$!webPath/seller/order.htm?beginTime=$!{curTime3}&endTime=$!{curTime4}"><img src="$!webPath/assets/img/433.png" />
+							昨日订单：$!count2 </a></li>
+				</ul>
+				<ul>
+					<li><a href="$!webPath/seller/order.htm?order_status=40"><img src="$!webPath/assets/img/444.png" />
+							新的评论：$!count6 </a></li>
+					<li><a href="$!webPath/seller/order.htm?order_status=10"><img src="$!webPath/assets/img/435.png" />
+							可收款订单：$!count4 </a></li>
+					<li><a href="$!webPath/seller/order.htm?refund=true"><img src="$!webPath/assets/img/436.png" />
+							退换货订单：$!count5 </a></li>
+				</ul>
+			</div>
+		</div>
+
+
+		<div class="top_ler">
+			<div class="score-title">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<div class="seller_shop_r">
+						<h4>店铺动态评分</h4>
+						<ul>
+							<li><i>描述相符：</i> <span> #foreach($i in [1..25])
+									#set($val=$i * 0.2) #set($val=$!CommUtil.formatDouble($val,1))
+									<input name="description_evaluate"
+									class="description_evaluate {split:5}" type="radio"
+									value="$!val" disabled="disabled" /> #end
+							</span><i>$!CommUtil.null2Double($!{store.point.descriptionEvaluate})分</i></li>
+							<li><i>服务态度：</i><span> #foreach($i in [1..25])
+									#set($val=$i * 0.2) #set($val=$!CommUtil.formatDouble($val,1))
+									<input class="service_evaluate {split:5}" type="radio"
+									name="service_evaluate" disabled="disabled" value="$!val" />
+									#end
+							</span><i>$!CommUtil.null2Double($!{store.point.serviceEvaluate})分</i></li>
+							<li><i>发货速度：</i><span> #foreach($i in [1..25])
+									#set($val=$i * 0.2) #set($val=$!CommUtil.formatDouble($val,1))
+									<input class="ship_evaluate {split:5}" type="radio"
+									name="ship_evaluate" disabled="disabled" value="$!val" /> #end
+							</span><i>$!CommUtil.null2Double($!{store.point.shipEvaluate})分</i></li>
+						</ul>
+					</div>
+				</table>
+			</div>
+			<div class="sqk">
+				<ul>
+					<li><a href="$!webPath/seller/add_goods_first.htm"><img src="$!webPath/assets/img/451.png" title="上架新商品"
+						name="sdfas" /></a></li>
+					<li><a href="$!webPath/seller/seller_order_evaluate.htm?id=$!store.id"><img src="$!webPath/assets/img/452.png" title="查看最新评论" /></a></li>
+					<li><img src="$!webPath/assets/img/453.png" title="最新通知公告" /></li>
+					<li><a href="$!webPath/seller/chatting.htm"><img src="$!webPath/assets/img/454.png" title="卖家聊天" /></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="sel_top2">
+		<span>
+			<p>店铺状态</p>
+			#if($!{store.storeStatus}==2) <img src="$!webPath/assets/img/611.png" /><label>正常</label>
+			#elseif($!{store.storeStatus}==3)<img src="$!webPath/assets/img/shop/close.png" /><label>关闭</label>
+			#end
+			<input type="button" value="立即查看" onclick="window.location.href='$!webPath/seller/store_set.htm"/>
+		</span>
+		<span>
+        	<p>待处理问题</p>
+            <em style="font-size:48px; color:#84bf4d">0</em><em>个</em>
+            <cite>已处理问题 12 个</cite>
+        </span>
+		<span>
+        	<p>店铺一周访问量</p>
+        	#if($!lastWeekVisit > $!thisWeekVisit)
+        	#set($v = $!{lastWeekVisit}-$!{thisWeekVisit})
+            	<em style="font-size:48px; color:red">↓</em><em>$!thisWeekVisit</em>
+            	<cite>上周访问$!lastWeekVisit,本周下降$!v条</cite>
+            #else
+            #set($v = $!{thisWeekVisit}-$!{lastWeekVisit})
+            	<em style="font-size:48px; color:red">↑</em><em>$!thisWeekVisit</em>
+            	<cite>上周访问$!lastWeekVisit,本周上升$!v条</cite>
+            #end
+        </span>
+		<span style="margin-right:0">
+        	<p>店铺一周销量</p>
+        	#if($!lastWeekSale > $!thisWeekSale)
+        	#set($d = $!{lastWeekSale}-$!{thisWeekSale})
+            	<em style="font-size:48px; color:#84bf4d">↓</em><em>$!thisWeekSale</em>
+            	<cite>上周销量$!lastWeekSale件 本周下降$!d件</cite>
+            #else
+            #set($d = $!{thisWeekSale}-$!{lastWeekSale})
+            	<em style="font-size:48px; color:red">↑</em><em>$!thisWeekSale</em>
+            	<cite>上周销量$!lastWeekSale件 本周上升$!d件</cite>
+            #end
+        </span>
+    </div>
+	
+	#set($goods_count=0)
+    #set($goods_repertory_count=0)
+    #set($goods_report_count=0)
+    #set($consult_count=0)
+	    #foreach($goods in $store.goodsList)
+		    #if($!goods.goodsStatus==-2)
+		    	#set($goods_repertory_count=$goods_repertory_count+1)
+		    #end
+		    #if($!goods.goodsStatus== 1)
+		    	#set($goods_report_count=$goods_report_count+1) 
+		    #end
+		    #if($!goods.goodsStatus==0)
+		    	#set($goods_count=$goods_count+1) 
+		    #end
+		    #foreach($cousult in $goods.consults)
+		    #if(!$!cousult.reply)
+		    	#set($consult_count=$consult_count+1)
+		    #end 
+	    #end  
+    #end
+	
+	#set($order_count=0) #set($order_wait_pay_count=0)
+		#set($order_wait_ship_count=0)
+		#set($order_wait_takeover_count=0)
+	#set($order_wait_evaluate_count=0)
+	#foreach($order in $store.ofs)
+		#if($order.order_status<60) #set($order_count=$order_count+1)
+	#end
+	#if($!order.orderStatus==10)
+		#set($order_wait_pay_count=$order_wait_pay_count+1) 
+	#end
+	#if($!order.orderStatus==20)
+		#set($order_wait_ship_count=$order_wait_ship_count+1) 
+	#end
+	#if($!order.orderStatus==30)
+		#set($order_wait_takeover_count=$order_wait_takeover_count+1) 
+	#end
+		#if($!order.orderStatus==50)
+			#set($order_wait_evaluate_count=$order_wait_evaluate_count+1) 
+		#end 
+	#end
+	
+	<div class="seller_shop">
+		<h3>交易提示</h3>
+		<div class="seller_shop_box">
+			<div class="seller_shop_bottom">
+				<div class="seller_shop_bottom">
+			       <ul>
+			         <li class="this">
+			           <h5>您需要关注的店铺情况：</h5>
+			           <span>商品提示：<i><a href="$!webPath/seller/seller_goods_storage.htm">已下架的商品</a>(<b>$!goods_repertory_count</b>)</i></span><span>违规提示：<i><a href="$!webPath/seller/goods_report.htm">被举报禁售商品</a>(<b>$!{goods_report_count}</b>)</i></span><span>咨询提示：<i><a href="$!webPath/seller/consult.htm?reply=false">未回复的咨询</a>(<b>$!{consult_count}</b>)</i></span> </li>
+			         <li class="other"><span><a href="$!webPath/seller/seller_goods.htm">出售中的商品：($!goods_count)</a></span><span><a href="$!webPath/seller/goods_out.htm">违规下架的商品：(0)</a></span></li>
+			       </ul>
+			     </div>	
+			
+				<ul>
+					<li class="this">
+						<h5>您需要立即处理的交易订单：</h5> <span>近期销售：<i><a
+								href="$!webPath/seller/order.htm">交易中的订单</a>(<b>$!{order_count}</b>)</i></span><span>维权提示：<i><a
+								href="$!webPath/seller/complaint.htm">收到维权投诉</a>(<b>0</b>)</i></span>
+					</li>
+					<li class="other"><span><a
+							href="$!webPath/seller/order.htm?order_status=10">待买家付款：($!{order_wait_pay_count})</a></span><span><a
+							href="$!webPath/seller/order.htm?order_status=20">待发货：($!{order_wait_ship_count})</a></span><span><a
+							href="$!webPath/seller/order.htm?order_status=30">待卖家收货：($!{order_wait_takeover_count})</a></span><span><a
+							href="$!webPath/seller/order.htm?order_status=40">待评价：($!order_wait_evaluate_count)</a></span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="sel_top4">
+		<div class="s_tit">
+			<span>店铺装修</span> <span class="fr pr10" style="font: normal"><a
+				href="">查看更多</a></span>
+		</div>
+
+
+<!-- 代码 开始 -->
+		<div class="zx">
+			<div class="zx_list">
+				<ul>
+					<li>
+						<div class="p-img">
+							<a href="$!webPath/seller/store_theme.htm"><img src="$!webPath/assets/img/mo1.jpg"></a>
+						</div>
+						<div class="p_pri" ><span style="text-decoration:line-through;color:#666;font-size:12px;font-weight:500">¥90.00元/月</span> 免费</div>
+						<div class="p_tx">
+							<p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+							<p class="c6">设计师：Amall商城</p>
+						</div>
+					</li>
+
+					<li>
+						<div class="p-img">
+							<a href="$!webPath/seller/store_theme.htm"><img src="$!webPath/assets/img/mo2.jpg"></a>
+						</div>
+						<div class="p_pri" ><span style="text-decoration:line-through;color:#666;font-size:12px;font-weight:500">¥90.00元/月</span> 免费</div>
+						<div class="p_tx">
+							<p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+							<p class="c6">设计师：Amall商城</p>
+						</div>
+					</li>
+
+					<li>
+						<div class="p-img">
+							<a href="$!webPath/seller/store_theme.htm"><img src="$!webPath/assets/img/mo3.jpg"></a>
+						</div>
+						<div class="p_pri" ><span style="text-decoration:line-through;color:#666;font-size:12px;font-weight:500">¥90.00元/月</span> 免费</div>
+						<div class="p_tx">
+							<p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+							<p class="c6">设计师：Amall商城</p>
+						</div>
+					</li>
+
+					<li>
+						<div class="p-img">
+							<a href="$!webPath/seller/store_theme.htm"><img src="$!webPath/assets/img/mo4.jpg"></a>
+						</div>
+						<div class="p_pri" ><span style="text-decoration:line-through;color:#666;font-size:12px;font-weight:500">¥90.00元/月</span> 免费</div>
+						<div class="p_tx">
+							<p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+							<p class="c6">设计师：Amall商城</p>
+						</div>
+					</li>
+
+					<li>
+						<div class="p-img">
+							<a href="$!webPath/seller/store_theme.htm"><img src="$!webPath/assets/img/mo5.jpg"></a>
+						</div>
+						<div class="p_pri" ><span style="text-decoration:line-through;color:#666;font-size:12px;font-weight:500">¥90.00元/月</span> 免费</div>
+						<div class="p_tx">
+							<p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+							<p class="c6">设计师：Amall商城</p>
+						</div>
+					</li>
+
+					<li>
+						<div class="p-img">
+							<a href="$!webPath/seller/store_theme.htm"><img src="$!webPath/assets/img/mo6.jpg"></a>
+						</div>
+						<div class="p_pri" ><span style="text-decoration:line-through;color:#666;font-size:12px;font-weight:500">¥90.00元/月</span> 免费</div>
+						<div class="p_tx">
+							<p class="c3">清新欧美简约女装服装鞋类模板轮播 - 通用风格</p>
+							<p class="c6">设计师：Amall商城</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- 代码 结束 -->
+	</div>
+
+</div>
+
+</div>
+
+#end
+<div class="clear"></div>
+
+<script type="text/javascript">
+jQuery(function(){
+	
+	//页面加载,交易提示和店铺设置不显示
+	$(".seller_shop").hide();
+	$(".sel_top4").hide();
+	
+	var res;
+	#if($!res)
+		res = $!res; 
+	#end
+	//如果是子账号
+	if(res){
+		ids_Array = res[0].value.split("|");
+		
+		if(ids_Array.length > 0){
+			jQuery.each(ids_Array,function(i,v){
+				//子账号有交易的权限,则显示
+				if(v == "appOrder"){
+					$(".seller_shop").show();
+				}
+				////子账号有店铺设置的权限,则显示
+				if(v == "appSets"){
+					$(".sel_top4").show();
+				}
+			});
+		}
+	}else{
+		//是商家.则显示
+		$(".seller_shop").show();
+		$(".sel_top4").show();
+	}
+});
+</script>
+
+$!httpInclude.include("/footer.htm")

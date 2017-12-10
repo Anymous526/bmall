@@ -1,0 +1,226 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>马上推广</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/assets/css/share_lets.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script> 
+<script type="text/javascript">
+function copyUrl2()
+  { 
+   var Url2=document.getElementById("biao1");
+   Url2.select(); // 选择对象
+   document.execCommand("Copy"); // 执行浏览器复制命令
+     alert("复制成功，可贴粘。");
+  }
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>马上推广</span></div></div>
+ 	<div class="productmain" style="background:#FFF;padding: 0 10px;width:933px;"> 
+    	<div class="share-body">
+		<div class="share-invite"><a href="#">邀请好友</a></div> 
+		<div class="share-share">
+			<div class="share-way">
+				<div class="share-way1">
+					<span><h1 class="share-tithree"><a href="#">方式一：分享链接给好友</a></h1></span>
+					<span class="share-tcontent">
+					<ul class="jiathis_style_32x32">
+					<label><li><a class="jiathis_button_cqq"></a></li></label>
+					<label><li><a class="jiathis_button_tsina"></a></li></label>
+					<label><li><a class="jiathis_button_qzone"></a></li></label>
+					<label><li><a class="jiathis_button_weixin"></a></li></label>
+					<label><li><a class="jiathis_button_renren"></a></li></label>
+					<label><li><a class="jiathis_button_tqq"></a></li></label> 
+					</ul>
+					<script type="text/javascript" > 
+					var jiathis_config={
+							boldNum:6,
+							url:"http://amall.com/reg8.htm?pid=&redno=&did=$!userid",
+							summary:"——天使Amall，注册有礼！合伙电商，分享创富！",
+							title:"100亿礼金，等你来领！",
+							pic:"http://m.amall.com/img/logo3.png",
+							shortUrl:false,
+							hideMore:false
+					}
+				jQuery(".jiathis_style_32x32 a").click(function(){ 
+					var calssVal = jQuery(this).attr("class"); 
+					if(calssVal == "jiathis_button_weixin"){ 
+						jiathis_config.url = "http://m.amall.com/shareweichat.htm?pid=&did=$!userid&redno=";
+					}else{
+						jiathis_config.url = "http://amall.com/reg8.htm?pid=&redno=&did=$!userid";
+					}
+				});  
+			</script>
+			<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script> 
+					</span>
+					
+				</div>
+				<div class="share-way2">
+					<span><h1 class="share-tithree"><a href="#">方式二：复制链接给好友</a></h1></span>
+					<textarea  cols="10" rows="1" id="biao1" style="width:385px;">http://amall.com/reg8.htm?pid=&redno=&did=$!userid</textarea>
+					<span><input onclick="copyUrl2()" type="buttom" class="share-tbuttom" value="点击复制链接" ></span>
+					
+				</div>
+			</div>
+			 
+		 
+		<div class="share-redflow">
+			<div class="share-red">天使Amall互助升值计划</div>
+			<div class="share-flow">
+				<span class="share-flowone">
+					<span class="share-floimg"><a href="#"><img src="$!webPath/assets/img/sahre_lets2.jpg"/></a></span>
+					<span class="share-flocontent">通过以上两种方式</br>把链接给好友</span>
+					<span class="share-frightimg"><img src="$!webPath/assets/img/sahre_lets3.jpg"/></span>
+				</span>
+				<span class="share-flowone">
+					<span class="share-floimg"><a href="#"><img src="$!webPath/assets/img/sahre_lets4.jpg"/></a></span>
+					<span class="share-flocontent">好友通过链接注册后，升级成为您的初/联盟商家</span>
+					<span class="share-frightimg"><img src="$!webPath/assets/img/sahre_lets3.jpg"/></span>
+				</span>
+				<span class="share-flowone" style="margin-right:0px;">
+					<span class="share-floimg"><a href="#"><img src="$!webPath/assets/img/sahre_lets5.jpg"/></a></span>
+					<span class="share-flocontent">互助红包即时到达您的账号，会员越多钱越多哦</span>
+					<span class="share-frightimg"><img src="$!webPath/assets/img/sahre_lets3.jpg"/></span>
+				</span>
+			</div>
+			
+			<div class="share-red">绑定终身分红攻略：</div>
+			<div class="share-process">
+			        <ul class="disc2">
+				    	<li>- 每成功邀请一位好友注册升级成为联盟商家，即可获得相应招商奖励，邀请越多，红包越多，不设上限</li>
+				    	<li>- 好友只有通过您发送的推广链接注册成功，并且升级成为联盟商家，您才能获得各项现金奖励</li>
+				    	<li>- 升级成为联盟商家，除了招商奖外，还能获得好友1%的店铺分红</li>
+				    	<li>- 建议复制链接分享到各种论坛、社区、QQ群等地方，可能会收到意想不到的惊喜</li>
+				    </ul>
+		    </div>
+		</div>
+		
+		
+		
+		
+		</div>
+		
+	<!--	<div class="share-invite"><a href="#">邀请记录</a></div>
+		<div id="container" style="border: 0;height:150px;">
+			<table class="share_table" width="100%" cellspacing="5" cellpadding="3" style="border-left:1px solid #ccc;">
+				<thead>
+					<td>真实姓名</td>
+					<td>手机号码</td>
+					<td>注册时间</td>
+					<td>红包金额</td>
+				</thead>
+				<tbody>
+					<tr>
+						<td>张三丰</td>
+						<td>13800138000</td>
+						<td>2016-03-20</td>
+						<td>20</td>
+					</tr>
+					<tr>
+						<td>张三丰</td>
+						<td>13800138000</td>
+						<td>2016-03-20</td>
+						<td>20</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+< div class="share-invite"><a href="#">邀请红包使用规则</a></div>
+<div class="share-process">
+	<ol class="decimal">
+		<li>每成功邀请一位好友注册并绑定手机号既可获得20元红包，邀请越多，红包越多，没有上限</li>
+		<li>只有您的好友通过推荐链接注册，您才能获得红包</li>
+		<li>建议复制链接分享到各种论坛、社区、QQ群等地方，可能会收到意想不到的惊喜</li><li>只有您的好友通过推荐链接注册，您才能获得红包</li>
+		<li>建议复制链接分享到各种论坛、社区、QQ群等地方，可能会收到意想不到的惊喜</li>
+	</ol>
+</div> -->
+		
+		
+		
+		</div> 
+	</div>
+</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>
+<script type="text/javascript">
+	function $(id){
+	return typeof id==='string'?document.getElementById(id):id;
+}
+
+window.onload=function(){
+  // 标签的索引
+  var index=0;
+  var timer=null;
+
+  var lis=$('container-tit').getElementsByTagName('li'),
+      divs=$('container-con').getElementsByTagName('div');
+
+  if(lis.length!=divs.length) return;
+
+  // 遍历所有的页签
+  for(var i=0;i<lis.length;i++){
+    lis[i].id=i;
+    lis[i].onmouseover=function(){
+      // 用that这个变量来引用当前滑过的li
+      var that=this;
+      // 如果存在准备执行的定时器，立刻清除，只有当前停留时间大于100ms时才开始执行
+      if(timer){
+        clearTimeout(timer);
+        timer=null;
+      }
+      // 延迟0.1秒执行
+      timer=window.setTimeout(function(){
+        for(var j=0;j<lis.length;j++){
+          lis[j].className='';
+          divs[j].style.display='none';
+        }
+        lis[that.id].className='select';
+        divs[that.id].style.display='block';
+      },100);
+    }
+  }
+};
+
+
+//替换为带logo的二维码	
+var t_img; // 定时器
+var isLoad = false; // 控制变量
+
+function isImgLoad(callback){
+
+	if(jQuery("#jiathis_webchat:first img")!=null)
+    if(jQuery("#jiathis_webchat:first img").length >0)isLoad = true;
+    if(isLoad){
+        //clearTimeout(t_img); // 清除定时器，
+        callback();
+    }//else{
+        t_img = setTimeout(function(){
+            isImgLoad(callback); // 递归扫描
+        },100); 
+    //}
+	
+}
+ 
+//判断图片是否出现，出现后回调
+isImgLoad(function(){
+	var url=jQuery("#jiathis_webchat:first img").attr("src");
+    jQuery("#jiathis_webchat:first img").attr("src",url.replace("s.jiathis.com/qrcode.php?url","zhibo.amall.com/barcode/2/gen.php?t"));
+	isLoad = false;
+});
+</script>

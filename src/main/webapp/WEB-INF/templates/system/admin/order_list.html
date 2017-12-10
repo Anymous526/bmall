@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/font-awesome.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<style>
+.cont .export_box{position:relative;}
+.export_box button{position:absolute;right:7%;bottom:1%;background:#2A7AD2;border:none;padding:6px 8px;color:#fff;border-radius:3px;letter-spacing:3px;padding-left:10px;}
+.export_box button:hover{background:#36C;}
+</style>
+<script>
+jQuery(document).ready(function(){
+  jQuery('#beginTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  //
+  jQuery("#export_btn").click(function(){
+	  var a=window.confirm("确定要导出所有订单吗");
+	  if(a!=0){
+		  window.location.href="$webPath/admin/rechargeLogExport.htm";
+	  }
+  });
+  jQuery("#exporto2o_btn").bind("click",function(){
+	  if(window.confirm("确定要导出吗")){
+		  window.location.href="$webPath/admin/O2OrechargeLogExport.htm";
+	  }
+  });
+});
+</script>
+</head>
+<body>
+
+<div class="cont">
+  <h1 class="seth1">订单管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="javascript:void(0);" class="this">所有订单</a></span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/order_list.htm" method="post" id="queryForm" >
+  <div class="orders">
+    <ul>
+      <li> <span>订单状态</span><span class="ordersel">
+        <select name="order_status" id="order_status">
+          <option value="">所有订单</option>
+          <option value="10">待付款</option>
+          <option value="20">待发货</option>
+          <option value="30">已发货</option>
+          <option value="40">已收货</option>
+          <option value="50">已完成</option>
+          <option value="0">已取消</option>
+        </select>
+      </span><span>类型</span><span>
+        <select name="type" id="type">
+          <option value="store">店铺名称</option>
+          <option value="buyer">买家名称</option>
+          <option value="order">订单号</option>
+        </select>
+        </span> <span class="order_input size1">
+        <input name="type_data" type="text" id="type_data" />
+      </span> <span>支付方式</span><span>
+        <select name="payment" id="payment">
+          <option value="">所有支付方式</option>
+          <option value="alipay">支付宝</option>
+          <option value="chinabank">网银在线</option>
+          <option value="bill">快钱</option>
+          <option value="tenpay">财付通</option>
+          <option value="outline">线下支付</option>
+          <option value="balance">预付款支付</option>
+        </select>
+        </span></li>
+      <li> <span>下单时间</span><span class="order_input size2">
+        <input name="beginTime" type="text" id="beginTime"  readonly="readonly"/>
+        </span><span>—</span><span class="order_input size2">
+        <input name="endTime" type="text" id="endTime" readonly="readonly" />
+        </span> <span>订单金额</span><span class="order_input size2">
+        <input name="begin_price" type="text" id="begin_price" />
+        </span><span>—</span><span class="order_input size2">
+        <input name="end_price" type="text" id="end_price" />
+        </span> <span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;"/>
+      </span> </li>
+    </ul>
+  </div>
+  </form>
+  <div class="export_box"><button id="export_btn" style="right:20%;"><i class="fa fa-table">导出普通订单</i></button></div>
+  <div class="export_box"><button id="exporto2o_btn" style="right:3%;"><i class="fa fa-table">导出O2O订单</i></button></div>
+  <form action="$!webPath/admin/order_list.htm" method="post" id="ListForm" >
+    <div class="allshop_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="15%">店铺名称</td>
+        <td width="15%">订单号</td>
+        <td width="10%">买家名称</td>
+        <td  width="15%">下单时间</td> 
+        <td  width="8%">订单总额</td>
+        <td  width="8%">实际激活总额</td>
+        <td width="10%">支付方式</td>
+        <td width="8%">订单状态</td>
+        <td width="4%">订单类型</td>
+        <td align="center">操作</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td>$!obj.store.storeName</td>
+        <td>$!obj.orderId</td>
+        <td>$!obj.user.username</td>
+        <td>$!CommUtil.formatLongDate($!obj.addtime)</td>
+        <td>$!obj.goodsAmount元,#if($!obj.beanNum) 其中含豆$!obj.beanNum #end  #if($!obj.beanAmount)颗,豆金额$!obj.beanAmount元 #end  </td>
+        #if($!obj.orderType==2000)
+        <td>$!obj.alipayOrder.totalFee</td>
+        #else
+        <td></td>
+        #end
+            #set($payment="未支付")
+            #if($!obj.payment.mark=="alipay")
+            #set($payment="支付宝")
+            #end
+            #if($!obj.payment.mark=="Unionpay")
+            #set($payment="银联在线")
+            #end
+            #if($!obj.payment.mark=="chinabank")
+            #set($payment="网银在线")
+            #end
+            #if($!obj.payment.mark=="WXPay")
+            #set($payment="微信支付")
+            #end       
+        <td>$!{obj.Payment.name}</td>
+            #if($!obj.orderStatus==0)
+            #set($status="已取消")
+            #end
+            #if($!obj.orderStatus==10)
+            #set($status="待付款")
+            #end
+            #if($!obj.orderStatus==15)
+            #set($status="线下支付待审核")
+            #end
+            #if($!obj.orderStatus==16)
+            #set($status="货到付款待发货")
+            #end
+            #if($!obj.orderStatus==20)
+            #set($status="已付款")
+            #end
+            #if($!obj.orderStatus==30)
+            #set($status="已发货")        
+            #end                
+            #if($!obj.orderStatus==40)
+            #set($status="已收货")
+            #end
+            #if($!obj.orderStatus==50)
+            #set($status="已完成,已评价")                                              
+            #end
+            #if($!obj.orderStatus==60)
+            #set($status="已结束")                                              
+            #end  
+            #if($!obj.refundEntity)
+	             #if($!obj.refundEntity.status == 41)
+	             	#set($refund="等待退款")
+	             #end
+	             #if($!obj.refundEntity.status == 42)
+	             	#set($refund="卖家同意申请退款")
+	             #end
+	          
+	             #if($!obj.refundEntity.status == 43)
+	             	#set($refund="卖家拒绝申请退款")
+	             #end
+	              #if($!obj.refundEntity.status == 44)
+	             	#set($refund="买家申请退款中")
+	             #end
+	             #if($!obj.refundEntity.status == 45)
+	             	#set($refund="买家申请退货")
+	             #end
+	             #if($!obj.refundEntity.status == 46)
+	             	#set($refund="卖家同意退货")
+	             #end
+	              #if($!obj.refundEntity.status == 47)
+	             	#set($refund="退货结束")
+	             #end
+	             #if($!obj.refundEntity.status == 48)
+	             	#set($refund="卖家拒绝退货")
+	             #end
+	             #if($!obj.refundEntity.status == 49)
+	             	#set($refund="退货失败")
+	             #end
+	             #if($!obj.refundEntity.status == 51)
+	             	#set($refund="已退款")
+	             #end
+	             
+	         #else
+	             	#set($refund="")
+	             
+             #end
+            
+        	<td>$!status $!refund</td>
+        	
+        	
+        #if($!obj.orderType==2000)
+        <td>O2O订单</td>
+        #else
+        <td>    </td>
+        #end
+        <td align="center" class="blue xiahua"><a href="$!webPath/admin/order_view.htm?id=$!obj.id">查看</a></td>
+      </tr>
+     #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="end_price" type="hidden" id="end_price" value="$!end_price" />
+    <input name="begin_price" type="hidden" id="begin_price" value="$!begin_price" />
+    <input name="endTime" type="hidden" id="endTime" value="$!endTime" />
+    <input name="beginTime" type="hidden" id="beginTime" value="$!beginTime" />
+    <input name="type_data" type="hidden" id="type_data" value="$!type_data" />
+    <input name="type" type="hidden" id="type" value="$!type" />
+    <input name="order_status" type="hidden" id="order_status" value="$!order_status" />
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

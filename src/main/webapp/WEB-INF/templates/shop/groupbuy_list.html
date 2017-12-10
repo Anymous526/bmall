@@ -1,0 +1,162 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/tuangou.css">
+<script src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script><!-- 分页需要引入的js文件，里面有gotoPage()函数 -->
+</head>
+<script type="text/javascript">
+function group_order(field1,val1,field2,val2){
+	  jQuery("#"+field1).val(val1);
+	  jQuery("#"+field2).val(val2);
+	  //jQuery("#ListForm").submit();
+	  ajaxPage('$!webPath/groupbuy_list.htm',1,this);
+	}
+	function setIsDay(val)
+	{
+		if(val=="0")
+		{
+		jQuery("#isDay").val("");//全部	
+		}else if(val=="-1")
+		{
+		jQuery("#isDay").val("-1");//昨天	
+		}else if(val=="1")
+		{
+		jQuery("#isDay").val("1");//今天
+		}
+		ajaxPage('$!webPath/groupbuy_list.htm',1,this);
+	}
+	
+	
+function ajaxPage(url,currentPage,obj) {
+	var totalPages =jQuery("#totalPages").val();
+	var orderBy=jQuery("#orderBy").val();
+	var orderType=jQuery("#orderType").val();
+	var isDay=jQuery("#isDay").val();
+	var ggName=jQuery("#ggName").val();
+	if(currentPage < 1) {
+		currentPage = 1;
+	}else if(currentPage > totalPages) {
+		currentPage = totalPages;
+	}
+	jQuery.ajax({
+				 type:'POST',
+				 url:url,
+				 data:{"currentPage":currentPage,"orderBy":orderBy,"orderType":orderType,"isDay":isDay,"ggName":ggName},
+				 success :　function(data) {
+					 $("#add").html(data);
+				 },
+				 error : function(){
+					 alert("已到第一页");
+				 }
+				});
+}
+
+jQuery(document).ready(function(){
+	 
+	  jQuery(".gp_scort a").removeClass("this");
+	  jQuery(".gp_scort a[id^=$!order_type]").addClass("this");
+	  #if($!orderType=="desc")
+	  jQuery(".gp_scort a[id^=$!order_type] i").addClass("scort_d");
+	  #else
+	  jQuery(".gp_scort a[id^=$!order_type] i").addClass("scort_c");
+	  #end
+	 
+	});
+
+</script>
+<body>
+<div id="add">
+<div class="t_list_top">
+
+  <div class="w1200">
+   <span class="pai">
+   <div class="gp_scort">
+     #if($!orderType=="desc")
+     #set($c_orderType="asc")
+     #else
+     #set($c_orderType="desc")
+     #end
+   <a href="javascript:void(0);" onclick="group_order('orderBy','addTime','orderType','$!c_orderType');"  class="this" id="addTime_$!orderType">默认</a><a href="javascript:void(0);" onclick="group_order('orderBy','gg_price','orderType','$!c_orderType');" id="gg_price_$!orderType">价格 <img src="$!webPath/assets/img/select_xl.png" /></a><a href="javascript:void(0);" onclick="group_order('orderBy','gg_def_count','orderType','$!c_orderType');" id="gg_def_count_$!orderType">销量 <img src="$!webPath/assets/img/select_xl.png" /></a>
+   </div>
+   </span>
+   <span class="search_fun_btn"><a href="javascript:void(0);" onclick="setIsDay('0');">全部</a><a href="javascript:void(0);" onclick="setIsDay('1');">今日开团</a><a href="javascript:void(0);" onclick="setIsDay('-1');">昨日开团</a>
+    <input class="search_input1" type="text" id="ggName" name="ggName" value="$!ggName" />
+    <input type="button" value="搜索" class="search_btn2"  onclick="ajaxPage('$!webPath/groupbuy_list.htm',1,this);" />
+    </span> 
+  </div>
+</div>
+<form action="$!webPath/groupbuy_list.htm" method="post" id="ListForm" >
+#if($!objs.size()>0)
+
+
+
+
+<ul class="shop_list">
+   #foreach($obj in $objs)
+    <li> 
+      <a href="$!webPath/groupExcessive.htm?gg_id=$!obj.id">
+      <img src="$!{config.imagewebserver}/$!obj.ggImg2.path/$!obj.ggImg2.name" width="100%" original="$!webPath/$!obj.ggImg2.path/$!obj.ggImg2.name" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" />
+      </a>
+      <div class="border1">
+        <h4><a href="$!webPath/groupExcessive.htm?gg_id=$!obj.id"">$!obj.ggName</a></h4>
+        <h5>$!obj.ggContent</h5>
+      </div>
+      <div class="item_info">
+        <div class="t_pri"><i>¥</i><em>$!obj.ggPrice</em></div>
+        <div class="t_block">
+          <div class="pri_cha"><i>¥</i>$!obj.ggGoods.goodsPrice</div>
+          #set($buyer_count=$!obj.ggDefCount+$!obj.ggVirCount)
+          <div>$!buyer_count件已售</div>
+        </div>
+      </div>
+      <div class="item_link">立即团!</div>
+    </li>
+   #end 
+  </ul>
+  
+   <input name="orderBy" type="hidden" id="orderBy" value="$!orderBy" />
+   <input name="orderType" type="hidden" id="orderType" value="$!orderType" />
+   <input type="hidden" name="currentPage" id="currentPage" value="$!currentPage"/>
+   <input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+   <input name="isDay" type="hidden" id="isDay" value="$!isDay"/>
+   
+<div class="page">
+ $!gotoPageAjaxHTML
+</div>
+ #else
+    <div class="index_w" style="width:1200px;margin:0 auto;text-align: center;">
+       <div class="tuan_empty"> <i><img src="$!webPath/resources/style/system/front/default/images/group/empty.png" width="120" height="109" /></i> <span>没有正在进行中的团购活动</span> </div>
+    </div>
+ #end
+</form>  
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+	jQuery(function(){
+		var lis = jQuery(".shop_list li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%3;
+			if(t == 0){
+				jQuery(this).css("margin-right","0px");
+			}
+		});
+	});
+</script> 
+
+
+</body>
+</html>

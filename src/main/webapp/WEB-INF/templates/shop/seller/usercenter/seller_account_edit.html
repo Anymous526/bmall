@@ -1,0 +1,451 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加子账号 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/map.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/cryptographic.js"></script>
+<script>
+
+
+
+var number = $!config.smsSendInterval;
+var exceedTime = $!config.smsExceedTime;
+var time = number;
+var time_id = "";
+
+var map = new Map();
+var key = "res";
+	
+var ids_Array;
+
+$(function(){
+	
+	#if($!isAdd < 1)
+		$(".addnav").hide();
+		$("#appunadd").show();
+	#else
+		$(".addnav").show();
+		$("#appunadd").hide();
+	#end
+	
+	#if($!obj)
+		var val_array = $!obj.resource;
+		ids_Array = val_array[0].value.split("|");
+		//设置对象id,当id为空，表示新增,不为空时，表示编辑
+		$("#appId").val($!obj.id);
+		var name = $!obj.user.username;
+		//编辑子账号,只能修改资源权限,其他的不需要修改.不走账号验证，短信验证,因为新增子账号的时候已经做了验证处理
+		$("#appName").val(name);
+		$("#appName").attr("readOnly",true);
+		$("#appCheck").hide();
+		$("#appDivPwd").hide();
+		$("#appDivComfirmPwd").hide();
+		$("#appDivSms").hide();
+	#else
+		ids_Array = new Array();
+	#end
+	
+	if(ids_Array.length > 0){
+		jQuery.each(ids_Array,function(i,v){
+			console.info($("#"+v));
+			$("#c_"+v).attr("checked",true);
+		});	
+	}
+	
+});
+
+function selectedShow(e){
+	//获取到复选框
+	var obj = jQuery(e);
+	//如果复选框选中了
+	if(obj.attr("checked")){
+		ids_Array.push(obj.val());
+		map.remove(key);
+		map.put(key,ids_Array.join("|"));
+		var json = JSON.stringify(map.elements);
+		$("#appRes").val(json);
+	}else{
+		//更新map
+		map.remove(key);
+		ids_Array = new Array();
+		var others = obj.parent().siblings();
+		jQuery.each(others,function(i,v){
+			var otherInput = $(v).find("input");
+			if(otherInput.attr("checked")){
+				ids_Array.push(otherInput.val());
+			}
+		});
+		map.put(key,ids_Array.join("|"));
+		var json = JSON.stringify(map.elements);
+		$("#appRes").val(json);
+	}
+}
+
+function strSendSms(){
+	
+	var name = jQuery.trim($("#appName").val());
+	if(!name){
+		 alert("子账号名称不能为空");
+		 return false;
+	 }
+	 var phoneReg = /^1\d{10}$/;
+	 if(!phoneReg.test(name)){
+		alert("请输入正确手机号码");
+		return false;
+	 }
+	 
+	var messageArray = new Array();
+	messageArray[0] = "请输入手机号";
+	messageArray[1] = "手机号已注册";
+	messageArray[2] = "今天短信次数超限,请明天再次尝试";
+	messageArray[3] = "两次发送间隔太短，请稍候再试";
+	messageArray[4] = "短信发送失败，请再次尝试";
+	messageArray[5] = "短信发送成功，请查收";
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/seller_account_sms.htm",
+		data : {"phoneNum":name},
+		success : function(ret) {
+			sendRemainTime(messageArray[ret]);
+			time_id = setInterval(countDown, 1000);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			jQuery("#getSmsYzm").html("短信验证码发送失败");
+			time_id = setInterval(countDown, 1000);
+		}
+	});
+}
+
+function sendRemainTime(str){ 
+	$("#getSmsYzm").text(str);
+} 
+
+function countDown(){
+	 --time;
+	 if(time == 0){
+	     clearInterval(time_id);
+		 $("#remainTime").css("display", "none")
+	     $(".btn").removeAttr("style");
+	     $(".btn").css("padding-left", "10px");
+	     $(".btn").css("padding-right", "10px");
+	     $(".btn").css("margin-left", "-3px");
+	     $("#getSmsYzm").text("发送短信");
+	     time = number;
+	     return false;
+	 }
+	 
+	 $(".btn").css("display","none");
+	 $("#remainTime").text("");
+	 $("#remainTime").css("display","block");
+	 $("#remainTime").text(time + "秒后可重新获取,验证码有效期" + exceedTime + "分钟");
+		 
+}
+
+jQuery(document).ready(function(){
+	$("#appCheck").bind("click",function(){
+		var name = jQuery.trim($("#appName").val());
+		if(!name){
+			 alert("子账号名称不能为空");
+			 return false;
+		 }
+		 var phoneReg = /^1\d{10}$/;
+		 if(!phoneReg.test(name)){
+			alert("请输入正确手机号码");
+			return false;
+		 }
+		 
+		$("#appDivPwd").show();
+		$("#appDivComfirmPwd").show();
+		$("#appTrueName").hide();
+			
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/checkexist2.htm",
+			data : {"uname":name},
+			success : function(data) {
+				data = eval( '('+ data +')');
+				if (data.pass == '1') {//账号可以使用,是老用户
+					$("#divTrueName").text(data.msg);
+					$("#appDivPwd").hide();
+					$("#appDivComfirmPwd").hide();
+					$("#appTrueName").show();
+					$("#tipMsg").text("该账号可以使用");
+				}else if(data.pass == '2'){ //账号可以使用,但是是新用户
+					$("#divTrueName").text(data.msg);
+					$("#appDivPwd").show();
+					$("#appDivComfirmPwd").show();
+					$("#appTrueName").hide();
+					$("#tipMsg").text("该账号可以使用");
+				}else{
+					$("#tipMsg").text("该账号不能使用");
+				}
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+			}
+	 });
+	});
+	
+	 $("#appSave").bind("click",function(){
+		 //如果id有值,则是编辑子账号,否则是新增子账号.子账号编辑不走验证.直接提交请求
+		 if(!($("#appId").val())){
+			 var name = jQuery.trim($("#appName").val());
+			 var pwd = jQuery.trim($("#appPwd").val());
+			 var comfirmPwd = jQuery.trim($("#appComfirmPwd").val());
+			 if(!name){
+				 alert("子账号名称不能为空");
+				 return false;
+			 }
+			 var phoneReg = /^1\d{10}$/;
+			 if(!phoneReg.test(name)){
+				alert("请输入正确手机号码");
+				return false;
+			 }
+			 
+			 jQuery.ajax({
+					type : 'POST',
+					url : "$!webPath/checkexist2.htm",
+					data : {"uname":name},
+					success : function(data) {
+						data = eval( '('+ data +')');
+						if (data.pass == '1' || data.pass == '2') {
+							$("#divTrueName").text(data.msg);
+							$("#appDivPwd").hide();
+							$("#appDivComfirmPwd").hide();
+							$("#appTrueName").show();
+							if(data.pass == '1'){
+								$("#appExist").val("1");	
+							}else{
+								$("#appExist").val("2");
+							}
+							
+							$("#tipMsg").text("该账号可以使用");
+							//表示是新用户,需要走密码验证,和加密
+							if($("#appExist").val() == "2"){
+								 if(!pwd){
+									 alert("密码不能为空");
+									 return false;
+								 }
+								 if(pwd.length < 6){
+									 alert("密码长度不能小于6位");
+									 return false;
+								 }
+								 if(!comfirmPwd){
+									 alert("确认密码不能为空");
+									 return false;
+								 }
+								 if(!(pwd == comfirmPwd)){
+									 alert("两次密码输入不一致");
+									 return false;
+								 }
+								 var shaObj = new amallEncryption(pwd);
+								 var str = shaObj.getHash();
+								 $("#appPwd").val(str);
+								 
+								 if(map.get(key) == undefined){
+									 alert("还没有选择权限资源");
+									 return false;
+								 }
+								 //console.info(map.get(key));
+								 $("#theForm").submit();
+							 }
+							
+						}else{
+							$("#tipMsg").text("该账号不能使用");
+							return false;
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					}
+			 });
+			 
+		 }
+		
+		
+	 });
+	 
+	 $("#appReset").bind("click",function(){
+		 $("#appName").val("");
+		 $("#tipMsg").text("");
+		 $("#appDivPwd").show();
+		 $("#appDivComfirmPwd").show();
+		 $("#appTrueName").hide();
+	 });
+});
+
+</script>
+<style>
+	.xinghao{color:red; font-size:14px; line-height: 30px;}
+	.resetbtn{background-color: red; color:#fff; border-radius:5px;  margin-left:280px; padding: 2px 6px; cursor: pointer;}
+	.message{background-color:#0dd741; color:#fff; border-radius:5px;  margin-left:10px; padding:6px 12px; cursor: pointer;}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm")
+
+<div class="s_m"> 
+	<div class="buyer_position">
+        <div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">我的账户</a> > <span>添加子账号</span></div></div>
+        <div class="productmain">
+           	<div class="container" style="height:37px">
+            <ul class="section" style="padding: 0;">
+                <li class=""><a href='$!webPath/seller/seller_account_list.htm'>子账号列表</a></li>
+				<li class="li_this"><a href='$!webPath/seller/seller_account_edit.htm' >添加子账号</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav">
+                <form action="$!webPath/seller/seller_account_save.htm" method="post" name="theForm" id="theForm">
+                <input type="hidden" name="id" id="appId"/>
+                <input type="hidden" name="res" id="appRes"/>
+                <input type="hidden" name="exist" id="appExist"/>
+                
+                <div class="add_account">
+                	<div class="left1">子账号名称：</div>
+                	<div class="right1">
+                		<input class="add_account_text" type="text" id="appName" name="uname"/> <label class="xinghao">*</label>
+                		<a class="all_select_button" id="appCheck">检查账号是否可用 </a>
+                		<span id="tipMsg"></span>
+                	</div>
+                </div>
+                <div class="add_account" id="appDivPwd">
+                	<div class="left1">子账号密码：</div>
+                	<div class="right1"><input class="add_account_text" type="password" id="appPwd" name="upwd"/> <label class="xinghao">*</label> </div>
+                </div>
+                <div class="add_account" id="appDivComfirmPwd">
+                	<div class="left1">确认密码：</div>
+                	<div class="right1"><input class="add_account_text" type="password" id="appComfirmPwd"/> <label class="xinghao">*</label> </div>
+                </div>
+                
+                <div class="add_account" style="display: none;" id="appTrueName">
+                	<div class="left1">用户名称:</div>
+                	<div class="right1" style="padding-top: 5px;">
+	                	<span style="width: 300px;" id="divTrueName"></span>
+	                	<a id="appReset" class="resetbtn">我要重填</a>
+                	</div>
+                </div>
+                
+                <!-- <div class="add_account">
+                	<div class="left1">角色或部门：</div>
+                	<div class="right1">
+                		<ul class="juese">
+                			<li><input type="checkbox" />财务人员</li>
+                			<li><input type="checkbox" />产品人员</li>
+                			<li><input type="checkbox" />发货或物流人员</li>
+                			<li><input type="checkbox" />客服人员</li>
+                			<li><input type="checkbox" />客服人员</li>
+                		</ul>
+                	</div>
+                </div> -->
+                
+                
+                
+                <div class="add_account">
+                	<div class="left1">权限：</div>
+                	<div class="right1" style="border:1px solid #ccc; padding-left: 20px;">
+                		<ul class="quanxian">
+                		
+                			<li><input type="checkbox" value="appGoods" id="c_appGoods" onclick="selectedShow(this);"/>商品管理<label>（发布商品、编辑商品属性价格、商品上下架等 ）</label></li>
+                			
+                			<li><input type="checkbox" value="appOrder" id="c_appOrder" onclick="selectedShow(this);"/>交易管理<label>（指导客户下单、处理客户订单、发货 ）</label></li>
+                			
+                			<li><input type="checkbox" value="appSets" id="c_appSets" onclick="selectedShow(this);"/>店铺管理<label>（选择店铺模板风格、处理页面楼层等 ）</label></li>
+                			
+                			<li><input type="checkbox" value="appServer" id="c_appServer" onclick="selectedShow(this);"/>客户服务管理<label>（即时与客户沟通）</label></li>
+                			
+                			<li><input type="checkbox" value="appActivity" id="c_appActivity" onclick="selectedShow(this);"/>促销管理<label>（特价活动、团购活动）</label></li>
+
+                		</ul>
+                	</div>
+                </div>
+                
+                <div class="add_account" id="appDivSms">
+                	<div class="left1">子账号短信码验证：</div>
+                	<div class="right1">
+                		  <input class="add_account_text" type="text" name="smscode"/>
+                		 <span style="float:right;margin-top:-68px;"><a class="btn" href="javascript:strSendSms();" style="margin-top: 20px;margin-right: 30px;">
+	                        <span class="message" id="getSmsYzm" style="">获取短信码</span>
+	                      </a></span> 
+                	</div>
+                </div>
+                <div class="add_account">
+                	<span id="remainTime" class="f12" style="font:size:12px; padding-left:130px;color:#ff7200"></span>
+                </div>
+                
+                
+                
+                  <!-- <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                    
+                   
+                    <tr>
+                      <td width="102" align="right" valign="top" class="modifysp"><span>用户名：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td  class="px10">
+                      	<span class="setinputtext">
+                        	<input name="cashAmount" type="text" id="cash_amount" />
+                        </span>
+                      </td>
+                    </tr>
+                    <tr id="cash_user_tr" >
+                      <td align="right" valign="top" class="modifysp"><span>密码：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td  class="px10">
+                      	<span class="setinputtext">
+                        	<input name="cashUsername" type="text" id="cash_userName" />
+                        </span>
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                      <td align="right" valign="top" class="modifysp">操作资源配置：</td>
+                      <td  class="px10"></td>
+                    </tr>
+                    
+                    <tr>
+                    	<td align="right" valign="top" class="modifysp"> </td>
+                    	<td>商品管理</td>
+                    </tr>
+                    <tr>
+                    	<td align="right" valign="top" class="modifysp"><input type="checkbox" /></td>
+                    	<td>商品发布</td>
+                    </tr>
+                    
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td class="px10"><span class="setsub">
+                        <input name="" type="submit"  value="提交" style="cursor:pointer;height: 29px;border: 0;"/>
+                        </span></td>
+                    </tr>
+                  </table> -->
+                </form>
+                
+                <div class="add_account"  style="margin:0 0 38px 0;">
+                	<div class="left1"></div>
+                	<div class="right1"><button class="add_account_ok" id="appSave" style="background-color: #f1474a;">确 定</button></div>
+                </div>
+              </div>
+              <div id="appunadd">
+              	最多只能创建5个子账号$!isAdd
+              </div>	
+            </div>
+          </div>
+  </div>
+  </div>
+$!httpInclude.include("/footer.htm") 
+</body>
+</html>

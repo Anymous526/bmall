@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>账户设置-$!{config.title}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com"/>
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved"/>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<!-- 时间控件 -->
+<script type="text/javascript" src="$!webPath/assets/js/activitytime.js" ></script>
+
+<script type="text/javascript">
+ function areaEdit(){
+	 $("#setinput2").show();
+	 $("#setinput1").hide();
+ }
+</script>
+<script>
+ jQuery(document).ready(function(){
+	$(":radio[value=$!user.sex]").attr("checked",true);
+	 #if($!userArea)
+		 $("#setinput1").show();
+	 	 $("#setinput2").hide();
+	 #else
+		 $("#setinput2").show();
+ 	 	 $("#setinput1").hide();
+	 #end
+	 
+	//获取下级地区信息
+	  jQuery("select[id^=areas]").click(function(){				
+			var areaMark = jQuery(this).attr("areaMark");
+			var parentId = jQuery("#areas"+areaMark).val();	
+			//alert("areaMarkL:"+areaMark+"  parentId:"+parentId +" "+!isNaN(parentId));
+			if(!isNaN(parentId)){
+			jQuery.post("$!webPath/buyer/buyer_account_getAreaChilds.htm",{
+						"parentId":parentId,
+						"areaMark":areaMark
+						},function(data){
+							if(areaMark=="Province"){
+							jQuery("#areaId").html("<option>请选择...</option>");	
+							jQuery("#areasCity").html(data);
+								}
+							if(areaMark=="City"){
+							jQuery("#areaId").html(data);
+								}	
+							},"text");		
+	  	}
+	  });
+	  
+	 jQuery("#userSave").click(function(){
+		 
+		 var truename = jQuery("#truename").val();
+		 if(truename == ""){
+			 alert("真实姓名不能为空");
+			 return false;
+		 }
+		 var smscode = $("#smscode").val();
+		 if(typeof(smscode) == "undefined"){
+			 if(truename != '$!user.truename'){
+				 alert("修改真实姓名请输入手机验证码");
+				 jQuery("#areatr").after("<tr><td align='right' valign='top'>手机验证码：</td><td  class='px10'><span class='setinput'><input name='smscode' type='text' id='smscode' value='' /></span></td></tr>")
+				 
+				 var messageArray = new Array();
+					messageArray[0] = "请输入手机号";
+					messageArray[1] = "手机号已注册";
+					messageArray[2] = "今天短信次数超限,请明天再次尝试";
+					messageArray[3] = "两次发送间隔太短，请稍候再试";
+					messageArray[4] = "短信发送失败，请再次尝试";
+					messageArray[5] = "短信发送成功，请查收";
+					
+					jQuery.ajax({
+						type : 'POST',
+						url : "$!webPath/send_sms.htm",
+						data : {"phoneNum":'$!user.username',"forgot":"true"},
+						success : function(ret) {
+							alert(messageArray[ret]+",请输入手机验证码");
+							
+						},
+						error : function(jqXHR, textStatus, errorThrown) {
+							alert("短信验证码发送失败");
+						}
+					});
+				 
+			 }else{
+				 jQuery("#theForm").submit();
+			 }
+		 }else{
+			 jQuery.ajax({
+				type : 'POST',
+				url : "$!webPath/verify_sms_code.htm",
+				data : {"smscode":smscode},
+				success : function(ret) {
+					if(ret == "true")
+					{
+						jQuery("#theForm").submit();
+					}
+				    else
+					{
+						alert("验证码错误或验证码超时");
+					}
+					},
+				error : function(jqXHR, textStatus, errorThrown) {
+					alert("验证码错误或验证码超时");
+				}
+			});
+		 }
+	 });
+	  
+	 
+ });
+</script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div style="width:1200px; margin: 0 auto;">
+<div class="main">
+$!httpInclude.include("/buyer/buyer_left.htm?op=account")
+<div class="s_m">  
+        <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> ><a href="$!webPath/buyer/buyer_account.htm">账户设置</a> > <span>基本信息</span></div></div>
+        <div class="productmain">
+          <div class="container" style="height:37px">
+            <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href='$!webPath/buyer/buyer_account.htm' >基本信息</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_password.htm'>修改密码</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_email.htm'>修改电子邮件</a></li>
+				<li class=""><a href='$!webPath/buyer/buyer_account_mobile.htm'>修改账号</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_avatar.htm'>更换头像</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_verify.htm'>实名认证</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_updateNickName.htm'>修改昵称</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_updateTrueName.htm'>修改真实姓名</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav">
+                <form action="$!webPath/buyer/buyer_account_save.htm" method="post" name="theForm" id="theForm">
+                  <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                    <tr>
+                      <td width="100" align="right">用户名称：</td>
+                      <td class="px10">$!user.username</td>
+                    </tr>
+                    
+                    <tr>
+                      <td align="right">金币余额：</td>
+                      <td class="px10">$!{user.gold}</td>
+                       <input type="hidden" id="gold" name="gold" value="$!user.gold"/>
+                    </tr>
+                    <tr>
+                      <td align="right">电子邮箱：</td>
+                      <td class="px10">$!user.email#if($!user.email)<span style="color:#FF0000">[已绑定]</span><span style="color:#0000FF"><a href="$!webPath/buyer/buyer_account_email.htm">[修改]</a></span>#end</td>
+                       <input type="hidden" id="email" name="email" value="$!user.email"/>
+                    </tr>
+                    <tr>
+                      <td align="right">手机号码：</td>
+                      <td class="px10">$!user.mobile#if($!user.mobile)<span style="color:#FF0000">[已绑定]</span><span style="color:#0000FF"><a href="$!webPath/buyer/buyer_account_mobile.htm">[修改]</a></span>#else<a href="$!webPath/buyer/buyer_account_mobile.htm">[去绑定]</a>#end</td>
+                       <input type="hidden" id="mobile" name="mobile" value="$!user.mobile"/>
+                    </tr>
+                    <tr>
+                      <td align="right">真实姓名：</td>
+                      <td class="px10"><span class="setinput">
+                        <!-- <input name="truename" type="text" id="truename" value="$!user.truename" /> -->
+                        $!user.truename#if($!user.truename)<span style="color:#0000FF"><a href="$!webPath/buyer/buyer_account_updateTrueName.htm">[修改]</a></span>
+                       #else if($!user.getChgTruenameTimes() ==false) <span style="color:#FF0000">[已修改]</span>#end
+                        </td>
+                    </tr>
+                    <tr>
+                      <td align="right">性别：</td>
+                      <td class="px10">
+                      <label>
+                      <input type="radio" name="sex" id="radio" value="-1" style="padding-bottom: 4px;border: 0px;"/>
+                      		  保密
+                        </label> &nbsp; &nbsp;
+                        <label>
+                        <input type="radio" name="sex" id="radio" value="1" style="padding-bottom: 4px;border: 0px;"/>
+                     		   男 
+                        </label>
+                        &nbsp; &nbsp;
+                       <label>
+                        <input type="radio" name="sex" id="radio" value="0" style="padding-bottom: 4px;border: 0px;"/>
+                      		  女 
+                        </label></td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top" >生日：</td>
+                      <td  class="px10"><span class="setinput">
+                        <input name="birthday" type="text" id="birthday" value="$!CommUtil.formatShortDate($!user.birthday)" onclick="SelectDate(this,'yyyy-MM-dd')"/>
+                        </span></td>
+                    </tr>
+                    
+                     <tr>
+                      <td align="right" valign="top">QQ：</td>
+                      <td  class="px10"><span class="setinput">
+                        <input name="qq" type="text" id="qq" value="$!user.qq" />
+                        </span></td>
+                    </tr>
+                    
+                     <tr id="areatr">
+                      <td align="right" valign="top">所在地区：</td>
+                      <td  class="px10">
+	                       <span class="setinput" id="setinput">
+	                       	  
+	                       	   
+		                       <span id="setinput1">$!userArea.parent.parent.areaname $!userArea.parent.areaname $!userArea.areaname
+		                       <a href="javascript:void(0)" onclick="areaEdit();" style="color:blue">[修改]</a>
+		                       </span>
+		                       <span id="setinput2">
+		                       	<select id="areasProvince" areaMark="Province" style="width: 76px;">
+			                       <option>请选择...</option>
+			                       #foreach($area in $areas)
+			                       		<option value="$!area.id">$!area.areaname</option>
+			                       #end
+			                       </select>
+			                       <select id="areasCity" areaMark="City">
+			                       <option value="">请选择...</option>
+			                       </select>
+			                       <select id="areaId" name="areaId"> 
+			                       <option value="">请选择...</option>
+			                    </select>
+		                       </span>
+		                       
+	                       </span>
+                       </td>
+                    </tr>
+                 
+                    <tr>
+                      <td align="right" ></td>
+                      <td  class="px10">
+                      	<span class="setsub">
+                        	<input type="button" name="save"style="width:103px; height:29px;border: 0;" class="input_submit"  id="userSave" value="保存"/>
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div>
+   
+</div>
+</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

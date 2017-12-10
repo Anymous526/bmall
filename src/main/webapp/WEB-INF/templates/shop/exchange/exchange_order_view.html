@@ -1,0 +1,95 @@
+﻿<!doctype html>
+<html>
+<head>
+<title>订单成功 </title>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/tuangou.css" /> 
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+function gotoExchangeMainInOk(id){
+		window.location.href="$!webPath/exchange/exchange_index.htm?id="+id;
+}
+</script>
+
+</head>
+
+
+
+<body>
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/exchange/exchange_search3.htm") 
+
+<div class="shop_menu default_color" style="margin-top:0">
+	<div class="w990 shop_menu_nav">
+		<ul class="f14 fb"> 
+          	<li><a style="color:#ffffff" href="$!webPath/amall_member2.htm" >兑换首页</a></li>
+            <li><a style="color:#ffffff" href="$!webPath/exchange/exchange_index.htm" >所有商品</a></li>
+          	#foreach($ig in $igs)
+          	<li onclick="gotoExchangeMainInOk($!ig.igGcId)">$!ig.gc.classname</li>
+          	#end
+        </ul>
+	</div>      
+</div>
+
+
+
+
+<div class="w990 dhddh" style="margin-top: 30px;">
+
+	<div class="exchange_success_connent_box" >
+		<span class="exchange_success_icon"><img alt="" src="$!webPath/assets/img/exchange_success_icon.png"/></span>
+	</div>
+	   
+	<div class="exchange_success_connent">
+		<span style="font-size: 26px;font-weight: 900;">礼品兑换成功！
+			<a class="exchange_success_back_btn"><input name="" type="button" onclick="window.location.href='$!webPath/buyer/integral_order.htm'" value="查看已兑换商品" style="cursor:pointer;"/></a>
+			<a href="$!webPath/buyer/integral_order_view.htm?id=$!{igo.id}" style="font-size: 14px;cursor: pointer;">&nbsp;&nbsp;&nbsp;查看交易详情</a>
+	
+		</span>
+		<br/>订单编号:<span style="color: #66839e; font-size: 16px;"> $!orderID</span> 
+		<br/>消费礼品金：<span style="color: #f1474a; font-size: 16px;"> $!totalCost </span>币
+		
+	<br/><span class="exchange_success_connent_text" style="float:left;margin-top: 8px;cursor: pointer;"><img alt="" src="$!webPath/assets/img/lianxikefu.png"/></span>
+		
+		<br/><br/><br/><br/><span class="exchange_sucess_connent_text">欢迎您到
+			<a href="$!webPath/exchange/exchange_index.htm" class="exchange_success_connent_link" >&nbsp;天使兑换中心&nbsp;</a>发现更多可兑换商品！</span>
+		<br/><span class="exchange_success_connent_text">你可能需要：
+			<a href="$!webPath/buyer/buyer_index.htm" class="exchange_success_connent_link" >&nbsp;个人中心&nbsp;</a>|
+			<a href="$!webPath/buyer/integral_order.htm" class="exchange_success_connent_link" >&nbsp;已购买商品&nbsp;</a>|
+			<!-- <a href="$!webPath/buyer/buyer_favorite_goods.htm" class="exchange_success_connent_link" >&nbsp;未付款商品&nbsp;</a>| -->
+			<a href="$!webPath/buyer/buyer_favorite_goods.htm" class="exchange_success_connent_link" >&nbsp;我关注的商品&nbsp;</a>
+			</span>
+		<br/><img style="padding-top: 10px;padding-bottom: 10px;" alt="" src="$!webPath/assets/img/exchange_line.png">
+		<br/><span class="exchange_success_connent_text">常见问题：
+			<a href="http://help.amall.com/help/help_users_5_3_1.html" class="exchange_success_connent_link">&nbsp;天使商家延迟发货怎么办？&nbsp;</a>
+			<a href="http://help.amall.com/help/help_users_5_1_3.html" class="exchange_success_connent_link">&nbsp;收到的商品描述不符怎么办？&nbsp;</a>
+			<a href="http://help.amall.com/help/help_users_4_1_2.html" class="exchange_success_connent_link">&nbsp;为什么商品购买不了？&nbsp;</a>
+			<a href="http://help.amall.com/help/help_c.html" class="exchange_success_connent_link">&nbsp;更多常见问题 >>&nbsp;</a>
+			</span>
+		<br/><span class="exchange_success_connent_text" >交易管理：
+			<a href="$!webPath/buyer/integral_order.htm" class="exchange_success_connent_link">&nbsp;交易详情&nbsp;</a>
+			<a href="$!webPath/buyer/integral_order.htm" class="exchange_success_connent_link">&nbsp;交易管理&nbsp;</a>
+			</span>
+
+	
+	
+	
+	
+	</div>
+</div> 
+
+
+
+
+
+
+
+
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>
+
+

@@ -1,0 +1,845 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>$!obj.goodsName</title>
+<meta charset="UTF-8"/>
+<meta name="keywords" content="$!obj.seoKeywords" />
+<meta name="description" content="$!obj.seoDescription" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/detail.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/goodd.css"/>
+<link href="http://pc1.amallcdn.cn/assets/css/amall_big_banner.css" rel="stylesheet" type="text/css"/>
+<link href="http://pc3.amallcdn.cn/service/css/service.css" rel="stylesheet" type="text/css"/> 
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/duigou.css"> 
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" rel="stylesheet" type="text/css"/>
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/window.css" rel="stylesheet" type="text/css"/>   
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc5.amallcdn.cn/assets/js/12vb.js"></script>  
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script type="text/javascript" src="http://pc5.amallcdn.cn/resources/js/map.js"></script> 
+
+<!-- 配送至全国begin -->
+<!-- <link rel="stylesheet" type="text/css" href="$!webPath/assets/css/198zone.css"/> -->   
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/location.js"></script> 
+<!-- 配送至全国end --> 
+<script src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/jquery.tabso_yeso.js"></script>  
+ 
+
+
+<!-- 图片延迟加载 -->
+<script src="http://pc5.amallcdn.cn/assets/js/function.js" type="text/javascript"></script>
+<script src="http://pc6.amallcdn.cn/assets/js/jquery.lazyload.mini.js" type="text/javascript"></script>
+ 
+<script type="text/javascript">
+	var jq=jQuery.noConflict();
+	jq(function(){
+		
+		jq("#goods_img_detail").bind("click",function(){
+			$(this).siblings().removeClass("current");
+			$(this).addClass("current");
+			$("#sublist_0").show();
+			$("#sublist_3").hide();
+			$("#sublist_2").hide();
+		});
+		
+		jq("#goods_evaluation").bind("click",function(){
+			$(this).siblings().removeClass("current");
+			$(this).addClass("current");
+			$("#sublist_0").hide();
+			$("#sublist_3").hide();
+			$("#sublist_2").show();
+		});
+		
+		jq("#goods_endSer").bind("click",function(){
+			$(this).siblings().removeClass("current");
+			$(this).addClass("current");
+			$("#sublist_0").hide();
+			$("#sublist_3").show();
+			$("#sublist_2").hide();
+		});
+		
+		
+		jq("img.lazy").lazyload({placeholder:"$!webPath/assets/img/32-32.gif",effect:"fadeIn"});
+	});
+</script>
+<!-- 图片延迟加载 -->
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	
+	var price = $!obj.goodsNumber;
+	
+	$(".ajia").click(function(){
+		var currentCount = $(".order_number").val();
+		if(currentCount == 1)
+		{
+			return false;
+		}
+		
+		$(".order_number").val(Number(currentCount) - 1);
+		
+		var totalPrice = (Number(currentCount) - 1) * Number(price);
+		
+		$(".de_pri").text("礼品金：" + totalPrice);
+	});
+	
+	$(".ajian").click(function(){
+		
+		var currentCount = $(".order_number").val();
+		var mayBuyCount = $!obj.goodsCount - $!obj.buyerCodeCount;
+		var limitCount = $!obj.exchangeLimit;
+		
+		if(Number(mayBuyCount) <= Number(currentCount) || Number(limitCount) <= Number(currentCount))
+		{
+			return false;
+		}
+		
+		$(".order_number").val(Number(currentCount) + 1);
+		
+		var totalPrice = (Number(currentCount) + 1) * Number(price);
+		
+		$(".de_pri").text("礼品金：" + totalPrice);
+	});
+	
+	$(".order_number").blur(function(){
+		
+		var currentCount = $(".order_number").val();
+		var mayBuyCount = $!obj.goodsCount - $!obj.buyerCodeCount;
+		var limitCount = $!obj.exchangeLimit;
+		
+		if(!/^[1-9]\d*$/.test(currentCount)){
+			alert("请输入大于等于1的整数");
+			$(".order_number").val(1);
+		}
+		
+		if(Number(mayBuyCount) < Number(currentCount))
+		{
+			$(".order_number").val(mayBuyCount);
+		}
+		
+		if(Number(limitCount) <= Number(currentCount))
+		{
+			$(".order_number").val(limitCount);
+		}
+		
+		var totalPrice = Number($(".order_number").val()) * Number(price);
+		
+		$(".de_pri").text("礼品金：" + totalPrice);
+	});
+	
+});
+</script> 
+</head>
+<body> 
+<i id="end"></i> 
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/head.htm") 
+<div style="width:100%;">
+$!httpInclude.include("/nav2.htm")
+</div> 
+$!httpInclude.include("/login_block.htm")
+ 
+
+<div class="w1190" style="position: relative;margin-top:30px;">
+ <form  action="$webPath/angel_exchange_pay.htm" method="post"> 
+  <input type="hidden" value="$!obj.exchangeLimit" id="number_limit">
+  <input type="hidden" value="$!obj.id" name="id">
+      
+  <div class="detail_info">
+  
+    <div class="detail_shop_img">
+      <div id="preview" class="spec-preview"> 
+		<span class="jqzoom">
+      		<img jqimg="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name" src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name" />
+		</span> 
+	  </div>
+            
+      <!--缩图开始-->
+      <div class="spec-scroll"> <a class="prev">&lt;</a> <a class="next">&gt;</a>
+        <div class="items">
+          <ul>
+          	<li><img bimg="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name" src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name" onmousemove="preview(this);"/></li>
+          </ul>
+        </div>
+      </div> 
+     
+      </div>
+     <!--缩图结束-->
+    <!--商品信息star-->
+     <div class="detail_shop_info">
+      <div class="shop_tit">
+        <p class="f18 c3 fb wei">$!obj.goodsName</p>
+        <p class="f14 cred">序号 <label>$!obj.id</label> 互助兑。</p>
+      </div>
+      
+      #if(!$!obj.openWinnerTime)
+      <div class="amall_prc pt10 mt15 pb10" id="wjx21" style="background: #f7f7f7; height:320px; position: relative; display:block">
+      	<div class="de_time">
+      		<div class="settime2" endtime="$CommUtil.formatLongDate($obj.endTime)">00.00:00:00</div>
+      		<div class="de_pri">礼品金：$!obj.goodsNumber</div>
+      		<div class="new_load2">
+				<span class="now_load" id="$obj.id"></span>	
+			</div>
+			
+			<div class="new_num2">
+				<span class="num_left2"><label class="color5">$obj.buyerCodeCount</label><label>已参与</label></span>
+				<span class="num_right2"><label class="color6">#set($count=$obj.goodsCount - $obj.buyerCodeCount)$!count</label><label>剩余</label></span>
+			</div>
+			<div class="amall_hei" style="color:#d33650;font-size:14px;line-height:30px;">限制兑换数量：#if($count < $!obj.exchangeLimit) $count #else $!obj.exchangeLimit #end</div>
+			<div class="amall_hei"> 
+	          <div class="detail_dt" style="width:60px;overflow:hidden;height:30px; text-align: left">数 量：</div>
+	          <div class="detail_dd"> 
+	          	<span class="tb-stock" style="width:100%; overflow: hidden;"> 
+	          		<a href="javascript:void(0);"  class="ajia">-</a>
+		            <input type="text" class="order_number" value="1" maxlength="8" name="count">
+		            <a href="javascript:void(0);" class="ajian" style="float:left; margin-right: 10px;">+</a>
+	            </span>  
+	          </div>
+	        </div>
+			
+			<div class="duig_sub">
+				<input class="submitok" type="submit" value="立即兑换"/>
+			</div>
+			</div>
+			</div>
+			
+			
+        #else
+         
+        <div class="amall_prc pt10 mt15 pb10" id="yjx21" style=" background-image:url('$!webPath/assets/img/nced_2.png'); height:320px; position: relative; display:block;"><!-- 时间到！block -->
+        	<div class="jiexiao_tit"><span>揭晓结果</span></div>
+        	<div class="kaijiang_num">
+        		<span class="num_big">$!obj.openWinnerCode</span>
+        		<span class="num_small">
+        			<p>恭喜 <label style="color:red; font-size:14px; font-weight:900"> $!obj.user.truename </label> 获得本期商品</p>
+					<p>揭晓时间：$CommUtil.formatLongDate($!obj.openWinnerTime)</p>
+					<p>参与时间：$CommUtil.formatLongDate($!buyerAddTime)</p>
+        		</span>
+        	</div>
+        </div> 
+        #end 
+        <script type="text/javascript"> 
+        jQuery(".Region>ul>li>a").click(function(){
+        	  var city_name=jQuery(this).attr("city_name");	
+        	  jQuery.ajax({type:'POST',url:'$!webPath/trans_fee.htm',dataType:'json',data:{"city_name":city_name,"goods_id":"$!{obj.id}"},
+        				   beforeSend:function(){
+        					    jQuery("#current_city_info").html('<img style="padding-top:3px;" src="$!webPath/resources/style/common/images/wait.gif" width="14" height="14" />');
+        					    jQuery("#goods_mail_fee").html('<img style="padding-top:3px;" src="$!webPath/resources/style/common/images/wait.gif" width="14" height="14" />');
+        						jQuery("#goods_express_fee").html('<img style="padding-top:3px;" src="$!webPath/resources/style/common/images/wait.gif" width="14" height="14" />');
+        						jQuery("#goods_ems_fee").html('<img style="padding-top:3px;" src="$!webPath/resources/style/common/images/wait.gif" width="14" height="14" />');				
+        					},
+        				   success:function(json){
+        					    jQuery("#current_city_info").html(json.current_city_info);
+        					    jQuery("#goods_mail_fee").html('¥'+json.mail_fee);
+        						jQuery("#goods_express_fee").html('¥'+json.express_fee);
+        						jQuery("#goods_ems_fee").html('¥'+json.ems_fee);
+        					 }
+        				  });
+        	  jQuery(".Cities").hide();	
+        	  jQuery(".goods_ct").hide();
+        	});
+        	//
+        	jQuery(".enjoy_btn").mouseover(function(){
+        	   jQuery(".enjoy_box").show();
+        	 }).mouseleave(function(){
+        	   jQuery(".enjoy_box").hide();
+        	 });
+        	// 
+        </script>
+</div>   
+      <!--商品信息end--> 
+    <!--商品信息end--> 
+    <div class="shop_seller"> 
+      <div class="guiz_tit"><img src="$!webPath/assets/img/duigz.jpg" /></div> 
+      <div class="guiz_info" style="padding-left:14px;"> 
+      		<b>互助兑：</b>
+	        <p>用礼品金兑换礼品，<span style="color:#e516a5">升级/充值</span>自动获得礼品金；</p>
+	        <b>互助码：</b>
+	        <p>参与兑换礼品时，随机分配<span style="color:#e516a5">唯一</span>互助码；</p> 
+      		<b>幸运码（幸运星）：</b> 
+            <p>兑换时，每位参与者填写 <= <span style="color:#e516a5">自己参与份数</span>的投票；投票<span style="color:#e516a5">相加总和</span>即为幸运码，拥有<span style="color:#e516a5">幸运码</span>者即成为<span style="color:#e516a5">幸运星</span>获得该礼品。</p>
+            <p style="margin-top:5px;color:#0d4877">备注：倒计时间截止，礼品未兑换完，系统自动退还礼品金。</p> 
+             
+ 
+      </div>
+
+    </div> 
+</form> 
+</div>  
+  </div>
+<div class="gongshi_txt"> 
+	<div class="xqzk"><a id="xqzk">展开</a></div> 
+	<h2>计算公式</h2> 
+	<p><img src="$!webPath/assets/img/jsjg.png" /></p>
+	       <b>互助码：</b>
+	        <p>1、每件商品平均分成若干"等份",1份对应1个互助码</p>
+	        <p>2、兑换成功后，系统根据随机算法分配互助码，1 ≤ 互助码 ≤ 等份总数</p> 
+      		<b>幸运码(幸运星)：</b> 
+            <p>1、兑换时，每份必须由兑换者选择数字"0"或"1"，系统保存</span></p>
+            <p>2、商品兑完，系统自动把兑换者选择的所有数字"0"和"1"相加，总和即为幸运码，1 ≤ 幸运码 ≤ 等份总数</p> 
+       
+	<label>备注</label>
+	<p>为避免出现兑换者全部选择“0”导致跳单现象，系统默认第一位兑换者选择“1”；同一商品可兑换一份或多份，一次或多次;若倒计时间截止，商品未售完，系统自动退还礼品金;参与者秉着自愿参与的原则，阅读并同意《天使兑换规则协议》方可参与兑换；揭晓幸运码的同时，也将公布所有参与者的选择，保障了兑换结果的公正公平公开。</p>
+	<div class="xqsq"><a id="xqsq">收起</a></div>
+</div>
+ 
+<div class="shop_content"> 
+  <div class="c_right" style="width:100%; float:left"> 
+	<ul class="tabbtn" id="normaltab">
+		<li class="current" id="goods_img_detail"><a href="javascript:void(0);" >商品详情</a></li>
+		<li id="goods_evaluation"><a href="javascript:void(0);" >参与记录<span class="c005ea7">（$!buyerList.size()）</span></a></li>
+		<li id="goods_endSer" ><a href="javascript:void(0);" >晒单</a></li>
+	</ul><!--tabbtn end-->
+	
+	
+	
+	
+	<div class="tabcon pd20" id="normalcon">
+		<div class="sublist pd20" id="sublist_0">
+			$obj.igContent
+		</div>
+		
+		
+		<div class="sublist comment_c" name="sublist" id="sublist_2" style="display:none">
+			<div class="canyu_info">
+				<div class="canyutit">
+					<span class="c10" style="width:20%;">参与时间</span>
+					<span class="c15" style="width:20%;">用户名称</span>
+					<span class="c15" style="width:20%;">兑换份数</span>
+					<span class="c15" style="width:15%;">选择的数</span>
+					<span class="c15" style="width:20%;">互助码</span>
+				</div>
+				
+	            <dl>
+	            #foreach($buyer in $!buyerList)
+	            	<dd id="$buyer.user.id">
+	            		<span style="width:20%; text-align: center;">$CommUtil.formatLongDate($buyer.addtime)</span>
+	            		<span style="width:20%; text-align: center;"><a href=""> 
+	            		#if($buyer.user.truename.length()>0)
+					    $buyer.user.truename
+					    #else
+					           无名
+					    #end         
+	            		</a></span>
+	            		<span style="width:20%; text-align: center;">#if($buyer.cloudCodesCount) $buyer.cloudCodesCount #else $buyer.buyCounts #end</span>
+	            		<span style="width:15%; text-align: center;">#if(!$buyer.cloudCodesCount) $buyer.userSelectNumber #end</span>
+	            		<span style="width:20%; text-align: center;display:none" class="cs-wei">#if(!$buyer.cloudCodesCount) $buyer.cloudCodesDetail #end</span>
+	            		<span style="width:20%;margin-top:0px;">
+	            		<ul class="wei2"></ul>
+	            		</span>
+	            		<span style="width:5%; text-align: center;color:#06799f;cursor:pointer" class="$buyer.user.id"></span>
+	            	</dd>
+	            #end
+	            </dl>
+            </div>
+            
+		</div>
+		
+		<div class="sublist pd20" id="sublist_3" style="display:none">
+		
+			#if(!$!order)
+			<div class="shaidan_yes" >
+				<p></p><p></p>
+				<p><img src="$!webPath/assets/img/wwcsd.png" /></p>
+				<p></p><p></p><p></p>
+			</div>
+			#else
+			<div class="shaidan_none">
+				<div class="de_sh_user">
+					<img src="$!{config.imagewebserver}/$!order.user.photo.path/$!order.user.photo.name" />
+					<p><a href="#">
+					#if($order.user.truename.length()>0)
+					$order.user.truename
+					#else
+					无名
+					#end
+					</a></p>
+				</div>
+				<div class="de_sh_info">
+					<div class="sh_info_tit">
+						<span class="sh_info_tit_right">$CommUtil.formatLongDate($order.addtime)</span>
+					</div>
+					
+					<div>
+						<span class="de_content">$order.context</span>
+						<span class="de_img_three">
+						    #if($order.accessory_one)
+                                <img src="$!{config.imagewebserver}/$order.accessory_one.path/$order.accessory_one.name" alt=""/>
+                            #end
+                            #if($order.accessory_two)
+                                <img src="$!{config.imagewebserver}/$order.accessory_two.path/$order.accessory_two.name" alt=""/>
+                            #end
+                            #if($order.accessory_three)
+                                <img src="$!{config.imagewebserver}/$order.accessory_three.path/$order.accessory_three.name" alt=""/>
+                            #end
+						</span>
+					</div>
+				</div>
+			</div>
+			#end
+			 
+		</div>
+	</div>
+</div>
+</div>  
+ 
+ 
+ 
+$!httpInclude.include("/footer.htm") 
+ 
+ 
+<script type="text/javascript" src="$!webPath/assets/js/jquery.simplemodal.js"></script> <!--遮罩-->
+<script type="text/javascript" src="$!webPath/assets/js/gallery.js"></script>            <!--遮罩-->
+
+<script src="http://pc6.amallcdn.cn/assets/js/location.js"></script> 
+
+<!-- 图片放大镜 别乱动位置 -->
+<script type="text/javascript" src="$!webPath/assets/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/base.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/jquery.jqzoom_wei.js"></script>
+<script type="text/javascript">
+//图片放大镜效果
+$(document).ready(function(){  
+	var web21=$(window).width(); 
+ 
+	if(web21<=800){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:200,
+			position: "right",
+			preload: 1
+			});
+	} 
+	if(web21<=1040  && web21>800){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:200,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1060  && web21>1040){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:205,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1100  && web21>1060){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:210,
+			position: "right",
+			preload: 1
+			});
+	} 
+	 
+	else if(web21<=1120  && web21>1100){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:215,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1140  && web21>1120){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:215,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1150  && web21>1140){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:210,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1160  && web21>1150){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:210,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1170  && web21>1160){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:210,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1180  && web21>1170){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:210,
+			position: "right",
+			preload: 1
+			});
+	} 
+	
+	else if(web21<=1190  && web21>1180){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:210,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1200  && web21>1190){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:200,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1210 && web21>1200){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:200,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1220 && web21>1210){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:195,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1230 && web21>1220){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:190,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1240 && web21>1230){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:190,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1250 && web21>1240){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:180,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1270 && web21>1250){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:170,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1280 && web21>1270){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:164,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1290 && web21>1280){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:160,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1300 && web21>1290){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:154,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1310 && web21>1300){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:150,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1320 && web21>1300){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:145,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1330 && web21>1320){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:140,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1340 && web21>1330){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:135,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1350 && web21>1340){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:130,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1380 && web21>1350){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:120,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1400 && web21>1380){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:110,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1410 && web21>1400){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:100,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1420 && web21>1410){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:95,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1430 && web21>1420){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:90,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1440 && web21>1430){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:84,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1450 && web21>1440){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:80,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1460 && web21>1450){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:75,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1470 && web21>1460){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:70,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1480 && web21>1470){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:65,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1490 && web21>1480){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:60,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1500 && web21>1490){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:55,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1510 && web21>1500){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:50,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1520 && web21>1510){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:45,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1530 && web21>1520){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:40,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1540 && web21>1530){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:35,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1550 && web21>1540){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:50,
+			position: "right",
+			preload: 1
+			});
+	}
+	else if(web21<=1570 && web21>1550){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:30,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1600 && web21>1570){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:10,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else if(web21<=1920 && web21>1600){
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:-150,
+			position: "right",
+			preload: 1
+			});
+	} 
+	else{ 
+		$(".jqzoom").jqueryzoom({
+			xzoom:400,
+			yzoom:410, 
+			offset:-200,
+			position: "right",
+			preload: 1
+			});
+	}
+	
+});
+</script> 
+<!-- 图片放大镜 别乱动位置 end-->
+</body> 
+</html>
+ 
+

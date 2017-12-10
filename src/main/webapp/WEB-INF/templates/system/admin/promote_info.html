@@ -1,0 +1,58 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!--[if IE]>
+<style type="text/css">
+.input{behavior: url($!webPath/resources/style/common/css/ie-css3.htc);}
+</style>
+<![endif]-->
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+	$(function(){
+		$("#savePromote").click(function(){
+			var id = $("#promoteId").val();
+			var title = $("#title").val();
+			var content = $("#content").val();
+			jQuery.post("$!webPath/admin/promote_info_save.htm",{id:id,title:title,content:content},function(data){
+				if(data == 'true'){
+					alert("编辑成功！");
+				}else{
+					alert("编辑失败！");
+				}
+			},"text");
+		});
+	});
+</script>
+</head>
+<body scroll="yes">
+<div class="cont">
+  <h1 class="seth1">推广信息</h1>
+  <div class="settab"> 
+  <span class="tab-two"></span>	</div>
+    <div class="allmem_search">
+      <ul>
+				<li>
+					<h2>推广消息标题</h2><br/>
+					<input type="hidden" id="promoteId" name="promoteId" value="$!obj.id"/>
+					<input name="title" id="title" value="$!obj.title"/>	
+					<h2>推广消息内容</h2>
+					<li><textarea name="content" cols="50" rows="4"
+							id="content" class="mp_textarea">$!obj.content</textarea></li>
+					<span class="btn_search mp_btn_search"> 
+					 	<input id="savePromote" type="button" value="保存" style="cursor: pointer;" />
+					</span>
+				</li>
+			</ul>
+    </div>
+  
+</div>
+</body>
+</html>

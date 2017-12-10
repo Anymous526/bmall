@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!config.title </title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" /><!-- 大方块样式 -->
+
+<!-- 买家中心模块 -->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css"/>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css"/>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	var lis = jQuery(".tools ul li");
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+});
+function gotoGroupOrder(){
+	jQuery.ajax({
+		type:'POST',
+		url:"$!webPath/buyer/group_order.htm",
+		data:{"currentPage":1},
+		success:function(data){
+			$("#rightBody").html(data);
+		},
+		error:function(){
+			alert("请检查内部错误");
+		}
+		
+	});
+} 
+
+function gotoOrderCancelRecord() {
+	jQuery.ajax({
+		type:'POST',
+		url:"$!webPath/buyer/order_cancel_record.htm",
+		data:{"currentPage":1},
+		success:function(data) {
+			$("#rightBody").html(data);
+		},
+		error:function(){
+			alert("请检查内部错误");
+		}
+	});
+}
+</script>
+
+</head>
+
+<body style="background-color:#fff">
+
+<!--买家中心模块  -->
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+	<div class="user_main w1200">
+		$!httpInclude.include("/buyer/buyer_left.htm")
+		
+		<div id="rightBody">
+			<div class="seller_shop" style="margin-left: 10px;">
+				<h3>开通店铺</h3>
+				
+					<div class="create_guide_one">
+						<span class="create_guide_img_span_1">选择支付方式</span>
+						<span class="create_guide_img_span_2_1" style="color: #646464">支付结果</span>
+						
+					</div>
+					
+					<div class="create_apply_cn_box">
+						<!-- 内容 -->
+						<div class="apply_success_icon_box" >
+							<span class="apply_success_icon"><img alt="" src="$!webPath/assets/img/exchange_success_icon.png"></span>
+				   		</div>
+				   		
+						<div class="apply_success_connent">
+							<span style="font-size: 26px;font-weight: 900;color: #323232">保证金缴纳失败，原因如下。</span>
+							<div style="width: 200px; height: 400px;background-color:#f1f1f1;border: 1px solid #ccc;">
+								<span>▪ 支付方式错误。</span>
+								<span>▪ 支付企业执照审核不合格。</span>
+								<span>▪ 身份证号码与照片不符。</span>
+								<span>▪ 联系电话无法接通。</span>							
+							</div>
+							<br/><br/><br/><br/><br/><br/>
+							<div style="color:#205ab3">
+								<span style="font-size: 18px;font-weight: 900;color: #323232">支付遇到的问题？</span>
+								<span>扣费成功了，但显示缴纳失败</span>
+								<span>为什么手机号码与银行预留号码不一致？</span>
+								<span>如何更换网银方式完成付款？</span>
+								<span>怎么查看交易状态？</span>							
+							</div>
+							
+							<br/><span style="height:20px;width:400px; border-bottom: 1px solid #f0f0f0;"></span>
+							<br/><span>如有疑问，请联系客服。客服电话：<a style="font-size: 18px;font-weight: 800px;">4007777017</a></span>
+							<br/><span>如果在审核过程中遇到问题，请前往<a target="_blank" href="http://help.amall.com/help/help_c.html">&nbsp; 帮助中心&nbsp;</a>寻找帮助。</span>
+						</div>
+				   		
+		   
+						
+					</div>
+					
+			</div>
+		</div>
+	</div>
+$!httpInclude.include("/footer.htm")
+</body>
+
+</html>

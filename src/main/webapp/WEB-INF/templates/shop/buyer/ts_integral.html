@@ -1,0 +1,131 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>积分兑换 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<style>
+.dqjf{margin-top: 30px; height: 30px; line-height:30px; width:90%; border:1px solid #F90; margin-left: 20px; padding-left:15px}
+.dqjf label{color:#a90000; font-weight:bold; font-size:14px; padding-left: 5px; padding-right: 5px}
+.shurujf{margin-top: 30px;width:90%;margin-left: 20px; padding-left:15px}
+.txt_tr{text-align: right; width:100px; float:left; height:30px; line-height: 30px;}
+.jfinpu{height:26px; line-height: 26px; font-size:14px; outline：none； color:#a90000; font-weight:bold; width:100px; text-align: right;}
+.duicjf{font-size:40px; color:#a90000; font-family:'黑体'; font-weight:bold;}
+.dhan{border:none;background-color: #ff4400; color:#fff; padding:7px 19px 7px 19px;border-radius:3px; margin-left:83px; margin-top: 30px; cursor: pointer;}
+</style>
+
+<script>
+
+	
+var proportion = "$!proportion";
+function jfinpuValueChange(e){
+	var b = 0;
+	if(isNaN(e.value)){
+		alert("只能输入数字");
+		e.focus(); 
+		return;
+	}
+
+	if(e.value==null){
+		alert("输入积分不能为空");
+		e.focus();
+		return;
+	}
+	var current = jQuery("#currentIntegral").text();
+	var yesCurrent = jQuery("#yesCurrentIntegral").text();
+	var integral=$("#integral").val();
+	var cash =e.value;
+	if(cash > parseInt(current)){
+		alert("积分不足");
+		return;
+	}
+	if(e.value>0){
+		 b = parseInt(e.value/proportion);
+	}
+	
+	if(parseInt(integral)<proportion){
+		alert("积分不足");
+		return;
+	} 
+	jQuery(".duicjf").text(b);
+	jQuery("#tianshiB").val(b);
+	
+}
+
+
+function checkAndSubmit(){
+	var jf = jQuery("#integ").val();
+	jQuery("#integ").focus();
+	if(jf==""){
+		alert("输入积分必须大于0");
+		return;
+	}
+	jQuery("#ListForm").submit();
+}
+
+
+
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="main">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+    <form action="$!webPath/buyer/integral_cash.htm" method="post" id="ListForm">
+          <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>积分记录</span></div></div>
+          <div class="productmain">
+           <div class="ordernav container">
+            <ul class="orderul section">
+              <li class="this"><a href="$!webPath//buyer/goldIntegralExchange.htm">积分兑换</a></li>
+              <li class="btn btn-1 btn-1b"><a href="$!webPath/buyer/integral_order_list.htm">兑换记录</a></li>
+            </ul>
+          </div>
+          <div class="ordercon">
+			<div class="dqjf">
+			<input type="hidden" name="integral" id="integral" value="$!user.integral"/>
+				您当前的累计积分为：<label id="currentIntegral">$!user.integral</label> 分<!-- ,可兑换礼品金为
+				<label id="yesCurrentIntegral">#set($size = $!user.integral / $!proportion )$!size</label>礼品金 -->
+			</div>
+			<!-- 暂时不让自行积分兑换 -->
+			<!-- <div class="shurujf">
+				<span class="txt_tr">请输入积分数量：</span>
+				<span><input class="jfinpu" id="integ" onblur="jfinpuValueChange(this)" type="text" name="cashIntegral" /></span> 分($!proportion分/1礼品金)
+			</div>
+			
+			<div class="shurujf">
+				<span class="txt_tr" style="padding-top:20px;">礼品金：</span>
+				<span> <label class="duicjf">0</label>礼品金</span>
+				<input type="hidden" id = "tianshiB" name="gold"/>
+			</div>
+			
+			<div><input class="dhan" value="立即兑换" type="button" onclick="checkAndSubmit()"></input></div> 
+			
+			
+			
+			<div class="dqjf" style="color:#999; border:none">
+				温馨提示：积分兑换成功后支持积分返还或体现； 如兑换成功积分余额未更新可刷新或重新登录
+			</div>-->
+          	<!-- 温馨提示暂时使用以下 -->
+          	<div class="dqjf" style="color:#666; border:none">
+				温馨提示：当积分积满1000分时，系统将自动帮你兑换<span style="color:#a90000;font-size: 18px;"> 1 </span>礼品金！
+
+			</div>
+          	
+          	
+          </div>
+       </div>
+    </form>
+  </div>
+   </div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

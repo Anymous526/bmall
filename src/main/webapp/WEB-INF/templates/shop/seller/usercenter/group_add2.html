@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>团购管理 </title>
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+
+<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<script src="$!webPath/resources/js/jquery.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+
+<script>
+
+$(function($){
+	 //{"width":220,"height":330}
+  
+  $('#gg_acc2').uploadify({
+   　　 'method': 'get',
+      'auto ': true,
+      'swf': '$!webPath/resources/uploadify/uploadify.swf',
+      'uploader' : '$!webPath/seller/seller_upload.htm',
+      'buttonText': '图片上传',
+      'fileTypeExts': '*.png;*.jpg;;*.gif',
+      'width': 80,
+      'height': 20,
+      'formData':{"width":220,"height":330},
+      'fileObjName' : 'Filedata',
+      'multi': false,
+      'auto': false,
+      'queueSizeLimit': 5,
+      'fileSizeLimit': '5MB',
+      'onUploadStart': function (file) {
+         
+      },
+      'onUploadSuccess': function (file, data, response) {
+		console.info(file);
+		console.info(data);
+		console.info(response);
+      }
+　});
+  
+
+});
+
+
+</script>
+
+</head>
+<body>
+  
+          
+<input type="file" name="gg_acc2" id="gg_acc2" />
+          	最佳尺寸：390px*261px
+<a href="javascript:$('#gg_acc2').uploadify('upload', '*')">上传文件</a> | 
+<a href="javascript:$('#gg_acc2').uploadify('cancel', '*')">停止上传!</a>
+                     	
+            
+
+</body>
+</html>

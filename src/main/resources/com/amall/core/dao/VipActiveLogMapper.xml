@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.VipActiveLogMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.VipActiveLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="angel_gold" property="angelGold" jdbcType="INTEGER" />
+    <result column="upgrade_fee" property="upgradeFee" jdbcType="DECIMAL" />
+    <result column="pay_id" property="payId" jdbcType="BIGINT" />
+    <result column="Financial_gold" property="financialGold" jdbcType="INTEGER" />
+	<result column="pay_user_id" property="payUserId" jdbcType="BIGINT" />
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+ 	 <association property="payOrder" column="pay_id" javaType="com.amall.core.bean.AlipayOrder" select="com.amall.core.dao.AlipayOrderMapper.selectByPrimaryKey"/>
+  </resultMap>
+   <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.VipActiveLog" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, user_id, angel_gold, upgrade_fee, pay_id, pay_user_id, Financial_gold
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.VipActiveLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_vipactivelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.VipActiveLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_vipactivelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_vipactivelog
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.VipActiveLogExample" >
+	select
+	<if test="distinct" >
+	  distinct
+	</if>
+	<include refid="Base_Column_List" />
+	from amall_vipactivelog
+	<if test="_parameter != null" >
+	  <include refid="Example_Where_Clause" />
+	</if>
+	<if test="orderByClause != null" >
+	  order by ${orderByClause}
+	</if>
+	<if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select> 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_vipactivelog
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.VipActiveLogExample" >
+    delete from amall_vipactivelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.VipActiveLog" >
+    insert into amall_vipactivelog (id, addTime, user_id, 
+      angel_gold, upgrade_fee, pay_id, 
+      pay_user_id, Financial_gold, content
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, 
+      #{angelGold,jdbcType=INTEGER}, #{upgradeFee,jdbcType=DECIMAL}, #{payId,jdbcType=BIGINT}, 
+      #{payUserId,jdbcType=BIGINT}, #{financialGold,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.VipActiveLog" >
+    insert into amall_vipactivelog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="angelGold != null" >
+        angel_gold,
+      </if>
+      <if test="upgradeFee != null" >
+        upgrade_fee,
+      </if>
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="payUserId != null" >
+        pay_user_id,
+      </if>
+      <if test="financialGold != null" >
+        Financial_gold,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="angelGold != null" >
+        #{angelGold,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeFee != null" >
+        #{upgradeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=BIGINT},
+      </if>
+      <if test="payUserId != null" >
+        #{payUserId,jdbcType=BIGINT},
+      </if>
+      <if test="financialGold != null" >
+        #{financialGold,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.VipActiveLogExample" resultType="java.lang.Integer" >
+    select count(*) from amall_vipactivelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_vipactivelog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.angelGold != null" >
+        angel_gold = #{record.angelGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.upgradeFee != null" >
+        upgrade_fee = #{record.upgradeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.payId != null" >
+        pay_id = #{record.payId,jdbcType=BIGINT},
+      </if>
+      <if test="record.payUserId != null" >
+        pay_user_id = #{record.payUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.financialGold != null" >
+        Financial_gold = #{record.financialGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_vipactivelog
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      angel_gold = #{record.angelGold,jdbcType=INTEGER},
+      upgrade_fee = #{record.upgradeFee,jdbcType=DECIMAL},
+      pay_id = #{record.payId,jdbcType=BIGINT},
+      pay_user_id = #{record.payUserId,jdbcType=BIGINT},
+      Financial_gold = #{record.financialGold,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_vipactivelog
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      angel_gold = #{record.angelGold,jdbcType=INTEGER},
+      upgrade_fee = #{record.upgradeFee,jdbcType=DECIMAL},
+      pay_id = #{record.payId,jdbcType=BIGINT},
+      pay_user_id = #{record.payUserId,jdbcType=BIGINT},
+      Financial_gold = #{record.financialGold,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.VipActiveLog" >
+    update amall_vipactivelog
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="angelGold != null" >
+        angel_gold = #{angelGold,jdbcType=INTEGER},
+      </if>
+      <if test="upgradeFee != null" >
+        upgrade_fee = #{upgradeFee,jdbcType=DECIMAL},
+      </if>
+      <if test="payId != null" >
+        pay_id = #{payId,jdbcType=BIGINT},
+      </if>
+      <if test="payUserId != null" >
+        pay_user_id = #{payUserId,jdbcType=BIGINT},
+      </if>
+      <if test="financialGold != null" >
+        Financial_gold = #{financialGold,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.VipActiveLog" >
+    update amall_vipactivelog
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      angel_gold = #{angelGold,jdbcType=INTEGER},
+      upgrade_fee = #{upgradeFee,jdbcType=DECIMAL},
+      pay_id = #{payId,jdbcType=BIGINT},
+      pay_user_id = #{payUserId,jdbcType=BIGINT},
+      Financial_gold = #{financialGold,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.VipActiveLog" >
+    update amall_vipactivelog
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      angel_gold = #{angelGold,jdbcType=INTEGER},
+      upgrade_fee = #{upgradeFee,jdbcType=DECIMAL},
+      pay_id = #{payId,jdbcType=BIGINT},
+      pay_user_id = #{payUserId,jdbcType=BIGINT},
+      Financial_gold = #{financialGold,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

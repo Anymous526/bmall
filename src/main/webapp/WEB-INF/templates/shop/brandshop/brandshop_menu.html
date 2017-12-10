@@ -1,0 +1,81 @@
+﻿<div class="shop_index1">
+  <div class="shop_top block">
+    <div class="shop_hd"><img src="$!webPath/assets/img/shop/top1.jpg" /></div>
+    <div class="shop_menu default_color">
+      <div class="shop_menu_nav">
+        <ul>
+          <li>首 页</li>
+          <li>所有商品</li>
+          <li>2015新品首发</li>
+          <li>特惠精品</li>
+          <li>凉鞋尝鲜</li>
+          <li>鱼嘴鞋专区</li>
+          <li>亲子专区</li>
+          <li>男鞋专区</li>
+          <li>品牌故事</li>
+        </ul>
+      </div>
+    </div>
+    
+    <!--banner-->
+    <div id="slide-index" style="overflow:hidden">
+      <div class=slides>
+        <div class="slide autoMaxWidth">
+          <div id=bi_0 class=image><A href="#"><img class="xu_1219" src="$!webPath/assets/img/shop/img01.jpg"></A></div>
+          <div id=bt_0 class=text></div>
+          <div id=bb_0 class=button></div>
+        </div>
+        <div class="slide autoMaxWidth">
+          <div id=bi_0 class=image><A href="#"><img class="xu_1219" src="$!webPath/assets/img/shop/img02.jpg"></A></div>
+          <div id=bt_0 class=text></div>
+          <div id=bb_0 class=button></div>
+        </div>
+        <div class="slide autoMaxWidth">
+          <div id=bi_0 class=image><A href="#" ><img class="xu_1219" src="$!webPath/assets/img/shop/img03.jpg"></A></div>
+          <div id=bt_0 class=text></div>
+          <div id=bb_0 class=button></div>
+        </div>
+      </div>
+      <div class=control><A href="#"></A><A href="#"></A><A href="#"></A></div>
+    </div>
+    <script type=text/javascript>
+$(function(){	
+	indexSlides.ini();
+	
+});
+var indexSlides={};
+indexSlides.timer=false;
+indexSlides.total=$('#slide-index .control a').length;
+indexSlides.current=-1;
+indexSlides.offScreenLeft=2000;
+indexSlides.leaveScreenLeft=4000;
+indexSlides.animating=false;
+indexSlides.obj=$('#slide-index .slide');
+indexSlides.style=[];
+indexSlides.style[0]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+	
+indexSlides.style[1]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+	
+indexSlides.style[2]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+</script> 
+    <script type=text/javascript src="$!webPath/assets/js/shop_banner.js"></script> 
+    <!--banner--> 
+<script>
+$(document).ready(function(){
+	var xjh=$("#slide-index .xu_1219").height(); 
+	$("#slide-index .slide ").height(xjh); 
+});
+</script>
+</div> 

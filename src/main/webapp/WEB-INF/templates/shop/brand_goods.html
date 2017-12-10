@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!gb.name </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="author" content="www.amall.com">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/index.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/goodshidden.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.lazyload.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+jQuery(document).ready(function(){						
+  jQuery(".brandsort_show a").click(function(){								 
+     var goods_view=jQuery(this).attr("goods_view");
+	 if(goods_view=="list"){
+	   jQuery(".goodstyletwo").show();
+	   jQuery(".smallgoods").hide();
+	   jQuery(this).addClass("brandsort_show_list2");
+	   jQuery("#thumb_view").removeClass().addClass("brandsort_show_big");
+	 }
+	 if(goods_view=="thumb"){
+	   jQuery(".smallgoods").show();
+	   jQuery(".goodstyletwo").hide();
+	   jQuery(this).addClass("brandsort_show_big2");
+	   jQuery("#list_view").removeClass().addClass("brandsort_show_list");	  
+	 }
+	 jQuery("#goods_view").val(goods_view);
+  });
+  #if("$!goods_view"=="list")
+	 jQuery(".goodstyletwo").show();
+	 jQuery(".smallgoods").hide();
+	 jQuery("#list_view").addClass("brandsort_show_list2");
+	 jQuery("#thumb_view").removeClass().addClass("brandsort_show_big");    
+  #end
+  #if("$!goods_view"=="thumb")
+	 jQuery(".smallgoods").show();
+	 jQuery(".goodstyletwo").hide();
+	 jQuery("#thumb_view").addClass("brandsort_show_big2");
+	 jQuery("#list_view").removeClass().addClass("brandsort_show_list");	 
+  #end
+//排序
+  jQuery(".brandsort_sort a").click(function(){
+	   var orderBy = jQuery(this).attr("orderBy");
+	   var orderType = jQuery(this).attr("orderType");
+	   jQuery("#orderBy").val(orderBy);
+	   jQuery("#orderType").val(orderType);
+	   jQuery("#ListForm").submit();
+	});
+	#if($!orderBy)
+	jQuery(".brandsort_sort a").removeClass("this");
+	jQuery(".brandsort_sort a[orderBy='$!orderBy']").addClass("this");
+	#end
+
+  jQuery(".smallgoods ul").hover(function(){
+	  jQuery(this).addClass("this");
+	  jQuery("li[class='goodshidden']").hide();
+	  jQuery(this).find("li[class='goodshidden']").show();
+	  },function(){
+	  jQuery(this).removeClass("this").find("li[class='goodshidden']").hide(); 
+	  });
+ jQuery(".classia:gt(2)").hide();
+ if(jQuery(".classia").length<=3){
+   jQuery("#all_property_open").hide();
+   jQuery("#all_property_close").hide();
+ }
+ jQuery("#all_property_open").mouseover(function(){
+    jQuery(this).css("cursor","pointer");
+  }).click(function(){
+	jQuery("#all_property_status").val("open"); 
+    jQuery(".classia").show();
+	jQuery("#all_property_close").show();
+	jQuery("#all_property_open").hide();
+ });
+ jQuery("#all_property_close").mouseover(function(){
+    jQuery(this).css("cursor","pointer");
+  }).click(function(){
+	jQuery("#all_property_status").val("close"); 
+    jQuery(".classia:gt(2)").hide();
+	jQuery("#all_property_open").show();
+	jQuery("#all_property_close").hide();
+ });
+ 
+ #if($!all_property_status=="open")
+ jQuery(".classia").show();
+ jQuery("#all_property_close").show();
+ jQuery("#all_property_open").hide();
+ #end
+ #if($!all_property_status=="close")
+ jQuery(".classia:gt(2)").hide();
+ jQuery("#all_property_open").show();
+ jQuery("#all_property_close").hide();
+ #end
+ 
+ jQuery(".classia").each(function(){
+   jQuery(this).find(".classb span:gt(12)").hide(); 
+ });
+ jQuery(".classmore a").each(function(){
+    jQuery(this).click(function(){
+	   if(jQuery(this).index()==0){ 
+	   	var mark = jQuery(this).attr("mark");
+		 jQuery("#detail_property_status").val(jQuery("#detail_property_status").val()+","+mark);					
+	     jQuery(this).parent().parent().find(".classb span").show();
+	     jQuery(this).hide();
+	     jQuery(this).parent().find("a:last").show();
+	   }
+	   if(jQuery(this).index()==1){ 
+	     jQuery(this).parent().parent().find(".classb span:gt(12)").hide();
+		 jQuery(this).hide();
+	     jQuery(this).parent().find("a:first").show();
+	   }
+	});
+ });
+ 
+ #foreach($list in $pro_list)
+ var key = "$!list";
+ var val = $!pro_map.get("$!list");
+ var mark =key+"_"+val;
+ jQuery(".classmore a[mark="+mark+"]").hide();
+ jQuery(".classmore a[mark="+mark+"]").parent().find("a").eq(1).show().parent().parent().find("span").show();
+ #end
+ 
+ jQuery(".goodsimgs img").lazyload({effect:"fadeIn",width:178,height:178});
+  jQuery(".goodstwo img").lazyload({effect:"fadeIn",width:86,height:86});
+  
+   jQuery(".brandsort_sc_area").hover(function(){
+		jQuery(".area_detail").css("display","block");
+		},function(){
+		jQuery(".area_detail").css("display","none");	
+			});
+  jQuery(".brandsort_fineprice").hover(function(){
+		jQuery(".brandsort_price_bottom").css("display","block");	
+		},function(){
+		jQuery(".brandsort_price_bottom").css("display","none");	
+			});			
+  jQuery(".brandsort_price_bottom a").click(function(){
+	 	var mark = jQuery(this).attr("mark");
+	    if(mark=="clear"){
+		jQuery(".brandsort_price_top input").val("");	
+			}
+		jQuery("#ListForm").submit();						   
+		});		
+		
+  jQuery("ul.areaul").find("a").click(function(){
+		jQuery("#area_id").val(jQuery(this).attr("area_id"));
+		jQuery("#ListForm").submit();
+		});
+  
+  var search_bar_top=jQuery("#search_bar").offset().top;
+  jQuery(window).scroll(function(){
+      var top= jQuery("#search_bar").offset().top;
+	  var scrolla=jQuery(window).scrollTop();
+	  var i=top-scrolla;
+	 if(i<=0){
+	   jQuery("#search_bar").addClass("brandsort_screen_top");	  
+	 }
+	 if(scrolla<search_bar_top){
+	   jQuery("#search_bar").removeClass("brandsort_screen_top");
+	 }
+  });
+ 
+  
+});
+function goods_property_remove(type,id){
+	if(type=="gc"){ 
+	   jQuery("#gc_ids").val("");
+	   jQuery("#ListForm").submit();	  
+	}
+	if(type=="gs"){ 
+	   jQuery("#gs_ids").val("");
+	   jQuery("#ListForm").submit();	 
+	}
+ 
+}
+function goods_property_generic(type,id,value){
+   if(type=="gc"){
+	  var gc_ids=jQuery("#gc_ids").val();
+	  var s="|"+id+","+value;
+	  if(gc_ids.indexOf(s)<0){
+	    gc_ids=gc_ids+"|"+id+","+value;
+	    jQuery("#gc_ids").val(gc_ids);
+		jQuery("#ListForm").submit();  
+	  } 
+   }
+   if(type=="gs"){
+	   var gs_ids=jQuery("#gs_ids").val();
+	   if(gs_ids.indexOf(id)<0){
+		if(gs_ids != ""){
+			gs_ids=gs_ids+id+"|";
+		}else{
+			gs_ids = id + "|";
+		}
+	    
+	    jQuery("#gs_ids").val(gs_ids); 
+		jQuery("#ListForm").submit();  
+	  }
+   }
+  
+}
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/head.htm?type=$!type")
+<div style="margin-top: -12px;">$!httpInclude.include("/nav1.htm")</div>
+<div class="w100 bg_fff">
+	<div class="w1190">
+		<div class="root-nav"><span class="f_yahei">当前位置：</span>
+		<a href="$!webPath/index.htm">首页</a> > <a href="$!webPath/brand.htm">所有品牌</a> > <span>$!gb.name</span></p></div>
+		$!httpInclude.include("/brand_goods_left.htm")
+		
+			<div class="search_v_list2">
+				<form action="$!webPath/brand_goods_$!{gb.id}.htm" method="post" id="ListForm">
+					<div style="width:100%">
+						<div class="opclass">
+							#if($!gss.size()>0)
+							<div class="classify">
+								<div class="chosen">
+									<div class="chosena">您已经选择：</div>
+									#if($!goods_property.size()>0)
+									<div class="chosenb">
+										#foreach($map in $goods_property) 
+										<span class="chose">
+											<strong class="hui2">$!map.get("name"):</strong> 
+											<strong class="orange">$!map.get("value")</strong> 
+											<strong class="close_chose"></strong> 
+											<strong class="del_chose">
+												<img src="$!webPath/resources/style/system/front/default/images/close.jpg" width="14" height="14" onclick="goods_property_remove('$!map.get("type")','$!map.get("id"),$!map.get("id")')" />
+											</strong>
+										</span>
+										#end
+									</div>
+									#end 
+									<span class="chosen_sp"> 
+										<img src="$!webPath/resources/style/system/front/default/images/more_sp.gif" width="26" height="26" id="all_property_open" /> 
+										<img src="$!webPath/resources/style/system/front/default/images/more_sp2.gif" width="26" height="26" style="display: none" id="all_property_close" />
+									</span>
+								</div>
+								#if($!gcs.size()>0)
+								<div class="classia">
+									#if($!gcs.size()>12)
+									<div class="classmore">
+										<a href="javascript:void(0);" class="class_more" mark="brand_0">更多</a> <a href="javascript:void(0);" style="display: none" class="class_income">收起</a>
+									</div>
+									#end
+									<div class="classa">分类类型:</div>
+									<div class="classb">
+										#foreach($info in $gcs) <span>
+										<a href="javascript:void(0);" onclick="goods_property_generic('gc','$!{info.id}','$!{info.name}')">$!info.classname</a>
+										</span> #end
+									</div>
+								</div>
+								#end
+								
+								#foreach($info in $gss)
+								<div class="classia">
+									#if($!info.properties.size()>12)
+									<div class="classmore">
+										<a href="javascript:void(0);" class="class_more" mark="gss$!{info.id}_$!{info.id}">更多</a> 
+										<a href="javascript:void(0);" style="display: none" class="class_income">收起</a>
+									</div>
+									#end
+									<div class="classa">$!info.name:</div>
+									<div class="classb">
+										#foreach($v_info in $info.properties) <span> 
+										<a href="javascript:void(0);" onclick="goods_property_generic('gs','$!{v_info.id}','$!{v_info.value}')">$!v_info.value</a>
+										</span> 
+										#end
+									</div>
+								</div>
+								#end  
+							</div>
+							#end
+						</div>
+						<!--商品列表开始-->
+						<div class="allgoods">
+							<div class="brandsort_screen" id="search_bar">
+			
+								<div class="brandsort_sort">
+									<a href="javascript:void(0);" class="sort_a this"
+										orderBy="addTime" orderType="asc">默认排序</a> <a
+										href="javascript:void(0);" class="sort_a"
+										orderBy="goods_salenum" orderType="desc"><i
+										class="sort_a1">销量</i></a> <a href="javascript:void(0);"
+										class="sort_a" orderBy="goods_collect" orderType="desc"><i
+										class="sort_a1">人气</i></a> <a href="javascript:void(0);"
+										class="sort_a" orderBy="store_price" orderType="asc"><i
+										class="sort_a1">价格</i></a>
+								</div>
+								<div class="brandsort_fineprice">
+									<div class="brandsort_price_top">
+										<input placeholder="¥" name="store_price_begin"
+											value="$!store_price_begin" type="text" title="按照价格区间筛选 最低价"
+											class="brandsort_price_input" /> <i>-</i> <input
+											placeholder="¥" name="store_price_end"
+											value="$!store_price_end" type="text" title="按照价格区间筛选 高价"
+											class="brandsort_price_input" />
+									</div>
+									<div class="brandsort_price_bottom" style="display: none">
+										<a href="javascript:void(0);" mark="clear"
+											class="brandsort_btn_clear">清空</a> <a
+											href="javascript:void(0);" class="brandsort_btn_com">确定</a>
+									</div>
+								</div> 
+							</div>
+							#if($!objs)
+							<div class="search_img_list">
+								#foreach($obj in $objs)
+								<ul>
+									#if($!obj.goodsMainPhoto)
+									#set($img="$!imageWebServer/$!{obj.goodsMainPhoto.path}/$!{obj.goodsMainPhoto.name}")
+									#else
+									#set($img="$!webPath/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+									#end #set($goods_url="$!webPath/goods_$!{obj.id}.htm")
+									#if($!config.secondDomainOpen)
+									#set($goods_url="http://$!{obj.goodsStore.storeSecondDomain}.$!{domainPath}/goods_$!{obj.id}.htm")
+									#end									
+									<li class="goodsimgs">
+										<div class="s_img">
+											<a href="$!goods_url" target="_blank">
+											#*	<img src="$!webPath/resources/style/common/images/loader_01.gif" original="$!img" 
+												onerror="this.src='$!webPath/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" width="220" height="220" /> *#
+												<img src="$!img"  width="220" height="220" />
+											</a>
+										</div>
+										<div class="s_info">
+											<a href="$!goods_url" title='$!CommUtil.substring("$!obj.goodsName",50)' target="_blank"> $!CommUtil.substring("$!obj.goodsName",14)</a>
+										</div>
+										
+										<div class="s_pri">
+						                		<span class="prinum">¥ $!{obj.goodsPrice}</span> 
+						                </div>
+									</li>
+								</ul>
+								#end
+							</div>
+							#else
+							<div class="starshop_list" style="height: 500px;">
+								<div class="sigh">
+									<span>
+										<img src="$!webPath/resources/style/system/front/default/images/sigh.png" width="120" height="109" />
+									</span> 
+									<b>对不起，没有对应的数据!</b>
+								</div>
+							</div>
+							#end
+						</div>
+						
+					</div> 
+				</form>
+				</div>
+				<div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageFormHTML
+				</div>
+			</div>
+		</div>
+		
+	</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

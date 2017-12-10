@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.SpareGoodsFloorMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.SpareGoodsFloor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="adver_id" property="adverId" jdbcType="VARCHAR" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="visable" property="visable" jdbcType="INTEGER" />
+    <result column="sgc_id" property="sgcId" jdbcType="BIGINT" />
+    <result column="adver_type" property="adverType" jdbcType="INTEGER" />
+    <result column="advert_url" property="advertUrl" jdbcType="VARCHAR" />
+    <result column="advert_id" property="advertId" jdbcType="BIGINT" />
+    <result column="advert_img_id" property="advertImgId" jdbcType="BIGINT" />
+    <result column="display" property="display" jdbcType="BIT" />
+    <result column="adp_id" property="adpId" jdbcType="BIGINT" />
+    <association property="sgc" column="sgc_id" javaType="com.amall.core.bean.SpareGoodsClass" select="com.amall.core.dao.SpareGoodsClassMapper.selectByPrimaryKey"/>
+    <association property="advert_img" column="advert_img_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="adp" column="adp_id" javaType="com.amall.core.bean.AdvertPosition" select="com.amall.core.dao.AdvertPositionMapper.selectByPrimaryKey"/>
+    <collection property="sgs" ofType="com.amall.core.bean.SpareGoodsWithBLOBs" column="sparegoods_id" select="com.amall.core.dao.SpareGoodsMapper.selectByExampleWithBLOBs"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, adver_id, sequence, title, visable, sgc_id, adver_type, 
+    advert_url, advert_id, advert_img_id, display, adp_id
+  </sql>
+  <cache/>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.SpareGoodsFloorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_spare_goodsfloor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.SpareGoodsFloorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_spare_goodsfloor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_spare_goodsfloor
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_spare_goodsfloor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.SpareGoodsFloorExample" >
+    delete from amall_spare_goodsfloor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.SpareGoodsFloor" >
+    insert into amall_spare_goodsfloor (  id, addTime, deleteStatus, 
+      adver_id, sequence, title, 
+      visable, sgc_id, adver_type, 
+      advert_url, advert_id, advert_img_id, 
+      display, adp_id)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{adverId,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{visable,jdbcType=INTEGER}, #{sgcId,jdbcType=BIGINT}, #{adverType,jdbcType=INTEGER}, 
+      #{advertUrl,jdbcType=VARCHAR}, #{advertId,jdbcType=BIGINT}, #{advertImgId,jdbcType=BIGINT}, 
+      #{display,jdbcType=BIT}, #{adpId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.SpareGoodsFloor" >
+    
+    insert into amall_spare_goodsfloor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="adverId != null" >
+        adver_id,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="visable != null" >
+        visable,
+      </if>
+      <if test="sgcId != null" >
+        sgc_id,
+      </if>
+      <if test="adverType != null" >
+        adver_type,
+      </if>
+      <if test="advertUrl != null" >
+        advert_url,
+      </if>
+      <if test="advertId != null" >
+        advert_id,
+      </if>
+      <if test="advertImgId != null" >
+        advert_img_id,
+      </if>
+      <if test="display != null" >
+        display,
+      </if>
+      <if test="adpId != null" >
+        adp_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="adverId != null" >
+        #{adverId,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="visable != null" >
+        #{visable,jdbcType=INTEGER},
+      </if>
+      <if test="sgcId != null" >
+        #{sgcId,jdbcType=BIGINT},
+      </if>
+      <if test="adverType != null" >
+        #{adverType,jdbcType=INTEGER},
+      </if>
+      <if test="advertUrl != null" >
+        #{advertUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertId != null" >
+        #{advertId,jdbcType=BIGINT},
+      </if>
+      <if test="advertImgId != null" >
+        #{advertImgId,jdbcType=BIGINT},
+      </if>
+      <if test="display != null" >
+        #{display,jdbcType=BIT},
+      </if>
+      <if test="adpId != null" >
+        #{adpId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.SpareGoodsFloorExample" resultType="java.lang.Integer" >
+    select count(*) from amall_spare_goodsfloor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_spare_goodsfloor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.adverId != null" >
+        adver_id = #{record.adverId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequence != null" >
+        sequence = #{record.sequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visable != null" >
+        visable = #{record.visable,jdbcType=INTEGER},
+      </if>
+      <if test="record.sgcId != null" >
+        sgc_id = #{record.sgcId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adverType != null" >
+        adver_type = #{record.adverType,jdbcType=INTEGER},
+      </if>
+      <if test="record.advertUrl != null" >
+        advert_url = #{record.advertUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advertId != null" >
+        advert_id = #{record.advertId,jdbcType=BIGINT},
+      </if>
+      <if test="record.advertImgId != null" >
+        advert_img_id = #{record.advertImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.display != null" >
+        display = #{record.display,jdbcType=BIT},
+      </if>
+      <if test="record.adpId != null" >
+        adp_id = #{record.adpId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_spare_goodsfloor
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      adver_id = #{record.adverId,jdbcType=VARCHAR},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      visable = #{record.visable,jdbcType=INTEGER},
+      sgc_id = #{record.sgcId,jdbcType=BIGINT},
+      adver_type = #{record.adverType,jdbcType=INTEGER},
+      advert_url = #{record.advertUrl,jdbcType=VARCHAR},
+      advert_id = #{record.advertId,jdbcType=BIGINT},
+      advert_img_id = #{record.advertImgId,jdbcType=BIGINT},
+      display = #{record.display,jdbcType=BIT},
+      adp_id = #{record.adpId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.SpareGoodsFloor" >
+    update amall_spare_goodsfloor
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="adverId != null" >
+        adver_id = #{adverId,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="visable != null" >
+        visable = #{visable,jdbcType=INTEGER},
+      </if>
+      <if test="sgcId != null" >
+        sgc_id = #{sgcId,jdbcType=BIGINT},
+      </if>
+      <if test="adverType != null" >
+        adver_type = #{adverType,jdbcType=INTEGER},
+      </if>
+      <if test="advertUrl != null" >
+        advert_url = #{advertUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="advertId != null" >
+        advert_id = #{advertId,jdbcType=BIGINT},
+      </if>
+      <if test="advertImgId != null" >
+        advert_img_id = #{advertImgId,jdbcType=BIGINT},
+      </if>
+      <if test="display != null" >
+        display = #{display,jdbcType=BIT},
+      </if>
+      <if test="adpId != null" >
+        adp_id = #{adpId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.SpareGoodsFloor" >
+    update amall_spare_goodsfloor
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      adver_id = #{adverId,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      visable = #{visable,jdbcType=INTEGER},
+      sgc_id = #{sgcId,jdbcType=BIGINT},
+      adver_type = #{adverType,jdbcType=INTEGER},
+      advert_url = #{advertUrl,jdbcType=VARCHAR},
+      advert_id = #{advertId,jdbcType=BIGINT},
+      advert_img_id = #{advertImgId,jdbcType=BIGINT},
+      display = #{display,jdbcType=BIT},
+      adp_id = #{adpId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

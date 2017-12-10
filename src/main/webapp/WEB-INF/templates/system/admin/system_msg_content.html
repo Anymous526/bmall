@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">系统消息</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/system_msg_list.htm">管理</a> | <a href="$!webPath/admin/system_msg_add.htm" #if(!$!edit)class="this"#end>新增</a> #if($!edit) <a href="javascript:void(0);" class="this">编辑</a> #end </span> <span class="tab-two"></span></div>
+    <div class="setcont">
+      <ul class="set1">
+        <li>标题</li>
+        <li><span class="webname">
+          <input name="title" type="text" id="title" value="$!obj.title" size="40" />
+          </span>
+        </li>
+    </div>
+    $!obj.content
+</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的投诉 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery("#status").val("$!status");
+});
+</script>
+</head>
+<body style="background-color: #fff">
+
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+
+<div class="user_main w1200" >
+ $!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">
+    <table width="831px" border="0" cellspacing="0" cellpadding="0" style="border-collapse: collapse;border: none;">
+      <tr> 
+        <td id="centerbg" valign="top" style="line-height:20px;">
+        <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/index.htm">个人中心</a> > <span>我的投诉</span></div></div>
+        <div class="productmain">
+            <div class="container">
+            <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href="$!webPath/buyer/complaint.htm">我的投诉</a></li>
+                <!--<li class=""><a href="$!webPath/buyer/complaint_seller.htm">被投诉</a></li>-->
+              </ul>
+            </div>
+            
+            <form action="$!webPath/buyer/complaint.htm" method="post" id="ListForm">
+            <div class="ordercon">
+              <div class="ordersear" style="margin-top: 3px;">
+                <div class="right" > <span class="ordersel">
+                  <select name="status" id="status">
+                    <option value="">选择投诉状态</option>
+                    <option value="0">新投诉</option>
+                    <option value="1">待申诉</option>
+                    <option value="2">对话中</option>
+                    <option value="3">待仲裁</option>
+                    <option value="4">已完成</option>
+                  </select>
+                  </span> <span class="orderbtn">
+                  <input name="" type="submit" value="搜索" style="cursor:pointer;" />
+                  </span> </div>
+              </div>
+              <div class="operation">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width="150">投诉人</td>
+                    <td width="150">被投诉人</td>
+                    <td width="100">投诉主题</td>
+                    <td width="150">投诉时间</td>
+                    <td width="100">投诉状态</td>
+                    <td align="left">操作</td>
+                  </tr>
+              #if($objs.size()>0)     
+                  #foreach($obj in $objs)
+                  <tr>
+                    <td>$!obj.fromUser.username</td>
+                    <td>$!obj.toUser.username</td>
+                    <td>$!obj.cs.title</td>
+                    <td>$!CommUtil.formatLongDate($!obj.addtime)</td>
+                    #if($!obj.status==0)
+                      #set($status="新投诉")
+                    #end
+                    #if($!obj.status==1)
+                      #set($status="待申诉")
+                    #end
+                    #if($!obj.status==2)
+                      #set($status="对话中")
+                    #end
+                    #if($!obj.status==3)
+                      #set($status="待仲裁")
+                    #end
+                    #if($!obj.status==4)
+                      #set($status="已完成")
+                    #end
+                    <td>$!status</td>
+                    <td><span class="detailcancel"><a href="$!webPath/buyer/complaint_view.htm?id=$!obj.id" class="blue2"> 详细</a>#if($!obj.status==0)<a href="javascript:void(0);" onclick="if(confirm('确认取消申诉吗？'))window.location.href='$!webPath/buyer/complaint_cancel.htm?id=$!obj.id&currentPage=$!currentPage'" class=" blue2">取消</a>#end</span></td>
+                  </tr>
+                  #end
+                  #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">投诉数据</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end    
+                </table>
+              </div>
+              <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+            </div>
+            </form>
+          </div>
+         </td>
+      </tr>
+    </table>
+  </div>
+
+</div>
+  $!httpInclude.include("/footer.htm")
+</body>
+</html>

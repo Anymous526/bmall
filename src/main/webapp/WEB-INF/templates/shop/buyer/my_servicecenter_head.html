@@ -1,0 +1,49 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>代充记录</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/assets/css/my_asset.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<script>
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+
+</script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+		<div class="s_m">  
+		  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>服务中心</span></div></div>
+		  <div class="productmain"> 
+		  	<div style="margin-top: 10px;">
+	 		<a href="$!webPath/buyer/active_appliaction_cash.htm"><img alt="" src="$webPath/assets/img/servicecenter.png" width="587" height="150" style="float:left; margin-right: 30px;" /></a>
+	 		</div>
+			
+			<div style="width: 100%;padding-top: 155px;">
+  				<div style="width: 70px;height: 70px;float: left;margin-left:10px; background-image: url('$!webPath/assets/img/mg2.png');background-size: 80% 80%; background-position: 50% 0%;background-repeat: no-repeat;"></div>
+  				<div style="width: 150px;height: 70px;float: left;padding-left: 15px;margin-bottom: 10px;">
+  					<p>可用额度：</p>
+  					<i style="font-size:28px; color:#666">¥ #if($!serviceCenter) $!serviceCenter.remainMoney #else 0.00 #end</i>
+  				</div>
+			</div>
+			<div class="cash_tool" style="border: 0;">
+				<input class="tool1" type="button" onclick="javasript:location.href='$!webPath/buyer/chongz.htm'" value="充值" />
+				<input class="tool3" type="button" onclick="javasript:location.href='$!webPath/buyer/duicho.htm'" value="代升级" />
+			</div>
+			
+			

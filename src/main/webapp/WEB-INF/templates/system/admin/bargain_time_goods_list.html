@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery('#beginTime').attr("readonly","readonly").datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').attr("readonly","readonly").datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  //
+});
+function ajax_update(id,fieldName,obj){
+   var val=jQuery(obj).val();
+   jQuery.ajax({type:'POST',
+	              url:'$!webPath/admin/bargain_ajax.htm',
+				  data:{"id":id,"fieldName":fieldName,"value":val},
+				beforeSend:function(){
+				  
+				},
+			   success:function(data){
+	             if(val==""){
+				   jQuery(obj).attr("src","$!webPath/resources/style/system/manage/blue/images/"+data+".png");
+				 }else{
+				   jQuery(obj).val(val);
+				 }      
+              }
+	    });
+}
+//向前count天 向后count天
+function before_set(count,date){
+   jQuery.post("$!webPath/admin/date_query_set.htm",{"count":count,"date":date},function(data){
+	 jQuery("#the_day").html(data);
+   });
+}
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">限时特价</h1>
+  <div class="settab"><span class="tab-one"></span> 
+  <span class="tabs"> 
+	
+	<a href="$!webPath/admin/bargain_time_add.htm">特价设置</a> |
+	<a href="$!webPath/admin/bargain_time_list.htm">设置列表</a>
+	</span>
+	<!-- <span id="the_day" class="tabs">
+	#foreach($bargain in $bargains)
+	<a href="$!webPath/admin/bargain_time_goods_list.htm?bargain_time=$!CommUtil.formatShortDate($!bargain.bargainTime)&bargain_end_time=$!CommUtil.formatShortDate($!bargain.bargainEndTime)&mark=1"
+	 #if("$!bargainTime"==$!CommUtil.formatShortDate($!bargain.bargainTime))class="this"#end>$!CommUtil.formatShortDate($!bargain.bargainTime)--$!CommUtil.formatShortDate($!bargain.bargainEndTime)</a>|
+	#end
+	</span> -->	 
+ <span class="tab-two"></span></div>
+  <form method="post" id="queryForm">
+  <div class="orders">
+    <ul>
+      <li><span>商品名称</span> <span class="allmen size6">
+        <input name="goods_name" type="text" id="goods_name" />
+        </span> <span>
+        <select name="bg_status" id="bg_status">
+          <option value="">特价状态</option>
+          <option value="1">审核通过</option>
+          <option value="0">等待审核</option>
+          <option value="-1">拒绝通过</option>
+        </select>
+        </span><span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;"/>
+        </span> </li>
+    </ul>
+  </div>
+  </form>
+  <form method="post" id="ListForm" name="ListForm" action="$!webPath/admin/bargain_time_goods_list.htm">
+  <div class="allshop_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="30"></td>
+        <td>特价商品</td>
+        <td>店铺名称</td>
+        <td align="center">店铺价格</td>
+        <td align="center">折后价格</td>
+        <td align="center">活动时间</td>
+        <td align="center" width="8%">状态</td>
+        <td align="center">操作</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td><input name="checkbox" type="checkbox" id="checkbox" value="$!obj.id" /></td>
+        <td>$!obj.bgGoods.goodsName</td>
+        <td>$!obj.bgGoods.goodsStore.storeName</td>
+        <td align="center">$!obj.bgGoods.goodsPrice</td>
+        <td align="center">$!obj.bgPrice</td>
+        <td align="center">$!CommUtil.formatLongDate($!obj.bgTime)--$!CommUtil.formatLongDate($!obj.bgEndTime)</td>
+        #set($status="等待审核")
+         #if($!obj.bgStatus==1)
+           #set($status="审核通过")
+         #end
+         #if($!obj.bgStatus==-1)
+           #set($status="拒绝通过")
+         #end
+        <td align="center">$!status</td>
+        <td  align="center" class="aoprater">
+		#if($!obj.bgStatus!=1)<a href="javascript:void(0);" onclick="if(confirm('确定审核通过该特价申请？'))window.location.href='$!webPath/admin/bargain_time_goods_audit.htm?bargainTime=$!bargainTime&bargainEndTime=$!bargainEndTime&mulitId=$!obj.id&currentPage=$!currentPage&mark=$!mark'" class="blue">通过</a>#end 
+		#if($!obj.bgStatus!=-1)<a href="javascript:void(0);" onclick="if(confirm('确定拒绝通过该特价申请？'))window.location.href='$!webPath/admin/bargain_time_goods_refuse.htm?bargainTime=$!bargainTime&bargainEndTime=$!bargainEndTime&mulitId=$!obj.id&currentPage=$!currentPage&mark=$!mark'" class="blue">拒绝</a>#end		
+        </td>
+      </tr>
+      #end
+      <tr style="background:#F2F2F2; height:30px;">
+        <td colspan="7"><div class="fenye3">
+          
+          <input name="bg_status" type="hidden" id="bg_status" value="$!bg_status" />
+          <input name="goods_name" type="hidden" id="goods_name" value="$!goods_name" />
+		  <input type="hidden" name="mulitId" id="mulitId" />
+          <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+          <input type="hidden" name="bargain_time" id="bargain_time" value="$!bargainTime"/>
+          <input type="hidden" name="bargain_end_time" id="bargain_end_time" value="$!bargainEndTime"/>
+          <input type="hidden" name="mark" id="mark" value="$!mark"/>
+          $!gotoPageFormHTML</div>
+          <div class="shopbtn shopfx">
+            <input type="checkbox" name="all" id="all" value="" onclick="selectAll(this)"/>
+            &nbsp;&nbsp;全部</div>
+          <div class="shop_btn_del shopbtn">
+            <input type="button" value="通过" onclick="cmd('$!webPath/admin/bargain_time_goods_audit.htm?bargainTime=$!bargainTime&bargainEndTime=$!bargainEndTime&mark=$!mark');" style="cursor:pointer;" />
+            <input type="button" value="拒绝" onclick="cmd('$!webPath/admin/bargain_time_goods_refuse.htm?bargainTime=$!bargainTime&bargainEndTime=$!bargainEndTime&currentPage=$!currentPage&mark=$!mark');" style="cursor:pointer;" />
+         </div></td>
+      </tr>
+    </table>
+  </div>
+  </form>
+</div>
+</body>
+</html>

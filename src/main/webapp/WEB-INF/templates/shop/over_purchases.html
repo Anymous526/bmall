@@ -1,0 +1,127 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>海外购-$!config.title </title> 
+<meta name="baidu-site-verification" content="u7KaeCBGVW" />
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved"> 
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon"> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>  
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/hwa.css" /> 
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/public.css" />  
+<script>
+$(document).ready(function(e) {
+	 var wei_id=window.location.search;
+	 if(wei_id=="?id=australia"){$('html,body').animate({scrollTop:$('#country1').offset().top-80}, 900);}
+	 if(wei_id=="?id=france"){$('html,body').animate({scrollTop:$('#country2').offset().top-80},800);}
+	 if(wei_id=="?id=mieast"){$('html,body').animate({scrollTop:$('#country3').offset().top-80}, 1100);}
+	 if(wei_id=="?id=korea"){$('html,body').animate({scrollTop:$('#country4').offset().top-80}, 900);}
+	 if(wei_id=="?id=japan"){$('html,body').animate({scrollTop:$('#country5').offset().top-80}, 1000);}
+	 if(wei_id=="?id=asean"){$('html,body').animate({scrollTop:$('#country6').offset().top-80}, 1200);}
+	 if(wei_id=="?id=england"){$('html,body').animate({scrollTop:$('#country7').offset().top-80}, 1000);}
+	 if(wei_id=="?id=america"){$('html,body').animate({scrollTop:$('#country8').offset().top-80}, 1100);}
+	 if(wei_id=="?id=samerica"){$('html,body').animate({scrollTop:$('#country9').offset().top-80}, 1200);} 
+});
+</script> 
+</head>
+<body>   
+$!httpInclude.include("/top.htm") 
+$!httpInclude.include("/head.htm") 
+$!httpInclude.include("/nav2.htm")  
+<div class="w100 bg_fff"> 
+    <div class="slideBox">
+      <div class="hd" style="margin-top:-260px;">
+        <ul>
+        #if($obj)
+  		#foreach($adv in $obj.advs)
+          <li></li>
+        #end
+        #end  
+        </ul>
+      </div>
+      <div class="bd">
+        <ul>
+        #if($obj)
+  		#foreach($adv in $obj.advs)	
+           <li style="background: url($!{config.imagewebserver}/$!adv.adAcc.path/$!adv.adAcc.name) 50% 0px no-repeat;"></li> 
+        #end
+        #end  
+        </ul>
+      </div>
+    </div> 
+</div>  
+<div class="w100 bg_fff" style="margin-top:-50px;">
+  <div class="w1200" style="padding-top:50px;">
+  
+	#if($!floorList.size()>0)
+		#foreach($floor in $floorList)
+		#if(${velocityCount} < 9)
+		#if($!floor.goodsList.size()>0)
+     <div class="hwfloor theme${velocityCount}">
+      <div class="floor_more" style="display:none">
+        <a href="#" style="color:red">全部品牌</a> <!-- 这个不循环 -->
+        <!-- 这里开始循环 -->
+        <a href="#">内衣品牌</a>
+        <a href="#">内衣品牌</a>
+        <a href="#">内衣品牌</a>
+        <a href="#">内衣品牌</a>
+        <a href="#">内衣品牌</a>
+        <!-- 这里开始循环 -->
+      </div>
+
+
+      <label id="country${velocityCount}">${velocityCount}F $floor.floorname</label>      
+
+      <b class="title-shadow"></b>
+      <div class="floor_left" onClick="window.location.href='$!webPath/over_purchases_more.htm?floorId=$!floor.id'">
+        
+        <div class="the_bg" style="position: relative;">
+        	<!-- 查看更多  -->
+	        <a href="$!webPath/over_purchases_more.htm?floorId=$!floor.id" class="op_morebtn">查看更多</a>
+	        <a href="$!webPath/over_purchases_more.htm?floorId=$!floor.id"><img src="$!webPath/assets/img/pichw${floor.id}.png" /></a>
+        </div>
+      </div>
+        <dl>
+          #foreach($goods in $floor.goodsList)
+          	<dd>
+          		#set($gmp = $!goods.goodsMainPhoto)
+          		#set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+          		<a href="$!goods_url">
+            	<span class="h_list_img"><img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" /></span>
+                <div style="padding: 0 20px;width:205px;line-height:18px;height:36px;text-overflow: -o-ellipsis-lastline;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;" title="$goods.goodsName">$goods.goodsName</div>
+                <span class="in_goods_price in_over_purcha">
+                	#if($!goods.goodsCurrentPrice)
+          				<i>¥</i>$!goods.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!goods.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">$!goods.goodsPrice</span>
+            	</a>
+         	 </dd>
+          #end
+        </dl>
+    </div>
+    #end
+    #end
+    #end
+    #end
+       
+    </div>
+
+
+
+</div>
+
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script>
+<script src="$!webPath/assets/js/jquery.SuperSlide.2.1.1.js"></script> 
+  <script type="text/javascript">
+    $(".slideBox,.slideBox2").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,});
+  </script>
+<script type="text/javascript" src="$!webPath/assets/js/animatescroll.js"></script><!-- 顺序别乱动哈 ，必须放低部-->  
+$!httpInclude.include("/footer.htm")  
+</body>
+</html>

@@ -1,0 +1,299 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+	jQuery(function(){
+		
+		var lis = jQuery(".address ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%4;
+			if(t == 0){
+				jQuery(this).css("margin-right","0px");
+			}
+		});
+		
+		
+		//运费根据商品id获取商品配送方式
+		var goods = $("input[id^='appId_']");
+		jQuery.each(goods,function(i,v){
+			//获取商品id
+			var paramdata = $(v).val();
+			var params = paramdata.split("`");
+			//获取商品对象
+			jQuery.ajax({
+			   type: "POST",
+			   url: "$!webPath/getGoodsById.htm",
+			   data: {"id":params[0],"count":params[1]},
+			   dataType : "text",
+			   success: function(msg){
+				   $(v).next().html(msg);
+			   }
+			});
+		
+		});
+		
+	});
+	
+	//结算出来的金额(不包含运费)
+	var totalAmount = "$!payment";
+	
+	//配送方式change事件
+	function changeTransType(obj){
+		var seldata = $(obj).val();
+		if(seldata == ""){
+			$(obj).next().next().empty();
+			return false;
+		}
+		var params = seldata.split("`");
+		
+		//获取商品对象
+		jQuery.ajax({
+		   type: "POST",
+		   url: "$!webPath/getTranFee.htm",
+		   data: {"type":params[0],"count":params[1],"id":params[2]},
+		   dataType : "text",
+		   success: function(data){
+			   $(obj).next().next().empty();
+			   $(obj).next().next().html(data);
+			   var storeId = $("#store"+params[2]).val();
+			   var tempAmount = totalAmount;
+			   var spanfee = $("span[id='goodsTransFee_"+params[2]+"']");
+			   var totalAmout = $("#"+storeId).val();
+			   jQuery.each(spanfee,function(i,v){
+				   var transfee = $(v).text();
+				   totalAmout = FloatAdd(transfee,totalAmout);
+				   var newtotalAmount = FloatAdd(transfee,tempAmount);
+				   tempAmount = newtotalAmount;
+			   });
+			   
+			   $("#totalAmount1"+storeId).text("¥"+totalAmout);
+			   $("#totalAmount2").text("¥"+tempAmount);
+		   }
+		});
+	}
+	//浮点型运算
+	function FloatAdd(arg1,arg2){
+		var r1,r2,m;
+		try{
+			r1 = arg1.toString().split(".")[1].length
+		}catch(e){
+			r1 = 0;
+		}
+		try{
+			r2 = arg2.toString().split(".")[1].length
+		}catch(e){
+			r2 = 0;
+		}
+		m = Math.pow(10,Math.max(r1,r2));
+		var rs = (arg1*m + arg2*m)/m;
+		rs = rs * 100;
+		rs = rs + "";
+		var newFee = rs.substring(0, rs.length -2) + "." + rs.substring(rs.length-2, rs -1);
+		return newFee;
+	}
+	
+	function btnCartInfo(){
+		
+		var goodsIds = "";
+		var msgs = "";
+		var invoices = "";
+		
+		if($("#addressId").val() == ""){
+			alert("请点击选择一个收货地址");
+			return;
+		}
+		jQuery("input[name=goodsId]").each(function () {
+			for (var i = 0; i < $(this).length; i++) {
+				goodsIds = goodsIds + $(this).val() + "|";
+			}
+		});
+		
+		jQuery("input[name=msg]").each(function () {
+			for (var i = 0; i < $(this).length; i++) {
+				
+				if($(this).val() == "")
+				{
+					msgs = msgs + "  " + "|";
+				}
+				else
+				{
+					msgs = msgs + $(this).val() + "|";
+				}
+			}
+		});
+		
+		jQuery("input[name=invoice]").each(function () {
+			for (var i = 0; i < $(this).length; i++) {
+				if($(this).val() == "")
+				{
+					invoices = invoices + "  " + "|";
+				}
+				else
+				{
+					invoices = invoices + $(this).val() + "|";
+				}
+				
+			}
+		});
+		
+		var goodsCount = "";
+		jQuery("td[name='goodscount']").each(function(){
+			goodsCount += parseInt($(this).html()) + "|";
+		});
+		
+		
+		if(goodsIds == ""){
+			alert("没有商品");
+		}
+		//是否提交表单
+		var subflag = true;
+		//组装购买商品的ID和选择的配送方式(后台要计算运费)
+		var goodsIdAndTransType = "";
+		//计算运费
+		var typeselect = jQuery("select[id^='goodsTransType_']");
+		jQuery.each(typeselect,function(i,v){
+			var selval = $(v).find("option:selected").val()
+			if(selval == ""){
+				alert("您还没有选择配送方式");
+				subflag = false;
+				goodsIdAndTransType = "";
+				return false;
+			}else{
+				var goodsId = $(v).parent().prev().val().split("`")[0];
+				var transType = selval.split("`")[0];
+				//console.info("goodsId -> "+goodsId);
+				//console.info("transType -> "+transType);
+				var temp = goodsId+"`"+transType+"|";
+				goodsIdAndTransType = goodsIdAndTransType + temp;
+			}
+		});
+		 
+		jQuery("#goodscounts").val(goodsCount);
+		jQuery("#goodsId").val(goodsIds);
+		jQuery("#msg").val(msgs);
+		jQuery("#invoice").val(invoices);
+		jQuery("#appGoodsIdAndTransType").val(goodsIdAndTransType);
+		
+		if(subflag){
+			$("#cartForm").submit();	
+		}
+		
+	}
+	
+	
+	/* 文字多余省略...  */
+	window.onload = function(){
+        var text = document.getElementById('cartgoods_goodsname'),
+        str = text.innerHTML,
+        textLeng = 70;
+        if(str.length > textLeng ){
+              text .innerHTML = str.substring(0,textLeng )+"...";
+        } 
+	}	
+
+</script>
+</head>
+<body>
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/cart/cart_confirm_order_logo.htm")
+$!httpInclude.include("/cart/cart_confirm_order_address.htm")
+
+<div class="w990" style="background-color: #fff;border: 1px solid #e8e8e8;">
+	<span class="f14 fb c3" style="padding-left: 10px;">确认订单信息</span>
+	#if($!cartGoodsShow.size()>0) 
+	#set($i=0)
+	#foreach($store in $!cartGoodsShow)
+	
+    <table class="order_list" width="100%" border="0" cellspacing="0" cellpadding="0" >
+      <thead>
+        <tr>
+          <th width="44%" class="tab_th1" style="padding-left: 10px;"><img src="$!webPath/assets/img/ss.png" style="display: inline-block;margin-top:-3px;"/>店铺：$!store.storeName</th>
+          <th width="13%" class="tab_th2">单价(元)</th>
+          <th width="13%" class="tab_th2">数量</th>
+          <th width="13%" class="tab_th2">小计(元)</th>
+          <th width="17%" class="tab_th3">配送方式</th>
+        </tr>
+      </thead>
+      
+     #set($j=0)
+      #foreach($!cartGoods in $!store.goodsList)
+      
+      <input type="hidden" name="goodsId" value="$!cartGoods.goodsId=$!cartGoods.goodsProperty"/>
+      <tbody width="100%" border="0" cellspacing="5" cellpadding="3">
+        <tr>
+          <td style="padding-left: 10px;">
+          	<a class="order_img1" href="$!webPath/goods.htm?id=$!cartGoods.goodsId">
+          		<img src="$!cartGoods.goodsImg" width="50"  />
+          	</a>
+          	<span>
+          		<a id="cartgoods_goodsname" href="$!webPath/goods.htm?id=$!cartGoods.goodsId" style="width:360px;line-height: 20px;height: 40px;overflow: hidden;">$!cartGoods.goodsName &nbsp; $!cartGoods.goodsProperty</a>
+          		&nbsp;&nbsp;<img src="$!webPath/assets/img/16-161.png" /> 
+          		<img src="$!webPath/assets/img/xcard.png" /> 
+          		<img src="$!webPath/assets/img/post.png" />
+          	</span>
+		  </td>
+          <td align="center">$!cartGoods.goodsPrice</td>
+          <td align="center">$!cartGoods.count </td>
+          #set($total=$CommUtil.mulBigDecimal($!cartGoods.goodsPrice,$!cartGoods.count))
+          <td align="center"><label id="xiaoji">$!total</label></td>
+          <td rowspan="2">        
+          	
+          	<div> 
+          		<input type="hidden" id="appId_$i$j" value="$!cartGoods.goodsId`$!cartGoods.count">
+          		<div id="context_$i$j"></div>
+          	</div>
+
+           </td>
+        </tr>
+        
+      </tbody>
+       #set($j=$j+1)
+      #end
+       #set($i=$i+1)
+      <tfoot>
+      
+      	<tr  style="border-top:1px solid #b4d0ff; background:#f2f6ff">
+      		
+        	<td><div class="memo">备注说明：<input type="text" name="msg" style="width:350px; height:20px;" /></div></td>
+            <td colspan="3">发票抬头：<input type="text" name="invoice" style="width:200px; height:20px;" /></td>
+            <td align="right"><div class="orderPay">店铺合计(含运费): <span id="totalAmount1$!store.storeId">¥$!store.storePrice</span><input type="hidden" id="$!store.storeId" value="$!store.storePrice"/></div></td>
+       		
+        </tr>
+       
+      </tfoot>
+       
+    </table>
+    
+   #end
+   <form action="$!webPath/cart/cart_pay_index.htm" method="post" id="cartForm"> 
+	<input type="hidden" id="addressId" name="addressId"/>
+	<input type="hidden" id="goodsId" name="goodsIds"/>
+	<input type="hidden" id="msg" name="msgs"/>
+	<input type="hidden" id="invoice" name="invoices"/>
+	<input type="hidden" id="appGoodsIdAndTransType" name="goodsIdAndTransType"/>
+	<input type="hidden" id="cartUUID" name="cartUUID" value="$!cartUUID"/>
+   </form>
+   
+   #end
+
+	<div class="con_money" >
+    	<p>实付款：<span class="moeny" id="totalAmount2" style="margin-right: 10px;">¥$!payment</span></p>
+	</div>
+		
+	
+    <div class="action" style="padding-right: 10px;">
+    	#if(!$!directBuy)<a href="$!webPath/cart/cart_index.htm" class="back-cart">返回购物车修改</a>#end
+    	<div class="go-wrapper"><a class="go-btn" onclick="btnCartInfo();">提交订单</a></div>
+    </div>
+</div>
+
+
+
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>
+

@@ -1,0 +1,45 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>500 错误 $!{config.title}！</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/reg.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon"> 
+</head>
+<body style="background-color:#f2f2f2">
+$!httpInclude.include("/top.htm")
+<div class="yg_header" id="yg_header" style="background-color:#f2f2f2">
+  
+  <div id="yg_logo_tab" class="clearfix ygwrap" style="width:990px; margin:30px auto;">
+    <div class="logo fl"> <a href="$!webPath/index.html"></a> </div>  
+  </div>
+  <div class="yg_sites_tabtn"></div>
+</div> 
+<div class="regcontent errorimg21">
+	<span class="errtit" style="font-family:Microsoft YaHei;">对不起！您访问的页面不存在~</span>
+	<img src="$!webPath/assets/img/tan.jpg" />
+    <div class="txt404">
+    	<p class="f16">不必担心，情况并不严重，工程师正在帮你找回...</p>
+        <p class="c6"><label>3</label>秒钟后自动跳转到首页，您还可以</p>
+        <p class=""> 1） <a href="$!webPath/index.html">返回到首页</a></p>
+        <p class=""> 2） <a href="#" onClick="javascript :history.go(-1);">返回到上一页</a></p>
+    </div>
+</div> 
+<script>
+	  var count=3;
+	  window.setInterval(go,1000);
+	  function go(){
+	    count--;
+	    if(count==0) window.location.href="$!webPath/index.htm";
+	  }
+</script> 
+<div class="login_footer">
+	<p><a href="">关于我们</a> | <a href="">联系我们</a> | <a href="">人才招聘</a> | <a href="">商家入驻</a> | <a href="">广告服务</a> | <a href="">手机天使</a> | <a href="">友情链接</a> | <a href="">销售联盟</a> | <a href="">天使社区</a> | <a href="">天使公益</a> | <a href="">English Site</a></p>
+    <p><a href="">Copyright©2015-2016  天使Amall.com 版权所有</a></p>
+</div> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script> 
+</body>
+</html>

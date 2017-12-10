@@ -1,0 +1,51 @@
+<script>
+jQuery(document).ready(function(){
+  jQuery(":radio").click(function(){
+     if(jQuery(this).val()=="user"){
+	   jQuery("li[id^=user_adv_]").show();
+	   jQuery("#shop_adv").hide();
+	 }else{
+	   jQuery("li[id^=user_adv_]").hide();
+	   jQuery("#shop_adv").show();	 
+	 }
+  });
+  jQuery("#img").change(function(){
+     jQuery("#file_val").val(jQuery(this).val());
+  });
+});
+</script>
+<form action="$!webPath/admin/goods_floor_main_photo_add.htm" method="post" enctype="multipart/form-data" id="theForm">
+<div class="box_floor">
+  <div class="floor_advertisment"> <em class="floor_warning">注释：使用上传的图片作为楼层的主题图片</em>
+    <ul class="floor_adv">
+       <input name="id" type="hidden" id="id" value="$!obj.id">
+     <!--  <li>
+       <b>
+       选择类型：</b> 
+      <span class="floor_adv_sp">
+      <i><input name="type" type="radio" id="type" value="user" checked="checked" />图片上传</i>
+      <i><input name="type" type="radio" id="type" value="adv" />商城广告</i>
+      </span> 
+      </li> -->
+      <li id="user_adv_img"> 
+      <b>商品主题图片上传：</b> 
+      <span class="floor_adv_sp">
+        <input name="fileVal"  type="text" class="floor_file_txt" id="file_val" />
+        <input name="button" type="button" class="floor_file_btn" value=""/>
+        <input  type="file"  size="33" class="flooor_file" id="img" name="img"/>
+        </span>
+        <i class="floor_adv_i">建议上传360*494像素图片</i> 
+      </li>
+      <li id="user_adv_url"> <b>图片链接：</b>
+       <span class="floor_adv_sp">
+        <input name="acc_url" type="text"class="floor_file_txt2" id="acc_url" />
+        </span>
+      </li>
+       
+    </ul>
+  </div>
+  <div class="submit">
+    <input name="" type="submit" value="提交" />
+  </div>
+</div>
+</form>

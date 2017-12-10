@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>兑换记录</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc1.amallcdn.cn/assets/css/duigou.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<style>
+.orderul li{color: #333}
+p{margin: 0;padding: 0;line-height: 18px;}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+<div class="s_m">  
+  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>兑换记录</span> > <span>已揭晓</span></div></div>
+  <div class="productmain" style="border-bottom: 0;"> 
+	<div class="container" style="border-top:1px solid #ccc;" >
+        <ul class="section"  style="padding: 0;">
+          <li class=""><a href="$!webPath/my_angel_exchang_list_ing.htm">进行中<span class="b_record_block02">$!noWinCount</span></a></li>
+          <li class="li_this"><a href="$!webPath/my_angel_exchang_list_ed.htm" style="color: #dd2726">已揭晓<span class="b_record_block01">$!totalCount</span></a></li>
+        </ul>
+	</div>
+      
+	<div class="ordercon" style="width: 831px;">
+		<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+		<tbody>
+		#if($!objs.size()>0)
+			<tr class="b_part_title">
+				<th class="b_th1">商品图片</th>
+				<th class="b_th2">商品名称</th>
+				<th class="b_th3">互助兑状态</th>
+				<th class="b_th4">购买数量</th>
+				<th class="b_th5">购买详情</th>
+				<th class="b_th6">操作</th>
+			</tr>
+		<!-- 循环 -->	
+		#foreach($obj in $!objs)
+		<tr style="border-bottom: 1px solid #d8d8d8;">
+			<td style="width: 110px;text-align: center;padding: 10px;">
+				<a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id">
+					<img src="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name" alt="" width="100%" style="padding: 1px;border: 1px solid #d8d8d8;">
+				</a>
+			</td>
+			<td style="padding: 20px 0;">
+				<div class="b_goods_name">
+					<span class="b_goods_name02"><a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id">(序号:$obj.cloudGoods.id)$obj.cloudGoods.goodsName</a></span>
+					<b class="b_all_require">总需：$obj.cloudGoods.goodsCount人次</b>
+					<p>幸运星：<a href="#">$obj.cloudGoods.user.truename</a></p>
+					<p>幸运号码：<i style="color: #dd2726" >$obj.cloudGoods.openWinnerCode</i></p>
+					<p class="c_know_time">揭晓时间：<i>$CommUtil.formatLongDate($obj.cloudGoods.openWinnerTime)</i></p>
+				</div>
+
+				
+			</td>
+			<td class="b_color">已揭晓</td>
+			<td>
+				<tt class="times0">$obj.buyCounts（个）</tt>
+			</td>
+			<td>
+				<a href="$!webPath/my_angel_exchang_list_xq.htm?cloudGoodsId=$obj.cloudGoods.id">购买详情&gt;</a>
+			</td>
+			<td>
+				<tt>
+					<a href="$!webPath/angel_exchange_detail.htm?id=$!obj.cloudGoods.id">查看详情&gt;</a>
+				</tt>
+			</td>
+		</tr>
+		#end
+		#else
+		<div style="height:250px;text-align:center;line-height:150px;border-bottom:1px solid #CCC;">暂无<span style="color:red">揭晓记录</span>哦,先去看看吧~ </div>
+		#end
+		</tbody>
+
+           
+       </table>
+       </div>
+        #if($!objs.size()>0)
+		        <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageHTML
+				</div>
+		  #end
+     </div>
+        </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

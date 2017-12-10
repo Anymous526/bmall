@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<!-- springmvc 扫包 @Controller ..... -->
+	<context:component-scan base-package="com.amall"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 配置全局日期转换器 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="webBindingInitializer">
+			<bean class="com.amall.core.web.CustomDateEdtor" />
+		</property>
+		
+        <property name="messageConverters">  
+             <list>  
+                 <bean class = "org.springframework.http.converter.StringHttpMessageConverter">  
+                    <property name = "supportedMediaTypes">  
+                          <list>  
+                              <value>text/html;charset=UTF-8</value>  
+                         </list>  
+                    </property>  
+                 </bean>  
+            </list>  
+        </property>
+	</bean>
+	  
+	<!-- springmvc的对模型视图名称的解析，即在模型视图名称添加前后缀 -->
+	
+
+
+	<!-- 定时器任务配置 -->
+	
+	<!-- 系统调度控制器 1-->
+	<bean id="groupTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="group_job" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="execute" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	<!-- 触发器1配置 -->
+	<bean id="group_cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="groupTask" />
+		<!-- 执行时间周期 -->
+		<property name="cronExpression" value="0 15 10 * * ? 2019" />
+	</bean>
+	         
+	<!-- 系统调度控制器 2-->
+	<bean id="jobTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="shop_job" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="execute" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 触发器2配置 -->
+	<bean id="job_cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="jobTask" />
+		<!-- 执行时间周期 -->
+		<property name="cronExpression" value="0 0/3 * * * ?" />
+	</bean>
+	
+	<!-- 系统调度控制器3-->
+	<bean id="bargainTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="autoOrder_job" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="execute" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 触发器3配置 -->
+	<bean id="bargain_cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="bargainTask" />
+		<!-- 执行时间周期 -->
+		<property name="cronExpression" value="0 0/3 * * * ?" />
+	</bean>
+	
+		<!-- 系统调度控制器4-->
+	<bean id="RedpackgeTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="Redpacket_job" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="AutoRedpackgeJob" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 触发器4配置 -->
+	<bean id="redpacket_cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="RedpackgeTask" />
+		<!-- 执行时间周期 -->
+		<property name="cronExpression" value="0 0/15 8-23 * * ?" />
+	</bean>
+	
+	<!-- 系统调度控制器5 -->
+	<bean id="RedmonthlyRoseTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="automonthlyRoseOrderDetial_job" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="execute" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 触发器5配置 -->
+	<bean id="redpacket_monthlyRose" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="RedmonthlyRoseTask" />
+		<!-- 执行时间周期 -->
+		<property name="cronExpression" value="0 59 23 L * ?" />
+	</bean>
+	<!-- 0 59 23 L * ? -->
+	<!-- 0 15 10 ? * * -->
+	
+	<!-- 系统调度控制器 6-->
+	<bean id="goodsPhotoTask"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="goods_photo_mat" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="execute" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 触发器6配置 -->
+	<bean id="goodsPhoto_cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="goodsPhotoTask" />
+		<!-- 执行时间周期 -->
+		<property name="cronExpression" value="0 0/3 * * * ?" />
+	</bean>
+		<!-- 系统调度控制器7 -->
+	<bean id="CancelAnOrder" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="CancelAnOrderjob" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="execute" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 触发器7配置 -->
+	<bean id="redpacket_CancelAnOrder" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="CancelAnOrder" />
+		<!-- 执行时间周期 -->
+		<property name="cronExpression" value="0 0/1 * * * ?" />
+	</bean>
+	
+	<!--  "0 15 10 ? * SUN" 周日的上午10:15触发  -->
+		<!-- 系统调度控制器8 -->
+	<bean id="participationInProfit" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调用的类 -->
+		<property name="targetObject" ref="participationInProfitJob" />
+		<!-- 调用类中的方法 -->
+		<property name="targetMethod" value="execute" />
+		 <!--将并发设置为false-->  
+		<property name="concurrent" value="false" />
+	</bean>
+	
+	<!-- 触发器8配置 -->
+	<bean id="redpacket_participationInProfit" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="participationInProfit" />
+		<!-- 执行时间周期 -->
+		<!-- <property name="cronExpression" value="50 59 23 ? * SUN" /> -->
+		<property name="cronExpression" value="30 59 23 ? * SUN" />
+	</bean>
+	
+	<bean id="schdulerFactory" lazy-init="false"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="group_cronTrigger" />
+				<ref bean="job_cronTrigger" />
+				<ref bean="bargain_cronTrigger"/>
+				<ref bean="redpacket_cronTrigger"/>
+				<ref bean="redpacket_monthlyRose"/>
+				<ref bean="goodsPhoto_cronTrigger"/>
+				<ref bean="redpacket_CancelAnOrder"/>
+				<ref bean="redpacket_participationInProfit"/>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 上传图片 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>10485760</value>    <!-- 文件上传最大为10M -->
+		</property>
+		<property name="maxInMemorySize" value="4096" />
+	</bean>
+
+</beans>

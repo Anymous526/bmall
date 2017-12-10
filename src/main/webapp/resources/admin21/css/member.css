@@ -1,0 +1,81 @@
+.panel{margin:15px;}
+.panel-heading .nav li a{font-size:14px!important;} 
+.btn-group #condition{cursor:pointer;float:left;background:#5ab5de;line-height:30px;padding:0 10px 0 10px;height:30px;border-radius:5px;border:none;color:#FFF;outline:medium;}
+.btn-group #serach{float:left;line-height:30px;height:30px;margin:0 10px 0 10px;text-indent:0.5em;width:200px;border:1px solid #5ab5de;border-radius:5px;}
+.btn-group #serachbtn{float:left;line-height:30px;height:30px;width:70px;text-align:center;background:#5ab5de;outline:medium;border:none;border-radius:5px;color:#FFF;}
+#about3 .panel{margin:20px 0 20px 0;width:100%;}
+.wex21{width:100%;} 
+.blue-box td{height:40px;font-size:1.2rem;font-weight:bold;margin-top:20px;}
+.wxc21{margin:15px;min-height:50px;color:#666}
+.wxc21 td{height:100px;font-size:1.2rem;margin-top:20px;}
+#mbname{height:20px;cursor:pointer;width:20px;display:block;}
+.wom21{width:100%}
+.wom21 .kwom21{float:left;text-align:cneter;width:35%;} 
+.wom22{float:left;text-align:left;width:65%;padding:0;margin:0;}
+.wom24{float:left;text-align:left;width:65%;padding:0;margin:0;padding-top:10px;}
+.wom24 li{line-height:28px;}
+.wom22 li{line-height:24px;}
+.wo3{font-size:14px;font-weight:bold;}
+.wo3 span{color:#468bd0}
+.email:hover i{display:block;position:absolute;margin-top:-25px;margin-left:23px;border:none;transition:all 1s ease-out 0s;transition:all 1s ease-in 0s;}
+.email i{display:none}
+.email .wei3{ height: 0;margin-top:7px;margin-left:-15px;width: 0;position:absolute; border:8px solid #4acacb; border-color:transparent #4acacb transparent transparent;} 
+.email .wei5{display:block;font-size:14px;margin-left:1px;background:#4acacb;border-radius:5px;color:#FFF;padding:6px 12px 6px 12px;}
+.qq:hover i{display:block;position:absolute;background:#65CEA7;margin-top:-25px;margin-left:45px;border:none;transition:all 1s ease-out 0s;transition:all 1s ease-in 0s;}
+.qq i{display:none}
+.qq .wei3{height: 0;margin-top:7px;margin-left:-15px;width: 0;position:absolute; border:8px solid #4acacb; border-color:transparent #4acacb transparent transparent;} 
+.qq .wei5{display:block;font-size:14px;margin-left:1px;background:#4acacb;border-radius:5px;color:#FFF;padding:6px 12px 6px 12px;}
+.edit{color:#6a8abe;cursor:pointer;margin:0 5px 0 5px;}
+.delete{color:#6a8abe;cursor:pointer;margin:0 5px 0 5px;}
+.btn-pwf{padding:10px 45px 10px 45px!important;margin-top:20px;display:block}
+#mysex{display:block;margin-bottom:8px;}
+.sex{border:none;height:16px; width:16px;margin:0 5px 0 5px!important;cursor:pointer}
+.col21{color:#fb8575}
+.custom-tab1{background:#fc8675!important;}
+.custom-tab2{background:#6a8abe!important;}
+.fa-user{margin-right:6px;}
+.form-group div{margin:10px 0 15px 0;color:#333;}
+#ve_state{display:block;margin-bottom:10px;}
+.form-group select{width:100px;height:30px;line-height:30px;}
+@media screen and (max-width:450px) {
+	.btn-group #condition {
+    cursor: pointer;
+    float: left;
+    background: #5ab5de;
+    line-height: 30px;
+    padding: 0 4px 0 4px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    color: #FFF;
+    outline: medium;
+}
+   .btn-group #serach {
+    float: left;
+    line-height: 30px;
+    height: 30px;
+    margin: 0 10px 0 10px;
+    text-indent: 0.5em;
+    width: 150px;
+    border: 1px solid #5ab5de;
+    border-radius: 5px;
+}
+.btn-group #serachbtn {
+    float: left;
+    line-height: 30px;
+    height: 30px;
+    width: 50px;
+    text-align: center;
+    background: #5ab5de;
+    outline: medium;
+    border: none;
+    border-radius: 5px;
+    color: #FFF;
+}
+.wom21 .kwom21 {
+    float: left;
+    text-align: cneter;
+    width: 35%;
+    display:none;
+}
+}

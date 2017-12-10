@@ -1,0 +1,91 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>支付保证金</title>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanel ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panes>div:eq('+$(this).index()+')').show().siblings().hide();	
+	})
+})
+</script>
+
+</head>
+
+
+
+
+
+
+
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/cart/cart_pay_logo2.htm")
+
+
+
+
+<div class="w100 w100_div">
+  <div class="w1200 order_num mb30">
+    <div class="order_num_left"> <span class="pt20 pl20">
+      <p class="f16"><strong>   
+      <p>请您在提交订单后<span class="cred">24小时</span>内完成支付，否则订单会自动取消。</p>
+      </span> </div>
+    <div class="order_num_right"> <span class="order_code"><!-- <img src="$!webPath/assets/img/code.jpg" /> --></span> <span class="order_money">
+      <p>应付金额
+        <label class="f18 fb cred">
+         $!payment</label>
+        元</p>
+      </span> </div>
+  </div>
+</div>
+
+<div class="w1200 paydiv">
+  <div style="width:90%;margin:40px auto;">
+  <form action="$!webPath/seller/seller_cash_deposit_pay.htm" method="post" id="theForm">
+  <input type="hidden" name="orderId" value="$!orderId"/>
+    <div class="tabPanel">
+      <ul>
+        <li class="hit">平台支付</li>
+      </ul>
+      <div class="panes">
+        <div class="pane" style="display:block;">
+          <div class="bank_list">
+            <p>支持国内几乎所有银行的储蓄卡及信用卡进行支付（需开通网上银行）</p>
+            <dl>
+              <!-- <dt> 
+              <label style="cursor: pointer;">
+	              <span><input type="radio" name="webbankpay" id="alipay" value="alipay" /></span> 
+	              <img src="$!webPath/assets/img/bank-img13.png" />  
+              </label>
+                
+                </dt> -->
+              <dt> 
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="Unionpay" value="Unionpay" /></span> 
+              	<img src="$!webPath/assets/img/bank-img14.png" />  
+              </label>
+              </dt>
+              <dt> 
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="WXPay" value="WXPay" /></span> 
+              	<img src="$!webPath/assets/img/bank4.png" />  
+              </label>
+              </dt>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt25">
+      <input type="submit" value="立即支付" class="ui-button ui-button-XL">
+    </div>
+    </form>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

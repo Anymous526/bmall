@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!--[if IE]>
+<style type="text/css">
+.input{behavior: url($!webPath/resources/style/common/css/ie-css3.htc);}
+</style>
+<![endif]-->
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+function btnSubmit()
+{
+	var phone = $("#phone").val();
+	//!(/^1\d{10}$/.test)(phone)
+	var reg1=/\s|;|；/g;
+	var phone_vals=phone.split(reg1);
+	console.log(phone_vals);
+	var phone_val=phone_vals.join(",");
+	/* var reg=/^1\d{10}(?=;|\s)/g; */
+	var reg=/(^1[0-9]{10})+(;|；|\s)|^1[0-9]{10}/g;
+	if(reg.test(phone)==false )
+	{
+		alert("请输入正确的手机号码");
+		$("#phone").focus();
+		return false;
+	}
+	
+	var content = $("#name").val();
+	if(content == "")
+	{
+		alert("请输入内容");
+		$("#name").focus();
+		return false;
+	}
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$webPath/admin/sends_sms.htm",
+		data : {"phoneNum":phone_val,"content":content},
+		success : function(ret) {
+			if(ret == "fail")
+			{
+				alert("手机号码或姓名错误或发送失败");
+				return false;
+			}
+			else
+			{
+				alert("发送成功");
+			}
+			
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("发送失败");
+			return false;
+		}
+	});
+}
+$(function(){
+	$(".send_textarea").keyup(function(){
+		var textarea_len=$(".send_textarea").val().length;
+		$(".send_style").text(100-textarea_len);
+	});
+})
+
+</script>
+</head>
+<body scroll="yes">
+<div class="cont">
+  <h1 class="seth1">短信发送</h1>
+  <div class="settab"> 
+	</div>
+    <div class="allmem_search">
+      <ul>
+        <li style="position:relative;">
+        <p style="color:#FC2349;padding-bottom:48px;">温馨提示：此功能可以进行多手机账号发送短信</p>
+        <p style="position:absolute;bottom:-21px;left:69px;color:#888">输入多手机账号时，可用中英文分号或者空格隔开</p> 
+        <span>手机号码</span> <span class="allmen size4">
+          <input name="phone" type="text" id="phone" />
+          </span>
+          
+        </li>
+        <li>
+        	<span>&nbsp;&nbsp;内&nbsp;容&nbsp;&nbsp;&nbsp;&nbsp;</span>
+          <span class="allmen size4" style="display:inline-block;width:327px;">
+          <textarea name="name" rows="8" cols="50" id="name" maxlength="100" class="send_textarea"></textarea>
+          <span class="send_count">你还可以输入<i class="send_style">100</i>字</span>
+          </span><span class="btn_search">
+          <input onclick="btnSubmit()" type="button" value="发送" style="cursor:pointer;" />
+        </span> 
+        </li>
+      </ul>
+    </div>
+  
+</div>
+</body>
+</html>

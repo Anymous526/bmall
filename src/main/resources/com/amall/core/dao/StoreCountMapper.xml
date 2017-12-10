@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.StoreCountMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.StoreCount" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="last_week_sale" property="lastWeekSale" jdbcType="INTEGER" />
+    <result column="this_week_sale" property="thisWeekSale" jdbcType="INTEGER" />
+    <result column="last_week_visit" property="lastWeekVisit" jdbcType="INTEGER" />
+    <result column="this_week_visit" property="thisWeekVisit" jdbcType="INTEGER" />
+    <result column="store_time" property="storeTime" jdbcType="TIMESTAMP" />
+    <result column="store_id" property="storeId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, last_week_sale, this_week_sale, last_week_visit, this_week_visit, store_time, 
+    store_id
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.StoreCountExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_store_count
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_store_count
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_store_count
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.StoreCountExample" >
+    delete from amall_store_count
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.StoreCount" >
+    insert into amall_store_count (id, addTime, last_week_sale, 
+      this_week_sale, last_week_visit, this_week_visit, 
+      store_time, store_id)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{lastWeekSale,jdbcType=INTEGER}, 
+      #{thisWeekSale,jdbcType=INTEGER}, #{lastWeekVisit,jdbcType=INTEGER}, #{thisWeekVisit,jdbcType=INTEGER}, 
+      #{storeTime,jdbcType=TIMESTAMP}, #{storeId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"  parameterType="com.amall.core.bean.StoreCount" >
+    insert into amall_store_count
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="lastWeekSale != null" >
+        last_week_sale,
+      </if>
+      <if test="thisWeekSale != null" >
+        this_week_sale,
+      </if>
+      <if test="lastWeekVisit != null" >
+        last_week_visit,
+      </if>
+      <if test="thisWeekVisit != null" >
+        this_week_visit,
+      </if>
+      <if test="storeTime != null" >
+        store_time,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastWeekSale != null" >
+        #{lastWeekSale,jdbcType=INTEGER},
+      </if>
+      <if test="thisWeekSale != null" >
+        #{thisWeekSale,jdbcType=INTEGER},
+      </if>
+      <if test="lastWeekVisit != null" >
+        #{lastWeekVisit,jdbcType=INTEGER},
+      </if>
+      <if test="thisWeekVisit != null" >
+        #{thisWeekVisit,jdbcType=INTEGER},
+      </if>
+      <if test="storeTime != null" >
+        #{storeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.StoreCountExample" resultType="java.lang.Integer" >
+    select count(*) from amall_store_count
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_store_count
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastWeekSale != null" >
+        last_week_sale = #{record.lastWeekSale,jdbcType=INTEGER},
+      </if>
+      <if test="record.thisWeekSale != null" >
+        this_week_sale = #{record.thisWeekSale,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastWeekVisit != null" >
+        last_week_visit = #{record.lastWeekVisit,jdbcType=INTEGER},
+      </if>
+      <if test="record.thisWeekVisit != null" >
+        this_week_visit = #{record.thisWeekVisit,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeTime != null" >
+        store_time = #{record.storeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_store_count
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      last_week_sale = #{record.lastWeekSale,jdbcType=INTEGER},
+      this_week_sale = #{record.thisWeekSale,jdbcType=INTEGER},
+      last_week_visit = #{record.lastWeekVisit,jdbcType=INTEGER},
+      this_week_visit = #{record.thisWeekVisit,jdbcType=INTEGER},
+      store_time = #{record.storeTime,jdbcType=TIMESTAMP},
+      store_id = #{record.storeId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.StoreCount" >
+    update amall_store_count
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastWeekSale != null" >
+        last_week_sale = #{lastWeekSale,jdbcType=INTEGER},
+      </if>
+      <if test="thisWeekSale != null" >
+        this_week_sale = #{thisWeekSale,jdbcType=INTEGER},
+      </if>
+      <if test="lastWeekVisit != null" >
+        last_week_visit = #{lastWeekVisit,jdbcType=INTEGER},
+      </if>
+      <if test="thisWeekVisit != null" >
+        this_week_visit = #{thisWeekVisit,jdbcType=INTEGER},
+      </if>
+      <if test="storeTime != null" >
+        store_time = #{storeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.StoreCount" >
+    update amall_store_count
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      last_week_sale = #{lastWeekSale,jdbcType=INTEGER},
+      this_week_sale = #{thisWeekSale,jdbcType=INTEGER},
+      last_week_visit = #{lastWeekVisit,jdbcType=INTEGER},
+      this_week_visit = #{thisWeekVisit,jdbcType=INTEGER},
+      store_time = #{storeTime,jdbcType=TIMESTAMP},
+      store_id = #{storeId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

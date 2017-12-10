@@ -1,0 +1,46 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统提示 - $!config.title -</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/index.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+
+$!httpInclude.include("/top.htm")
+  $!httpInclude.include("/head.htm")
+  $!httpInclude.include("/nav2.htm")
+  <div class="main">
+  <div class="index" style="height:300px;">
+    <div id="weo">
+      <div id="ero">
+      <span style="float:left;">
+      <img src="$!webPath/resources/style/common/images/icon/error.png" />
+      </span>
+      <span id="wero1">$!{op_title}！</span>
+      </div>
+    </div>
+  </div>
+  #if($!url)
+<script>
+	  var count=3;
+	  window.setInterval(go,1000);
+	  function go(){
+	    count--;
+	    if(count==0) window.location.href="$!url";
+	  }
+	</script>
+    #end
+    
+</div>
+</body>
+</html>
+$!httpInclude.include("/footer.htm")

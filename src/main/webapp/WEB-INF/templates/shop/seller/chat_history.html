@@ -1,0 +1,39 @@
+#foreach($chatting in $chattings)
+      	#foreach($clog in $chatting.chattingLogs)
+	      	#if($!clog.userId == $!chatting.user1Id)
+	      	<input type="hidden" name="seller" id="seller" value="$!chatting.user1Id"/>
+	      	<div id="adm" class="" name="msg">
+	        	<div class="admimg">
+	        		#set($img = $!clog.user.photo)
+	        		#if($!img)
+	        			#set($photo = "$!{config.imagewebserver}/$!{img.path}/$!{img.name}")
+	        		#else
+	        			#set($photo = "$!webPath/service/img/50.png")
+	        		#end
+	            	<img src="$!photo" />
+	            </div>
+	        	<div class="info">
+	           	  $!clog.content
+	            </div>
+	        </div>
+	        #end
+	        #if($!clog.userId == $!chatting.user2Id)
+	       <input type="hidden" name="buyer" id="buyer" value="$!chatting.user2Id"/>
+	       <div id="gue" class="" name="msg">
+	       		#set($img = $!clog.user.photo)
+	        		#if($!img)
+	        			#set($photo = "$!{config.imagewebserver}/$!{img.path}/$!{img.name}")
+	        		#else
+	        			#set($photo = "$!webPath/service/img/55.png")
+	        		#end
+	        	<div class="info">
+	           	  $!clog.content
+	            </div>
+	            <div class="admimg">
+	            	<img src="$!photo" />
+	            </div>
+	            <div style="clear:left;"></div>
+	        </div>
+	        #end
+        #end
+     #end

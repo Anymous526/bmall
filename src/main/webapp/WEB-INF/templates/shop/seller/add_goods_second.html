@@ -1,0 +1,1640 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>填写商品详细信息 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="$!webPath/resources/editor/themes/default/default.css" />
+	
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<style>
+/* .ke-dialog{top:25% !important;} */
+</style>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="$!webPath/resources/js/jquery.shop.common24.js"></script>
+<script src="$!webPath/resources/js/jquery.shop.base.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/kindeditor.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/lang/zh_CN.js"></script>
+<script src="$!webPath/resources/js/swfupload.js"></script>
+<script src="$!webPath/resources/js/swfupload.queue.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/map.js"></script> 
+<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+<script> 
+  jQuery.validator.addMethod("transportId",
+    function(value, element) {
+        if (jQuery(':radio[id=goods_transfee][value=0]').attr('checked') && jQuery(':radio[id=transport_type][value=0]').attr('checked')){
+	        	if (jQuery('#transport_id').val() == ''){
+	        		return false;
+	        	}else{
+	        		return true;
+	        	}
+        }else{
+        	return true;
+        }}
+    );
+//options为编辑配置属性 
+var options = {
+        cssPath : '$!webPath/resources/editor/plugins/code/prettify.css',
+        filterMode : true,
+		uploadJson:'$!webPath/upload.htm',
+		width : '860px',
+		height:'400px',
+		resizeType : 1,
+		allowImageUpload : true,
+		allowFlashUpload : false,
+		allowMediaUpload : false,
+		allowFileManager : false,
+		syncType:"form",
+		afterCreate : function() {
+							var self = this;
+							self.sync();
+						},
+		afterChange : function() {
+							var self = this;
+							self.sync();
+						},
+		afterBlur : function() {
+							var self = this;感恩金
+							self.sync();
+						},
+		items:['source', '|', 'fullscreen', 'undo', 'redo', 'print', 'cut', 'copy', 'paste',
+			'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+			'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+			'superscript', '|', 'selectall', 'clearhtml','quickformat','|',
+			'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+			'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image','flash', 'media', 'table', 'hr', 'emoticons', 'link', 'unlink', '|', 'about']
+}; 
+
+var map = new Map();
+//规格选择
+function selectedSepc(e){
+	
+	//jQuery(e)是当前选择的对象
+	jQuery(e).toggleClass("selceted");
+	
+	//获取到OL标签(OL包含很多li)
+	var specOl = jQuery(e).parent().children();
+	
+	//组装选择的规格,用"|"链接起来
+	var ids="";
+	specOl.each(function(i,n){
+		if($(n).hasClass("selceted")){
+			ids+=n.getAttribute("id")+"|";
+			
+		}
+	});
+	
+	//获取到复选框
+	var checkObj = jQuery(e).parent().prev().find("input");
+	//如果有选中复选框
+	if(checkObj.is(":checked")){
+		//如果至少有选中一个规格,
+		if(ids != ""){
+			//给予显示y的标识
+			ids = ids + "y";
+		}else{
+			//如果某项规格一个都没有选,则取消选中
+			checkObj.attr("checked",false);
+		}
+	}else{
+		 if(ids != ""){
+			//如果没有选中复选框,则给予不显示n的标识
+			alert("你有对应的规格没有选择");
+			return false;
+		}
+		
+	}
+	
+	//获取到当前的某项规格ID,作为map对象里面的key
+	var key = jQuery(e).parent().prev().attr("id");
+	console.log(key);
+	
+	//如果修改的规格项已经在map对象里面存在
+	if(map.containsKey(key)){
+		//给对应的key的value，重新赋值
+		map.remove(key);
+		if(ids != ""){
+			map.put(key,ids);
+		}
+	}else{
+		//把新加的规格项添加到map对象里面
+		map.put(key,ids);
+	}
+	//console.info(ids);
+	//将map对象转换成json串,设置商品的规格属性
+	var json = JSON.stringify(map.elements);
+	jQuery("input[name='goods_properties']").val(json);
+}
+
+var selectCount = 0;
+//设置复选框事件
+function selectedShow(e){
+	
+	//获取到复选框
+	var obj = jQuery(e);
+	//console.info(selectCount);
+
+	//获取到对应规格项ID
+	var key = obj.attr("id").split("_")[1];
+	//根据规格项,获取对应的值
+	var ids = map.get(key);
+
+	//如果复选框选中了
+	if(obj.attr("checked")){
+		//如果该规格项对应的的值只是n
+		if(ids == "n"){
+			alert("还没有选择规格");
+		}else{
+			
+			if(selectCount > 4){
+				alert("商品详情的规格参数最多只能显示5项");
+				obj.attr("checked",false);
+				return;
+			}
+			
+			selectCount ++;
+			
+			//至少有选择一个规格项的值
+			ids_Array = ids.split("|");
+			//获取改规格项数组的最后一个值
+			var ids_Array_last = ids_Array[ids_Array.length - 1];
+			//console.info(ids_Array[ids_Array.length - 1]);
+			if(ids_Array_last == "n"){
+				ids_Array[ids_Array.length - 1] = "y";
+			}else{
+				ids_Array.push("y");
+			}
+			//console.info(ids_Array);
+			map.remove(key);
+			map.put(key,ids_Array.join("|"));
+			var json = JSON.stringify(map.elements);
+			//console.info(json);
+			jQuery("input[name='goods_properties']").val(json);
+		}
+	}else{
+		
+		selectCount --;
+		//如果取消复选框选中事件
+		ids_Array = ids.split("|");
+		var ids_Array_last = ids_Array[ids_Array.length - 1];
+		//console.info(ids_Array[ids_Array.length - 1]);
+		//设置n标识
+		if(ids_Array_last == "y"){
+			ids_Array[ids_Array.length - 1] = "n";
+		}
+		//console.info(ids_Array);
+		//更新map
+		map.remove(key);
+		map.put(key,ids_Array.join("|"));
+		var json = JSON.stringify(map.elements);
+		//console.info(json);
+		jQuery("input[name='goods_properties']").val(json);
+	}
+	
+	//console.info("selectCount -> "+selectCount);
+
+}
+
+
+var swf_upload;
+var photo_count=0;
+var user_goods_class_count=2;
+jQuery(document).ready(function() {
+	//默认加载已经选好的规格,设置规格的选中样式
+	  var data='$!obj.goodsProperty';
+	  if(jQuery.trim(data).length > 0){
+		  //console.info("data - > "+data); 
+		  var properties=eval("("+data+")");
+		  jQuery.each(properties,function(index,item){
+			  //console.info("item.key - > "+item.key);
+			  //console.info("item.value - > "+item.value);
+		      map.put(item.key,item.value);
+		      //var ols = $("#"+item.key).next();
+		      
+		      var itemArray = item.value.split("|");
+		      //设置复选框的选中
+		      var itemArray_last =  itemArray[itemArray.length - 1];
+		      
+		      if(itemArray_last == "y"){
+		    	  //累加计算详情显示不能超过的个数
+		    	  selectCount ++;
+		    	  $("input[id='specs_"+item.key+"']").attr("checked",true);
+		      }
+		      jQuery.each(itemArray,function(i,v){
+		    	  //ols.find("#"+itemArray[i]).addClass("selceted");
+		    	  $(".shopattdetail").find("#"+itemArray[i]).addClass("selceted");
+		      });
+		  });
+	  }
+	  var json = JSON.stringify(map.elements);
+	  jQuery("input[name='goods_properties']").val(json);
+	  //商品编辑选中商品品牌
+	  var data2 = '$!obj.goodsBrandId';
+	  if(jQuery.trim(data2).length > 0){
+		  $(".selectbrand").find("#$!obj.goodsBrandId").addClass("selceted");
+	  }
+	  
+	  
+	  
+ var settings_object = {//定义参数配置对象
+        upload_url : "$!webPath/seller/swf_upload.htm",
+            flash_url : "$!webPath/resources/flash/swfupload.swf",
+            file_post_name : "imgFile",
+            post_params : {
+              "user_id" : "$!user.id",
+              "goodsId" : "$!obj.id"
+            },
+            use_query_string : false,
+            requeue_on_error : false,
+            file_types : "$!imageSuffix",
+            file_types_description: "商品图片",
+            file_size_limit : 2048,
+            file_upload_limit : 0,
+            file_queue_limit : 0,
+            debug : false,
+            prevent_swf_caching : true,
+            preserve_relative_urls : false,
+     
+            button_placeholder_id : "upload_imgs",
+            button_image_url : "$!webPath/resources/style/common/images/upload.jpg",
+            button_width : 160,
+            button_height : 28,
+            button_text : "<b></b> <span class='upload_text'>选择上传商品图片</span>",
+            button_text_style : ".upload_text { color: #666666;font-size:12px;margin-left:40px; }",
+            button_text_left_padding : 3,
+            button_text_top_padding : 5,
+            button_action : SWFUpload.BUTTON_ACTION.SELECT_FILES,
+            button_disabled : false,
+            button_cursor : SWFUpload.CURSOR.HAND,
+            button_window_mode : SWFUpload.WINDOW_MODE.TRANSPARENT,
+			file_dialog_start_handler:fileDialogStart,
+			file_dialog_complete_handler:fileDialogComplete,
+            upload_start_handler:upload_start_handler,
+            upload_success_handler:uploadSuccess,
+			upload_complete_handler:uploadComplete
+			
+    };   
+    swf_upload = new SWFUpload(settings_object);//实例化一个SWFUpload，传入参数配置对象
+	#if($!obj.goodsMainPhoto)
+	  photo_count=1;
+	#end 
+	#if($!obj.goodsPphotos)
+	  photo_count=photo_count+$!obj.goodsPhotos.size();
+	#end
+	
+	function fileDialogStart(){
+	  var stats = this.getStats();
+	  stats.successful_uploads=photo_count;
+	  this.setStats(stats);
+	}
+	function fileDialogComplete(numFilesSelected, numFilesQueued) {
+	try {
+	    var upload=0;
+		var stats = this.getStats();
+		var select_count=5-photo_count;
+		if (select_count!=0&&numFilesSelected > select_count) {
+		    alert("当前最多上传"+select_count+"张商品图片");	
+			this.cancelQueue();
+			upload=1;
+		}
+		
+		if(stats.successful_uploads>=5){
+		    alert("已经上传5张图片,如要修改请先删除图片！");
+			this.cancelQueue();
+			upload=1;
+		}
+		if(upload==0){
+		   this.startUpload();
+		}
+	} catch (ex)  {
+        this.debug(ex);
+	}
+    }
+	function upload_start_handler(){
+	  jQuery("#upload_wait").show();
+	}
+	function uploadSuccess(file, serverData){//单个图片上传成功
+	  var obj=eval("("+serverData+")");
+	  if(obj==null){
+		  alert("您选择的图片不符合要求");
+	  }else{
+	  if(obj.url!=""){  
+		  photo_count++;
+		  var stats = this.getStats(); 
+	    if(stats.successful_uploads==1){
+	      jQuery("#goods_image_0").attr("src",obj.url);
+	    }
+		    jQuery("#goods_image_"+stats.successful_uploads).attr("src",obj.url);   
+		    jQuery("#goods_image_"+stats.successful_uploads).attr("image_id",obj.id);
+		  }else{
+		    alert("您的店铺图片空间不足，请选择升级店铺或删除相册图片！");
+		  }
+		  if(obj.remainSpace==0){
+		     jQuery("#img_remain_size").html("空间大小不受限制");
+		 }else{
+		    jQuery("#img_remain_size").html(obj.remainSpace+"M");
+		  }
+	  }
+	}
+	function uploadComplete(file) {
+	try {
+		if (this.getStats().files_queued == 0) {
+           jQuery("#upload_wait").hide();
+		} else {	
+		   if(this.getStats.successful_uploads>=5){
+			   this.cancelQueue();
+		   }else{
+		       this.startUpload();
+		   }
+		}
+	} catch (ex) {
+		this.debug(ex);
+	}
+}
+
+
+	
+ //默认赋值
+  jQuery(":radio[id='goods_transfee'][value='$!{obj.goodsTransfee}']").attr("checked",true);
+  jQuery(":radio[id='goods_status'][value='$!{obj.goodsStatus}']").attr("checked",true);
+  jQuery(":radio[id='goods_recommend'][value='$!{obj.goodsRecommend}']").attr("checked",true);
+  jQuery(":radio[id='goods_choice_type'][value='$!{obj.goodsChoiceType}']").attr("checked",true);
+  jQuery("#goods_brand_id").val("$!obj.goodsBrand.id");
+  var selectData = jQuery("select[name='refundServerTime']").children();
+  selectData.each(function(i,n){
+	  if(n.value=='$!obj.refundServerTime'){
+		  n.selected=true;
+	  }
+  })
+  #foreach($ugc in $obj.goodsUgcs)
+    jQuery("#ugc_id_$!{velocityCount}").val("$!ugc.id");
+  #end
+  #foreach($spec in $obj.goodsSpecs)
+    jQuery(":checkbox[id=spec_$!{spec.id}]").attr("checked",true);
+  #end
+	//判断obj.inventoryType是否为spec
+	
+	
+ 
+  //表单验证
+  jQuery("#theForm").validate({		
+	ignore: "",						  
+     rules: {
+	        goodsClassId:{
+			     required:true
+			},
+			 goodsSerial:{
+			     maxlength:20
+			},
+			goodsName:{
+			     required:true,
+				 minlength:3,
+				 maxlength:90
+			    },
+			goodsInfo:{
+			     required:true,
+				 minlength:3,
+				 maxlength:50
+			 },
+			 goodsPrice:{
+			    required:true,
+				number:true,
+				range:[0.01,1000000] 
+			 },
+			 goodsWeight:{
+				number:true
+				},
+			goodsVolume:{
+				number:true
+				},	
+			 storePrice:{
+			    required:true,
+				number:true,
+				range:[0.01,1000000] 
+			 },
+			 goodsInventory:{
+				digits:true,
+				range:[1,1000000000] 
+			 },
+			 transportId:{
+				 transportId:true
+			},
+			refundServerTime:{
+				required:true
+			},
+     },
+     messages: {
+	        goodsClassId:{required:"商品分类不能为空"},
+			goodsSerial:{maxlength:"输入字符长度不得超过20"},
+			goodsName:{
+			    required: "商品名不能为空",
+			    minlength:"商品名最少为3个字符",
+			    maxlength:"商品名最多为90个字符"			   
+			  },
+		    goodsInfo:{
+			    required: "商品补充说明不能为空",
+			    minlength:"商品补充说明最少为3个字符",
+			    maxlength:"商品补充说明最多为50个字符"			   
+			  },
+			goodsPrice:{
+			    required:"商品售价不能为空",
+				number:"商品售价只能是数字格式",
+				range:"商品价格只能在0.01-1000000之间"
+				},
+			goodsWeight:{
+				number:"只能输入小数及整数"
+				},
+			goodsVolume:{
+				number:"只能输入小数及整数"
+				},	
+			storePrice:{
+			    required:"店铺价格不能为空",
+				number:"店铺价格只能是数字格式",
+				range:"店铺价格只能在0.01-1000000之间"
+				},
+			goodsInventory:{
+				digits:"商品库存只能为整数",
+				range:"商品库存数量只能在0-1000000000之间"
+			},
+			transportId:{transportId:"请选择一个运费模板"},
+			refundServerTime:{
+				required:"请选择商品售后期限"
+			}
+		  }
+		 
+  }); 
+  //
+  jQuery(":input[id^=inventory_details_count_]").on("keyup",function(){
+     var goods_inventory=0;
+	 jQuery(":input[id^=inventory_details_count_]").each(function(){
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(jQuery(this).val())){
+		    jQuery(this).val("0");
+		}
+		goods_inventory=parseInt(jQuery(this).val())+goods_inventory;
+	 });
+	 jQuery("#goods_inventory").val(goods_inventory);
+  });
+   //
+  jQuery(":input[id^=inventory_details_price_]").on("keyup",function(){
+	 jQuery(":input[id^=inventory_details_price_]").each(function(){
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(jQuery(this).val())){
+		    jQuery(this).val("0");
+		}
+	 });
+  });
+  
+     //
+  jQuery(":input[id='mail_trans_fee']").on("keyup",function(){
+	 jQuery(":input[id='mail_trans_fee']").each(function(){
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(jQuery(this).val())){
+		    jQuery(this).val("0.0");
+		}
+	 });
+  });
+     //
+  jQuery(":input[id='express_trans_fee']").on("keyup",function(){
+	 jQuery(":input[id='express_trans_fee']").each(function(){
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(jQuery(this).val())){
+		    jQuery(this).val("0.0");
+		}
+	 });
+  });
+     //
+  jQuery(":input[id='ems_trans_fee']").on("keyup",function(){
+	 jQuery(":input[id='ems_trans_fee']").each(function(){
+		var reg = new RegExp("^[0-9]*$");
+		if(!reg.test(jQuery(this).val())){
+		    jQuery(this).val("0.0");
+		}
+	 });
+  });
+  
+  
+  //
+  //
+  editor = KindEditor.create('#goods_details',options);    
+  //
+  jQuery(":radio[id='goods_transfee']").click(function(){
+     var val=jQuery(this).val();
+	 if(val==0){
+	    jQuery("#buyer_transport_info").show();
+	  }else{
+	    jQuery("#buyer_transport_info").hide();
+	  }
+  });
+  //
+  jQuery("select[id^=ugc_id_]").on("change",function(){
+     var the_ugc_id=jQuery(this).attr("id");
+	 var the_val=jQuery(this).val();
+	 jQuery("select[id!="+the_ugc_id+"]").each(function(){
+	   if(jQuery(this).val()==the_val){
+	     alert("已经存在该分类");
+		 jQuery("#"+the_ugc_id).val("");
+	   }	   
+	 });
+  });
+  
+  
+  
+});
+
+
+
+
+function arrow_left(id){
+  var i=parseInt(id);
+  if(i>1){
+    var temp_src=jQuery("#goods_image_"+(i-1)).attr("src");
+	var temp_id=jQuery("#goods_image_"+(i-1)).attr("image_id");
+	var the_src=jQuery("#goods_image_"+i).attr("src");
+	var the_id=jQuery("#goods_image_"+i).attr("image_id");
+	if(temp_id!=""&&temp_id!=undefined&&the_id!=""&&the_id!=undefined){
+	  jQuery("#goods_image_"+(i-1)).attr("src",the_src);
+	  jQuery("#goods_image_"+(i-1)).attr("image_id",the_id);
+      jQuery("#goods_image_"+i).attr("src",temp_src);
+	  jQuery("#goods_image_"+i).attr("image_id",temp_id);
+	  if(i==2){
+	  jQuery("#goods_image_0").attr("src",the_src);
+	  jQuery("#goods_image_0").attr("image_id",the_id);	   
+	  }
+	}
+  }
+}
+function arrow_right(id){
+  var i=parseInt(id);
+  if(i<5){
+    var temp_src=jQuery("#goods_image_"+(i+1)).attr("src");
+	var temp_id=jQuery("#goods_image_"+(i+1)).attr("image_id");
+	var the_src=jQuery("#goods_image_"+i).attr("src");
+	var the_id=jQuery("#goods_image_"+i).attr("image_id");
+	if(temp_id!=""&&temp_id!=undefined&&the_id!=""&&the_id!=undefined){
+	  jQuery("#goods_image_"+(i+1)).attr("src",the_src);
+	  jQuery("#goods_image_"+(i+1)).attr("image_id",the_id);
+      jQuery("#goods_image_"+i).attr("src",temp_src);
+	  jQuery("#goods_image_"+i).attr("image_id",temp_id);
+	  if(i==1){
+	  jQuery("#goods_image_0").attr("src",temp_src);
+	  jQuery("#goods_image_0").attr("image_id",temp_id);	   
+	  }
+	}
+  }
+}
+function arrow_del(id){
+  if(confirm("删除后不可恢复，是否继续？")){	
+    var stats = swf_upload.getStats(); 
+    var image_id=jQuery("#goods_image_"+id).attr("image_id");
+	jQuery.post("$!webPath/seller/goods_image_del.htm",{"image_id":image_id},function(data){
+	    if(data != null && data.result==true){
+		  jQuery("#img_remain_size").html(data.remainSpace+"M");
+		  jQuery("#goods_image_"+id).attr("src","$!webPath/resources/style/system/front/default/images/usercenter/smallimg.jpg");
+		  jQuery("#goods_image_"+id).attr("image_id","");
+		  if(id==1){
+		     jQuery("#goods_image_0").attr("src","$!webPath/resources/style/system/front/default/images/usercenter/img.jpg");
+		  }
+		  stats.successful_uploads--;
+		  swf_upload.setStats(stats);
+		  photo_count--;
+		  var i=parseInt(id);
+		  while(i<5){
+		    var image_id=jQuery("#goods_image_"+(i+1)).attr("image_id");
+			var image_src=jQuery("#goods_image_"+(i+1)).attr("src");
+			//alert("当前删除:"+i+",下一组图片:"+(i+1)+",src:"+image_src+",id:"+image_id);
+			if(image_id!=""){
+			  jQuery("#goods_image_"+i).attr("image_id",image_id);
+			  jQuery("#goods_image_"+i).attr("src",image_src);
+			  if(i==1){
+			    jQuery("#goods_image_0").attr("image_id",image_id);
+			    jQuery("#goods_image_0").attr("src",image_src);			  
+			  }
+			  jQuery("#goods_image_"+(i+1)).attr("image_id","");
+			  jQuery("#goods_image_"+(i+1)).attr("src","$!webPath/resources/style/system/front/default/images/usercenter/smallimg.jpg");
+			}
+			i++;
+		  }
+		}else alert("删除失败，请重新删除！");
+	},"json");
+  }
+}
+function arrow_remove(id){
+    var stats = swf_upload.getStats(); 
+    var image_id=jQuery("#goods_image_"+id).attr("image_id");
+	jQuery("#goods_image_"+id).attr("src","$!webPath/resources/style/system/front/default/images/usercenter/smallimg.jpg");
+	jQuery("#goods_image_"+id).attr("image_id","");
+	if(id==1){
+	    jQuery("#goods_image_0").attr("src","$!webPath/resources/style/system/front/default/images/usercenter/img.jpg");
+	}
+	stats.successful_uploads--;
+	swf_upload.setStats(stats);
+	photo_count--;
+	var i=parseInt(id);
+	while(i<5){
+	   var image_id=jQuery("#goods_image_"+(i+1)).attr("image_id");
+	    var image_src=jQuery("#goods_image_"+(i+1)).attr("src");
+			if(image_id!=""){
+			  jQuery("#goods_image_"+i).attr("image_id",image_id);
+			  jQuery("#goods_image_"+i).attr("src",image_src);
+			  if(i==1){
+			    jQuery("#goods_image_0").attr("image_id",image_id);
+			    jQuery("#goods_image_0").attr("src",image_src);			  
+			  }
+			  jQuery("#goods_image_"+(i+1)).attr("image_id","");
+			  jQuery("#goods_image_"+(i+1)).attr("src","$!webPath/resources/style/system/front/default/images/usercenter/smallimg.jpg");
+			}
+			i++;
+  }
+
+}
+/*Ajax分页*/
+function ajaxPage(url,currentPage,obj){
+  var ajax_page=jQuery(obj).parent().attr("ajax_page");
+  if(ajax_page=="goods_transport"){
+     jQuery.post("$!webPath/seller/goods_transport.htm",{"currentPage":currentPage,"ajax":true},function(data){
+         jQuery("#ListForm").empty().html(data);
+      },"html");
+  }else{
+     var ajax_type=jQuery(obj).parent().attr("ajax_type");
+     var type=jQuery(obj).parent().attr("type");
+     jQuery.post("$!webPath/seller/goods_img_album.htm",{"currentPage":currentPage,"type":type},function(text){
+       jQuery(ajax_type).empty();
+	   jQuery(ajax_type).append(text);
+     },"text");
+  }
+}
+function saveForm(){
+  editor.sync();//同步编辑器的数据到texterea
+  var image_ids="";
+  for(var i=2;i<=5;i++){
+	var image_id=jQuery("#goods_image_"+i).attr("image_id");
+	if(image_id!=""&&image_id!=undefined){
+	  image_ids=image_id+","+image_ids;
+	}
+  }
+  jQuery("#image_ids").val(image_ids);
+  var main_image_id=jQuery("#goods_image_1").attr("image_id");
+  jQuery("#goods_main_img_id").val(main_image_id);
+  var user_class_ids="";
+  jQuery("select[id^=ugc_id_]").each(function(){
+     if(jQuery(this).val()!=""){
+	   user_class_ids=jQuery(this).val()+","+user_class_ids;
+	 }
+  });
+  jQuery("#user_class_ids").val(user_class_ids);
+  
+  
+  var goods_spec_ids="";
+  jQuery(":checkbox[id^=spec_][checked=true]").each(function(){
+     goods_spec_ids=jQuery(this).val()+","+goods_spec_ids;
+  });
+  jQuery("#goods_spec_ids").val(goods_spec_ids);
+  
+  //将属性值提取出来
+  /* var specNeed = "";
+  $("input[name='spec_name']").each(function(){
+	  var spec = $(this).val() + "=";
+	  $(this).next().next("ul[name='spec_prop']").children("li").each(function(){
+		 //开始循环li
+		  var proValue = $(this).find("input").eq(0).val();
+		  var proPrice = $(this).find("input").eq(1).val();
+		  var proInventory = $(this).find("input").eq(2).val();
+		  var prop = proValue + "," + proPrice + "," + proInventory;
+		  spec += prop + "_";
+	  });
+	  specNeed += spec + "|";
+  });
+  
+  $("#specNeed").empty().val(specNeed);
+   */
+  var intentory_details="";
+  jQuery("input[id^=inventory_details_count_]").each(function(){
+	 var id=jQuery(this).attr("name");
+	 var count=jQuery(this).val();
+	 var price=jQuery("#inventory_details_price_"+id).val();
+	 intentory_details=id+","+count+","+price+";"+intentory_details;
+  });
+  jQuery("#intentory_details").val(intentory_details);
+  var bigImg = $(".tabimgbig img").attr("src");
+  console.log(bigImg);
+  if(bigImg.indexOf("upload")>-1){
+  }else{
+	  alert("请上传主图");
+	  return false;
+  }
+  jQuery("#theForm").submit();
+}
+
+// 品牌选择
+function selcetedBranch(e){
+	/* var ol = jQuery(e).parent().children();
+	ol.each(function(i,n){
+		jQuery(n).removeClass("selceted");
+	});
+	jQuery(e).addClass("selceted"); 
+	jQuery("input[name='goods_brand_id']").val(e.getAttribute("id")); */
+	//如果有选中复选框
+	if(jQuery(e).hasClass("selceted")){
+		jQuery(e).removeClass("selceted");
+		jQuery("input[name='goods_brand_id']").removeAttr("value");
+	}else{
+		jQuery(e).addClass("selceted").siblings().removeClass("selceted");
+		jQuery("input[name='goods_brand_id']").val(e.getAttribute("id"));
+	} 
+}
+
+
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  var dettail_demos = $("[id^=dettail]");
+  dettail_demos.hover(function(){
+	  var ele_id = $(this).attr("id");
+	  var ele_ids = ele_id.split("_");
+	  var index = ele_ids[2];
+	  $(".demo_img_"+index).show();
+  },function(){
+	  var ele_id = $(this).attr("id");
+	  var ele_ids = ele_id.split("_");
+	  var index = ele_ids[2];
+	  $(".demo_img_"+index).hide();
+  });
+  
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	//级联获取商品模块楼层
+	$("#module").change(function(){
+		 //清除二级下拉列表
+		 $("#moduleId").empty();
+		//清除三级下拉列表
+		 $("#proviceId").empty();
+		 $("#proviceId").css("display","none");
+         $("#moduleId").append($("<option/>").text("--请选择--").attr("value","-1"));
+         var module=$(this).val();
+         //将选中的一级下拉列表项的id传过去
+         jQuery.ajax({
+				type:'POST',
+				url:"$!webPath/seller/floorByModule.htm",
+				data:{"module":module},
+				success:function(data){
+					//alert(data);
+					var dataObj = eval("("+data+")");
+					 jQuery.each(dataObj, function(index,item){
+					      jQuery("#moduleId").append("<option value='"+item.id+"'>"+item.floorname+"</option>");
+					  })
+				},
+				error:function() {
+					alert("请检查内部错误!");
+				}
+			}); 
+	});
+	
+	//级联获取商品模块楼层省份
+	$("#moduleId").change(function(){
+		var mod = $("#module").val()
+		//如果选择土特产则显示三级下拉列表
+		if (mod==1) {
+			 //清除第3级下拉列表
+			 $("#proviceId").css("display","inline");
+			 $("#proviceId").empty();
+		     $("#proviceId").append($("<option/>").text("--请选择--").attr("value","-1"));
+		     var floorId=$(this).val();
+		     //将选中的一级下拉列表项的id传过去
+		     jQuery.ajax({
+					type:'POST',
+					url:"$!webPath/seller/provByFloor.htm",
+					data:{"floorId":floorId},
+					success:function(data){
+					var dataObj = eval("("+data+")");
+					jQuery.each(dataObj, function(index,item){
+						jQuery("#proviceId").append("<option value='"+item.id+"'>"+item.areaname+"</option>");
+						})
+					},
+					error:function() {
+						alert("请检查内部错误!");
+					}
+				});  
+		}
+	});
+	
+	
+	 #if($!module)
+		var module = "$!module";
+		var modules = $("#module").children();
+		for(var i = 0;i<modules.length;i++){
+			var modulesVal = $(modules[i]).val();
+			if(module==modulesVal){
+				$(modules[i]).attr("selected",true);
+			}
+		}
+		#foreach($floor in $!floors)
+			jQuery("#moduleId").append("<option value='$floor.id'>$floor.floorname</option>");
+		#end
+		var moduleId = "$!moduleId";
+		var floorss = $("#moduleId").children();
+		for(var i = 0;i<floorss.length;i++){
+			var floorssVal = $(floorss[i]).val();
+			if(moduleId==floorssVal){
+				$(floorss[i]).attr("selected",true);
+			}
+		}
+		#if($!proviceId)
+			$("#proviceId").css("display","inline");
+			#foreach($area in $!areas)
+				jQuery("#proviceId").append("<option value='$area.id'>$area</option>");
+			#end
+			var proviceId = "$!proviceId";
+			var provs = $("#proviceId").children();
+			for(var i = 0;i<provs.length;i++){
+				var provsVal = $(provs[i]).val();
+				if(proviceId==provsVal){
+					$(provs[i]).attr("selected",true);
+				}
+			}
+		#end	
+	#end	
+	
+}); 
+</script>
+</head> 
+<body style="overflow-y:scroll;">   
+$!httpInclude.include("/seller/seller_head.htm")
+	<div class="main">
+		<div class="position">
+			当前位置：<a href="$!webPath/seller/seller_index.htm">首页</a>><span>商品发布</span>
+		</div>
+		<div class="navdetail">
+			<span class="navadd1 addcolor">选择商品所在分类</span> <span class="navadd2 white">填写商品详细信息</span> <span class="navadd3 addcolor">商品发布成功</span>
+		</div>
+		<div class="adddetail" style="background-color: #fff">
+			<form action="$!webPath/seller/add_goods_finish.htm" method="post"	enctype="multipart/form-data" name="theForm" id="theForm">
+				<table border="0" cellspacing="0" cellpadding="0" class="tabledetail">
+					<tr>
+						<td colspan="2" class="tableh1">商品详细信息 <input name="id" type="hidden" id="id" value="$!obj.id" /></td>
+					</tr>
+					<tr>
+						<td width="95" align="right">商品分类：</td>
+						<td><span>$!goods_class_info</span>
+						<span class="editbtn">
+						<input name="goods_class_id" type="hidden" id="goods_class_id" value="$!{goods_class.id}" /> 
+						<input name="goods_main_img_id" type="hidden" id="goods_main_img_id" /> 
+						<input name="image_ids" type="hidden" id="image_ids" />
+						<input name="user_class_ids" type="hidden" id="user_class_ids" /> 
+						<input name="goods_spec_ids" type="hidden" id="goods_spec_ids" /> 
+						<input name="goods_properties" type="hidden" id="goods_properties" />
+						<input type="hidden" name="intentory_details" id="intentory_details" />
+						<input name="goods_brand_id" type="hidden" id="goods_brand_id" />
+						<input name="edit_class" type="button" id="edit_class" value="编辑" style="cursor: pointer;" onclick="window.location.href='$!webPath/seller/add_goods_first.htm?id=$!{obj.id}'" />
+						</span></td>
+					</tr>
+					
+					
+					<tr>
+						<td align="right" valign="middle">商品品牌：</td>
+						<td>
+						<ul class="selcetatt">
+							<li>
+							<span class="selectbrand">
+							#foreach($gb in $gbs)
+								<ol id="$!gb.id" onclick="selcetedBranch(this);">$!gb.name</ol>
+							#end
+							</span>
+							</li>
+						</ul>
+						</td>
+					</tr>
+					
+					
+					<tr id="inventory_detail">
+						<td align="right" valign="top">规格配置： </td>
+						<td class="sptable">
+						
+							<ul class="selcetatt" id="inventory_detail_content">
+							#set($i=0)
+							#foreach($goodsSpec in ${sepcs.keySet()})
+								<li style="position: relative;">
+									<!-- <span style="position: absolute; bottom:10px;left:80px; z-index:999;"><input type="checkbox"   /><a style="#666">显示在商品详情页</a></span> -->
+									<div style="display:block; overflow:hidden; margin-top:10px; margin-bottom:5px;">
+										<span class="shopattname" id="$!goodsSpec.id">
+											<span class="dettail_demo" id="dettail_demo_$i">
+												<input type="checkbox" style="border:1px solid #ccc"   id="specs_$!goodsSpec.id" onclick="selectedShow(this);"/> $goodsSpec.name: 
+											</span>
+										</span>
+										<span class="shopattdetail">
+										  	  #foreach($property in ${sepcs.get($goodsSpec)})
+												<ol id="$!property.id" onclick="selectedSepc(this);">$property.value</ol>
+											  #end
+										</span>
+									</div>
+									
+									<div class="demo_img_$i" style="display:none; position: absolute; top:-130px; left:80px; z-index:999">
+										<img src="$!webPath/assets/img/demo_img.gif" width="600px" style="border:10px solid #fcb986;border-radius:5px;"/>
+									</div>
+									
+								</li>
+								#set($i=$i+1)
+							#end
+							</ul>
+							
+							
+						</td> 
+					</tr>
+					
+					<tr>
+						<td align="right" valign="top"><a style="color: red">*</a>商品名称：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size1"> 
+						<input name="goodsName" type="text" id="goods_name" value="$!obj.goodsName" />
+						</span>
+						<span class="hui2">商品标题名称长度至少3个字符，最长90个汉字</span></td>
+					</tr>
+					
+					<tr>
+						<td align="right" valign="top"><a style="color: red">*</a>商品补充说明：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size1"> 
+						<input name="goodsInfo" type="text" id="goodsInfo" value="$!obj.goodsInfo"/>
+						</span>
+						<span class="hui2">商品补充说明长度至少3个字符，最长50个汉字，将显示在商品名称下方</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">店铺导航：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size1"> 
+							<select id="storeNavId" name="storeNavId" style="height:22px;width:120px;">
+								<option value="">请选择...</option>
+								#foreach($nav in $navs)
+									<option value="$!nav.id" #if ($!nav.id=="$!obj.storeNavId") selected="selected" #end>$!nav.title</option>
+								#end
+							</select>
+						</span>
+						<span class="hui2"></span></td>
+					</tr>
+					
+					<tr>
+						<td align="right" valign="top"><a style="color: red">*</a>商品类型：</td>
+						<td class="sptable">
+						<label> 
+						<input name="goodsChoiceType" type="radio" id="goods_choice_type" value="0" checked="checked" style="display: inline-block;margin-top: -4px;"/> 实物商品
+						</label> 
+						<label> 
+						<input type="radio" name="goodsChoiceType" id="goods_choice_type" value="1" style="display: inline-block;margin-top: -4px;" /> 虚拟商品
+						</label> 
+						<span class="hui2">充值卡、消费券等属于虚拟商品</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品促销信息：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size1"> 
+						<input name="salesPromotion" type="text" id="salesPromotion" value="$!obj.salesPromotion" />
+						</span>
+						<span class="hui2">商品促销信息长度至少3个字符，最长50个汉字</span></td>
+					</tr>
+					<!-- #foreach($gs in ${gt.gss})
+					<tr id="gs_$!{gs.id}" gs_name="$!{gs.name}">
+						<td align="right" valign="top">$!{gs.name}：</td>
+						<td class="sptable">
+						<ul class="color_chose">
+								#foreach($gsp in $!gs.properties)
+								<li>
+								<span class="cc_sp1"> 
+								<input name="spec_$!{gsp.id}" type="checkbox" id="spec_$!{gsp.id}" gs_id="$!gs.id" gsp_val="$!gsp.value" value="$!gsp.id" />
+								</span> 
+								<label for="spec_$!{gsp.id}"> #if($!gs.type=="img") 
+								<span class="cc_sp2"> 
+								<img src="$!webPath/$!{gsp.specImage.path}/$!{gsp.specImage.name}" width="16" height="16" />
+								</span> #end <span class="cc_sp3">$!gsp.value</span>
+								</label>
+								</li> #end
+							</ul></td>
+					</tr>
+					#end -->
+				
+					<!-- <tr>
+						<td align="right" valign="top">商品原价：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size2"> 
+						<input name="goodsPrice" type="text" id="goods_price" value="$!obj.goodsPrice" />
+						</span> 
+						<span class="hui2">商品原价必须是0.01~1000000之间的数字</span></td>
+					</tr> -->
+					<tr>
+						<td align="right" valign="top"><a style="color: red">*</a>商品售价：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size2"> 
+						<input name="goodsPrice" type="text" id="goods_price" value="$!obj.goodsPrice" />
+						</span> 
+						<span class="hui2">商品售价必须是0.01~1000000之间的数字</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top"><a style="color: red">*</a>商品库存：</td>
+						<td class="sptable"><span class="tabtxt1 size2">
+						<input name="goodsInventory" type="text" id="goods_inventory" value="$!obj.goodsInventory" />
+						</span> 
+						<span class="hui2">
+								<ul class="tableli">
+									<li>商铺库存数量必须为1~1000000000之间的整数</li>
+									<li>若启用了规格配置，则系统自动计算商品的总数，此处无需卖家填写</li>
+								</ul>
+						</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品货号：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goodsSerial" type="text" id="goods_serial"
+								value="$!obj.goodsSerial" />
+						</span> <span class="hui2">
+								<ul class="tableli">
+									<li>商品货号是指卖家个人管理商品的编号，买家不可见</li>
+									<li>最多可输入20个字符，支持输入中文、字母、数字、_、/、-和小数点</li>
+								</ul>
+						</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品模块：</td>
+						<td class="sptable">
+							<span class="tabtxt1 size2"> 
+								<select name="module" id="module">
+									<option value="0">请选择</option>
+									#if($!gms.size()>0)
+										#foreach($gm in $gms)
+											<option value="$gm.id">$gm.modulename</option>
+										#end
+									#end
+								</select>
+								<select name="moduleId" id="moduleId">
+								</select>
+								<select name="proviceId" id="proviceId" style="display: none ">
+								</select>
+							</span> 
+							<span class="hui2">
+								<ul class="tableli">
+									<li>商品模块是指卖家个人根据实情选择商品所属模块</li>
+									<li>可以不选</li>
+								</ul>
+						</span></td>
+					</tr>
+					<!-- <tr>
+						<td align="right" valign="top">感恩金：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size1"> 
+							<select  name="goodsRate" style="height:22px;width:120px;">
+								#if($!objBeanRate)
+								<option value="$!obj.goodsRate" selected>$!objRate</option>
+								#end
+								#if($!goodsRate.size()>0)
+										#foreach($rate in $!goodsRate)
+								<option value="$!rate.rate">$!rate.percentRate</option>
+										#end
+								#end
+							</select>
+						</span>
+						<span class="hui2">
+							<ul class="tableli">
+									<li>以上比例乘以商品价格，将作为感恩金，用于消费者、店铺、店铺推荐人、城市代理及平台分红。</li>
+							</ul>
+						</span></td>
+					</tr> -->
+					<tr>
+						<td align="right" valign="top">感恩豆：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size1"> 
+							<select id="storeNavId" name="beanRate" style="height:22px;width:120px;">
+								#if($!objBeanRate)
+								<option value="$!obj.beanRate" selected>$!objBeanRate</option>
+								#end
+								#if($!beanRate.size()>0)
+										#foreach($rates in $!beanRate)
+								<option value="$rates.rate">$rates.percentRate</option>
+										#end
+								#end
+							</select>
+						</span>
+						<span class="hui2">
+							<ul class="tableli">
+									<li>以上比例乘以商品价格，将允许使用感恩豆支付。</li>
+							</ul>
+						</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品图片：</td>
+						<script>
+		    function photo_switch(clz,obj){
+			 jQuery(".tabbody_ul li").removeClass("this");
+			 jQuery(".tab_body_b").hide();
+			 jQuery(obj).addClass("this");
+			 if(clz=="tab_body_b"){
+			 jQuery.post("$!webPath/seller/goods_img_album.htm",{"type":"goods_img_album"},function(text){
+				jQuery(".tab_body_b").empty();
+				jQuery(".tab_body_b").append(text);
+			  },"text");
+			 }
+			 jQuery("."+clz).show();			  
+			}
+		  </script>
+						<td><div class="tab_body">
+								<ul class="tabbody_ul">
+									<li class="this" style="cursor: pointer;"
+										onclick="photo_switch('tab_body_a',this)">上传图片 </li>
+							#*		<li style="cursor: pointer;"
+										onclick="photo_switch('tab_body_b',this)">从用户相册选择</li>  *#
+								</ul>
+								<div class="tabbodys">
+									<div class="tab_body_b" style="display: none;"></div>
+									<div class="tab_body_a">
+										<div class="tabimg">
+											#if($!obj.goodsMainPhoto)
+											#set($img="$!{config.imagewebserver}/$!{obj.goodsMainPhoto.path}/$!{obj.goodsMainPhoto.name}")
+											#else
+											#set($img="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+											#end
+											<div class="tabimgbig">
+												<img id="goods_image_0" src="$!img" width="197" height="196" />
+											</div>
+											<div class="tabimgcent">
+												<div class="tabupload">
+													<a href="javascript:void(0);"><span id="upload_imgs"></span>
+														<img id="upload_wait" style="display: none;"
+														src="$!webPath/resources/style/common/images/loader.gif" /></a>
+												</div>
+												<div class="tabimgsmall">
+													<ul>
+														<li class="tabimgs"><img id="goods_image_1"
+															image_id="$!obj.goodsMainPhoto.id" src="$!img" width="73"
+															height="73" /></li>
+														<li class="taboper"><a href="javascript:void(0);"
+															title="左移" onclick="arrow_left('1');" class="tableft">
+																<img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_left.png"
+																width="16" height="16" />
+														</a> <a href="javascript:void(0);" title="从服务器删除"
+															onclick="arrow_del('1');" class="tabdel"> <img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_del.gif"
+																width="15" height="13" /></a> <a href="javascript:void(0);"
+															title="从商品删除" onclick="arrow_remove('1');" class="tabdel">
+																<img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_remove.gif"
+																width="15" height="13" />
+														</a> <a href="javascript:void(0);" title="右移"
+															onclick="arrow_right('1');" class="tabright"> <img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_right.png"
+																width="16" height="16" /></a></li>
+													</ul>
+													#set($img2="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+													#set($img2_id="")
+													#set($img3="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+													#set($img3_id="")
+													#set($img4="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+													#set($img4_id="")
+													#set($img5="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+													#set($img5_id="") 
+													#foreach($img in $obj.goodsPhotos)
+														#if($velocityCount==1)
+															#set($img2="$!{config.imagewebserver}/$!{img.path}/$!{img.name}")
+															#set($img2_id="$!img.id") 
+														#end 
+														#if($velocityCount==2)
+															#set($img3="$!{config.imagewebserver}/$!{img.path}/$!{img.name}")
+															#set($img3_id="$!img.id") 
+														#end 
+														#if($velocityCount==3)
+															#set($img4="$!{config.imagewebserver}/$!{img.path}/$!{img.name}")
+															#set($img4_id="$!img.id") 
+														#end 
+														#if($velocityCount==4)
+															#set($img5="$!{config.imagewebserver}/$!{img.path}/$!{img.name}")
+															#set($img5_id="$!img.id") 
+														#end 
+													#end
+													<ul>
+														<li class="tabimgs"><img id="goods_image_2"
+															image_id="$!img2_id" src="$!img2" width="73" height="73" /></li>
+														<li class="taboper"><a href="javascript:void(0);"
+															title="左移" onclick="arrow_left('2');" class="tableft">
+																<img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_left.png"
+																width="16" height="16" />
+														</a> <a href="javascript:void(0);" title="从服务器删除"
+															onclick="arrow_del('2');" class="tabdel"> <img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_del.gif"
+																width="15" height="13" /></a> <a href="javascript:void(0);"
+															title="从商品删除" onclick="arrow_remove('2');" class="tabdel"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_remove.gif"
+																width="15" height="13" /></a><a href="javascript:void(0);"
+															title="右移" onclick="arrow_right('2');" class="tabright"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_right.png"
+																width="16" height="16" /></a></li>
+													</ul>
+													<ul>
+														<li class="tabimgs"><img id="goods_image_3"
+															image_id="$!img3_id" src="$!img3" width="73" height="73" /></li>
+														<li class="taboper"><a href="javascript:void(0);"
+															title="左移" onclick="arrow_left('3');" class="tableft"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_left.png"
+																width="16" height="16" /></a><a href="javascript:void(0);"
+															title="从服务器删除" onclick="arrow_del('3');" class="tabdel"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_del.gif"
+																width="15" height="13" /></a><a href="javascript:void(0);"
+															title="从商品删除" onclick="arrow_remove('3');" class="tabdel"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_remove.gif"
+																width="15" height="13" /></a><a href="javascript:void(0);"
+															title="右移" onclick="arrow_right('3');" class="tabright"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_right.png"
+																width="16" height="16" /></a></li>
+													</ul>
+													<ul>
+														<li class="tabimgs"><img id="goods_image_4"
+															image_id="$!img4_id" src="$!img4" width="73" height="73" /></li>
+														<li class="taboper"><a href="javascript:void(0);"
+															title="左移" onclick="arrow_left('4');" class="tableft"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_left.png"
+																width="16" height="16" /></a><a href="javascript:void(0);"
+															title="从服务器删除" onclick="arrow_del('4');" class="tabdel"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_del.gif"
+																width="15" height="13" /></a><a href="javascript:void(0);"
+															title="从商品删除" onclick="arrow_remove('4');" class="tabdel"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_remove.gif"
+																width="15" height="13" /></a><a href="javascript:void(0);"
+															title="右移" onclick="arrow_right('4');" class="tabright"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_right.png"
+																width="16" height="16" /></a></li>
+													</ul>
+													<ul>
+														<li class="tabimgs"><img id="goods_image_5"
+															image_id="$!img5_id" src="$!img5" width="73" height="73" /></li>
+														<li class="taboper"><a href="javascript:void(0);"
+															title="左移" onclick="arrow_left('5');" class="tableft"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_left.png"
+																width="16" height="16" /></a><a href="javascript:void(0);"
+															title="从服务器删除" onclick="arrow_del('5');" class="tabdel"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_del.gif"
+																width="15" height="13" /></a><a href="javascript:void(0);"
+															title="从商品删除" onclick="arrow_remove('5');" class="tabdel"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_remove.gif"
+																width="15" height="13" /></a><a href="javascript:void(0);"
+															title="右移" onclick="arrow_right('5');" class="tabright"><img
+																src="$!webPath/resources/style/system/front/default/images/usercenter/arrow_right.png"
+																width="16" height="16" /></a></li>
+													</ul>
+												</div>
+											</div>
+											<div class="tabshowimg">
+												<img
+													src="$!webPath/resources/style/system/front/default/images/usercenter/thumb.jpg"
+													width="170" height="192" />
+											</div>
+										</div>
+										<div class="warning">
+											<h2>最多可发布5张商品图片</h2>
+											<ul>
+												<li>支持多图片同时选取上传。支持$!imageSuffix格式上传，只能选择大小2M内的图片。</li>
+												<li>用户图空间剩余:<span style="color: #FF0000;"
+													id="img_remain_size">#if($!{img_remain_size}==0)空间不限制大小#else$!{img_remain_size}M#end</span>，空间不足时将无法上传图片
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品重量：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goodsWeight" type="text" id="goods_weight"
+								value="$!obj.goodsWeight" />
+						</span> <span class="hui2"> 单位：千克(Kg) </span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">商品体积：</td>
+						<td class="sptable"><span class="tabtxt1 size2"> <input
+								name="goodsVolume" type="text" id="goods_volume"
+								value="$!obj.goodsVolume" />
+						</span> <span class="hui2"> 单位：立方米(m³) </span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top"><a style="color: red">*</a>售后期限：</td>
+						<td class="sptable">
+						<span class="tabtxt1 size1"> 
+							<select id="refundServerTimeId" name="refundServerTime" style="height:22px;width:120px;">
+								<option value="">请选择...</option>
+								<option value="100">不提供退货</option>
+								<option value="101">7天</option>
+								<option value="102">15天</option>
+								<option value="103">30天</option>
+							</select>
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td rowspan="2" align="right" valign="middle">运费：</td>
+						<td><label><input name="goodsTransfee" type="radio"
+								id="goods_transfee" value="1" checked="checked" style="display: inline-block;margin-top: -4px;"/> 卖家承担运费</label></td>
+					</tr>
+					<tr>
+						<td><label><input name="goodsTransfee" type="radio"
+								id="goods_transfee" value="0" style="display: inline-block;margin-top: -4px;"/> 买家承担运费</label> <script>
+			jQuery(document).ready(function(){
+			   jQuery(":radio[id=transport_type]").click(function(){
+				   var val=jQuery(this).val();
+				   if(val==0){
+				     jQuery("#transport_template_select").show();
+					 jQuery("#mail_trans_fee").attr("readonly","readonly");
+					 jQuery("#express_trans_fee").attr("readonly","readonly");
+					 jQuery("#ems_trans_fee").attr("readonly","readonly");
+				   }else{
+				     jQuery("#transport_template_select").hide();
+					 jQuery("#mail_trans_fee").removeAttr("readonly");
+					 jQuery("#express_trans_fee").removeAttr("readonly");
+					 jQuery("#ems_trans_fee").removeAttr("readonly");
+				   }
+				});
+			   #if($!obj.transport)
+			     jQuery(":radio[id=transport_type][value=0]").attr("checked","checked");
+				 jQuery("#transport_template_select").show();
+			   #else
+			     jQuery(":radio[id=transport_type][value=1]").attr("checked","checked");
+				 jQuery("#transport_template_select").hide();
+			   #end
+			   
+			   #if($obj.goodsTransfee)
+				   #if($!obj.goodsTransfee == 0)
+				   		jQuery("#buyer_transport_info").show();
+			   		#end
+			   #end
+			   
+			   
+			});
+			</script>
+							<div id="buyer_transport_info" style=" display:none;width:80%; background:#FFF; border:1px solid #CCC; margin-top:10px;padding-left:20px;">
+              <ul style="line-height:30px;">
+                <li>
+                  <label>
+                    <input name="transportType" type="radio" id="transport_type" value="0" checked="checked" /> 
+                 		   使用运费模板
+                  </label>
+                 <div id="transport_template_select" style="padding-left:30px;"><input type="hidden" value="$!obj.transportId" name="transportId" id="transport_id" />
+                 <span style="color:#06C;" id="transport_template_name">$!{obj.transport.transName}</span>
+                 <span style="display:block; width:70px; height:28px; text-align:center; background-color: #ff8b00; color:#fff">           
+                 	<a href="javascript:void(0);" dialog_uri="$!webPath/seller/goods_transport.htm" dialog_title="选择运费模板" dialog_width="600" dialog_height="500" dialog_id="transport_template_frm">选择模板</a>                
+                 </span>
+                 </div> 
+                </li>
+                <li style="display:none" ><label>
+                    <input  type="radio" name="transportType" id="transport_type" value="1" />
+                  		  固定运费
+                  	</label>
+                    	平邮 <input name="mailTransFee" type="text" id="mail_trans_fee" value="$!CommUtil.null2Float($!obj.mailTransFee)" size="10" /> 元,
+                 	            快递 <input name="expressTransFee" type="text" id="express_trans_fee" value="$!CommUtil.null2Float($!obj.expressTransFee)" size="10" />元,
+                        EMS<input name="emsTransFee" type="text" id="ems_trans_fee" value="$!CommUtil.null2Float($!obj.emsTransFee)" size="10" /> 元
+                </li>
+              </ul>
+          </div></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="tableh1">商品详情描述</td>
+					</tr>
+					
+					#foreach($property in $gt.properties)
+					<tr>
+						<td align="right" valign="top">$!{property.name}：</td>
+						<td><select name="property_$!{property.id}"
+							id="property_$!{property.id}">
+								<option value="">请选择...</option> #foreach($info in
+								$CommUtil.splitByChar("$!property.value",","))
+
+
+								<option value="$!info">$!info</option> #end
+
+
+						</select></td>
+					</tr>
+					#end
+					<tr>
+						<td align="right" valign="top">商品描述：</td>
+						<td><textarea name="goodsDetails" style="width: 100%; height: 400px; visibility: hidden;" 	id="goods_details">$!obj.goodsDetails</textarea> <script>
+           function switch_editor_photo(){
+			  var dis=jQuery(".editor_photo_detail").css("display");
+			  if(dis=="none"){
+				jQuery.post("$!webPath/seller/goods_img_album.htm",{"type":"goods_detail_album"},function(text){
+				   jQuery(".editor_photo_detail").empty();																					  
+			  	   jQuery(".editor_photo_detail").append(text);
+			    },"text"); 
+				jQuery(".editor_photo_detail").show();
+			  }else{
+				jQuery(".editor_photo_detail").hide();
+			  }
+		   }
+           
+       	function searchBrandByName(type){
+       		var brandName='';
+       		if(type==0){
+       			brandName=$("#brand_name").val();
+       		}
+       		if(type==1){
+       			$("#brand_name").val('')
+       			brandName='';
+       		}
+    		 //alert(brandName);
+    		 jQuery.ajax({
+    				type:'POST',
+    				url:"$!webPath/seller/brandByname.htm",
+    				data:{"brandName":brandName},
+    				success:function(data){
+    					//alert(data);
+    					jQuery("#goods_brand_id").html("");
+    					var dataObj = eval("("+data+")");
+    					 jQuery.each(dataObj, function(index,item){
+    					      jQuery("#goods_brand_id").append("<option value='"+item.id+"'>"+item.name+"</option>");
+    					  })
+    					/*for(var i=0;i<data.length;i++)
+    					{
+    					jQuery("#goods_brand_id").append("<option value='"+data[i].id+"'>"+data[i].name+"</option>");	
+    					}*/
+    				},
+    				error:function() {
+    					alert("请检查内部错误!");
+    				}
+    			});
+
+    	}
+           </script>
+							<div class="photoimg">
+								<div class="addphoto">
+							#*		<a href="javascript:void(0);" onclick="switch_editor_photo();">插入相册图片</a>  *#
+								</div>
+								<div class="editor_photo_detail" style="display: none;"></div>
+							</div></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="tableh1">其他信息</td>
+					</tr>
+					<script>
+		  function add_goods_class(){
+		    var s="<select name='ugc_id_0' id='ugc_id_0'><option value=''>请选择...</option>#foreach($ugc in $ugcs)<option value='$!ugc.id'>$!ugc.classname</option> #foreach($c_ugc in $ugc.childs) <option value='$!c_ugc.id'>&nbsp;&nbsp;$!c_ugc.classname</option>#end #end </select>";
+			s=s.replaceAll("ugc_id_0","ugc_id_"+user_goods_class_count);
+			jQuery("#ugc_id_"+(user_goods_class_count-1)).after(s);
+			user_goods_class_count++;
+		  }
+		</script>
+					<tr>
+						<td align="right" valign="top">本店分类：</td>
+						<td>
+						<span class="button_common" href="javascript:void(0);" onclick="add_goods_class();">新增分类</span> 
+						<span id="ugc_info" style="display: inline-block;margin-top: 3px;margin-left: 5px;">
+									#if(!$!obj||$!{obj.goodsUgcs.size()}==0) 
+									<select name="ugc_id_1" id="ugc_id_1">
+										<option value="">请选择...</option> #foreach($ugc in $ugcs)
+										<option value="$!ugc.id">$!ugc.classname</option>
+										#foreach($c_ugc in $ugc.childs)
+										<option value="$!c_ugc.id">&nbsp;&nbsp;$!c_ugc.classname</option>
+										#end #end
+
+									</select> 
+								#else 
+									#foreach($goods_ugc in $obj.goodsUgcs) 
+								<select name="ugc_id_$!{velocityCount}" id="ugc_id_$!{velocityCount}">
+										<option value="">请选择本店分类...</option> #foreach($ugc in $ugcs)
+										<option value="$!ugc.id">$!ugc.classname</option>
+										#foreach($c_ugc in $ugc.childs)
+										<option value="$!c_ugc.id">&nbsp;&nbsp;$!c_ugc.classname</option>
+										#end 
+										#end
+								</select> 
+									#end 
+								#end
+						</span>
+						
+						<span class="hui2 tableli">
+							<ul style="display:block;margin-top: 5px;">
+								<li>商品可以从属于店铺的多个分类之下选择</li>
+								<li>店铺分类可以由 "卖家中心 -> 商品管理 -> <a href="$!webPath/seller/usergoodsclass_list.htm">商品分类</a>" 中自定义</li>
+							</ul>
+						</span></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">售后保障：</td>
+						<td class="sptable"><span class="texttable"> 
+						<textarea name="aftermarket" cols="" rows="" id="aftermarket">$!obj.aftermarket</textarea>
+						</span>
+						<span class="hui2 noteswidth">售后保障出现在商品详细页面的售后保障页面</span></td>
+					</tr>
+					
+					<tr>
+						<td align="right" valign="top">商品发布：</td>
+						<td class="prorelease">
+						<span> 
+						<label><input name="goodsStatus" id="goods_status" type="radio" value="0" checked="checked" style="display: inline-block;margin-top: -4px;"/> &nbsp;立即发布</label>
+						</span> 
+						<span> 
+							<label><input name="goodsStatus" id="goods_status" type="radio" value="1" style="display: inline-block;margin-top: -4px;"/> &nbsp;放入仓库</label>
+						</span></td>
+					</tr>
+					<tr>
+						<td valign="top" align="right">商品推荐：</td>
+						<td class="prorelease">
+							<span>
+							<strong> <label><input name="goodsRecommend" id="goods_recommend" type="radio" value="true" style="display: inline-block;margin-top: -4px;"/> &nbsp;是</label></strong>
+							<strong> <label> <input name="goodsRecommend" id="goods_recommend" type="radio" value="false" checked="checked" style="display: inline-block;margin-top: -4px;"/> &nbsp;否 </label></strong>
+							</span> 
+							<span class="hui2">被推荐的商品会显示在店铺首页</span>
+						</td>
+					</tr>
+					<!-- <tr>
+						<td valign="top" align="right" style="padding-left:0;">支持感恩豆支付：</td>
+						<td class="prorelease">
+							<span style="margin-top:0">
+							<strong> <label><input name="isDou" type="radio" value="1" style="display: inline-block;margin-top: -4px;"/> &nbsp;支持</label></strong>
+							<strong> <label> <input name="isDou"  type="radio" value="0" checked="checked" style="display: inline-block;margin-top: -4px;"/> &nbsp;不支持 </label></strong>
+							</span> 
+						</td>
+					</tr> -->
+					<tr>
+						<td align="right" valign="top">SEO关键字：</td>
+						<td class="sptable">
+							<span class="tabtxt1 size1"><input name="seoKeywords" type="text" id="seo_keywords" value="$!obj.seoKeywords" /></span> 
+							<span class="hui2 noteswidth">SEO关键字 (keywords)出现在商品详细页面头部的 Meta 标签中， 用于记录本页面商品的关键字，多个关键字间请用半角逗号 "," 隔开</span>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">SEO描述：</td>
+						<td class="sptable"><span class="texttable"> <textarea
+									name="seoDescription" cols="" rows="" id="seo_description">$!obj.seoDescription</textarea>
+						</span> <span class="hui2 noteswidth">SEO关键字 (keywords)
+								出现在商品详细页面头部的 Meta 标签中， 用于记录本页面商品的关键字，多个关键字间请用半角逗号 "," 隔开</span></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><span class="submittable"> <input name=""
+								type="button" value="提交" onclick="saveForm();"
+								style="cursor: pointer;" />
+						</span> <input name="goods_session" type="hidden" id="goods_session"
+							value="$!goods_session" /></td>
+					</tr>
+				</table>
+				<input type="hidden" name="specNeed" value="" id="specNeed"/>
+			</form>
+		</div>
+	</div>
+	$!httpInclude.include("/footer.htm")
+<script>
+	// 判断浏览器是否安装flash插件
+	function flashChecker () {
+		var hasFlash = 0; // 是否安装了flash
+		var flashVersion = 0; // flash版本
+
+		if (document.all) {
+			var swf = new ActiveXObject('ShockwaveFlash.ShockwaveFlash');
+			if (swf) {
+					hasFlash = 1;
+					VSwf = swf.GetVariable("$version");
+					flashVersion = parseInt(VSwf.split(" ")[1].split(",")[0]);
+			}
+		} else {
+			if (navigator.plugins && navigator.plugins.length > 0) {
+				var swf = navigator.plugins["Shockwave Flash"];
+				if (swf) {
+					hasFlash = 1;
+					var words = swf.description.split(" ");
+					for (var i = 0; i < words.length; ++i) {
+						if (isNaN(parseInt(words[i]))) continue;
+						flashVersion = parseInt(words[i]);
+					}
+				}
+			}
+		}
+		return {f:hasFlash,v:flashVersion};
+		
+	}
+	var fls = flashChecker();
+	function flashTest(){
+		// 新建版本时
+		if (!fls.f) {
+			if (confirm('您的浏览器没有安装flash插件，需安装后才能使用该页面的相关功能，现在安装？')) {
+				window.location.href = "http://get.adobe.com/cn/flashplayer/";
+			}
+		} else {
+			//执行你的脚本
+			//alert("您已经安装了flash");
+		}
+	}
+		flashTest();
+</script>
+</body>
+</html>

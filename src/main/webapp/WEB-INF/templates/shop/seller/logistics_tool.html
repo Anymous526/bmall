@@ -1,0 +1,86 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>物流工具</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/kindeditor.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/lang/zh_CN.js"></script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods")
+<div class="s_m">  
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">物流工具</a> > <span>物流工具</span></div></div>
+        <div class="productmain">
+	     <div class="container" style="height:37px">
+           <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href="$!webPath/seller/logistics_tool.htm">物流公司</a></li>
+                <li class=""><a href="$!webPath/seller/logistics_query.htm">物流查询</a></li> 
+              </ul>
+            </div>
+            <div class="ordercon">
+            <button id="dpc01" onclick="javascript:window.location.href='$!webPath/seller/logistics_add.htm'">添加物流</button>
+             <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" style="margin-top:10px;">
+                  <tbody><tr id="opertitle">
+                    <td width="145px" style="padding-left:10px;">物流公司</td>
+                    <td width="179px">快递代码</td>
+                    <td width="200px">快递类型</td>
+                    <td width="200px">客服热线</td>
+                    <td width="147px" align="center">操作</td> 
+                  </tr>  
+                  <tr>
+                    <td style="padding-left:10px;">顺丰速递</td>
+                    <td class="g_td">
+                    	shunfeng 
+                    </td>
+                    <td class="g_td">
+                    	EXPRESS
+                    </td>
+                     
+                    <td class="g_td">
+                    	95338
+                    </td>
+                    <td align="center">
+                    	<button class="g_repeat">删除</button>
+                    </td>  
+                  </tr> 
+                  <tr>
+                    <td style="padding-left:10px;">顺丰速递</td>
+                    <td class="g_td">
+                    	shunfeng 
+                    </td>
+                    <td class="g_td">
+                    	EXPRESS
+                    </td>
+                     
+                    <td class="g_td">
+                    	95338
+                    </td>
+                    <td align="center">
+                    	<button class="g_repeat">删除</button>
+                    </td>  
+                  </tr> 
+                </tbody></table> 
+                </div>
+          </div>
+  </div>
+  </div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

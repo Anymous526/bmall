@@ -1,0 +1,156 @@
+﻿
+    <div class="sjindex_lef"> 
+   
+    	#if($!{store.storeInfo}&&$!{store.storeInfo}!="")
+        <div class="cus_box" style="border-bottom:1px solid #efdfca;">
+        	<h3><span>店铺介绍</span></h3>
+        	$!store.storeInfo
+         </div>
+        #end 
+         <div class="def-pic"></div> 
+        <div class="cus_box">
+        	<h3><span>联系店家</span></h3>
+            <span class="ww_pic">
+            	<ul>
+            	<li><span style="margin-right:10px"><a href="#"><img src="$!webPath/assets/img/shop/16.gif" /></a>客服一</span> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=974612428&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:974612428:51" alt="点击这里给客服一发消息" title="点击这里给客服一发消息"/></a></li>  
+                <li><span style="margin-right:10px"><a href="#"><img src="$!webPath/assets/img/shop/16.gif" /></a>客服二</span> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=974612428&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:974612428:51" alt="点击这里给客服二发消息" title="点击这里给客服二发消息"/></a></li>   
+                <li><span style="margin-right:10px"><a href="#"><img src="$!webPath/assets/img/shop/16.gif" /></a>客服三</span> <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=974612428&site=qq&menu=yes"><img border="0" src="http://wpa.qq.com/pa?p=2:974612428:51" alt="点击这里给客服三发消息" title="点击这里给客服三发消息"/></a></li> 
+                </ul>
+            </span>
+            
+           <a href="javascript:void(0);" onclick="reportStore();"> <h3><span>举报商家</span></h3></a>
+            <span class="ww_pic"><a href=""><img src="$!webPath/assets/img/shop/tianshi6.png" /></a> 商城客服</span>
+        </div>
+        
+        
+        <div class="cus_box">
+        	营业时间：9：00AM-24：00PM请咨询在线亮灯旺旺，不在线请使用购物车自助购物
+        </div>
+      
+        <div class="cus_box">
+        	<a href="javascript:void(0);" onclick="storeShouCang();"><div class="collect"></div></a>
+        </div>
+        
+        <div class="cus_box">
+        	
+            <h3><span>销售排行</span></h3>
+            
+            <div class="paihang_list">
+            <ul>
+            #foreach($goods in $goodsViewTools.sort_sale_goods("$!store.id",5))
+             #if($!goods.goodsMainPhoto)
+             	#set($img="$!imageWebServer/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+             #else
+            	 #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+             #end
+             #set($goods_url="$!webPath/goods.htm?id=$!{goods.id}")
+             #if($!config.secondDomainOpen)
+                 #set($goods_url="http://$!{goods.goodsStore.storeSecondDomain}.$!{domainPath}/goods.htm?id=$!{goods.id}")
+             #end 
+            
+            
+              <li>
+                <div class="ph_img"><a href="$!goods_url" target="_blank"><img src="$!img" /></a></div>
+                <div class="ph_txt">
+                  <p class="c3">$!CommUtil.substring("$!{goods.goodsName}",8)</p>
+                  <p class="cred">￥$!{goods.goodsPrice}</p>
+                  <p>已售出$!{goods.goodsSalenum}件</p>
+                </div>
+              </li>
+             #end
+            </ul>
+            <p style="width:100%; text-align:center"><a href="$!webPath/store_all_goods.htm?id=$!{store.id}">查看更多</a></p>
+          </div>
+        </div>
+    </div>
+
+    
+    
+<script type="text/javascript">
+	/**
+	 * 收藏商品
+	 */
+ 	function storeShouCang(){
+ 		#if(!$!user)
+ 			$(".login_bg").show();
+ 		#end
+ 		#if($!user)
+	 		#if($!user.id==$!store.userId)
+	 			alert("不能收藏自己的店铺！");
+	 		#else
+	 			jQuery.post("$!webPath/add_store_favorite.htm",{"storeId":"$!store.id"},function(data){
+					 if(data=="0"){
+					     alert("店铺收藏成功！");
+					 }else if(data=="1"){
+					    alert("该店铺已经被收藏！");
+					 }else{
+						 alert("收藏失败！");
+					 }
+				   },"text");
+	 		#end
+	 	#end
+ 	}
+ 	/**
+ 	*举报店铺
+ 	*/
+ 	
+ 	function reportStore(){
+ 		#if(!$!user)
+ 			$(".login_bg").show();
+ 		#end
+ 		#if($!user)
+	 		#if($!user.id==$!store.userId)
+	 			alert("不能举报自己的店铺！");
+	 		#else
+	 			window.location.href="$!webPath/buyer/store_report.htm?storeId="+$!store.id;
+	 		#end
+	 	#end
+ 	}
+ 	
+	$("#login_buttom").bind("click",function(){		
+		var username = jQuery.trim($("#username").val());
+		var password = jQuery.trim($("#password").val());
+		var code = jQuery.trim($("#code").val());
+		if (username == '') {
+            alert('请输入用户名');
+            return false;
+        }
+        if (password == '') {
+            alert('请输入密码');
+            return false;
+        }
+        if (password.length < 6 || password.length > 20) {
+			alert('请输入长度为6-20位的密码');
+			return false;
+		}
+        if (code == '') {
+            alert('请输入验证码');
+            return false;
+        }
+     
+        var url = $("#url").val();
+		var goodsId = $("#goodsId").val();
+		
+        jQuery.post("$!webPath/amall_login.htm?url="+url,{"username":username,"password":password,"code":code,"ajax_login":true,"url":url},function(data){
+            if(data=="success"){
+	             window.location.reload();
+	          }else{
+	             alert("用户名、密码或验证码错误，请重新输入");
+	          }
+           },"text");
+		
+	});
+	$("#app_block_close").bind("click",function(){
+		$(".login_bg").hide();
+	});
+	
+	
+	function search_form(){
+		  var keyword=arguments[0];
+		  if(keyword!=""&&keyword!=undefined){
+		   jQuery("#keyword").val(keyword);
+		  }
+		  jQuery("#searchForm").submit();	
+		  jQuery("#keyword").val("");
+		}
+</script>

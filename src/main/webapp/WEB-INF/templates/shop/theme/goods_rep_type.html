@@ -1,0 +1,30 @@
+﻿<div class="c_left">
+  	<div class="left_box">
+    	<div class="left_box_header">相关分类</div>
+        <div class="box_list">
+        	<ul>
+        	#foreach($gc in $gcs)
+                <li><a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id">$!gc.classname</a></li>
+            #end
+            </ul>
+        </div>
+    </div>
+    
+    <div class="left_box">
+    	<div class="left_box_header">同类商品</div>
+        <div class="shop_img_list">
+        	<ul>
+        	#foreach($recommend in $recommends)
+	        	#set($pSrc = "$!{config.imagewebserver}/$!{recommend.goodsMainPhoto.path}/$!{recommend.goodsMainPhoto.name}")
+	            <li style="width:100%; padding-top: 10px;">
+	                <div class="left_img">
+	                <a href="$!webPath/goods.htm?id=$!{recommend.id}"><img src="$!pSrc" width="92%"/></a>
+	                </div>
+	                <p><a style="color:#666; text-align: left" href="$!webPath/goods.htm?id=$!{recommend.id}">$!recommend.goodsName</a></p>
+	                <span><strong>$!recommend.storePrice</strong></span>
+	            </li>
+            #end
+            </ul>
+        </div>
+    </div>  
+</div>

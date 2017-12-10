@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>兑换记录</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc1.amallcdn.cn/assets/css/duigou.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<style>
+.orderul li{color: #333}
+#wei_x1{padding:10px;}
+#wei_x1 tr:first-child{font-weight:bold;background:#EEE}
+.ordercon{padding-top:0;}
+#wei_x1 tr{border-bottom:1px solid #CCC}
+#wei_x1 td{height:60px;line-height:60px;float:left;padding-left:0;}
+#wei_x1 .bt1{width:100px;overflow:hidden;display:block}
+#wei_x1 .bt2{width:200px;overflow:hidden;display:block}
+#wei_x1 .bt4{width:330px;overflow:hidden;display:block}
+.bt4 li{width:20%;float:left;line-height:30px;}
+.wecode{height:60px;overflow:hidden;display:block}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+<div class="s_m">  
+  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>兑换记录</span> > <span>购买详情</span></div></div>
+  <div class="productmain" style="width:953px;padding: 0;border-bottom: 0;">  
+	<div class="ordercon" style="width: 953px;">
+		<table id="wei_x1" border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width:838px;height: auto;border:none;">
+		  <tr><td class="bt1">轮数</td><td class="bt2">时间</td><td class="bt1">购买数量</td><td class="bt1">选择的数</td><td class="bt4">随机码</td></tr>
+		  
+		  #foreach($obj in $!objs)
+		  <tr>
+		  <td class="bt1">$!{velocityCount}</td>
+		  <td class="bt2">$CommUtil.formatLongDate($obj.addTime)</td>
+		  <td class="bt1">$obj.buyCount</td>
+		  <td class="bt1">$obj.selectNumber</td>
+		  <td class="$obj.id bt4"> 
+		  <ul class="wecode"></ul>
+		  <span style="text-align: center;color:red;clear:both;cursor:pointer;line-height:30px" id="$obj.id"></span>
+		  </td> 
+		  </tr>
+          #end
+       </table>
+       </div>
+     </div>
+   </div>
+</div>
+ 
+$!httpInclude.include("/footer.htm")
+<script type="text/javascript">
+#foreach($obj in $!objs)
+var cods1="$obj.codes";
+var wei=cods1.split(",");   
+ for(var i=0;i<wei.length;i++){
+ 	$(".$obj.id .wecode").append("<li>"+wei[i]+"</li>");
+} 
+ if(wei.length>11){
+	 $(".$obj.id").css({"height":"90px"});
+	 $("#$obj.id").html("显示全部");
+ }
+ $("#$obj.id").click(function(){
+		$(this).html(""); 
+		$(".$obj.id,.$obj.id .wecode").css("height","auto"); 
+ })
+#end
+
+</script>
+</body>
+</html>

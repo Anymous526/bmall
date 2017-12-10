@@ -1,0 +1,307 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/resources/style/common/css/window.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css"/>
+<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+<script type="text/javascript">
+var swf_upload;
+var photo_count=0;
+$(function($){
+	
+	$(".evaPublish").click(function(){
+		if(confirm("评价后不可修改，是否确定评价？")){
+		    jQuery("#theForm").submit();
+		}
+	});
+	
+	$("#appUpload").uploadify({
+        //指定swf文件
+        'swf': '$!webPath/resources/uploadify/uploadify.swf',
+        //后台处理的页面
+        'uploader': '$!webPath/buyer/buyer_upload_evaluate.htm',
+        //按钮显示的文字
+        'buttonText': '点击选择图片上传',
+        'method': 'post',
+        'formData'		   : {"isCheckWithHeight":0},
+        //显示的高度和宽度，默认 height 30；width 120
+        //'height': 15,
+        //'width': 80,
+        //上传文件的类型  默认为所有文件    'All Files'  ;  '*.*'
+        //在浏览窗口底部的文件类型下拉菜单中显示的文本
+        'fileTypeDesc': 'Image Files',
+        //允许上传的文件后缀
+        'fileTypeExts': '*.png;*.jpg;',
+        //发送给后台的其他参数通过formData指定
+        //'formData': { 'someKey': '123', 'someOtherKey': 1 },
+        //上传文件页面中，你想要用来作为文件队列的元素的id, 默认为false  自动生成,  不带#
+        //'queueID': 'fileQueue',
+        'fileSizeLimit': '2000KB',
+        //选择文件后自动上传
+        'auto': true,
+        //设置为true将允许多文件上传
+        'multi': true,
+        'queueSizeLimit': 3,
+        onUploadStart :function(){
+        	var imgsLen = $(".re_img").children().length;
+        	if(imgsLen > 2){
+        		alert("最多只能上传3张图片");
+        		$('#appUpload').uploadify('cancel', '*');
+        	}
+        	
+        },
+        onUploadSuccess: function(event, data) {
+       	 if(data != "null") 
+            {
+       		 data = eval('('+data+')');
+       		// var dt = data.split(",");
+       		 var imgHtml='<li><span class="rem"></span>'+
+				 '<img src="'+data.imagePath+'" width="100" height="100" />'+
+				 '<input id="imgs" name="imgs" type="hidden" value="'+data.pass+'">'+
+			     '</li>';
+			     $(".re_img").append(imgHtml);
+			     var imgIds = $("#imgIds").val();
+			     var value = data.imgId+","+imgIds;
+			     $("#imgIds").val(value);
+            }
+        }
+    });
+	
+	
+	
+	var lis = jQuery(".tools ul li");
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+	
+});
+</script>
+</head>
+
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m" style="float: left; margin-left: 10px;">		
+		<div class="ydcomment">
+			欢迎你发表原创并对其他用户有参考价值的商品评论<br />
+			审核通过后，您可以获得一定的积分奖励，前十名评论用户有多倍积分奖励哦 <a class="cred" style="text-decoration: underline;" href="#"> 详见积分规则</a>
+		</div>
+		
+		<div class="comment_title">
+			<span class="comment_tit">添加商品评论</span>
+			<span class="comm_contact">卖家： <label>$!goods.goodsStore.storeName&nbsp;&nbsp;</label>&nbsp;&nbsp;<a class="cred" href=""><img src="$!webPath/assets/img/shop/16.gif" /> 店小二</a></span>
+		</div>
+		<form action="$!webPath/buyer/buyer_orderCommentSave.htm" method="post" id="theForm" enctype="multipart/form-data">
+		<input name="orderId" type="hidden" value="$!orderForm.id" />
+		<input name="goodsId" type="hidden" value="$!goods.id" />
+		<input name="imgIds" id="imgIds" type="hidden" value="" />
+		<div class="comment_a">
+			<dl>
+				<dd>
+					<div class="com_shop">
+						<a href="$!webPath/goods.htm?id=$!goods.id" ><img src="$!{config.imagewebserver}/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}" width="130" height="130" /></a>
+						<p><a class="fb f14 cred weik" href="$!webPath/goods.htm?id=$!goods.id" >$!goods.goodsName</a></p>
+						<p>价格：<label class="fb">¥：$!goods.goodsPrice</label>  </p>
+					</div>
+					<div class="com_edit">
+						<table class="commenttable" width="100%" border="0" cellspacing="0" cellpadding="0">
+							
+							<tr>
+					             <span style="float:left;width:120px;margin-left:34px;margin-bottom:20px">
+					             <label style="cursor:pointer">
+					             <input name="evaluate_buyer_val" type="radio" value="1" checked="checked" style="float:left;width:20px;border:0;cursor:pointer;margin-top:4px;" />
+					             <em style="float:left" >好评</em><i class="hui2" style="float:left" >(加1分)</i>
+					             </label>
+					             </span>
+					             <span style="float:left;width:120px;margin-bottom:20px">
+					             <label style="cursor:pointer">
+					             <input name="evaluate_buyer_val" type="radio" value="0" style="float:left;width:20px;border:0;cursor:pointer;margin-top:4px;" />
+					             <em>中评</em><i class="hui2">(不加分)</i>
+					             </label>
+					             </span>
+					             <span style="float:left;width:120px;margin-bottom:20px">
+					             <label style="cursor:pointer">
+					             <input name="evaluate_buyer_val" type="radio" value="-1" style="float:left;width:20px;border:0;cursor:pointer;margin-top:4px;" />
+					             <em>差评</em><i class="hui2">(减1分)</i>	
+					             </label>
+					             </span>
+							</tr>
+							  
+							<tr >
+							  	<td align="right" >商品评价：</td>
+					    		<td><textarea name="evaluate_info" id="evaluate_info" rows="6" cols="15"></textarea> </td>
+							</tr>
+							<tr>
+							    <td align="right">添加图片：</td>
+							    <td>
+							    	<input type="file" accept="image/jpeg/jpg/png" name="uploadify" id="appUpload" />
+							    	
+							    	<span style="font-size:12px; color:#999">最多3张图片，支持JPEG,PNG格式</span> 
+							    </td>
+					  		</tr>
+					  		  
+					  		<tr>
+			          			<td class="taleft" width="100" align="right"></td>
+			          			<td>
+			          				<ul class="re_img">
+			          					
+			          					
+			          				</ul>
+			          			</td>
+			          		</tr>
+			          		
+					  <tr>
+					    <td align="right">满意度评价</td>
+					    <td>
+					    	<ul class="orcomst">
+					    	
+					    		<li><span>商品描述相符<input type="hidden" id="description_evaluate" class="description_evaluate" name="description_evaluate" value="" /></span>
+						    		<div class="star">
+										<ul>
+											<li id="description_evaluate" value="1" >1</li>
+											<li id="description_evaluate" value="2" >2</li>
+											<li id="description_evaluate" value="3" >3</li>
+											<li id="description_evaluate" value="4" >4</li>
+											<li id="description_evaluate" value="5" >5</li>
+										</ul>
+										<span></span>
+										<p></p>
+									</div>
+								</li>
+								
+								
+					    		<li><span>商家服务态度<input type="hidden" id="service_evaluate" class="service_evaluate" name="service_evaluate" value="" /></span>
+					    			<div class="star">
+										<ul >
+											<li id="service_evaluate" value="1">1</li>
+											<li id="service_evaluate" value="2">2</li>
+											<li id="service_evaluate" value="3">3</li>
+											<li id="service_evaluate" value="4">4</li>
+											<li id="service_evaluate" value="5">5</li>
+										</ul>
+										<span></span>
+										<p></p>
+									</div>
+					    		</li>
+					    		
+					    		<li><span>物流发货速度<input type="hidden" id="ship_evaluate" class="ship_evaluate" name="ship_evaluate" value="" /></span>
+					    			<div class="star">
+										<ul>
+											<li id="ship_evaluate" value="1">1</li>
+											<li id="ship_evaluate" value="2">2</li>
+											<li id="ship_evaluate" value="3">3</li>
+											<li id="ship_evaluate" value="4">4</li>
+											<li id="ship_evaluate" value="5">5</li>
+										</ul>
+										<span></span>
+										<p></p>
+									</div>
+					    		</li>
+					    		
+					    	</ul>
+					    </td>
+					  </tr>  
+						</table>
+					</div>
+				</dd>
+			</dl>
+			<div class="ml50 mb50"><input type="button" class="evaPublish" value="提交评论" style="padding:7px 14px 7px 14px;float:right; color:#fff;margin-right:18px; background-color: #ff7928; border:1px;cursor:pointer;margin-top: 8px;"/></div>
+		</div>
+
+		
+		</form>
+	</div>
+</div> 
+        
+        
+  
+
+
+
+
+$!httpInclude.include("/footer.htm")	<!-- 底部页脚 -->
+
+<script type="text/javascript"> 
+window.onload = function (){
+	var oStars = $(".star");
+	jQuery.each(oStars,function(i,v){
+		var showTip = false;
+		if(i == 0){
+			showTip = true;
+		}
+		var oStar = $(v);
+		var aLi = oStar.find("li");
+		var oUl = oStar.find("ul");
+		var oSpan = oStar.find("span");
+		var oP = oStar.find("p");
+		var i = iScore = iStar = 0;
+		var aMsg = [
+					"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
+					"不满意|部分有破损，与卖家描述的不符，不满意",
+					"一般|质量一般，没有卖家描述的那么好",
+					"满意|质量不错，与卖家描述的基本一致，还是挺满意的",
+					"非常满意|质量非常好，与卖家描述的完全一致，非常满意"
+					]
+		for (i = 1; i <= aLi.get().length; i++){
+			aLi[i - 1].index = i;
+			//鼠标移过显示分数
+			
+			
+			//点击后进行评分处理
+			aLi[i - 1].onclick = function (){
+				fnPoint(this.index);
+				var aLi_id=this.id;
+				if(aLi_id=="ship_evaluate"){
+					jQuery(".ship_evaluate").val(this.index);
+				}
+				if(aLi_id=="description_evaluate"){
+					jQuery(".description_evaluate").val(this.index);
+				}
+				if(aLi_id=="service_evaluate"){
+					jQuery(".service_evaluate").val(this.index);
+				}
+				iStar = this.index;
+				oP.hide();
+				/* if(showTip){
+					oSpan.get(0).innerHTML = "<strong>" + (this.index) + " 分</strong> (" + aMsg[this.index - 1].match(/\|(.+)/)[1] + ")";	
+				} */
+				
+			}
+		}
+		//评分处理
+		function fnPoint(iArg){
+			//分数赋值
+			iScore = iArg || iStar;
+			for (i = 0; i < aLi.get().length; i++) aLi.get()[i].className = i < iScore ? "on" : "";	
+		}
+		
+		
+	});	
+};  
+</script> 
+</body>
+</html>

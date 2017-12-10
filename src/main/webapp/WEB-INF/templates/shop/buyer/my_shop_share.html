@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>个人中心</title>
+<link rel="shortcut icon" href="$webPath/img/favicon.ico" type="image/x-icon">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="black" name="apple-mobile-web-app-status-bar-style" />
+<meta content="telephone=no" name="format-detection" />
+<meta content="email=no" name="format-detection" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<link rel="stylesheet" type="text/css" href="$!webPath/css/public.css">             <!--页面上下滚动-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/css/font-awesome.css">
+<link rel="stylesheet" type="text/css" href="$!webPath/css/base.css">
+<link rel="stylesheet" type="text/css" href="$!webPath/css/user.css">
+<link rel="stylesheet" type="text/css" href="$!webPath/css/csshake.css">
+<script type="text/javascript" src="$!webPath/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/js/qrcode.min.js"></script>
+
+<script type="text/javascript">     
+$(function(){
+	
+	var longUrl = "$!codelink";
+	var qrcode = new QRCode("qrcodeTable", {
+        text: longUrl,
+        width:190,
+        height:190,
+        colorDark : "#4A4A4A",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.Q
+    });
+	
+	function isWeiXin(){
+	    var ua = window.navigator.userAgent.toLowerCase();
+	    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+	        return true;
+	    }else{
+	        return false;
+	    }
+	}
+	
+	$("#appwxshare").bind("click",function(){
+		if(isWeiXin()){
+			//window.location.href = "$!webPath/shareweichat.htm?pid=&did=$!userid&redno=";
+			$("#appshareweichat").submit();
+	    }else{
+	    	alert("请在微信内打开www.amall.com,重新登录到个人中心即可推广.");
+	    }
+	});
+	
+	
+});
+</script>
+<style>
+
+</style>
+</head>
+
+<body style="background-color:#f2f2f2">
+
+<form action="$!webPath/shareweichat.htm?pid=&did=$!userid&redno=" method="post" id="appshareweichat">
+	<input type="hidden" name="flag" value="1">
+</form>
+<div id="header"><span class="fanhui"><a href="$!webPath/index.htm"><i class="fa fa-angle-left"></i></a></span>个人中心
+<span onClick="toshare()" class="shopcar"><i class="fa fa-share-square-o f20 colo666 pt10"></i></span>
+</div>
+
+$!httpInclude.include("/link.htm")
+
+<div class="banner"><img src="$!webPath/img/userbanner.jpg" width="100%" /></div>
+<div class="user_icon">
+    #if($!user.photo)
+	#set($img="$!{config.imagewebserver}/$!user.photo.path/$!user.photo.name")
+	#else 
+	#set($img="$!webPath/img/user.png")
+	#end
+	<div class="imgbox">
+	<img src="$img" style="width:80%;height:80%;" />
+	</div>
+	<!-- <span>$!user.username</span> -->
+	<span style="color:red;margin-top: -10px;">#if($!user.levelAngel)VIP$!user.levelAngel#else普通会员#end</span>
+	<span style="">$!user.username</span>
+</div>
+
+<div class="user_content">
+    
+    
+    <div class="may_like">
+    	<div class="may_tit"><span>热门精品兑换</span></div>
+        <ul>
+        	#set($count=0)
+		    #foreach($goods in $!integralGoods)
+		    	<li>
+	            	<a href="$!webPath/exchange/exchange_view.htm?id=$!goods.id">
+	            	<img src="$!{config.imagewebserver}/$!goods.igGoodsImg.path/$!goods.igGoodsImg.name" width="100%" />
+	                <span class="may_goodsname">$!goods.igGoodsName</span>
+	                <span class="ca90000">$!goods.igGoodsGoldNum礼品金</span>
+	                </a>
+	            </li>
+    		#set($count=$count + 1)
+    		#end
+        </ul>
+    </div>
+    
+    
+</div>
+
+<script type="text/javascript" src="$!webPath/js/jquery.min.js"></script>  <!--顶层下拉-->
+<script type="text/javascript">
+	$(function(){		
+		var lis = $(".may_like ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%3;
+			if(t == 0){
+				$(this).css("margin-right","0px");
+			}
+		});
+
+	});
+	
+	
+	
+	//添加用户名到session storage
+	sessionStorage.setItem("amallUser", '$!user.username');
+</script>
+<script type="text/javascript">
+	function toshare(){
+		$(".am-share").addClass("am-modal-active");	
+		if($(".sharebg").length>0){
+			$(".sharebg").addClass("sharebg-active");
+		}else{
+			$("body").append('<div class="sharebg"></div>');
+			$(".sharebg").addClass("sharebg-active");
+		}
+		$(".sharebg-active,.share_btn").click(function(){
+			$(".am-share").removeClass("am-modal-active");	
+			setTimeout(function(){
+				$(".sharebg-active").removeClass("sharebg-active");	
+				$(".sharebg").remove();	
+			},300);
+		})
+	}	
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".opacity_code").click(function(){
+	$(".am-share").show();
+  	$(".opacity_code").hide();
+  });
+  
+  
+  $("#faceshare").click(function(){
+	$(".am-share").hide();
+  	$(".opacity_code").show();
+  });
+});
+</script>
+
+
+</body>
+</html>

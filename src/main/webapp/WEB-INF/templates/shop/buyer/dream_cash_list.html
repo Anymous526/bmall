@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>提现申请列表</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){	
+   //
+});
+
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m"> 
+	<div class="buyer_position">
+		<div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">我的账户</a> > <span>提现申请列表</span></div>
+	</div>
+    <div class="productmain">
+		<div class="container">
+            <ul class="section" style="padding: 0;">
+				<li class=""><a href='$!webPath/buyer/dream_cash.htm'>梦想会员提现申请</a></li>
+                <li class="li_this"><a href='$!webPath/buyer/dream_cash_list.htm'>申请列表</a></li>
+            </ul>
+        </div>
+        <div class="ordercon">
+			<div class="operation">
+                <table width="834px" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width="130">申请时间</td>
+                    <td  width="60">提现人数</td>
+                    <td  width="60">提现时间</td>
+                    <td width="88">提现状态</td>
+                  </tr>
+               #if($objs.size()>0)      
+                  #foreach($obj in $objs)
+                  <tr class="opertr">
+                    <td>$!CommUtil.formatLongDate($!obj.addTime)</td>
+                    <td>$!obj.applyFee.intValue()</td>
+                    <td>$!CommUtil.formatLongDate($!obj.payTime)</td>
+                    <td>
+                    #if($!obj.approveStatus=="false")
+                    	等待审批
+                    #else
+                                                                       已提现 
+                    #end
+                    </td>
+                  </tr>
+                  #end
+                    #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="4" style="height:250px;line-height:250px;text-align: center;">您现在还没有<span style="color:red">提现申请</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end    
+                </table>
+              </div>
+            </div>
+          </div>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

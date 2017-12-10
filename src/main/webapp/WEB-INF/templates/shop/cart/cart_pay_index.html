@@ -1,0 +1,261 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Amall商城官方网站—正品低价,又省又赚—www.Amall.com</title>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/briberymoney.css">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<script src="$!webPath/assets/js/jquery-1.6.4.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/cryptographic.js"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanel ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panes>div:eq('+$(this).index()+')').show().siblings().hide();	
+	})
+})
+</script>
+
+</head>
+
+
+
+
+
+
+
+<body style="background:#FFF">
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/cart/cart_pay_logo.htm")
+
+
+
+
+<div class="w100 w100_div">
+  <div class="w990 order_num mb30">
+    <div class="order_num_left"> <span class="pt20 pl20">
+      <p class="f16"><strong>     
+      <p>请您在提交订单后<span class="cred">24小时</span>内完成支付，否则订单会自动取消。</p>
+      </span> </div>
+    <div class="order_num_right"> <span class="order_code"><!-- <img src="$!webPath/assets/img/code.jpg" /> --></span> <span class="order_money">
+      <p>应付金额
+        <label class="f18 fb cred">
+         $!payment</label>
+        元</p>
+      </span> </div>
+  </div>
+</div>
+
+<div class="w990 paydiv">
+  <div style="width:90%;margin:40px auto;">
+  <form action="$!webPath/order_pay.htm" method="post" id="theForm">
+  <input type="hidden" name="orderIds" value="#foreach($!order in $!orderList)#if($!order)$!order,#end #end"/>
+    <div class="tabPanel">
+      <ul>
+        <li class="hit">平台支付</li>
+      </ul>
+      <div class="panes">
+        <div class="pane" style="display: block">
+          <div class="bank_list">
+            <p>支持国内几乎所有银行的储蓄卡及信用卡进行支付（需开通网上银行）</p>
+            <dl>
+            
+              <dt> 
+              <label style="cursor: pointer;">
+	              <span><input type="radio" name="webbankpay" id="alipay" value="alipay" checked/></span> 
+	              <img src="$!webPath/assets/img/bank-img13.png" />  
+              </label>
+                </dt>
+                
+              <dt> 
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="Unionpay" value="Unionpay" /></span> 
+              	<img src="$!webPath/assets/img/bank-img14.png" />  
+              </label>
+              </dt>
+              <dt> 
+              
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="WXPay" value="WXPay" /></span> 
+              	<img src="$!webPath/assets/img/bank4.png" />  
+              </label>
+              </dt>
+               
+              <dt> 
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="AGPay" value="AGPay" /></span> 
+              	<img src="$!webPath/assets/img/bank1421.png" />  
+              </label>
+              </dt>
+               
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" value="" name="payment_pwd" id="payment_pwd"/>
+    <div class="mt25">
+    <input type="hidden" value="$!{currentUser.payPassword}" id="payPassword">
+    <input type="hidden" value="$!msg" id="passerr"/>
+      <input type="button" value="立即支付" class="ui-button ui-button-XL">
+    </div>
+    </form>
+  </div>
+</div>
+<div class="mb_bg" style="opacity: 0.4;filter:alpha(opacity=40);"></div>
+<!-- 支付密码start -->
+<div class="mb_dioalog02">
+	<div class="mb_tit02">请输入支付密码</div>
+	<form action="$!webPath/order_pay.htm" method="post" name="payPassword" id="form_paypsw">
+		<input type="password" value="" name="payment_pwd" class="payment_pwd" maxlength="6" placeholder="请输入支付密码"/>
+		<input type="hidden" name="orderIds" value="#foreach($!order in $!orderList)#if($!order)$!order,#end #end"/>
+		<input type="hidden" name="webbankpay" value="AGPay" />
+		<a href="$!webPath/paymentpwd_forgot.htm" class="payment_a">忘记密码?</a>
+    </form>	
+	<div>
+		<span class="mb_nobtn02" style="cursor:pointer;margin-top:40px;">取消</span>
+		<span class="mb_okbtn02" onclick="payBtn()" style="cursor:pointer;margin-top:40px;">确定</span>
+	</div>
+</div>
+<!-- 支付密码end  -->
+<!-- 设置支付密码start -->
+<div class="py_dioalog03">
+	<div class="mb_tit02">设置支付密码</div>
+	<form action="$!webPath/modifypwd.htm" method="post" name="payPassword" id="set_paypsw">
+		<span class="py_txt01">设置密码：</span><input type="password" value="" name="set_pwd" class="payment_pwds" maxlength="6" placeholder="请设置6位数的支付密码"/>
+		<span class="py_txt02">确认密码：</span><input type="password" value="" name="set_compwd" class="payment_pwds" maxlength="6" placeholder="请确认密码" onkeydown="setPwd()"/>
+    </form>	
+	<div>
+		<span class="mb_nobtn03" style="cursor:pointer;margin-top:40px;">取消</span>
+		<span class="mb_okbtn03" style="cursor:pointer;margin-top:40px;">确定</span>
+	</div>
+</div>
+<!-- 设置支付密码end  -->
+$!httpInclude.include("/footer.htm")
+<script>
+	$('.ui-button-XL').click(function(){
+		if($("#AGPay").is(":checked")){
+			if($('#payPassword').val()==""){
+				$('.mb_bg').fadeIn(500);
+				$('.py_dioalog03').fadeIn(500);
+				$("input[name='set_pwd']").focus();
+			}else{
+			$('.mb_bg').fadeIn(500);
+			$('.mb_dioalog02').fadeIn(500);
+			$("input[name='payment_pwd']").focus();
+			}
+		}else{
+			$('#theForm').submit();
+		}	
+	});
+	
+	$(".mb_okbtn03").click(function(){
+		var payVal=$("input[name='set_pwd']").val();
+		var pycomval=$("input[name='set_compwd']").val();
+		var pylen=payVal.length;
+		if(payVal==""){
+			alert("请设置支付密码");
+			return false;
+		}else if(pylen<6){
+			alert('密码长度不够');
+			return false;
+		}else if(pycomval==""){
+			alert('确认密码不能为空');
+			return false;
+		}else if(pycomval!=payVal){
+			alert('两次输入的密码不一致');
+			return false;
+		}else{
+			//加密
+			var shaObj = new amallEncryption($('.payment_pwds').val());
+			var str = shaObj.getHash();
+			$(".payment_pwds").val(str);
+			$("#set_paypsw").submit();
+		}
+	});
+	function setPwd(evt){
+		var evt=evt?evt:(window.event?window.event:null);//兼容IE和FF
+		if(evt.keyCode==13){
+			var payVal=$("input[name='set_pwd']").val();
+			var pycomval=$("input[name='set_compwd']").val();
+			var pylen=payVal.length;
+			if(payVal==""){
+				alert("请设置支付密码");
+				return false;
+			}else if(pylen<6){
+				alert('密码长度不够');
+				return false;
+			}else if(pycomval==""){
+				alert('确认密码不能为空');
+				return false;
+			}else if(pycomval!=payVal){
+				alert('两次输入的密码不一致');
+				return false;
+			}else{
+				//加密
+				var shaObj = new amallEncryption($('.payment_pwds').val());
+				var str = shaObj.getHash();
+				$(".payment_pwds").val(str);
+				$("#set_paypsw").submit();
+			}
+		}
+	}
+	$(".mb_nobtn03").click(function(){
+		$('.mb_bg').fadeOut(500);
+		$('.py_dioalog03').fadeOut(500);
+	});
+    
+	function payBtn(){
+		 var values=$('.payment_pwd').val();
+		 var alen=values.length;
+		 if(values==""){
+			 alert('请输入支付密码');
+			 return false;
+		 }else if(alen<6){
+			 alert('请输入正确的支付密码');
+		 }else{
+			 //$("#payment_pwd").val(values);
+			//加密
+			 var shaObj = new amallEncryption(values);
+			 var str = shaObj.getHash();
+			 $(".payment_pwd").val(str);
+			 $("#form_paypsw").submit(); 	 
+		 }
+	}
+	//回车键提交支付密码
+	function payPwd(evt){
+		var evt=evt?evt:(window.event?window.event:null);//兼容IE和FF
+		if(evt.keyCode==13){
+			var values=$('.payment_pwd').val();
+			 var alen=values.length;
+			 $("#form_paypsw").removeAttr("action");
+			 if(values==""){
+				 alert('请输入支付密码');
+				 return false;
+			 }else if(alen<6){
+				 alert('请输入正确的支付密码');
+			 }else{
+				 //$("#payment_pwd").val(values);
+				//加密
+				$("#form_paypsw").attr("action","$!webPath/order_pay.htm");
+				 var shaObj = new amallEncryption(values);
+				 var str = shaObj.getHash();
+				 $(".payment_pwd").val(str);
+				 $("#form_paypsw").submit(); 	 
+			 }
+		}
+	}
+	
+	$(".mb_nobtn02").click(function(){
+		$('.mb_bg').fadeOut(500);
+		$('.mb_dioalog02').fadeOut(500);
+		return false;
+	})  
+	var passerr = $("#passerr").val();
+	if(passerr != ""){
+		alert(passerr);
+	}
+</script>
+</body>
+</html>

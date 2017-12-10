@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>提现申请 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({
+       rules: {
+			cashPayment:{required:true},
+			cashAmount:{required:true},
+			cashUserName:{required:true},
+			cashBank:{required:true},
+			cashAccount:{required:true},
+		  },
+	   messages: {
+		    cashPayment:{required:"支付方式不能为空"},
+			cashAmount:{required:"提现金额不能为空",range:"请输入大于{0}的数字"},
+			cashUserName:{required:"收款人不能为空"},
+			cashBank:{required:"收款银行不能为空"},
+			cashAccount:{required:"收款账号不能为空"},
+	     }
+  });
+ //
+ jQuery("#cash_payment").change(function(){
+    var val=jQuery(this).val();
+	if(val=="outline"){
+	  jQuery("tr[id^=cash_]").show();
+	  jQuery("tr[id^=cash_] input").show();
+	}else{
+	  jQuery("tr[id^=cash_]").hide();
+	   jQuery("tr[id^=cash_] input").hide();
+	}
+  });
+});
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/buyer/buyer_left.htm") 
+<div class="s_m"> 
+	<div class="buyer_position">
+        <div class="buyer_p_box"><a href="$!webPath/buyer/seller_index.htm">卖家中心</a> > <span>梦想会员申请提现</span></div></div>
+        <div class="productmain">
+            <div class="container">
+            <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href='$!webPath/buyer/dream_cash.htm' >梦想会员提现申请</a></li>
+                <li class=""><a href='$!webPath/buyer/dream_cash_list.htm'>申请列表</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav">
+              #if($!cashAmount>0)
+                <form action="$!webPath/buyer/dream_cash_save.htm" method="post" name="theForm" id="theForm">
+                  <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                    <tr>
+                      <td align="right" valign="top" class="modifysp">可提人数：</td>
+                      <td  class="px10">$!cashAmount</td>
+                    </tr>
+                    <tr>
+                      <td width="102" align="right" valign="top" class="modifysp"><span>提取人数：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td  class="px10">
+                      	<span class="setinputtext">
+                        	<input name="applyFee" type="text" id="applyFee" style="" />
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td class="px10"><span class="setsub">
+                        <input name="" type="submit"  value="提交" style="cursor:pointer;height: 29px;border: 0;"/>
+                        </span></td>
+                    </tr>
+                  </table>
+                </form>
+                #else
+                	<div style="margin: 20px 10px;font-size: 14px;">&nbsp;&nbsp;&nbsp;您现在还没有<span style="color:red">可以提现的人数</span>哦,赶快去推广吧~ </div></td> 
+                #end
+                
+              </div>
+            </div>
+          </div>
+  </div>
+  </div>
+$!httpInclude.include("/footer.htm") 
+</body>
+</html>

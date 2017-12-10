@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.userMoneyDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.userMoneyDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="can_carry" property="canCarry" jdbcType="DECIMAL" />
+    <result column="manage_money" property="manageMoney" jdbcType="DECIMAL" />
+    <result column="detail_fee" property="detailFee" jdbcType="DECIMAL" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="detail_id" property="detailId" jdbcType="BIGINT" />
+    <result column="detail_tx" property="detailTx" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User" 
+     	select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, user_id, can_carry, manage_money, detail_fee, add_time, detail_id, detail_tx, 
+    remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.userMoneyDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_user_money_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+   <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.userMoneyDetailExample" >
+	select
+	<if test="distinct" >
+	  distinct
+	</if>
+	<include refid="Base_Column_List" />
+	from amall_user_money_detail
+	<if test="_parameter != null" >
+	  <include refid="Example_Where_Clause" />
+	</if>
+	<if test="orderByClause != null" >
+	  order by ${orderByClause}
+	</if>
+	<if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select> 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_user_money_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_user_money_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.userMoneyDetailExample" >
+    delete from amall_user_money_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.userMoneyDetail" >
+    insert into amall_user_money_detail (id, user_id, can_carry, 
+      manage_money, detail_fee, add_time, 
+      detail_id, detail_tx, remark
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{canCarry,jdbcType=DECIMAL}, 
+      #{manageMoney,jdbcType=DECIMAL}, #{detailFee,jdbcType=DECIMAL}, #{addTime,jdbcType=TIMESTAMP}, 
+      #{detailId,jdbcType=BIGINT}, #{detailTx,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.userMoneyDetail" >
+    insert into amall_user_money_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="canCarry != null" >
+        can_carry,
+      </if>
+      <if test="manageMoney != null" >
+        manage_money,
+      </if>
+      <if test="detailFee != null" >
+        detail_fee,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="detailId != null" >
+        detail_id,
+      </if>
+      <if test="detailTx != null" >
+        detail_tx,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="canCarry != null" >
+        #{canCarry,jdbcType=DECIMAL},
+      </if>
+      <if test="manageMoney != null" >
+        #{manageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="detailFee != null" >
+        #{detailFee,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailId != null" >
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="detailTx != null" >
+        #{detailTx,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.userMoneyDetailExample" resultType="java.lang.Integer" >
+    select count(*) from amall_user_money_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_user_money_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.canCarry != null" >
+        can_carry = #{record.canCarry,jdbcType=DECIMAL},
+      </if>
+      <if test="record.manageMoney != null" >
+        manage_money = #{record.manageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.detailFee != null" >
+        detail_fee = #{record.detailFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.detailId != null" >
+        detail_id = #{record.detailId,jdbcType=BIGINT},
+      </if>
+      <if test="record.detailTx != null" >
+        detail_tx = #{record.detailTx,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_user_money_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      can_carry = #{record.canCarry,jdbcType=DECIMAL},
+      manage_money = #{record.manageMoney,jdbcType=DECIMAL},
+      detail_fee = #{record.detailFee,jdbcType=DECIMAL},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      detail_id = #{record.detailId,jdbcType=BIGINT},
+      detail_tx = #{record.detailTx,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.userMoneyDetail" >
+    update amall_user_money_detail
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="canCarry != null" >
+        can_carry = #{canCarry,jdbcType=DECIMAL},
+      </if>
+      <if test="manageMoney != null" >
+        manage_money = #{manageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="detailFee != null" >
+        detail_fee = #{detailFee,jdbcType=DECIMAL},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detailId != null" >
+        detail_id = #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="detailTx != null" >
+        detail_tx = #{detailTx,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.userMoneyDetail" >
+    update amall_user_money_detail
+    set user_id = #{userId,jdbcType=BIGINT},
+      can_carry = #{canCarry,jdbcType=DECIMAL},
+      manage_money = #{manageMoney,jdbcType=DECIMAL},
+      detail_fee = #{detailFee,jdbcType=DECIMAL},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      detail_id = #{detailId,jdbcType=BIGINT},
+      detail_tx = #{detailTx,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

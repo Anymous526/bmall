@@ -1,0 +1,16 @@
+<div class="shop_menu default_color">
+    <div class="shop_menu_nav">
+	  <ul>
+	    <li id="store_index"> <a  href="$!webPath/store.htm?id=$!{store.id}" >首页</a></li>
+	    <li><a href="$!webPath/store_all_goods.htm?id=$!{store.id}" >所有商品</a></li>
+	    #foreach($nav in $navs)
+	    #if($!{nav.url}&&$!{nav.url}!="") 
+	      #set($url="$!nav.url")
+	    #else
+	    #set($url="$!webPath/store_nav_goods.htm?id=$!{store.id}&storeNavId=$!{nav.id}")
+	    #end	    
+	     <li id="$!nav.id"><a href="$!url" #if($!nav.win_type=="new_win") target="_blank" #end>$!nav.title</a></li>
+	    #end
+	  </ul>
+   </div>
+ </div>

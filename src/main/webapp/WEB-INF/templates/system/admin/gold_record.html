@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery('#beginTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  //
+});
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">礼品金兑换管理</h1>
+  <div class="settab"> <span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/gold_record.htm" class="this" id="goldBuy_record">礼品金兑换记录</a> | <a href="$!webPath/admin/gold_log.htm" id="goldBuy_log">礼品金兑换日志</a> </span> <span class="tab-two"></span> </div>
+  <div id="record">
+   <form method="post" id="queryForm">
+    <div class="allpro_search">
+      <ul>
+        <li> <span>兑换时间</span><span class="allpro size8">
+          <input name="begintime" type="text" id="beginTime" />
+          </span>—<span class="allpro size8">
+          <input name="endtime" type="text" id="endTime" />
+          </span> <span>礼品金数量</span><span class="allpro size8">
+          <input name="beginCount" type="text" id="beginCount" />
+          </span>—<span class="allpro size8">
+          <input name="endCount" type="text" id="endCount" />
+          </span> <span class="btn_search">
+          <input name="" type="submit"  value="搜索" style="cursor:pointer;"/>
+          </span> </li>
+      </ul>
+    </div>
+    </form>
+    <form method="post" id="ListForm">
+    <div class="shop_table">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+          <td width="25%" align="center">兑换编号</td>
+          <td width="15%" align="center">店铺名称</td>
+          <td width="10%" align="center">会员名</td>
+          <td width="8%" align="center">人民币金额</td>
+          <td width="10%" align="center">金币数量（枚）</td>
+          <td width="8%" align="center">支付方式</td>
+          <td width="8%" align="center">支付状态</td>
+          <td align="center">操作</td>
+        </tr>
+        #foreach($obj in $objs)
+        <tr>
+          <td align="center">$!obj.goldSn</td>
+          <td align="center">$!obj.goldUser.store.storeName</td>
+          <td align="center"> $!obj.goldUser.username</td>
+          <td align="center">$!obj.goldMoney</td>
+          <td align="center">$!obj.goldCount</td>
+        #if($!obj.goldPayment=="outline")
+          #set($goldPayment="线下支付")
+        #end
+        #if($!obj.goldPayment=="alipay")
+          #set($goldPayment="支付宝")
+        #end
+        #if($!obj.goldPayment=="tenpay")
+          #set($goldPayment="财付通")
+        #end
+        #if($!obj.goldPayment=="bill")
+          #set($goldPayment="快钱")
+        #end
+        #if($!obj.goldPayment=="chinabank")
+          #set($goldPayment="银联在线")
+        #end
+          <td align="center">$!goldPayment</td>
+          #if($!obj.goldPayStatus==0)
+            #set($goldPayStatus="等待支付")
+          #end
+          #if($!obj.goldPayStatus==1)
+            #set($goldPayStatus="等待审核")
+          #end
+          #if($!obj.goldPayStatus==2)
+            #set($goldPayStatus="支付完成")
+          #end
+          <td align="center">$!goldPayStatus</td>
+          <td class="bjsc" align="center">#if($!obj.goldStatus==0)<a href="$!webPath/admin/gold_record_edit.htm?id=$!obj.id&currentPage=$!currentPage">编辑</a>|<a href="javascript:void(0);" onclick="if(confirm('删除后不可恢复，确定删除吗?'))window.location.href='$!webPath/admin/gold_record_del.htm?mulitId=$!obj.id&currentPage=$!currentPage'">删除</a>#else <a href="$!webPath/admin/gold_record_view.htm?id=$!obj.id&currentPage=$!currentPage">查看</a>#end</td>
+        </tr>
+        #end
+      </table>
+    </div>
+      <div class="fenye">
+    <div class="fenye3">
+      <input name="endCount" type="hidden" id="endCount" value="$!endCount" />
+      <input name="beginCount" type="hidden" id="beginCount" value="$!beginCount" />
+      <input name="endtime" type="hidden" id="endTime" value="$!endtime" />
+      <input name="begintime" type="hidden" id="beginTime" value="$!begintime" />
+<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+      $!gotoPageFormHTML</div>
+  </div>
+  </form>
+  </div>
+</div>
+</body>
+</html>

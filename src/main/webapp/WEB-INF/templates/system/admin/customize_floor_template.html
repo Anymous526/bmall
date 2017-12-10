@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/indexTemplate.css"  rel="stylesheet" type="text/css"/>
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery(".floorul li").attr("cursor","pointer").click(function(){
+	var gc_id=jQuery(this).attr("gc_id");
+	jQuery(".floorul li").removeClass("this");
+	jQuery(this).addClass("this");
+    jQuery(".ftab").hide();
+	jQuery("#gc_"+gc_id).show();
+  });
+  #if($!tab)
+	jQuery(".floorul li").removeClass("this");
+	jQuery(".floorul li[gc_id=$!tab]").addClass("this");
+    jQuery(".ftab").hide();
+	jQuery("#gc_$!{tab}").show();
+  #end
+});
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">订制楼层</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/customize_floor_list.htm">管理</a> | <a href="$!webPath/admin/customize_floor_add.htm">新增</a> | <a href="$!webPath/admin/customize_floor_template.htm?id=$!obj.id" class="this">楼层模板</a> </span> <span class="tab-two"></span></div>
+  <div class="floor_editor">
+  <!--楼层样式0-->
+     <div class="floor_m">经典楼层</div>
+    <div class="floor_rel">
+      <div class="floor">
+        <div class="floor_box">
+          <div class="floor_menu">
+            <h3><a href="javascript:void(0);"  dialog_uri="$!webPath/admin/customize_floor_class.htm?id=$!{obj.id}" dialog_title="编辑分类" dialog_width="700" dialog_height="100" dialog_top="100"  dialog_id="goods_floor_cat" class="edfloor">编辑新增商品类别+</a></h3>
+            <div class="flr_m_details"> 								
+              <ul class="flr_m_du">
+              
+                #foreach($gc in $gcsByJson)
+                <li>
+                  <h4><a href="$!webPath/store_goods_list.htm?gc_id=$!{gc.id}" target="_blank">$!gc.classname</a></h4>
+                  <p>
+                  #foreach($c_gc in $gc.childs) 
+                  <span><a href="$!webPath/store_goods_list.htm?gc_id=$!{c_gc.id}" target="_blank">$!c_gc.classname</a></span>
+					#end
+                  </p>
+                </li>
+                #end
+              </ul>
+              
+            </div>
+          </div>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

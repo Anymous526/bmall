@@ -1,0 +1,75 @@
+<script type="text/javascript">
+function ajaxPage1(url,currentPage,obj) {
+	var totalPages =jQuery("#totalPages10").val();
+	if(currentPage < 1) {
+		currentPage = 1;
+	}else if(currentPage > totalPages) {
+		currentPage = totalPages;
+	}
+	jQuery.ajax({
+				 type:'POST',
+				 url:url,
+				 data:{"currentPage1":currentPage},
+				 success :　function(data) {
+					 $("#zhekou10").html(data);
+				 }, 
+				});
+};
+</script>
+
+<!-- *10元兑换* -->
+#if($!objs1.size() > 0)
+<div class="floor">
+  <div class="juxing"></div>
+  <div class="jij">10元礼品区</div>
+</div> 
+<div class="floortu">
+  <ul> 
+    #foreach($obj in $!objs1)
+    <li onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$obj.id'">
+      <div class="tu"><span id="weihzg"><img src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name"/></span></div>
+      <div class="wenzi"> 
+      	<a href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="$obj.goodsName" target="_blank">(序号：$obj.id)$!CommUtil.substring("$obj.goodsName",21)
+        	
+        </a>
+      </div>
+      <div class="duigou_load">
+		<span class="now_load" id="$obj.id"></span>	
+	  </div>
+      <div id="we721">
+      <p  class="settime21" endtime="$CommUtil.formatLongDate($obj.endTime)">00.00:00:00</p>
+      <p class="cur9"  id="212"></p>  
+      </div>                
+      <div class="leftshuzi">$obj.buyerCodeCount</div>
+      <div class="rightshuzi">#set($count=$obj.goodsCount - $obj.buyerCodeCount)$!count</div>
+      <div class="yicyu">已参与</div>
+      <div class="shengyu">剩余</div>
+      <div class="tshibi">
+        <div class="wu">$obj.goodsNumber</div>
+        <div class="tsb">礼品金</div>
+      </div>
+      <a class="anniu" href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="立刻参与" target="_blank">立刻参与</a>
+     
+    </li>
+    #end 
+     
+  </ul>
+  <!-- 分页开始 -->
+<div class="bottom_page" style="clear:both">
+	<input name="totalPages1" type="hidden" id="totalPages10" value="$!totalPage1"/>
+	<input name="currentPage1" type="hidden" id="currentPage1" value="$!currentPage1" />
+	$!gotoPageAjaxHTML1
+</div>
+<!-- 分页结束 -->
+#end
+</div>  
+<script type="text/javascript">  
+$(document).ready(function(){
+	#set($i=1);
+	#foreach($obj in $!objs1) 
+	 var we23_$i=Math.round(($obj.buyerCodeCount/$obj.goodsCount)*100);   
+     $('#$obj.id').css("width",we23_$i+"%");
+     #set($i=$i+1)
+     #end
+})  
+</script>  

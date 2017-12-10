@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>所有分类 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="EHaowang" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助  Inc. All Rights Reserved">
+
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/head.htm")
+$!httpInclude.include("/nav1.htm")
+
+  
+  <div class="" style="width:1190px; margin:15px auto;">
+    <div class="position" style="margin-bottom: 10px;">当前位置：<a href="$!webPath/index.htm" >首页</a> > <span>商品分类</span></div>
+    <div class="index2">
+      <div class="web_class" style="width:1190px; margin: 0 auto;">
+        <h1>商品分类</h1>
+        <div class="webclsbox" style="width:1190px;background-color: #fff">
+        #foreach($gc in $gcs)
+          <div class="class_a" style="width:1200px;background-color: #fff">
+            <h2><a href="$!webPath/store_goods_list_$!{gc.id}.htm" target="_blank">$!gc.classname</a></h2>
+            #foreach($c_gc in $gc.childs)
+            <div class="class_b" style="width:1190px;">
+              <h3><a href="$!webPath/store_goods_list_$!{c_gc.id}.htm" target="_blank">$c_gc.classname</a></h3>
+              <div class="class_c" style="width:1190px;">#foreach($c_c_gc in $c_gc.childs)<a href="$!webPath/store_goods_list_$!{c_c_gc.id}.htm" target="_blank">$!c_c_gc.classname</a><b>|</b>#end</div>
+            </div>
+            #end
+          </div>
+          #end     
+        </div>
+      </div>
+    </div>
+  </div>
+   
+
+$!httpInclude.include("/footer1.htm")	<!-- 底部页脚 -->
+</body>
+</html>

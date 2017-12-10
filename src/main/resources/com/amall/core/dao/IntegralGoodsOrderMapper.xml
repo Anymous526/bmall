@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.IntegralGoodsOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.IntegralGoodsOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="igo_order_sn" property="igoOrderSn" jdbcType="VARCHAR" />
+    <result column="igo_pay_time" property="igoPayTime" jdbcType="TIMESTAMP" />
+    <result column="igo_payment" property="igoPayment" jdbcType="VARCHAR" />
+    <result column="igo_ship_code" property="igoShipCode" jdbcType="VARCHAR" />
+    <result column="igo_ship_time" property="igoShipTime" jdbcType="DATE" />
+    <result column="igo_status" property="igoStatus" jdbcType="INTEGER" />
+    <result column="igo_total_integral" property="igoTotalIntegral" jdbcType="INTEGER" />
+    <result column="igo_total_gold" property="igoTotalGold" jdbcType="INTEGER" />
+    <result column="igo_trans_fee" property="igoTransFee" jdbcType="DECIMAL" />
+    <result column="igo_addr_id" property="igoAddrId" jdbcType="BIGINT" />
+    <result column="igo_user_id" property="igoUserId" jdbcType="BIGINT" />
+    <result column="igId" property="igId" jdbcType="BIGINT" />
+    <result column="ecId" property="ecId" jdbcType="BIGINT" />
+
+  	<association property="igoAddr" column="igo_addr_id" javaType="com.amall.core.bean.OrderAddress"
+  			select="com.amall.core.dao.OrderAddressMapper.selectByPrimaryKey"/>
+  	<association property="igoUser" column="igo_user_id" javaType="com.amall.core.bean.User"
+  			select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+  	<association property="ig" column="igId" javaType="com.amall.core.bean.IntegralGoods"
+  			select="com.amall.core.dao.IntegralGoodsMapper.selectByPrimaryKey"/>
+  	<association property="ec" column="ecId" javaType="com.amall.core.bean.ExpressCompany"
+  			select="com.amall.core.dao.ExpressCompanyMapper.selectByPrimaryKey"/>
+   
+    <collection column="integralGoodsCart_id" property="igoGcs" ofType="com.amall.core.bean.IntegralGoodsCart" 
+    		select="com.amall.core.dao.IntegralGoodsCartMapper.selectByExample"/>
+  	
+  </resultMap>
+  
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.IntegralGoodsOrderWithBLOBs" extends="BaseResultMap" >
+    <result column="igo_msg" property="igoMsg" jdbcType="LONGVARCHAR" />
+    <result column="igo_pay_msg" property="igoPayMsg" jdbcType="LONGVARCHAR" />
+    <result column="igo_ship_content" property="igoShipContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, igo_order_sn, igo_pay_time, igo_payment, igo_ship_code, 
+    igo_ship_time, igo_status, igo_total_integral,igo_total_gold, igo_trans_fee, igo_addr_id, igo_user_id,igId,ecId
+  </sql>
+  
+  
+  <sql id="Blob_Column_List" >
+    igo_msg, igo_pay_msg, igo_ship_content
+  </sql>
+  
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.IntegralGoodsOrderExample" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_integral_goodsorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.IntegralGoodsOrderExample" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_integral_goodsorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.IntegralGoodsOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_integral_goodsorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_integral_goodsorder
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_integral_goodsorder
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.IntegralGoodsOrderExample" >
+    delete from amall_integral_goodsorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.IntegralGoodsOrderWithBLOBs" >
+    insert into amall_integral_goodsorder (  id, addTime, deleteStatus, 
+      igo_order_sn, igo_pay_time, igo_payment, 
+      igo_ship_code, igo_ship_time, igo_status, 
+      igo_total_integral,igo_total_gold, igo_trans_fee, igo_addr_id, 
+      igo_user_id,igId, ecId,igo_msg, igo_pay_msg, 
+      igo_ship_content)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{igoOrderSn,jdbcType=VARCHAR}, #{igoPayTime,jdbcType=TIMESTAMP}, #{igoPayment,jdbcType=VARCHAR}, 
+      #{igoShipCode,jdbcType=VARCHAR}, #{igoShipTime,jdbcType=DATE}, #{igoStatus,jdbcType=INTEGER}, 
+      #{igoTotalIntegral,jdbcType=INTEGER}, #{igoTotalGold,jdbcType=INTEGER},#{igoTransFee,jdbcType=DECIMAL}, #{igoAddrId,jdbcType=BIGINT}, #{igId,jdbcType=BIGINT},
+      #{ecId,jdbcType=BIGINT},#{igoUserId,jdbcType=BIGINT}, #{igoMsg,jdbcType=LONGVARCHAR}, #{igoPayMsg,jdbcType=LONGVARCHAR}, 
+      #{igoShipContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.IntegralGoodsOrderWithBLOBs" >
+    
+    insert into amall_integral_goodsorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="igoOrderSn != null" >
+        igo_order_sn,
+      </if>
+      <if test="igoPayTime != null" >
+        igo_pay_time,
+      </if>
+      <if test="igoPayment != null" >
+        igo_payment,
+      </if>
+      <if test="igoShipCode != null" >
+        igo_ship_code,
+      </if>
+      <if test="igoShipTime != null" >
+        igo_ship_time,
+      </if>
+      <if test="igoStatus != null" >
+        igo_status,
+      </if>
+      <if test="igoTotalIntegral != null" >
+        igo_total_integral,
+      </if>
+      <if test="igoTotalGold != null" >
+        igo_total_gold,
+      </if>
+      <if test="igoTransFee != null" >
+        igo_trans_fee,
+      </if>
+      <if test="igoAddrId != null" >
+        igo_addr_id,
+      </if>
+      <if test="igoUserId != null" >
+        igo_user_id,
+      </if>
+      <if test="igId != null" >
+        igId,
+      </if>
+      <if test="ecId != null" >
+        ecId,
+      </if>
+      <if test="igoMsg != null" >
+        igo_msg,
+      </if>
+      <if test="igoPayMsg != null" >
+        igo_pay_msg,
+      </if>
+      <if test="igoShipContent != null" >
+        igo_ship_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="igoOrderSn != null" >
+        #{igoOrderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="igoPayTime != null" >
+        #{igoPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="igoPayment != null" >
+        #{igoPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="igoShipCode != null" >
+        #{igoShipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="igoShipTime != null" >
+        #{igoShipTime,jdbcType=DATE},
+      </if>
+      <if test="igoStatus != null" >
+        #{igoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="igoTotalIntegral != null" >
+        #{igoTotalIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="igoTotalGold != null" >
+        #{igoTotalGold,jdbcType=INTEGER},
+      </if>
+      <if test="igoTransFee != null" >
+        #{igoTransFee,jdbcType=DECIMAL},
+      </if>
+      <if test="igoAddrId != null" >
+        #{igoAddrId,jdbcType=BIGINT},
+      </if>
+      <if test="igoUserId != null" >
+        #{igoUserId,jdbcType=BIGINT},
+      </if>
+      <if test="igId != null" >
+        #{igId,jdbcType=BIGINT},
+      </if>
+      <if test="ecId != null" >
+        #{ecId,jdbcType=BIGINT},
+      </if>
+      <if test="igoMsg != null" >
+        #{igoMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="igoPayMsg != null" >
+        #{igoPayMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="igoShipContent != null" >
+        #{igoShipContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.IntegralGoodsOrderExample" resultType="java.lang.Integer" >
+    select count(*) from amall_integral_goodsorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_integral_goodsorder
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.igoOrderSn != null" >
+        igo_order_sn = #{record.igoOrderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.igoPayTime != null" >
+        igo_pay_time = #{record.igoPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.igoPayment != null" >
+        igo_payment = #{record.igoPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.igoShipCode != null" >
+        igo_ship_code = #{record.igoShipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.igoShipTime != null" >
+        igo_ship_time = #{record.igoShipTime,jdbcType=DATE},
+      </if>
+      <if test="record.igoStatus != null" >
+        igo_status = #{record.igoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.igoTotalIntegral != null" >
+        igo_total_integral = #{record.igoTotalIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.igoTotalGold != null" >
+        igo_total_gold = #{record.igoTotalGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.igoTransFee != null" >
+        igo_trans_fee = #{record.igoTransFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.igoAddrId != null" >
+        igo_addr_id = #{record.igoAddrId,jdbcType=BIGINT},
+      </if>
+      <if test="record.igoUserId != null" >
+        igo_user_id = #{record.igoUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.igId != null" >
+        igId = #{record.igId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ecId != null" >
+        ecId = #{record.ecId,jdbcType=BIGINT},
+      </if>
+      <if test="record.igoMsg != null" >
+        igo_msg = #{record.igoMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.igoPayMsg != null" >
+        igo_pay_msg = #{record.igoPayMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.igoShipContent != null" >
+        igo_ship_content = #{record.igoShipContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_integral_goodsorder
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      igo_order_sn = #{record.igoOrderSn,jdbcType=VARCHAR},
+      igo_pay_time = #{record.igoPayTime,jdbcType=TIMESTAMP},
+      igo_payment = #{record.igoPayment,jdbcType=VARCHAR},
+      igo_ship_code = #{record.igoShipCode,jdbcType=VARCHAR},
+      igo_ship_time = #{record.igoShipTime,jdbcType=DATE},
+      igo_status = #{record.igoStatus,jdbcType=INTEGER},
+      igo_total_integral = #{record.igoTotalIntegral,jdbcType=INTEGER},
+      igo_total_gold = #{record.igoTotalGold,jdbcType=INTEGER},
+      igo_trans_fee = #{record.igoTransFee,jdbcType=DECIMAL},
+      igo_addr_id = #{record.igoAddrId,jdbcType=BIGINT},
+      igo_user_id = #{record.igoUserId,jdbcType=BIGINT},
+      igId = #{record.igId,jdbcType=BIGINT},
+      ecId = #{record.ecId,jdbcType=BIGINT},
+      igo_msg = #{record.igoMsg,jdbcType=LONGVARCHAR},
+      igo_pay_msg = #{record.igoPayMsg,jdbcType=LONGVARCHAR},
+      igo_ship_content = #{record.igoShipContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_integral_goodsorder
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      igo_order_sn = #{record.igoOrderSn,jdbcType=VARCHAR},
+      igo_pay_time = #{record.igoPayTime,jdbcType=TIMESTAMP},
+      igo_payment = #{record.igoPayment,jdbcType=VARCHAR},
+      igo_ship_code = #{record.igoShipCode,jdbcType=VARCHAR},
+      igo_ship_time = #{record.igoShipTime,jdbcType=DATE},
+      igo_status = #{record.igoStatus,jdbcType=INTEGER},
+      igo_total_integral = #{record.igoTotalIntegral,jdbcType=INTEGER},
+      igo_total_gold = #{record.igoTotalGold,jdbcType=INTEGER},
+      igo_trans_fee = #{record.igoTransFee,jdbcType=DECIMAL},
+      igo_addr_id = #{record.igoAddrId,jdbcType=BIGINT},
+      igo_user_id = #{record.igoUserId,jdbcType=BIGINT}
+      igId = #{record.igId,jdbcType=BIGINT}
+      ecId = #{record.ecId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.IntegralGoodsOrderWithBLOBs" >
+    update amall_integral_goodsorder
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="igoOrderSn != null" >
+        igo_order_sn = #{igoOrderSn,jdbcType=VARCHAR},
+      </if>
+      <if test="igoPayTime != null" >
+        igo_pay_time = #{igoPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="igoPayment != null" >
+        igo_payment = #{igoPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="igoShipCode != null" >
+        igo_ship_code = #{igoShipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="igoShipTime != null" >
+        igo_ship_time = #{igoShipTime,jdbcType=DATE},
+      </if>
+      <if test="igoStatus != null" >
+        igo_status = #{igoStatus,jdbcType=INTEGER},
+      </if>
+      <if test="igoTotalIntegral != null" >
+        igo_total_integral = #{igoTotalIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="igoTotalGold != null" >
+        igo_total_gold = #{igoTotalGold,jdbcType=INTEGER},
+      </if>
+      <if test="igoTransFee != null" >
+        igo_trans_fee = #{igoTransFee,jdbcType=DECIMAL},
+      </if>
+      <if test="igoAddrId != null" >
+        igo_addr_id = #{igoAddrId,jdbcType=BIGINT},
+      </if>
+      <if test="igoUserId != null" >
+        igo_user_id = #{igoUserId,jdbcType=BIGINT},
+      </if>
+      <if test="igId != null" >
+        igId = #{igId,jdbcType=BIGINT},
+      </if>
+      <if test="ecId != null" >
+        ecId = #{ecId,jdbcType=BIGINT},
+      </if>
+      <if test="igoMsg != null" >
+        igo_msg = #{igoMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="igoPayMsg != null" >
+        igo_pay_msg = #{igoPayMsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="igoShipContent != null" >
+        igo_ship_content = #{igoShipContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.IntegralGoodsOrderWithBLOBs" >
+    update amall_integral_goodsorder
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      igo_order_sn = #{igoOrderSn,jdbcType=VARCHAR},
+      igo_pay_time = #{igoPayTime,jdbcType=TIMESTAMP},
+      igo_payment = #{igoPayment,jdbcType=VARCHAR},
+      igo_ship_code = #{igoShipCode,jdbcType=VARCHAR},
+      igo_ship_time = #{igoShipTime,jdbcType=DATE},
+      igo_status = #{igoStatus,jdbcType=INTEGER},
+      igo_total_integral = #{igoTotalIntegral,jdbcType=INTEGER},
+      igo_total_gold = #{igoTotalGold,jdbcType=INTEGER},
+      igo_trans_fee = #{igoTransFee,jdbcType=DECIMAL},
+      igo_addr_id = #{igoAddrId,jdbcType=BIGINT},
+      igo_user_id = #{igoUserId,jdbcType=BIGINT},
+      igId = #{igId,jdbcType=BIGINT},
+      ecId = #{ecId,jdbcType=BIGINT},
+      igo_msg = #{igoMsg,jdbcType=LONGVARCHAR},
+      igo_pay_msg = #{igoPayMsg,jdbcType=LONGVARCHAR},
+      igo_ship_content = #{igoShipContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.IntegralGoodsOrder" >
+    update amall_integral_goodsorder
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      igo_order_sn = #{igoOrderSn,jdbcType=VARCHAR},
+      igo_pay_time = #{igoPayTime,jdbcType=TIMESTAMP},
+      igo_payment = #{igoPayment,jdbcType=VARCHAR},
+      igo_ship_code = #{igoShipCode,jdbcType=VARCHAR},
+      igo_ship_time = #{igoShipTime,jdbcType=DATE},
+      igo_status = #{igoStatus,jdbcType=INTEGER},
+      igo_total_integral = #{igoTotalIntegral,jdbcType=INTEGER},
+      igo_total_gold = #{igoTotalGold,jdbcType=INTEGER},
+      igo_trans_fee = #{igoTransFee,jdbcType=DECIMAL},
+      igo_addr_id = #{igoAddrId,jdbcType=BIGINT},
+      igo_user_id = #{igoUserId,jdbcType=BIGINT},
+      igId = #{igId,jdbcType=BIGINT}
+      ecId = #{ecId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

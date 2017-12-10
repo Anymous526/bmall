@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.WeekBenifitDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.WeekBenifitDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="week" property="week" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="parent_user_id" property="parentUserId" jdbcType="BIGINT" />
+    <result column="orders" property="orders" jdbcType="BIGINT" />
+    <result column="amount" property="amount" jdbcType="DECIMAL" />
+    <result column="dou" property="dou" jdbcType="DECIMAL" />
+    <result column="users" property="users" jdbcType="BIGINT" />
+    <result column="buyedStatus" property="buyedstatus" jdbcType="BIT" />
+    <result column="consumer_money" property="consumerMoney" jdbcType="DECIMAL" />
+    <result column="consumer_dou" property="consumerDou" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, week, addTime, user_id, parent_user_id, orders, amount, dou, users, buyedStatus, 
+    consumer_money, consumer_dou
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.WeekBenifitDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_week_benifit_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_week_benifit_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_week_benifit_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.WeekBenifitDetailExample" >
+    delete from amall_week_benifit_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.WeekBenifitDetail" >
+    insert into amall_week_benifit_detail (id, week, addTime, 
+      user_id, parent_user_id, orders, 
+      amount, dou, users, 
+      buyedStatus, consumer_money, consumer_dou
+      )
+    values (#{id,jdbcType=BIGINT}, #{week,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=BIGINT}, #{parentUserId,jdbcType=BIGINT}, #{orders,jdbcType=BIGINT}, 
+      #{amount,jdbcType=DECIMAL}, #{dou,jdbcType=DECIMAL}, #{users,jdbcType=BIGINT}, 
+      #{buyedstatus,jdbcType=BIT}, #{consumerMoney,jdbcType=DECIMAL}, #{consumerDou,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.WeekBenifitDetail" >
+    insert into amall_week_benifit_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="week != null" >
+        week,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="parentUserId != null" >
+        parent_user_id,
+      </if>
+      <if test="orders != null" >
+        orders,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="dou != null" >
+        dou,
+      </if>
+      <if test="users != null" >
+        users,
+      </if>
+      <if test="buyedstatus != null" >
+        buyedStatus,
+      </if>
+      <if test="consumerMoney != null" >
+        consumer_money,
+      </if>
+      <if test="consumerDou != null" >
+        consumer_dou,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="week != null" >
+        #{week,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="parentUserId != null" >
+        #{parentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="orders != null" >
+        #{orders,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="dou != null" >
+        #{dou,jdbcType=DECIMAL},
+      </if>
+      <if test="users != null" >
+        #{users,jdbcType=BIGINT},
+      </if>
+      <if test="buyedstatus != null" >
+        #{buyedstatus,jdbcType=BIT},
+      </if>
+      <if test="consumerMoney != null" >
+        #{consumerMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumerDou != null" >
+        #{consumerDou,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.WeekBenifitDetailExample" resultType="java.lang.Integer" >
+    select count(*) from amall_week_benifit_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_week_benifit_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.week != null" >
+        week = #{record.week,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentUserId != null" >
+        parent_user_id = #{record.parentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.orders != null" >
+        orders = #{record.orders,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.dou != null" >
+        dou = #{record.dou,jdbcType=DECIMAL},
+      </if>
+      <if test="record.users != null" >
+        users = #{record.users,jdbcType=BIGINT},
+      </if>
+      <if test="record.buyedstatus != null" >
+        buyedStatus = #{record.buyedstatus,jdbcType=BIT},
+      </if>
+      <if test="record.consumerMoney != null" >
+        consumer_money = #{record.consumerMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.consumerDou != null" >
+        consumer_dou = #{record.consumerDou,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_week_benifit_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      week = #{record.week,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      parent_user_id = #{record.parentUserId,jdbcType=BIGINT},
+      orders = #{record.orders,jdbcType=BIGINT},
+      amount = #{record.amount,jdbcType=DECIMAL},
+      dou = #{record.dou,jdbcType=DECIMAL},
+      users = #{record.users,jdbcType=BIGINT},
+      buyedStatus = #{record.buyedstatus,jdbcType=BIT},
+      consumer_money = #{record.consumerMoney,jdbcType=DECIMAL},
+      consumer_dou = #{record.consumerDou,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.WeekBenifitDetail" >
+    update amall_week_benifit_detail
+    <set >
+      <if test="week != null" >
+        week = #{week,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="parentUserId != null" >
+        parent_user_id = #{parentUserId,jdbcType=BIGINT},
+      </if>
+      <if test="orders != null" >
+        orders = #{orders,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="dou != null" >
+        dou = #{dou,jdbcType=DECIMAL},
+      </if>
+      <if test="users != null" >
+        users = #{users,jdbcType=BIGINT},
+      </if>
+      <if test="buyedstatus != null" >
+        buyedStatus = #{buyedstatus,jdbcType=BIT},
+      </if>
+      <if test="consumerMoney != null" >
+        consumer_money = #{consumerMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="consumerDou != null" >
+        consumer_dou = #{consumerDou,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.WeekBenifitDetail" >
+    update amall_week_benifit_detail
+    set week = #{week,jdbcType=BIGINT},
+      addTime = #{addtime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=BIGINT},
+      parent_user_id = #{parentUserId,jdbcType=BIGINT},
+      orders = #{orders,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=DECIMAL},
+      dou = #{dou,jdbcType=DECIMAL},
+      users = #{users,jdbcType=BIGINT},
+      buyedStatus = #{buyedstatus,jdbcType=BIT},
+      consumer_money = #{consumerMoney,jdbcType=DECIMAL},
+      consumer_dou = #{consumerDou,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

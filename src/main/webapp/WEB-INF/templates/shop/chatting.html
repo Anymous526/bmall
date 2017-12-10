@@ -1,0 +1,245 @@
+<script src="$!webPath/service/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="$!webPath/service/js/tab.js"></script>
+<script type="text/javascript" src="$!webPath/service/js/rl_exp.js"></script>
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/service/css/service.css"/>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#chatcontent").scrollTop($("#chatcontent").scrollTop() + $("#chatcontent").height());
+	$("#rl_exp_input").keyup(function(){
+		var length = $("#rl_exp_input").attr("value").length;
+		if(length > 350 ) {
+			alert("无法继续输入信息");
+		} else {
+			jQuery.ajax({
+				type:'POST',
+				data:{"msgCount":length},
+				url:"$!webPath/msgCount.htm",
+				success:function(data){
+					$("#msgNum").html(data);
+				},
+				error:function(){
+					alert("请检查内部错误");
+				}
+			});
+		}
+	});
+	
+function refresh_chating(){
+		var receiverId = $("#receiver_id").val();
+		jQuery.ajax({
+			type:"POST",
+			data:{"user_id":receiverId},
+			url:"$!webPath/chatting_refresh.htm",
+			success:function(data){
+				$("#chatcontent").html(data);
+			},
+			error:function(){
+				alert("请检查内部错误");
+			} 
+		});
+	}
+window.setTimeout(refresh_chating,5000); 
+});
+
+function sendMsg(){
+	var content = jQuery.trim($("#rl_exp_input").val());
+	var storeId =$("#storeId").val();
+	var sellerId =$("input[name='seller']").eq(0).val();
+	var buyerId = $("input[name='buyer']").eq(0).val();
+	var goodsId = $("#goodsId").val();
+	if(content.length==0){
+		alert("输入内容不能为空");
+	}else{
+		jQuery.ajax({
+			
+			type : 'POST',
+			data : {"content":content,"goodsId":goodsId},
+			url : "$!webPath/chatting_save.htm",
+			success : function(data) {
+				var userIdIndex = data.indexOf(",");
+				var imgIndex = data.indexOf("^");
+				var userId = data.substr(0,userIdIndex);
+				var imgPath = data.substr(userIdIndex+1,imgIndex-2);
+				var msg = data.substr(imgIndex+1);
+				var msgHtml = "";
+				if(userId == sellerId ) {
+					//拼装seller方的html标签
+					msgHtml = "<div id='adm' class='' name='msg'>"
+							  +		"<div class='admimg'>"
+					          +			"<img src='"+imgPath+"'/>"
+					          +		"</div>"
+					          +		"<div class='info'>"
+					          + 	msg
+					          +		"</div>"
+					          +"</div>";
+					
+				}else {
+					//拼装buyer方的html标签
+					msgHtml = "<div id='gue' class='' name='msg'>"
+					       	  +		"<div class='info'>"
+					          + 		msg
+					          +		"</div>"
+					          +		"<div class='admimg'>"
+					          +  		"<img src='"+imgPath+"'/>"
+					          +  	"</div>"
+					          +"</div>"
+					          +"<div style='clear:left;'></div>"
+				}
+				
+				$("#chatcontent").append(msgHtml);
+				$("#chatcontent").scrollTop($("#chatcontent").scrollTop() + $("#chatcontent").height());
+				$("#rl_exp_input").attr("value","");
+
+			},
+			error : function(){
+				alert("请检查内部错误");
+			}
+		});
+	}
+}
+</script>  
+  <div class="chat_wei"><a href="javascript:void(0);" onclick="closeWindow();"><img src="service/img/c.png" width="20" /></a></div>
+  <div class="top"><img src="service/logo.png" /></div>
+  <div class="sbody">
+    <div class="left">
+      <div class="chatcontent" id="chatcontent">
+      
+   		消息记录加载中......请稍候.......
+       
+        
+      </div>
+      <div class="tool"> <span><a href="javascript:void(0);" id="rl_exp_btn"><img src="service/face/face.png" /></a></span> <span><img src="service/face/scissors.png" /></span> </div>
+      <div class="edit">
+        <div class="edit_t">
+          <textarea name="test" id="rl_exp_input" style="overflow-y:auto" maxlength="350"></textarea>
+          <input type="hidden" name="storeId" value="$!store.id" id="storeId"/>
+        </div>
+        <div class="btn"> <span>还可以输入<span id="msgNum">  350 </span>个字</span> <span>
+          <a href="javascript:void(0);" onclick="closeWindow();"><input class="close" type="button" value="关闭" /></a>
+          </span> <span>
+          <input class="send" type="button" value="发送" onclick="sendMsg();"/>
+          </span> </div>
+      </div>
+    </div>
+
+
+    
+    <div class="right">
+      <div class="zzsc">
+        <div class="tab"> <a href="javascript:;" class="on">商品信息</a> <a href="javascript:;">常见问题</a> </div>
+        <div class="content">
+          <ul>
+            <li style="display:block;">
+              <div class="shop_info">
+              	#set($img = $goods.photo)
+              	#if($!img)
+              		#set($photo = "$!{config.imagewebserver}/$!{img.path}/$!{img.name}")
+              	#else
+              		#set($photo = "")
+              	#end
+                <div class="shop_img"><a href=""><img src="$!photo" width="100" /></a></div>
+                <div class="shop_txt"> <span class="s_name"><a href="">$!goods.goodsName</a></span> <span class="s_info">$!goods.goodsDetails</span> </div>
+             	<input type="hidden" name="goodsId" id="goodsId" value="$!goods.id"/>
+             	<input type="hidden" name="receiver_id" id="receiver_id" value="$!store.userId"/>
+              </div>
+              <div class="cart">
+                <p>
+                <dd>天&nbsp;使&nbsp;价：</dd>
+                <dt><strong class="cred">￥$!goods.goodsPrice</strong></dt>
+                </p>
+                <p>
+                <dd>促销信息：</dd>
+                <dt>赠100积分满300.0减10.0满500.0减20.0满1000.0减50.0</dt>
+                </p>
+                <p>
+                <dd>库&nbsp;&nbsp;&nbsp;&nbsp;存：</dd>
+                <dt>$!goods.goodsInventory</dt>
+                </p>
+                <p>
+                <dd>服&nbsp;&nbsp;&nbsp;&nbsp;务：</dd>
+                <dt>由任E行官方旗舰店负责发货，并提供售后服务</dt>
+                </p>
+                <p><a href="javascript:void(0);" id="addToCart" class="buy"></a></p>
+              </div>
+            </li>
+            
+            <li style="overflow-y:auto; height:550px;">
+            
+              <div class="q_a">
+                <label>能不能送货到家啊？</label>
+                <div class="qa">
+                  <p>答：京东在全国很多城市都提供了送货上门服务，同时，也尽可能为您送货上楼、到家。如遇到快递员因为客观原因无法满足您送到家的需求，还请您谅解，第三方快递送货一般不支持送货上门，具体麻烦您和快递人员协商！</p>
+                </div>
+              </div>
+              
+              
+              <div class="q_a">
+                <label>我的地址是否在配送范围内？</label>
+                <div class="qa">
+                  <p>答：您可点击查询京东配送范围，如果您的地址超出配送范围，一般是无法成功提交订单的，还请您谅解！.</p>
+                </div>
+              </div>  
+              
+              
+              <div class="q_a">
+                <label>问下发什么快递啊？</label>
+                <div class="qa">
+                  <p>答：发货快递是根据您的下单地址和商品情况选择合适的快递送货，暂时不支持自选快递；第三方商家发货快递建议您联系商家客服咨询。</p>
+                </div>
+              </div>  
+              
+              <div class="q_a">
+                <label>这个商品还有货吗？</label>
+                <div class="qa">
+                  <p>答：您可以从商品页面“配送至”选项，选择收货地区查看库存状态，如显示无货建议您重新选择有货商品下单哦</p>
+                </div>
+              </div> 
+              
+              <div class="q_a">
+                <label>有没有发票？</label>
+                <div class="qa">
+                  <p>答：您好，京东自营商品自带机打发票（图书商品用户自由选择是否开发票），发票均为真实有效的合法发票，具有法律效力，可作为顾客维权、保修及用作单位报销的凭证；在订单提交页面“发票信息”栏可自助选择是否需要开具发票和设置要开具的发票信息</p>
+                </div>
+              </div> 
+              
+              <div class="q_a">
+                <label>多少包邮？</label>
+                <div class="qa">
+                  <p>答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。答：钻石会员购买京东自营商品单笔订单总金额满59元免运费，钻石以下会员满79元免运费，不满足条件则需每单支付5元运费；商家运费以商品页面显示为准。</p>
+                </div>
+              </div> 
+              
+              
+              
+              <div class="q_a">
+                <label>什么是礼品金？</label>
+                <div class="qa">
+                  <p>礼品金是Amall商城发行的自有预付卡，卡内资金可以在Amall商城或者在支付宝缴费时使用，仅支持在电脑端的大陆收银台使用。（具体支持的商家以收银台显示为准）
+一张礼品金只能绑定一个支付宝账户。有效期：自生效时间起36个月。</p>
+                </div>
+              </div> 
+               
+                         
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+      
+    <!--表情-->
+    <div class="rl_exp" id="rl_bq" style="display:none;">
+        <ul class="rl_exp_tab clearfix">
+            <li><a href="javascript:void(0);" class="selected">默认</a></li>
+            <li><a href="javascript:void(0);">拜年</a></li>
+            <li><a href="javascript:void(0);">浪小花</a></li>
+            <li><a href="javascript:void(0);">暴走漫画</a></li>
+        </ul>
+        <ul class="rl_exp_main clearfix rl_selected"></ul>
+        <ul class="rl_exp_main clearfix" style="display:none;"></ul>
+        <ul class="rl_exp_main clearfix" style="display:none;"></ul>
+        <ul class="rl_exp_main clearfix" style="display:none;"></ul>
+        <a href="javascript:void(0);" class="closeface">×</a>
+    </div>
+    <!--表情-->
+     
+  </div> 

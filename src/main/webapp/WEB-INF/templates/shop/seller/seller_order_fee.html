@@ -1,0 +1,106 @@
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/window.css" type="text/css" rel="stylesheet" />
+<script>
+jQuery (document).ready(function(){
+   
+	jQuery("#goods_amount").keyup(function(){
+	   var goods_amount=jQuery("#goods_amount").val();
+	   var ship_price=jQuery("#ship_price").val();
+	   if(goods_amount==""){
+		   goods_amount=0;
+	       jQuery("#goods_amount").val("0");
+	   }
+	   if(ship_price==""){
+	       ship_price=0;
+	       jQuery("#ship_price").val("0");
+	   }
+	   var as=/\d/g;
+	   if(!as.test(goods_amount)){
+		   alert("订单金额只能为数字");
+		   $("#goods_amount").val("");
+	   }
+	   var totalPrice=parseFloat(goods_amount)+parseFloat(ship_price);
+	   jQuery("#total_price_text").html(totalPrice);
+	   jQuery("#totalPrice").val(totalPrice);
+	});
+	
+	jQuery("#ship_price").keyup(function(){
+	   var goods_amount=jQuery("#goods_amount").val();
+	   var ship_price=jQuery("#ship_price").val();
+	   if(goods_amount==""){
+		   goods_amount=0;
+	       jQuery("#goods_amount").val("0");
+	   }
+	   if(ship_price==""){
+	       ship_price=0;
+	       jQuery("#ship_price").val("0");
+	   }
+	   var as=/\d/g;
+	   if(!as.test(ship_price)){
+		   alert("配送金额只能为数字");
+		   $("#ship_price").val("");
+	   }
+	   var totalPrice=parseFloat(goods_amount)+parseFloat(ship_price);
+	   jQuery("#total_price_text").html(totalPrice);
+	   jQuery("#totalPrice").val(totalPrice);
+	});
+	   var goods_amount=jQuery("#goods_amount").val();
+	   var ship_price=jQuery("#ship_price").val();
+	   var totalPrice=parseFloat(goods_amount)+parseFloat(ship_price);
+	   jQuery("#total_price_text").html(totalPrice);
+	   jQuery("#totalPrice").val(totalPrice);
+	   
+	   
+	  /*  jQuery("#theForm").validate({
+		   rules:{
+			   goods_amount:{number:true},
+			   ship_price:{number:true}
+		   },
+		   messages:{
+		       goods_amount:{number:"订单金额只能为数字"},
+			   ship_price:{number:"配送金额只能为数字"}
+		   }
+		}); */
+});
+</script>
+<style>
+.box_table tr td{
+height:41px!important;
+line-height:41px!important;
+border-top:1px solid #ccc;
+}
+.white_content{height:0;}
+</style>
+<form action="$!webPath/seller/order_fee_save.htm" method="post" id="theForm">
+  <table style="float:left;width: 390px; border: 0px;" cellspacing="0" cellpadding="0" class="box_table">
+    <tr>
+      <td align="right" valign="top">买家用户：</td>
+      <td align="left">$!obj.user.username</td>
+    </tr>
+    <tr>
+      <td width="100" align="right" valign="top">订单号：
+        <input name="id" type="hidden" id="id" value="$!obj.id" />
+        <input name="orderItemId" type="hidden" id="orderItemId" value="$!orderItemId"/>
+      </td>
+      <td align="left">$!obj.orderId</td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">商品总价：</td>
+      <td align="left"><input name="goodsAmount" style="height:30px;line-height:30px;"  type="text" id="goods_amount" value="$!item.goodsPrice" style="line-height: 18px;line-height: 14px\9;"/></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">配送金额：</td>
+      <td align="left"><input style="height:30px;line-height:30px;"  name="shipPrice" type="text" id="ship_price" value="$!obj.shipPrice"  style="line-height: 18px;line-height: 14px\9;"/></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">订单金额：</td>
+      <td align="left"><span style="color:#F00; font-weight:bold;" id="total_price_text"><!-- $!{item.goodsPrice} -->
+      </span><input name="totalPrice" type="hidden" id="totalPrice" value="" /></td>
+    </tr>
+    <tr>
+      <td colspan="2" align="center"><span class="inputbtn">
+        <input name="" type="submit" value="提交" style="cursor:pointer;"/>
+        <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+      </span></td>
+    </tr>
+  </table>
+</form>

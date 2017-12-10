@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>违规下架的商品 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods_out")
+<div class="s_m" style="float: left; margin-left: 10px;"> 
+  <form action="$!webPath/seller/goods_out.htm" name="ListForm" id="ListForm" method="post">
+        <div class="buyer_position">
+          <div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>违规下架的商品</span></div></div>
+          <div class="productmain">
+            <div class="pdctitle blue2">违规下架商品</div>
+            <div class="all_select">
+            	  <span>
+	                	<input name="all" type="checkbox" id="all" value="" onclick="selectAll(this)" style="display: inline-block;margin-top: -3px;margin-left: 10px;"/>
+	              </span>
+	              <label for="all">&nbsp;全选&nbsp;&nbsp;&nbsp;&nbsp;
+	              	<input name="mulitId" type="hidden" id="mulitId" />
+	              	<input name="op" type="hidden" id="op" value="storage" />
+	               </label>
+	              <span>
+	              	<a href="javascript:void(0);" onclick="cmd('$!webPath/seller/goods_del.htm','')" class="all_select_button">删除</a>
+	              </span>
+	              
+	              <div class="alldel_r">
+	              	<span class="alldelsel">商品分类
+		                <select name="user_class_id" id="user_class_id">
+		                  <option value="">请选择商品分类...</option>
+		                  #foreach($user_class in $goodsViewTools.query_user_class(""))
+		                  <option value="$!user_class.id">$!user_class.classname</option>
+		                  #foreach($c_user_class in $user_class.childs)
+		                  <option value="$!c_user_class.id">&nbsp;&nbsp;$!c_user_class.classname</option>
+		                  #end
+		                  #end
+		                </select>
+	                </span>
+	                <span class="alldelsear">　商品名称
+	                	<input name="goods_name" type="text" id="goods_name" />
+	                </span>
+	                <span class="alldelbtn">
+	                	<input name="" type="submit"  value="搜索" onclick="query();" style="margin-left:12px;margin-top:0;"/>
+	              	</span>
+	              </div>
+            </div>
+            
+            
+            <div class="operation">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                <tr id="opertitle">
+                  <td class="proname" width="220">商品名称</td>
+                  <td width="217" class="proclassify">商品分类</td>
+                  <td width="130" class="promoney">价格</td>
+                  <td width="51"  class="prorec">推荐</td>
+                  <td width="172" align="center">操作</td>
+                </tr>
+                
+                #if($objs.size() > 0)
+                
+				#foreach($obj in $objs)
+                <tr class="opertr">
+                  <td class="proname" valign="middle" >
+	                  	<span class="checkpro">
+		                    <input type="checkbox" value="$!obj.id" class="checkname"/>
+							#if($!obj.goodsMainPhoto)
+							  #set($img="$!{config.imagewebserver}/$!{obj.goodsMainPhoto.path}/$!{obj.goodsMainPhoto.name}")
+							#else
+							  #set($img="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+							#end
+	                    </span>
+	                    <span class="imgpro">
+	                    	<img src="$!img" width="60" height="63" />
+	                    </span>
+	                    <span class="nameproduct">
+	                    	<a href="$!webPath/goods_$!{obj.id}.htm" target="_blank">$!obj.goodsName</a>
+	                    </span>
+                  </td>
+                  <td class="proclassify">#if($!obj.gc)$!storeTools.generic_goods_class_info($!obj.gc)#end</td>
+                  <td  class="promoney">$!obj.goodsPrice</td>
+                  <td class="prorec"><img src="$!webPath/resources/style/system/front/default/images/usercenter/$!{obj.goodsRecommend}.jpg" width="16" height="14" /></td>
+                  <td class="operajt"><span class="edit"><a href="$!webPath/seller/goods_edit.htm?id=$!obj.id" target="_blank">编辑</a></span><span class="del"><a href="javascript:if(confirm('删除后不可恢复?'))window.location.href='$!webPath/seller/goods_del.htm?mulitId=$!obj.id&op=out'">删除</a></span></td>
+                </tr>
+                #end
+                 #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="5" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">违规下架商品</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end
+              </table>
+            </div>
+
+             <div  class="userfenye" style="margin-top:15px; margin-right:13px;">$!gotoPageHTML</div>            
+             <div class="all_select"> 
+              <label for="all1">
+                <input name="all" type="checkbox" id="all1" value=""  onclick="" class="all_select_checkbox"/>&nbsp;全选&nbsp;&nbsp;&nbsp;&nbsp;
+              </label>           
+              <span>
+              	<a href="javascript:void(0);" onclick="cmd('$!webPath/seller/goods_del.htm?','')" class="all_select_button">删除</a>
+              </span>
+             </div>
+
+            
+          </div><!-- end of productmain -->
+     <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    </form>
+  </div>
+</div>
+$!httpInclude.include("/footer1.htm")
+<script>
+	$("#all1").click(function(){
+		var flage = $(this).is(":checked");
+		$("input[class='checkname']").each(function(){
+			$(this).prop("checked",flage);
+		});
+		$("#all").removeAttr("checked");
+	});
+	$("#all").click(function(){
+		var flage = $(this).is(":checked");
+		$("input[class='checkname']").each(function(){
+			$(this).prop("checked",flage);
+		});
+		
+	});
+	
+</script>
+</body>
+</html>
+ 	

@@ -1,0 +1,56 @@
+﻿<div id="slide-index" style="overflow:hidden;min-height:396px;margin-top:-18px">
+	<div class="slides">
+      #foreach($slide in $store.slides)
+        <div class="slide autoMaxWidth">
+          <div id="bi_0" class="image"><a href="$!slide.url">
+          <img src="$!webPath/$!slide.acc.path/$!slide.acc.name"></a></div>
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div>
+        #end
+      </div>
+      
+      <div class=control>
+      #foreach($slide in $store.slides)
+      <a href="#">
+       #end
+       </a>
+      </div>
+            
+    </div>
+<script type=text/javascript src="$!webPath/assets/js/shop_banner.js"></script> 
+<script type=text/javascript>
+$(function(){	
+	indexSlides.ini();
+	
+});
+var indexSlides={};
+indexSlides.timer=false;
+indexSlides.total=$('#slide-index .control a').length;
+indexSlides.current=-1;
+indexSlides.offScreenLeft=2000;
+indexSlides.leaveScreenLeft=4000;
+indexSlides.animating=false;
+indexSlides.obj=$('#slide-index .slide');
+indexSlides.style=[];
+indexSlides.style[0]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+	
+indexSlides.style[1]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+	
+indexSlides.style[2]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+</script> 
+
+
+

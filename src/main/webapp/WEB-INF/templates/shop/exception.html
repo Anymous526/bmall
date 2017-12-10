@@ -1,0 +1,42 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>系统异常提示 - $!config.title -</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="main">
+  $!httpInclude.include("/head.htm")
+  $!httpInclude.include("/nav.htm")
+  <div class="index" style="height:300px;">
+    <div id="exc_wei1">
+      <div id="exc_wei2">
+      <span style="float:left;">
+      <img src="$!webPath/resources/style/common/images/icon/succeed.png" />
+      </span>
+      <span id="exc_wei3">系统出现异常！</span>
+      </div>
+    </div>
+  </div>
+#if($!url)
+<script>
+	  var count=3;
+	  window.setInterval(go,1000);
+	  function go(){
+	    count--;
+	    if(count==0) window.location.href="$!url";
+	  }
+	</script>
+#end
+    $!httpInclude.include("/footer.htm")
+</div>
+</body>
+</html>

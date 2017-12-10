@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.DreamPartnerMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.DreamPartner" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="approve_time" property="approveTime" jdbcType="TIMESTAMP" />
+    <result column="referrer_user_id" property="referrerUserId" jdbcType="BIGINT" />
+    <result column="apply_user_id" property="applyUserId" jdbcType="BIGINT" />
+    <result column="approve_status" property="approveStatus" jdbcType="BIT" />
+    <result column="total_fee" property="totalFee" jdbcType="DECIMAL" />
+    <result column="user_fee" property="userFee" jdbcType="DECIMAL" />
+    <result column="last_user_fee_time" property="lastUserFeeTime" jdbcType="TIMESTAMP" />
+    <result column="card_front_id" property="cardFrontId" jdbcType="BIGINT" />
+    <result column="card_back_id" property="cardBackId" jdbcType="BIGINT" />
+    
+    <association property="applyUser" column="apply_user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="referrerUser" column="referrer_user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="cardFront" column="card_front_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+	<association property="cardBack" column="card_back_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, add_time, approve_time, referrer_user_id, apply_user_id, approve_status, total_fee, 
+    user_fee, last_user_fee_time, card_front_id, card_back_id
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.DreamPartnerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_dream_partner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.DreamPartnerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_dream_partner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_dream_partner
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_dream_partner
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.DreamPartnerExample" >
+    delete from amall_dream_partner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.DreamPartner" >
+    insert into amall_dream_partner (id, add_time, approve_time, 
+      referrer_user_id, apply_user_id, approve_status, 
+      total_fee, user_fee, last_user_fee_time, 
+      card_front_id, card_back_id)
+    values (#{id,jdbcType=BIGINT}, #{addTime,jdbcType=TIMESTAMP}, #{approveTime,jdbcType=TIMESTAMP}, 
+      #{referrerUserId,jdbcType=BIGINT}, #{applyUserId,jdbcType=BIGINT}, #{approveStatus,jdbcType=BIT}, 
+      #{totalFee,jdbcType=DECIMAL}, #{userFee,jdbcType=DECIMAL}, #{lastUserFeeTime,jdbcType=TIMESTAMP}, 
+      #{cardFrontId,jdbcType=BIGINT}, #{cardBackId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.DreamPartner" >
+    insert into amall_dream_partner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="approveTime != null" >
+        approve_time,
+      </if>
+      <if test="referrerUserId != null" >
+        referrer_user_id,
+      </if>
+      <if test="applyUserId != null" >
+        apply_user_id,
+      </if>
+      <if test="approveStatus != null" >
+        approve_status,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="userFee != null" >
+        user_fee,
+      </if>
+      <if test="lastUserFeeTime != null" >
+        last_user_fee_time,
+      </if>
+      <if test="cardFrontId != null" >
+        card_front_id,
+      </if>
+      <if test="cardBackId != null" >
+        card_back_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveTime != null" >
+        #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="referrerUserId != null" >
+        #{referrerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="applyUserId != null" >
+        #{applyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="approveStatus != null" >
+        #{approveStatus,jdbcType=BIT},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="userFee != null" >
+        #{userFee,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUserFeeTime != null" >
+        #{lastUserFeeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardFrontId != null" >
+        #{cardFrontId,jdbcType=BIGINT},
+      </if>
+      <if test="cardBackId != null" >
+        #{cardBackId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.DreamPartnerExample" resultType="java.lang.Integer" >
+    select count(*) from amall_dream_partner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_dream_partner
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.approveTime != null" >
+        approve_time = #{record.approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.referrerUserId != null" >
+        referrer_user_id = #{record.referrerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.applyUserId != null" >
+        apply_user_id = #{record.applyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.approveStatus != null" >
+        approve_status = #{record.approveStatus,jdbcType=BIT},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userFee != null" >
+        user_fee = #{record.userFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.lastUserFeeTime != null" >
+        last_user_fee_time = #{record.lastUserFeeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cardFrontId != null" >
+        card_front_id = #{record.cardFrontId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cardBackId != null" >
+        card_back_id = #{record.cardBackId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_dream_partner
+    set id = #{record.id,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      approve_time = #{record.approveTime,jdbcType=TIMESTAMP},
+      referrer_user_id = #{record.referrerUserId,jdbcType=BIGINT},
+      apply_user_id = #{record.applyUserId,jdbcType=BIGINT},
+      approve_status = #{record.approveStatus,jdbcType=BIT},
+      total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      user_fee = #{record.userFee,jdbcType=DECIMAL},
+      last_user_fee_time = #{record.lastUserFeeTime,jdbcType=TIMESTAMP},
+      card_front_id = #{record.cardFrontId,jdbcType=BIGINT},
+      card_back_id = #{record.cardBackId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.DreamPartner" >
+    update amall_dream_partner
+    <set >
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="approveTime != null" >
+        approve_time = #{approveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="referrerUserId != null" >
+        referrer_user_id = #{referrerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="applyUserId != null" >
+        apply_user_id = #{applyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="approveStatus != null" >
+        approve_status = #{approveStatus,jdbcType=BIT},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="userFee != null" >
+        user_fee = #{userFee,jdbcType=DECIMAL},
+      </if>
+      <if test="lastUserFeeTime != null" >
+        last_user_fee_time = #{lastUserFeeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cardFrontId != null" >
+        card_front_id = #{cardFrontId,jdbcType=BIGINT},
+      </if>
+      <if test="cardBackId != null" >
+        card_back_id = #{cardBackId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.DreamPartner" >
+    update amall_dream_partner
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      approve_time = #{approveTime,jdbcType=TIMESTAMP},
+      referrer_user_id = #{referrerUserId,jdbcType=BIGINT},
+      apply_user_id = #{applyUserId,jdbcType=BIGINT},
+      approve_status = #{approveStatus,jdbcType=BIT},
+      total_fee = #{totalFee,jdbcType=DECIMAL},
+      user_fee = #{userFee,jdbcType=DECIMAL},
+      last_user_fee_time = #{lastUserFeeTime,jdbcType=TIMESTAMP},
+      card_front_id = #{cardFrontId,jdbcType=BIGINT},
+      card_back_id = #{cardBackId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

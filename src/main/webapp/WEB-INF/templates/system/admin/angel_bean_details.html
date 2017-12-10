@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+	$(function(){
+		$("#type option[value='$!type']").attr("selected","selected");
+	});
+</script>
+<style type="">
+.recharge_cg{color:#2dd700;font-size: 14px;}
+.recharge_cr{color:red;}
+</style>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">感恩豆明细</h1>
+  <div class="settab"><span class="tab-one"></span> 
+  					<span class="tabs"> 
+	  					<a href="$!webPath/admin/angel_bean_details.htm"  class="this">感恩豆明细</a>  
+  					</span> 
+  					<span class="tab-two"></span>
+  </div>
+  <form method="post" id="queryForm" action="$!webPath/admin/angel_bean_details.htm">
+  <div class="allpro_search">
+    <ul>
+      <li> <span>用户名</span><span class="allpro size3">
+        <input name="telephone" type="text" id="telephone" value="$!telephone"/>
+        </span> <span>
+        <select name="type" id="type">
+          <option value="0">买入</option>
+          <option value="1">卖出</option>
+        </select>
+        </span> <span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+        </span> </li>
+    </ul>
+  </div>
+  </form>
+  <form method="post" id="ListForm" name="ListForm" action="$!webPath/admin/angel_bean_details.htm">
+  <div class="allpro_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="15%" align="center">买方</td>
+        <td width="15%" align="center">卖方</td>
+        <td width="10%" align="center">数量</td>
+        <td width="12%" align="center">单价</td>
+        <td width="16%" align="center">交易类型</td>
+        <td width="20%" align="center">交易时间</td>
+      </tr>
+        #foreach($obj in $objs)
+      <tr>
+        <td align="center">$!{obj.buyUser.truename}</td>
+        <td align="center">$!{obj.selleUser.truename}</td>
+        <td align="center">$!{obj.totalDouNum}</td>
+        <td align="center">$!{obj.price}</td>
+        #if($!obj.type == false)
+        <td align="center">买入</td>
+        #else
+        <td align="center">卖出</td>
+        #end
+        <td align="center">$!CommUtil.formatLongDate($!obj.dealtime)</td>
+     <!--    <td align="center">$!{obj.payType}</td>
+        <td align="center">
+        	#foreach($rechargeBenefit in $!obj.rechargeBenefits)
+        		<p style="padding: 2px 0;">$!rechargeBenefit.getUser.username</p>
+        	#end
+        </td> -->
+        <!-- <td align="center">
+        	#foreach($rechargeBenefit in $!obj.rechargeBenefits)
+        		<p style="padding: 2px 0;">$!rechargeBenefit.getUser.truename</p>
+        	#end
+        </td> -->
+      </tr>
+      #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="telephone" type="hidden" id="" value="$!telephone" />
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+	<input name="type" type="hidden"  value="$!type" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

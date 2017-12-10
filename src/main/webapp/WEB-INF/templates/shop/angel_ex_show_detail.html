@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Amall商城官方网站—正品低价,又省又赚—www.Amall.com</title>
+<meta name="baidu-site-verification" content="u7KaeCBGVW" />
+<meta name="keywords"
+	content="天使Amall,amall商城,深圳市天使互助网络有限公司,Amall商城,免费开店,网上购物,网上商城,免费注册,商家联盟,海外精品,中国特产,厂家直供,店主直播" />
+<meta name="description"
+	content="深圳市天使互助网络有限公司于2010年9月成立,坐落于繁华的华南城交易中心,公司主要从事网络平台建设与运营及软件开发等。天使Amallwww.Amall.com定位电商·精品汇。网站以精品正品购物为核心理念，以创造一个丰盛富足的电商世界为使命。让实体插上翅膀，让消费创造价值。" />
+<meta name="copyright" content="深圳市天使互助网络有限公司  版权所有" />
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico"
+	type="image/x-icon">
+<link rel="stylesheet" type="text/css"
+	href="http://pc1.amallcdn.cn/assets/css/base.css" />
+<link rel="stylesheet" type="text/css"
+	href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css"
+	href="http://pc1.amallcdn.cn/assets/css/duigou.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc5.amallcdn.cn/assets/js/12vb.js"></script>
+<style>
+</style>
+</head>
+<body>
+
+	$!httpInclude.include("/top.htm")
+
+
+
+
+	<div class="duigou_head">
+		<div class="duigou_logo">
+			<img src="$!webPath/assets/img/ydg_logo21.png" />
+		</div>
+
+		<div class="head_number">
+			<ul>
+				<li class="F-number-bg"><span class="gray9">累计</span> <span
+					class="f-fn-size" id="spHeadTotalNum"></span><span class="gray9">人次参与兑换</span>
+				</li>
+
+			</ul>
+		</div>
+
+	</div>
+
+	<div style="width: 100%; height: 38px; background-color: #a90000">
+		$!httpInclude.include("/duigou_nav.htm")</div>
+
+
+
+
+	<div class="duig_xq_c">
+		<!--  左边灰色部分   -->
+		<div class="xq_left">
+
+
+			<div class="xq_poto">
+				#if($!cloudGoods.user.photo) 
+					#set($avatar ="$!{config.imagewebserver}/$!cloudGoods.user.photo.path/$!cloudGoods.user.photo.name")
+				#else 
+					#set($avatar = "$!webPath/assets/img/user2.jpg") 
+				#end 
+				<a href="#"><img src="$!avatar"></a>
+			</div>
+			<div class="xq_mane">
+				<a href=""><span class="xq_manzuo">$!cloudGoods.user.truename</span></a>
+			</div>
+
+			<div class="xq_msg">
+				<div>
+					<span class="xq_mingleft">本兑换参与：</span><span class="xq_mingright"><label
+						class="mscolor">$!userCount</label>人次</span>
+				</div>
+				<div>
+					<span class="xq_mingleft">幸运兑换码：</span><span class="xq_mingright"><label
+						class="mscolor">$!cloudGoods.openWinnerCode</label></span>
+				</div>
+				<div>
+					<span class="xq_mingleft">揭晓时间：</span><span class="xq_mingright">$!CommUtil.format2Date($!cloudGoods.openWinnerTime)</span>
+				</div>
+
+			</div>
+
+
+
+
+
+			<div class="right_titleft">
+				<span class="right_titqita">最新获奖者</span>
+			</div>
+			<div class="xq_rightshaidan">
+				<ul>
+					#foreach($cloud in $!newWinners) #if($!cloud.user.photo)
+					#set($userPhoto =
+					"$!{config.imagewebserver}/$!cloud.user.photo.path/$!cloud.user.photo.name")
+					#else #set($userPhoto = "$!webPath/assets/img/user2.jpg") #end
+					<li>
+						<div class="xq_pohont3">
+							<a href="#"><img src="$!userPhoto" /></a>
+						</div>
+
+						<div class="xq_neirong">
+							<div class="xq_nrtit">
+								<a class="xq_nrmingzi">$!cloud.user.truename</a> <span
+									class="xq_nrqishu">获得第$!cloud.id期</span>
+							</div>
+							<div class="xq_zweishaidan">
+								<span style="color: #666">$!cloud.goodsName</span>
+							</div>
+						</div>
+					</li> #end
+				</ul>
+				<div class="xq_hdjp"></div>
+			</div>
+		</div>
+		<!--  中间部分  -->
+		<div class="xq_center">
+			<span class="xq_c">$!cloudGoods.goodsName</span>
+			<div class="xq_cwenzi">
+				<span class="xq_wzi">$!cloudShowOrder.context</span>
+				<div class="xq_shaidan">
+				 	#if($!cloudShowOrder.accessory_one)
+						<img src="$!{config.imagewebserver}/$!cloudShowOrder.accessory_one.path/$!cloudShowOrder.accessory_one.name" >
+					#end
+					#if($!cloudShowOrder.accessory_two)
+						<img src="$!{config.imagewebserver}/$!cloudShowOrder.accessory_two.path/$!cloudShowOrder.accessory_two.name ">
+					#end
+					#if($!cloudShowOrder.accessory_three)
+						<img src="$!{config.imagewebserver}/$!cloudShowOrder.accessory_three.path/$!cloudShowOrder.accessory_three.name ">
+					#end	 
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<!--  右边灰色部分  -->
+
+		<div class="xq_right">
+			<div class="right_tit"></div>
+
+
+			<div class="xq_zxsd">
+				<span class="right_zuixingsd">最新晒单</span>
+			</div>
+			<div class="xq_shai">
+				<ul>
+					#foreach($showOrder in $!cloudShowOrderList)
+					<li>
+						<div class="xq_s">
+							<div class="xq_sleft">
+								<a class="xq_sright">$!showOrder.cloudGoods.goodsName</a>
+							</div>
+
+						</div>
+						<div class="xq_shaidcontent">
+							<a href="">$!showOrder.context</a>
+						</div>
+						<div class="xq_shaidimg">
+							<a href=""> 
+								#if($!showOrder.accessory_one)
+									<img src="$!{config.imagewebserver}/$!showOrder.accessory_one.path/$!showOrder.accessory_one.name" >
+								#end
+								#if($!showOrder.accessory_two)
+									<img src="$!{config.imagewebserver}/$!showOrder.accessory_two.path/$!showOrder.accessory_two.name ">
+								#end
+								#if($!showOrder.accessory_three)
+									<img src="$!{config.imagewebserver}/$!showOrder.accessory_three.path/$!showOrder.accessory_three.name ">
+								#end
+							</a>	
+						</div>
+					</li>
+					#end
+
+				</ul>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+	$!httpInclude.include("/footer.htm")
+</body>
+
+
+
+</html>

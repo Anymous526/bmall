@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>导航设置 - $!config.title</title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+
+<link rel="stylesheet" type="text/css" href="assets/css/base.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/index.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/cart.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/user.css" />
+<link rel="stylesheet" type="text/css" href="assets/css/seller.css" />
+
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">   
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>导航列表</span></div></div>
+	<form action="$!webPath/seller/store_nav.htm" method="post" name="ListForm" id="ListForm">
+        <div class="productmain">
+	     <div class="container" style="height:37px;">
+           <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href='$!webPath/seller/store_nav.htm'>导航列表</a></li>
+                <li class=""><a href='$!webPath/seller/store_nav_add.htm' class="other">新增导航</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+            
+            
+              <div class="all_select">
+                <span>
+                	<input name="all1" type="checkbox" id="all1" value=""  onclick="selectAll(this)" class="all_select_checkbox"/>&nbsp;全选&nbsp;&nbsp;&nbsp;&nbsp; 
+                </span>
+                <span>
+                	<a href="javascript:void(0);" class="all_select_button" onclick="cmd('$!webPath/seller/store_nav_del.htm','')">删除</a>
+                </span>
+              </div>
+              
+              
+              
+              <div class="operation">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width="470" style="padding-left: 20px;">导航标题<input name="mulitId" type="hidden" id="mulitId" />
+                   </td>
+                    <td width="50">是否显示</td>
+                    <td width="60" align="center">序号</td>
+                    <td align="center">操作</td>
+                  </tr> 
+                  #if($objs.size() > 0)
+                  	
+                  	#foreach($obj in $objs)
+                 	 <tr class="opertr" >
+                    <td ><input name="id" type="checkbox" value="$!obj.id" id="id"  /> 
+                      　				$!{obj.title}</td>
+                    #set($display="是") 
+                    #if(!$!{obj.display})#set($display="否")#end 
+                    <td align="center">$!display</td>
+                    <td align="center">$!obj.sequence</td>
+                    <td class="operajt"><span class="edit"><a href="$!webPath/seller/store_nav_edit.htm?id=$!obj.id">编辑</a></span><span class="del"><a href="$!webPath/seller/store_nav_del.htm?mulitId=$!obj.id&currentPage=$!currentPage">删除</a></span></td>
+                  	</tr>
+                  	#end
+                  	
+                  #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="4" style="height:250px;text-align:center;line-height:250px;">暂无数据</td> 
+	                </tr>  
+	                  
+                  #end
+                  
+                  
+                  
+                  
+                  
+                </table>
+              </div>
+              
+
+              <div class="userfenye" style="margin-top:15px; margin-right: 5px;">$!gotoPageHTML</div>
+              <div class="all_select">
+                <span>
+                	<input name="all1" type="checkbox" id="all1" value=""  onclick="selectAll(this)" class="all_select_checkbox"/>&nbsp;全选&nbsp;&nbsp;&nbsp;&nbsp; 
+                </span>
+                <span>
+                	<a class="all_select_button" href="javascript:void(0);" onclick="cmd('$!webPath/seller/store_nav_del.htm','')">删除</a>
+                </span>
+              </div>
+
+              
+              
+
+              
+              
+              
+              
+              
+              
+              
+              
+            </div>
+            
+          </div>
+          
+          </form>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

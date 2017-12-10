@@ -1,0 +1,137 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+
+ <script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+
+<script type="text/javascript">
+	$(function(){		
+		var lis = $(".hotbrand ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%4;
+			if(t == 0){
+				/* console.info($(this)); */
+				$(this).css("margin-right","0px");
+			}
+		});
+		
+		$("")
+	});
+</script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+   $(".index_nav li a").click(function(event) { 
+      var index=this.name
+      var id='#'+'index_'+index
+     $("html,body").animate({scrollTop: $(id).offset().top}, 1000);
+   });
+   $(".taoba").click(function(event) { 
+      var index=this.name
+      var id='#'+'index_'+index
+     $("html,body").animate({scrollTop: $(id).offset().top}, 1000);
+   });
+   function a(x,y){
+	   if($('#main').offset()){
+			l = $('#main').offset().left;
+		    w = $('#main').width();
+		    $('#tbox').css('left',(l  + x) + 'px');
+		    $('#tbox').css('top',y + 'px');
+		}else{
+			
+		}
+}//获取#tbox的div距浏览器底部和页面内容区域右侧的距离函数#main为页面的可视宽度
+$(function() {  
+    $(window).scroll(function(){
+    t = $(document).scrollTop();
+    if(t>500){
+      $('#tbox').show();
+    }else{
+      $('#tbox').hide();
+    }
+    if(t > 50){
+        $('#gotop').fadeIn('slow');
+    }else{
+        $('#gotop').fadeOut('slow');
+    }       
+})   
+    a(-30,100);//#tbox的div距浏览器底部和页面内容区域右侧的距离
+    $('#gotop').click(function(){ 
+        $('body,html').animate({
+            scrollTop: 0
+        },
+        800);//点击回到顶部按钮，缓懂回到顶部,数字越小越快
+        return false;  
+    })
+});
+  });
+</script> <!--楼层循环-->
+</head>
+<body>
+<div class="border3px"></div>
+<!--  顶部    start-->
+
+<div class="yHeader"> 
+  <!-- 导航   start  -->
+  <div class="yNavIndex">
+    <div class="pullDown">
+      <h2 class="pullDownTitle" onclick="javascript:location.href='$!webPath/goods_class.htm'">所有商品分类</h2>
+      <ul class="pullDownList">
+        
+        #foreach($gc in $objs)
+        	
+        	#if($!gc.iconAcc)
+        	#set($img = "$!{config.imagewebserver}/$!{gc.iconAcc.path}/$!{gc.iconAcc.name}")
+        	#else
+        	#set($img = "")
+        	#end <!--  -->
+	        <li name="gc_li">
+	          <img src="$!img">
+		      <b style="margin: 0;padding: 0;">
+		      	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">$!gc.classname</a>
+	          </b>
+	          <!-- 下拉详细列表具体分类 -->
+		      <div class="yMenuListCon" name="yMenuListCon">
+		        <div class="yMenuListConin" name="classdiv">
+		        #foreach($c_g in $gc.childs)
+		          <div class="yMenuLCinList" style="display:block;margin-top:-8px;">
+		            <h3>
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_g.id" target="_blank" class="yListName" style="display:block">$!c_g.classname</a>
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank" class="yListMore">更多 ></a></h3>
+		            <p style="line-height:24px;"> 
+		            	#foreach($c_cg in $c_g.childs)
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_cg.id" target="_blank" class="" style="display:block; text-align: left;">$!c_cg.classname</a>
+		            	#end
+		            </p>
+		          </div>
+		      
+		        #end
+		        </div>
+		   	 </div>
+	        </li>
+        #end
+     </ul>  
+       
+  
+      
+     
+    </div>
+    <ul class="yMenuIndex">
+      <li><a href="$!webPath/index.htm" class="yMenua">首页</a></li>
+      <li><a href="$!webPath/bulkitem.htm">单品团 <span></span></a></li>
+      <li><a href="$!webPath/groupbrand.htm">品牌团</a></li>
+    </ul>
+  </div>
+  <!-- 导航   end  --> 
+</div>
+
+
+
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/commodity.js"></script> <!--底层切换-->
+</body>
+</html>

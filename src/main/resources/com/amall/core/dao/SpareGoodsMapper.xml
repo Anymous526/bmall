@@ -1,0 +1,742 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.SpareGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.SpareGoods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="errorMessage" property="errormessage" jdbcType="VARCHAR" />
+    <result column="goods_old_price" property="goodsOldPrice" jdbcType="INTEGER" />
+    <result column="goods_price" property="goodsPrice" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="oldAndnew" property="oldandnew" jdbcType="INTEGER" />
+    <result column="sellMethod" property="sellmethod" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="img_id" property="imgId" jdbcType="BIGINT" />
+    <result column="spareGoodsClass_id" property="sparegoodsclassId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="img1_id" property="img1Id" jdbcType="BIGINT" />
+    <result column="img2_id" property="img2Id" jdbcType="BIGINT" />
+    <result column="img3_id" property="img3Id" jdbcType="BIGINT" />
+    <result column="img4_id" property="img4Id" jdbcType="BIGINT" />
+    <result column="main_img_id" property="mainImgId" jdbcType="BIGINT" />
+    <result column="img5_id" property="img5Id" jdbcType="BIGINT" />
+    <result column="viewInFloor" property="viewinfloor" jdbcType="BIT" />
+    <result column="sgf_id" property="sgfId" jdbcType="BIGINT" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="recommend" property="recommend" jdbcType="BIT" />
+    <result column="down" property="down" jdbcType="INTEGER" />
+    <association property="area" column="area_id" javaType="com.amall.core.bean.Area" select="com.amall.core.dao.AreaMapper.selectByPrimaryKey"/>
+    <association property="spareGoodsClass" column="spareGoodsClass_id" javaType="com.amall.core.bean.SpareGoodsClass" 
+    	select="com.amall.core.dao.SpareGoodsClassMapper.selectByPrimaryKey"/>
+    <association property="sgf" column="sgf_id" javaType="com.amall.core.bean.SpareGoodsFloor" select="com.amall.core.dao.SpareGoodsFloorMapper.selectByPrimaryKey"/>
+    <association property="img1" column="img1_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="img2" column="img2_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="img3" column="img3_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="img4" column="img4_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="img5" column="img5_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="mainImg" column="main_img_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.SpareGoodsWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="seodescribe" property="seodescribe" jdbcType="LONGVARCHAR" />
+    <result column="seokeyword" property="seokeyword" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, contact, errorMessage, goods_old_price, goods_price, name, 
+    oldAndnew, sellMethod, status, title, area_id, img_id, spareGoodsClass_id, user_id, 
+    phone, img1_id, img2_id, img3_id, img4_id, main_img_id, img5_id, viewInFloor, sgf_id, 
+    QQ, recommend, down
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    content, seodescribe, seokeyword
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.SpareGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_spare_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.SpareGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_spare_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.SpareGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_spare_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_spare_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_spare_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.SpareGoodsExample" >
+    delete from amall_spare_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.SpareGoodsWithBLOBs" >
+    insert into amall_spare_goods (  id, addTime, deleteStatus, 
+      contact, errorMessage, goods_old_price, 
+      goods_price, name, oldAndnew, 
+      sellMethod, status, title, 
+      area_id, img_id, spareGoodsClass_id, 
+      user_id, phone, img1_id, 
+      img2_id, img3_id, img4_id, 
+      main_img_id, img5_id, viewInFloor, 
+      sgf_id, QQ, recommend, down, 
+      content, seodescribe, seokeyword
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{contact,jdbcType=VARCHAR}, #{errormessage,jdbcType=VARCHAR}, #{goodsOldPrice,jdbcType=INTEGER}, 
+      #{goodsPrice,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{oldandnew,jdbcType=INTEGER}, 
+      #{sellmethod,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{areaId,jdbcType=BIGINT}, #{imgId,jdbcType=BIGINT}, #{sparegoodsclassId,jdbcType=BIGINT}, 
+      #{userId,jdbcType=BIGINT}, #{phone,jdbcType=VARCHAR}, #{img1Id,jdbcType=BIGINT}, 
+      #{img2Id,jdbcType=BIGINT}, #{img3Id,jdbcType=BIGINT}, #{img4Id,jdbcType=BIGINT}, 
+      #{mainImgId,jdbcType=BIGINT}, #{img5Id,jdbcType=BIGINT}, #{viewinfloor,jdbcType=BIT}, 
+      #{sgfId,jdbcType=BIGINT}, #{qq,jdbcType=VARCHAR}, #{recommend,jdbcType=BIT}, #{down,jdbcType=INTEGER}, 
+      #{content,jdbcType=LONGVARCHAR}, #{seodescribe,jdbcType=LONGVARCHAR}, #{seokeyword,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.SpareGoodsWithBLOBs" >
+    
+    insert into amall_spare_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="errormessage != null" >
+        errorMessage,
+      </if>
+      <if test="goodsOldPrice != null" >
+        goods_old_price,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="oldandnew != null" >
+        oldAndnew,
+      </if>
+      <if test="sellmethod != null" >
+        sellMethod,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="imgId != null" >
+        img_id,
+      </if>
+      <if test="sparegoodsclassId != null" >
+        spareGoodsClass_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="img1Id != null" >
+        img1_id,
+      </if>
+      <if test="img2Id != null" >
+        img2_id,
+      </if>
+      <if test="img3Id != null" >
+        img3_id,
+      </if>
+      <if test="img4Id != null" >
+        img4_id,
+      </if>
+      <if test="mainImgId != null" >
+        main_img_id,
+      </if>
+      <if test="img5Id != null" >
+        img5_id,
+      </if>
+      <if test="viewinfloor != null" >
+        viewInFloor,
+      </if>
+      <if test="sgfId != null" >
+        sgf_id,
+      </if>
+      <if test="qq != null" >
+        QQ,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="down != null" >
+        down,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="seodescribe != null" >
+        seodescribe,
+      </if>
+      <if test="seokeyword != null" >
+        seokeyword,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="errormessage != null" >
+        #{errormessage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsOldPrice != null" >
+        #{goodsOldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="oldandnew != null" >
+        #{oldandnew,jdbcType=INTEGER},
+      </if>
+      <if test="sellmethod != null" >
+        #{sellmethod,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="imgId != null" >
+        #{imgId,jdbcType=BIGINT},
+      </if>
+      <if test="sparegoodsclassId != null" >
+        #{sparegoodsclassId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="img1Id != null" >
+        #{img1Id,jdbcType=BIGINT},
+      </if>
+      <if test="img2Id != null" >
+        #{img2Id,jdbcType=BIGINT},
+      </if>
+      <if test="img3Id != null" >
+        #{img3Id,jdbcType=BIGINT},
+      </if>
+      <if test="img4Id != null" >
+        #{img4Id,jdbcType=BIGINT},
+      </if>
+      <if test="mainImgId != null" >
+        #{mainImgId,jdbcType=BIGINT},
+      </if>
+      <if test="img5Id != null" >
+        #{img5Id,jdbcType=BIGINT},
+      </if>
+      <if test="viewinfloor != null" >
+        #{viewinfloor,jdbcType=BIT},
+      </if>
+      <if test="sgfId != null" >
+        #{sgfId,jdbcType=BIGINT},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=BIT},
+      </if>
+      <if test="down != null" >
+        #{down,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seodescribe != null" >
+        #{seodescribe,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seokeyword != null" >
+        #{seokeyword,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.SpareGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from amall_spare_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_spare_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.contact != null" >
+        contact = #{record.contact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.errormessage != null" >
+        errorMessage = #{record.errormessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsOldPrice != null" >
+        goods_old_price = #{record.goodsOldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsPrice != null" >
+        goods_price = #{record.goodsPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.oldandnew != null" >
+        oldAndnew = #{record.oldandnew,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellmethod != null" >
+        sellMethod = #{record.sellmethod,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.imgId != null" >
+        img_id = #{record.imgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.sparegoodsclassId != null" >
+        spareGoodsClass_id = #{record.sparegoodsclassId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img1Id != null" >
+        img1_id = #{record.img1Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.img2Id != null" >
+        img2_id = #{record.img2Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.img3Id != null" >
+        img3_id = #{record.img3Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.img4Id != null" >
+        img4_id = #{record.img4Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.mainImgId != null" >
+        main_img_id = #{record.mainImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.img5Id != null" >
+        img5_id = #{record.img5Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.viewinfloor != null" >
+        viewInFloor = #{record.viewinfloor,jdbcType=BIT},
+      </if>
+      <if test="record.sgfId != null" >
+        sgf_id = #{record.sgfId,jdbcType=BIGINT},
+      </if>
+      <if test="record.qq != null" >
+        QQ = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommend != null" >
+        recommend = #{record.recommend,jdbcType=BIT},
+      </if>
+      <if test="record.down != null" >
+        down = #{record.down,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null" >
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.seodescribe != null" >
+        seodescribe = #{record.seodescribe,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.seokeyword != null" >
+        seokeyword = #{record.seokeyword,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_spare_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      errorMessage = #{record.errormessage,jdbcType=VARCHAR},
+      goods_old_price = #{record.goodsOldPrice,jdbcType=INTEGER},
+      goods_price = #{record.goodsPrice,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      oldAndnew = #{record.oldandnew,jdbcType=INTEGER},
+      sellMethod = #{record.sellmethod,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=BIGINT},
+      img_id = #{record.imgId,jdbcType=BIGINT},
+      spareGoodsClass_id = #{record.sparegoodsclassId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      img1_id = #{record.img1Id,jdbcType=BIGINT},
+      img2_id = #{record.img2Id,jdbcType=BIGINT},
+      img3_id = #{record.img3Id,jdbcType=BIGINT},
+      img4_id = #{record.img4Id,jdbcType=BIGINT},
+      main_img_id = #{record.mainImgId,jdbcType=BIGINT},
+      img5_id = #{record.img5Id,jdbcType=BIGINT},
+      viewInFloor = #{record.viewinfloor,jdbcType=BIT},
+      sgf_id = #{record.sgfId,jdbcType=BIGINT},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      recommend = #{record.recommend,jdbcType=BIT},
+      down = #{record.down,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=LONGVARCHAR},
+      seodescribe = #{record.seodescribe,jdbcType=LONGVARCHAR},
+      seokeyword = #{record.seokeyword,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_spare_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      contact = #{record.contact,jdbcType=VARCHAR},
+      errorMessage = #{record.errormessage,jdbcType=VARCHAR},
+      goods_old_price = #{record.goodsOldPrice,jdbcType=INTEGER},
+      goods_price = #{record.goodsPrice,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      oldAndnew = #{record.oldandnew,jdbcType=INTEGER},
+      sellMethod = #{record.sellmethod,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=BIGINT},
+      img_id = #{record.imgId,jdbcType=BIGINT},
+      spareGoodsClass_id = #{record.sparegoodsclassId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      img1_id = #{record.img1Id,jdbcType=BIGINT},
+      img2_id = #{record.img2Id,jdbcType=BIGINT},
+      img3_id = #{record.img3Id,jdbcType=BIGINT},
+      img4_id = #{record.img4Id,jdbcType=BIGINT},
+      main_img_id = #{record.mainImgId,jdbcType=BIGINT},
+      img5_id = #{record.img5Id,jdbcType=BIGINT},
+      viewInFloor = #{record.viewinfloor,jdbcType=BIT},
+      sgf_id = #{record.sgfId,jdbcType=BIGINT},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      recommend = #{record.recommend,jdbcType=BIT},
+      down = #{record.down,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.SpareGoodsWithBLOBs" >
+    update amall_spare_goods
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="errormessage != null" >
+        errorMessage = #{errormessage,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsOldPrice != null" >
+        goods_old_price = #{goodsOldPrice,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="oldandnew != null" >
+        oldAndnew = #{oldandnew,jdbcType=INTEGER},
+      </if>
+      <if test="sellmethod != null" >
+        sellMethod = #{sellmethod,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="imgId != null" >
+        img_id = #{imgId,jdbcType=BIGINT},
+      </if>
+      <if test="sparegoodsclassId != null" >
+        spareGoodsClass_id = #{sparegoodsclassId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="img1Id != null" >
+        img1_id = #{img1Id,jdbcType=BIGINT},
+      </if>
+      <if test="img2Id != null" >
+        img2_id = #{img2Id,jdbcType=BIGINT},
+      </if>
+      <if test="img3Id != null" >
+        img3_id = #{img3Id,jdbcType=BIGINT},
+      </if>
+      <if test="img4Id != null" >
+        img4_id = #{img4Id,jdbcType=BIGINT},
+      </if>
+      <if test="mainImgId != null" >
+        main_img_id = #{mainImgId,jdbcType=BIGINT},
+      </if>
+      <if test="img5Id != null" >
+        img5_id = #{img5Id,jdbcType=BIGINT},
+      </if>
+      <if test="viewinfloor != null" >
+        viewInFloor = #{viewinfloor,jdbcType=BIT},
+      </if>
+      <if test="sgfId != null" >
+        sgf_id = #{sgfId,jdbcType=BIGINT},
+      </if>
+      <if test="qq != null" >
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=BIT},
+      </if>
+      <if test="down != null" >
+        down = #{down,jdbcType=INTEGER},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seodescribe != null" >
+        seodescribe = #{seodescribe,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seokeyword != null" >
+        seokeyword = #{seokeyword,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.SpareGoodsWithBLOBs" >
+    update amall_spare_goods
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      contact = #{contact,jdbcType=VARCHAR},
+      errorMessage = #{errormessage,jdbcType=VARCHAR},
+      goods_old_price = #{goodsOldPrice,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      oldAndnew = #{oldandnew,jdbcType=INTEGER},
+      sellMethod = #{sellmethod,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=BIGINT},
+      img_id = #{imgId,jdbcType=BIGINT},
+      spareGoodsClass_id = #{sparegoodsclassId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      img1_id = #{img1Id,jdbcType=BIGINT},
+      img2_id = #{img2Id,jdbcType=BIGINT},
+      img3_id = #{img3Id,jdbcType=BIGINT},
+      img4_id = #{img4Id,jdbcType=BIGINT},
+      main_img_id = #{mainImgId,jdbcType=BIGINT},
+      img5_id = #{img5Id,jdbcType=BIGINT},
+      viewInFloor = #{viewinfloor,jdbcType=BIT},
+      sgf_id = #{sgfId,jdbcType=BIGINT},
+      QQ = #{qq,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=BIT},
+      down = #{down,jdbcType=INTEGER},
+      content = #{content,jdbcType=LONGVARCHAR},
+      seodescribe = #{seodescribe,jdbcType=LONGVARCHAR},
+      seokeyword = #{seokeyword,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.SpareGoods" >
+    update amall_spare_goods
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      contact = #{contact,jdbcType=VARCHAR},
+      errorMessage = #{errormessage,jdbcType=VARCHAR},
+      goods_old_price = #{goodsOldPrice,jdbcType=INTEGER},
+      goods_price = #{goodsPrice,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      oldAndnew = #{oldandnew,jdbcType=INTEGER},
+      sellMethod = #{sellmethod,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=BIGINT},
+      img_id = #{imgId,jdbcType=BIGINT},
+      spareGoodsClass_id = #{sparegoodsclassId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      phone = #{phone,jdbcType=VARCHAR},
+      img1_id = #{img1Id,jdbcType=BIGINT},
+      img2_id = #{img2Id,jdbcType=BIGINT},
+      img3_id = #{img3Id,jdbcType=BIGINT},
+      img4_id = #{img4Id,jdbcType=BIGINT},
+      main_img_id = #{mainImgId,jdbcType=BIGINT},
+      img5_id = #{img5Id,jdbcType=BIGINT},
+      viewInFloor = #{viewinfloor,jdbcType=BIT},
+      sgf_id = #{sgfId,jdbcType=BIGINT},
+      QQ = #{qq,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=BIT},
+      down = #{down,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

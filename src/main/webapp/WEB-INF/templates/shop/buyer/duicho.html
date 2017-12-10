@@ -1,0 +1,67 @@
+$!httpInclude.include("/buyer/my_servicecenter_head.htm")
+<script src="http://pc4.amallcdn.cn/assets/js/cryptographic.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#subBtn").click(function(){
+		
+		if(!(/^1\d{10}$/.test)($("#userName").val()))
+		{
+			$("#userName").attr("placeholder", "请输入正确的手机号码");
+			return false;
+		}
+		
+		//加密
+		var shaObj = new amallEncryption($("#password").val());
+		var str = shaObj.getHash();
+		$("#password").val(str);
+		$("#theForm").submit();
+		
+	});
+	
+	
+	
+});
+
+</script>
+		<div class="productmain" style="border:1px solid #acc7e2">
+			<div class="tixian_tit"><b style="font-size:14px">平台公司：深圳市天使互助网络有限公司</b></div>
+			<div class="tixianuser">
+				<span>姓 名：$user.truename</span>
+			</div>
+			<form action="$!webPath/daichong_VIP2.htm" method="post" id="theForm">
+			<div class="bank">
+				<div class="tixian_li">
+					<div class="left">对方账号：</div>
+					<div class="right"><input class="tixianinput" type="text" name="userName" id="userName" placeholder="请输入手机号码" maxlength="11"/></div>
+				</div>
+				
+				
+				<div class="tixian_li">
+					<div class="left">代充金额：</div>
+					<div class="right"><input class="tixianinput" type="text" value="3000元" disabled="disabled" style="background: none"/>
+					</div>
+				</div>
+				
+				
+				<div class="tixian_li">
+					<div class="left">登录密码：</div>
+					<div class="right"><input class="tixianinput" type="password" placeholder="******" name="password" id="password"/></div>
+					
+				</div>
+			</div>
+			
+			<div class="tixian_li" style="margin-top: 30px;">
+				<input class="tixianbtn" type="button" value="确定代充" id="subBtn"/>
+			</div>
+			
+			<div class="tixiantxt">
+				<p><strong>Amall商城全面保障您的资金安全</strong></p>
+				<p style="text-indent:2em">Amall商城为你量身定制的账户系统与支付服务系统。一方面，为Amall商城平台开发定制账户系统，提供系统外包运营服务；另一方面，为Amall商城平台提供支付和结算服务，帮助平台和用户实现充值、取现、资金划拨等服务；投资人资金划入虚拟账户后，平台无法触碰资金，避免了资金池模式。但是，我们对投资风险（包括但不限于平台或其他借款人违约）不承担任何责任，投资需谨慎。</p>
+			</div>
+			</form>
+        </div>
+	</div>
+</div>
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>

@@ -1,0 +1,170 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>老板送礼</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/briberymoney.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script type="text/javascript" src="$!webPath/js/jquery.min.js"></script>
+<script>
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+<script>
+	function receive_red(id,isReceive){
+		if(isReceive == true){
+			$(".mb_bg").show();
+			$(".mb_dioalog02").show();
+			$(".mb_okbtn02").click(function(){
+				jQuery.post("$!webPath/my_briberymoney_receive.htm",{id:id,isReceive:isReceive},function(data){
+					if(data == "1"){
+						$(".mb_bg").hide();
+						$(".mb_dioalog02").hide();
+						$("#red_td_"+id).empty();
+						$("#red_td_"+id).html("已领取");
+					}else{
+						alert("请求失败");
+					}
+				},"text");
+			})
+			$(".mb_nobtn02").click(function(){
+				$(".mb_bg").hide();
+				$(".mb_dioalog02").hide();
+			})
+		}else{
+			$(".mb_bg").show();
+			$(".mb_dioalog01").show();
+			$(".mb_okbtn01").click(function(){
+				jQuery.post("$!webPath/my_briberymoney_receive.htm",{id:id,isReceive:isReceive},function(data){
+					if(data == "1"){
+						$(".mb_bg").hide();
+						$(".mb_dioalog01").hide();
+						$("#red_td_"+id).empty();
+						$("#red_td_"+id).html("已退还");
+					}else{
+						alert("请求失败");
+					}
+				},"text");
+			})
+			$(".mb_nobtn01").click(function(){
+				$(".mb_bg").hide();
+				$(".mb_dioalog01").hide();
+			})
+		}
+		
+	}
+</script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+
+<div class="mb_bg" style="opacity: 0.4; "></div>
+<div class="mb_dioalog01">
+	<div class="mb_tit01">婉拒回复</div>
+	<textarea class="mb_dioalog_text" rows="" cols="" placeholder="请输入您想要回复对方的留言~"></textarea>
+	<div style="margin-top:10px;">
+		<span class="mb_nobtn01" style="cursor:pointer">取消</span>
+		<span class="mb_okbtn01" style="cursor:pointer">确定</span>
+	</div>
+</div>
+<div class="mb_dioalog02">
+	<div class="mb_tit02">确认提示</div>
+	<div style="text-align: center;font-size: 14px;">是否确认领取？</div>
+	<div style="margin-top:10px;">
+		<span class="mb_nobtn02" style="cursor:pointer">取消</span>
+		<span class="mb_okbtn02" style="cursor:pointer">确定</span>
+	</div>
+</div>
+
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+
+		<div class="s_m">  
+		  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <a href="$!webPath/buyer/my_briberymoney.htm"><span>老板送礼</span></a></div></div>
+		  <div class="productmain">
+				<div class="mg_iconbox" style="position: relative;height: 100px;">
+					<div><img src="$!webPath/assets/img/redbag_img01.png" alt="" style="width:100px; position: absolute;bottom: 0;left: 10px;"/></div>
+				</div>
+				<div>
+					<p style="font-size: 20px;color: #ea5052;font-weight: bold;margin-top: 25px;">天使Amall互助礼币</p>
+					<p style="float: left;">快给你的好友赠送礼币吧！</p>
+ 					<a href="$!webPath/buyer/my_briberymoney_send.htm" style="float: left;margin-top: -25px;margin-left: 100px;"><span class="mgc_btn01">我要送礼币</span></a>
+				</div>
+		  </div>
+		  <form action="$!webPath/buyer/my_briberymoney.htm" method="post" id="ListForm">
+		  <div class="productmain"> 
+			<div class="container">
+				<ul class="section" style="padding: 0;">
+					<li #if(!$!send)class="li_this"#end><a href="$!webPath/buyer/my_briberymoney.htm">我收到的礼币</a></li>
+					<li #if($!send)class="li_this"#end><a href="$!webPath/buyer/my_briberymoney.htm?send=true">我送出的礼币</a></li>
+				</ul>
+			</div> 
+			<div class="ordercon" style="width: 836px;padding-top: 0;">
+				<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+					<tr style="border-bottom: 1px solid #d8d8d8;font-weight:bold;">
+						<td width="10%" style="font-size:14px;overflow:hidden">礼币</td>
+						<td width="10%" style="font-size:14px;overflow:hidden">用户名</td>
+						<td width="25%" style="font-size:14px;overflow:hidden">留言</td>
+						<td width="10%" style="font-size:14px;overflow:hidden">礼品金</td>
+						<td width="25%" style="font-size:14px;overflow:hidden">时间</td>
+						<td width="20%" style="font-size:14px;overflow:hidden">操作</td>
+					</tr> 
+					#foreach($obj in $!objs)
+					<tr style="border-bottom: 1px solid #d8d8d8;" id="red_li_$!obj.id">
+						<td style="text-align: center;width:10%;overflow:hidden"><img src="$!webPath/assets/img/receive_briberymoney_icon01.png" style="width: 30px;display: inline-block;"></td>
+						#if($!send)
+						<td style="text-align: center;width:10%;overflow:hidden">$!obj.getUser.truename</td>
+						#else
+						<td style="text-align: center;width:10%;overflow:hidden">$!obj.giveUser.truename</td>
+						#end
+						<td style="text-align: center;width:25%;overflow:hidden">#if($!obj.giveContent)$!obj.giveContent#else恭喜发财#end</td>
+						<td style="text-align: center;width:10%;overflow:hidden"><span>$!obj.angelGold</span>个礼品金</td>
+						<td style="text-align: center;width:25%;overflow:hidden">$!CommUtil.format2Date($!obj.addTime)</td>
+						<td id="red_td_$!obj.id" style="text-align: center;width:20%;overflow:hidden">
+							#if($obj.txStatus == 0 && !$!send)
+							<button class="briberymoney_okbtn" onclick="receive_red($!obj.id,true);" type="button">接收</button>
+							<br/><button class="briberymoney_nobtn" style="margin-top:5px;" onclick="receive_red($!obj.id,false);" type="button">婉拒</button>
+							#end
+							#if($obj.txStatus == 0 && $!send)
+							待领取
+							#end
+							#if($obj.txStatus == 1)
+							已领取
+							#end
+							#if($obj.txStatus == 2)
+							已退还
+							#end
+						</td>
+					</tr>
+					#end
+				</table>
+				#if($!objs.size() == 0)
+				<div class="att_list" style="height:150px;line-height:150px;text-align:center;">您暂时还没有<span style="color:red">礼品记录</span>哦~</div>
+				#end
+			</div>
+			<div class="bottom_page" style="margin-top: 25px;">
+				<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+				<input name="send" type="hidden" id="send" value="$!send"/> 
+				$!gotoPageFormHTML
+			</div>
+          </div>
+          </form>
+          </div>
+</div>
+$!httpInclude.include("/footer.htm")
+
+
+</body>
+
+</html>

@@ -1,0 +1,481 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>我的订单 </title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/resources/style/common/css/window.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".colse_wuliu").click(function(){
+  $(".bg_black").hide();
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+
+function switch_reason(){
+	  var ck=jQuery("#reason_other").attr("checked");
+	  if(ck=="checked"){
+	    jQuery("#other_reason").show();
+	  }else{
+		jQuery("#other_reason").hide();  
+	  }
+	}
+//表单方式分页
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+
+
+$(document).ready(function(){
+	$('.accordion').jaccordion();
+	var lis = jQuery(".tools ul li");
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+	
+});
+
+function orderTimeSelect(){
+	jQuery("#ListForm").submit();
+}
+
+ // 查看物流
+function showWuLiu(orderId,goodsId){
+	var url = "$!webPath/buyer/buyer_ship_view.htm";
+	jQuery.post(url,{id:orderId,goodsId:goodsId},function(jsonData){
+		var data = JSON.parse(jsonData);
+		if(data.status==false){
+			alert(data.msg);
+		}else{
+			if(goodsId != 0){
+				// 退货物流
+				jQuery(".wuliutable").html("");
+			}else{
+				jQuery("#dialog_orderId").text(data.obj.orderId);
+				jQuery("#dialog_address").text(data.obj.addr.province+""+data.obj.addr.city+""+data.obj.addr.area+""+data.obj.addr.areaInfo);
+				jQuery("#dialog_companyName").text(data.obj.ec.companyName);
+				jQuery("#dialog_spipCode").text(data.obj.shipcode);
+			//	jQuery("#kuaidiStatus").text(data.kuaidiStatus.status);
+			}
+			jQuery(".bg_black").css("display","block");
+			var html="";
+			for(var i=0; i<data.transInfo.length;i++){
+			    html += '<section><span class="point-time point-green"></span><aside>';
+				html+='<p class="things">'+data.transInfo[i].context+'</p>'
+				if(i==data.transInfo.length-1){
+					html+='<p class="brief"><span class="text-red">'+data.transInfo[i].time+'</span></p>';
+				}else{
+					html+='<p class="brief"><span class="text-green">'+data.transInfo[i].time+'</span></p>';
+				}
+				html+='<aside></section>';
+			}
+			if(data.transInfo.length == 0){
+				html='<p class="brief"><span class="text-green">暂无物流信息</span></p>';
+			}
+			jQuery("#content").html(html);
+		}
+	});
+	
+}
+ 
+ function dialogHidden(){
+	 jQuery(".bg_black").css("display","none");
+ }
+</script>
+</head>
+<body style="background-color:#fff">
+<div class="bg_black" style="position:fixed; display: none;"  >
+	<div class="add_address" style="z-index: 9999999; background: #fff; overflow-y: scroll;height:60%;margin-top:4%">
+		<div class="address_t">
+			<span>查看物流</span>
+			<span class="colse_wuliu"><img src="$!webPath/assets/img/dialog_close_16px.png" /></span>
+		</div>
+		<div class="wuliu">
+		  <table class="wuliutable" width="100%" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		    <td>订单编号：</td>
+		    <td><label class="f16 color2" id="dialog_orderId"></label></td>
+		  </tr>
+		  <tr>
+		    <td valign="top">收货地址：</td>
+		    <td id="dialog_address"></td>
+		  </tr>
+		
+		  <tr>
+		    <td>物流公司：</td>
+		    <td id="dialog_companyName"></td>
+		  </tr>
+		  <tr>
+		    <td>运单编号：</td>
+		    <td id="dialog_spipCode"></td>
+		  </tr>  
+		</table>
+		
+		<div class="content">
+		  <article >
+		    <h3>物流信息</h3>
+		    <div id="content"></div>
+				
+			</article>
+		</div>
+		</div>
+	</div>
+</div>
+
+
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<form action="$!webPath/buyer/buyer_order.htm?" method="post" id="ListForm">
+		<div class="u_m" id="oBox">
+    	<div class="order-top">
+        	<div class="topname">我的订单</div>
+        
+            <div class="sch" style="float:right">
+            	<input class="inputtxt" type="text" value="$!choices" name="choices" placeholder="$!choices"/> 
+            	<input class="inputbtn" type="submit" value="搜索" />
+           	</div>
+        
+        </div>
+     	
+        <table class="order_table">
+        	<colgroup>
+                <col width="290">
+                <col width="90">
+                <col width="110">
+                <col width="100">
+                <col width="100">
+                <col width="130">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>订单信息</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>退款/货操作</th>
+                    <th>收货人</th>
+                    <th>订单金额</th>
+                    <th>
+                        <select name="order_time" onchange="orderTimeSelect();">
+                        	<option value="" #if($!order_time == "")selected="selected"#end>请选择</option>
+                            <option value="recentlyMonths" #if($!order_time == "recentlyMonths")selected="selected"#end>最近三个月</option>
+                            <option value="toYear"  #if($!order_time == "toYear")selected="selected"#end>今年内</option>
+                            <option value="oneYearAgo"  #if($!order_time == "oneYearAgo")selected="selected"#end>1年前</option>
+                            <option value="twoYearsAgo"  #if($!order_time == "twoYearsAgo")selected="selected"#end>2年前</option>
+                            <option value="threeYearsAgo"  #if($!order_time == "threeYearsAgo")selected="selected"#end>3年前</option>
+                            <option value="beforeThreeYearsAgo"  #if($!order_time == "beforeThreeYearsAgo")selected="selected"#end>3年以前</option>
+                       </select>
+                    </th>
+                    <th>
+                        <select name="order_status" id="order_status" onchange="orderTimeSelect()">
+                            <option value="" #if($!order_status == "")selected="selected"#end>全部状态</option>
+                            <option value="order_submit" #if($!order_status == "order_submit")selected="selected"#end>等待付款</option>
+                            <option value="order_pay" #if($!order_status == "order_pay")selected="selected"#end>等待收货</option>
+                            <option value="order_receive" #if($!order_status == "order_receive")selected="selected"#end>已收货</option>
+                            <option value="order_finish" #if($!order_status == "order_finish")selected="selected"#end>已完成</option>
+                            <option value="order_cancel" #if($!order_status == "order_cancel")selected="selected"#end>已取消</option>
+                        </select>
+                    </th>
+   
+                    <th>操作</th>
+                </tr>
+            </thead> 
+            #if($objs.size()>0)
+            #foreach($obj in $!objs)
+            <tbody>
+            
+            	<tr class="tbody_num">
+            		<td colspan="8">
+            			<span class="tcol1" style="display: inline-block; float:left">
+            			订单编号:<a href="$!webPath/buyer/order_view.htm?id=$!obj.id">$!obj.orderId&nbsp;&nbsp;&nbsp;</a>店铺:$!obj.store.storeName
+            			 </span>
+            			 
+            		</td>
+            		<td>
+            			#if($!obj.orderStatus >=20)
+                        	<a class="amall_tous" href="$!webPath/buyer/complaint_handle.htm?order_id=$!obj.id">投诉</a>
+                        #end
+            		</td>
+            	</tr>
+            	
+                	#set($gc=$!obj.cart)
+                	
+                	#if($!obj.orderStatus==0)
+               	 		#set($status="已取消")
+	                #end
+	                
+	                #if($!obj.orderStatus==10)
+	               		#set($status="等待支付")
+	                #end
+	                
+	                #if($!obj.orderStatus==15)
+	               		#set($status="线下支付待审核")
+	                #end
+	                
+	                #if($!obj.orderStatus==16)
+	                	#set($status="货到付款待发货")
+	                #end
+	                
+	                #if($!obj.orderStatus==20)
+	                	#set($status="已付款")
+	                #end
+	                
+	                #if($!obj.orderStatus==30)
+	                	#set($status="已发货")        
+	                #end    
+	                            
+	                #if($!obj.orderStatus==40)
+	                	#set($status="已收货")
+	                #end
+	                
+	                #if($!obj.orderStatus==50)
+	                	#set($status="已完成,已评价")                                              
+	                #end
+	                
+	                #if($!obj.orderStatus==60)
+	                	#set($status="已结束")                                              
+	                #end
+	                
+	                #if($!obj.orderStatus==65)
+	                	#set($status="已结束，不可评价")                                              
+	                #end
+	                
+	                #set($payment="未支付")
+	                
+	                #if($!obj.payment.mark=="alipay")
+	                	#set($payment="支付宝")
+	                #end
+	                
+	                #if($!obj.payment.mark=="alipay_wap")
+	                	#set($payment="手机网页支付宝")
+	                #end
+	                
+	                #if($!obj.payment.mark=="tenpay")
+	                	#set($payment="财付通")
+	                #end
+	                
+	                #if($!obj.payment.mark=="bill")
+	               		 #set($payment="快钱")
+	                #end  
+	                               
+	                #if($!obj.payment.mark=="chinabank")
+	                	#set($payment="银联在线")
+	                #end   
+	                    
+	                #if($!obj.payment.mark=="outline")
+	                	#set($payment="线下支付")
+	                #end   
+	                               
+	                #if($!obj.payment.mark=="balance")
+	                	#set($payment="预存款支付")
+	                #end
+	                
+	                #if($!obj.payment.mark=="payafter")
+	               		 #set($payment="货到付款")
+	                #end
+	                
+	                #if($!obj.payment.mark=="paypal")
+	                	#set($payment="paypal")
+	                #end
+                
+                	#set($goodsSize = $obj.items.size())
+                	#foreach($goodsitem in $!obj.items)
+                		#if($!goodsitem.goodsMainPhoto)
+                			#set($photo = "$!{config.imagewebserver}/$!{goodsitem.goodsMainPhoto.path}/$!{goodsitem.goodsMainPhoto.name}")
+                		#else
+                		#set($photo = "" )
+                		#end
+               
+                <tr>
+                	<td>
+                    	<div class="img-list">
+            		    	<a href="$!webPath/goods.htm?id=$!goodsitem.goodsId" class="img-box">
+        					<img width="50" height="50" src="$!photo"/>
+        		  			</a>
+        		        </div>
+        		        <div style="text-align:left;">
+        		        	<a style="line-height: 22px;text-align:left;" href="$!webPath/goods.htm?id=$!goodsitem.goodsId">$!goodsitem.goodsName</a>
+        		        </div>
+                    </td>
+                    <td>$!{goodsitem.goodsCount}</td>
+                    <td>
+                    	$!{goodsitem.goodsPrice}
+                    </td>
+                    <td>
+                    	 #if($goodsitem.refund)
+                    	 	#if($goodsitem.refund==41)
+			                    	 		<span>等待退款</span>
+			                #end
+                    	 	#if($goodsitem.refund==42)
+                    	 		<span>已退款</span>
+                    	 	#end
+                    	 	#if($goodsitem.refund==43)	
+                    	 		<span>拒绝申请退款</span>
+                    	 	#end
+                    	 	#if($goodsitem.refund==44)
+                    	 		<span>申请退款中</span>
+                    	 	#end
+                    	 	#if($goodsitem.refund==45)	
+                    	 		<span>申请退货中</span>
+                    	 	#end
+                    	 	#if($goodsitem.refund==46)
+                    	 		<span>已同意退货</span>
+                    	 			 <!-- 已收货,退货物流中 --> 
+                        			#if($!obj.orderStatus==40)
+                       				 <span>
+                       				 	<a href="javascript:void(0);" dialog_uri="$!webPath/buyer/buyer_order_return_ship.htm?id=$!obj.id&currentPage=$!currentPage" dialog_title="退换信息" dialog_width="500" dialog_height="100" dialog_top="0" dialog_id="order_cancel">
+                       				 		退货信息
+                       				 	</a>
+                       				 </span>
+                       				 <span>
+                       			 	<a href="javascript:void(0);" onclick="showWuLiu($!obj.id,$goodsitem.goodsId)">退货物流</a> 
+                       			 	</span>
+                       				#end
+                        
+                    	 	#end
+                    	 	#if($goodsitem.refund==48)	
+                    	 		<span>拒绝退货申请</span>
+                    	 		<span>
+	                        		<a href="javascript:void(0);" dialog_uri="$!webPath/buyer/buyer_order_return_apply.htm?id=$!obj.id&currentPage=$!currentPage" dialog_title="退货" dialog_width="500" dialog_height="100" dialog_top="0" dialog_id="order_cancel">
+	                        			<span> <a href="$!webPath/buyer/order_refund.htm?id=$!obj.id&goodsId=$!goodsitem.goodsId&currentPage=$!currentPage">退款/退货</a></span>
+	                        		</a>
+                        		</span>
+                    	 	#end
+                    	 	#if($goodsitem.refund==47)	
+                    	 		<span>退货成功</span>
+                    	 	#end
+                    	 #else
+                          	#if($obj.orderStatus!=10 && $obj.orderStatus!=0)
+                          	<span> <a href="$!webPath/buyer/order_refund.htm?id=$!obj.id&goodsId=$!goodsitem.goodsId&currentPage=$!currentPage">退款/退货</a></span>
+                         	#end
+                        #end
+                    </td>
+                	
+                    <td> $!obj.addr.truename</td>
+                    <td>￥$!obj.totalprice<br />
+                     	#if($!obj.orderStatus==20)
+                     	在线支付
+                        #end
+                    </td>
+                    
+                    <td><span class="c6">$!CommUtil.formatLongDate($!obj.addtime)</span></td>
+                    
+                    <td>
+                    	<span class="cred fb">$!status </span>
+                    	
+                    	#if($!obj.orderStatus>=30)
+                    	<a href="javascript:void(0);" onclick="showWuLiu($!obj.id,0)">查看物流</a> 
+                    	#end
+                    </td>
+                    
+                    <td width="100">
+                    	<!-- 订单取消  -->                      
+                        #if($!obj.orderStatus==0)
+                        	<a href="$!webPath/buyer/buyer_order_delete.htm?id=$!{obj.id}&currentPage=1">删除</a></span> 
+                        #end
+                    
+                    	<!-- 待付款  -->        
+                    	#if($!obj.orderStatus==10)
+                    		<span class="mt10">
+                    			<a class="btn_4" href="$!webPath/cart/orderform_pay.htm?orderFormId=$!obj.id">付款</a><br/>
+                        		<a dialog_id="order_cancel" dialog_height="100" dialog_width="500" dialog_title="取消订单" dialog_uri="$!webPath/buyer/buyer_order_cancel.htm?id=$!obj.id&currentPage=1" href="javascript:void(0);">取消订单</a> 
+                        	</span> 
+                        #end
+                       
+                     	<!-- 已付款  -->    
+                        #if($!obj.orderStatus==20)
+                        	<span class="mt10">
+                        		<a href="javascript:void(0);">待发货</a><br/>
+                        	</span>
+                        #end
+                        
+                        <!-- 已发货  --> 
+                        #if($!obj.orderStatus==30)
+                        	<span class="mt10">
+	                        	<a class="complsh" href="javascript:void(0);" dialog_uri="$!webPath/buyer/buyer_order_cofirm.htm?id=$!obj.id&currentPage=$!currentPage" dialog_title="确认收货" dialog_width="400" dialog_height="100" dialog_id="order_confirm">确认收货</a>
+	                       	</span>
+                        #end
+                        
+                       
+	                        <!-- 已收货,待评价 --> 
+                        #if($!obj.orderStatus==40)
+                        #if($!goodsitem.itemStatus==false)
+                        	<span>
+	                        	<a href="$!webPath/buyer/buyer_orderComment.htm?orderId=$!obj.id&goodsId=$!goodsitem.goodsId" >评价</a><br/>
+                        	</span>
+                        #end
+                        #end
+                        <!-- 已完成,已评价  --> 
+                        #if($!goodsitem.itemStatus == true) 
+                        	<span>
+                        		<a href="">申请返修</a> <br/>
+                            	<a href="javascript:void(0);" dialog_uri="$!webPath/buyer/buyer_order_return_apply.htm?id=$!obj.id&currentPage=$!currentPage&view='view'" dialog_title="退换货" dialog_width="500" dialog_height="100" dialog_top="0" dialog_id="order_cancel">退换货</a>
+                        	</span>
+                        #end
+                        
+                    </td>
+                    
+                </tr>
+                 	#end
+              
+            </tbody> 
+              #end  
+                #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="9" style="height:250px;text-align:center;line-height:250px;">您现在还没有订单哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end 
+                  
+                  
+                  
+        </table>
+       
+         
+        #if($!objs.size()>0)
+        <!--分页开始-->
+        <div class="bottom_page">
+			<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+			<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+			$!gotoPageAjaxHTML
+		</div>
+            <!--分页结束-->
+        </div>
+        #end
+       
+</div>
+</form>  
+</div>
+
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

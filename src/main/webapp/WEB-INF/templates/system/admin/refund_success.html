@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">系统消息</h1>
+  <div class="bigok">
+    <div class="bigokimg"><img src="$!webPath/resources/style/system/manage/$!{config.websitecss}/images/sys.jpg" /></div>
+    <div class="bigleft">
+      <ul>
+        <li>退款成功！</li>
+        <li class="hui"><span id="counts">3</span>秒后自动为您跳转到刚才的页面！</li>
+        <!-- <li class="successbtn"><a href="$!list_url">返回上一页</a></li>	 -->	
+      </ul>
+    </div>
+	<script>
+	  var count=3;
+	  window.setInterval(go,1000);
+	  var span_count = document.getElementById("counts");
+	  function go(){
+	    count--;
+	    if(count==0) window.history.go(-1);
+	    span_count.innerHTML=count;
+	  }	  
+	</script>
+  </div>
+</div>
+</body>
+</html>

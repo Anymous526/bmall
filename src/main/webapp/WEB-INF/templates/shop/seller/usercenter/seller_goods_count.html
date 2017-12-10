@@ -1,0 +1,72 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品统计排行</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+<style>
+	.productmain{width:953px;}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm")
+<div class="s_m">  
+  <div class="buyer_position"><div class="buyer_p_box"><a href="http://127.0.0.1:8080/amall/seller/seller_index.htm">卖家中心</a> &gt; <span>商品管理</span></div></div>
+    <form action="$!webPath/seller/seller_store_fee_detail.htm" method="post" id="ListForm">
+
+    <div class="productmain">
+	    <div class="container" style="height:37px">
+        <ul class="section" style="padding: 0;">
+              <li class="li_this"><a href="$!webPath/seller/seller_goods_count.htm">商品统计排行</a></li>
+            	#if($!total)总计:$!total#end
+            </ul>
+          </div>
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width:98%;margin-left:1%;height: auto;border:none;">
+            	<tr>
+            		<td width="20%">商品名称</td>
+            		<td width="10%">价格</td>
+            		<td width="18%">库存</td>
+            		<td width="15%">销量</td>
+            		<td width="10%">访问量</td>
+            		<td width="15%">发布时间</td>  
+            	</tr> 
+            	<tr>
+            		<td width="20%"  style="text-align:left;"><a href="$!webPath/seller/order_view.htm?id=1279">男式短袖t恤2016年翻领时尚中年品牌男装夏季新款免烫休闲男上衣</a></td>
+            		<td width="15%">¥91.00</td>
+            		<td width="15%">1100</td>
+            		<td width="15%">22</td>
+            		<td width="15%">1222</td> 
+            		<td width="20%">2016-09-21 09:08:00</td>
+            	</tr>
+             
+            </table>
+            
+            </div>
+            <div class="bottom_page" style="margin-top: 25px;">
+				<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+				$!gotoPageFormHTML
+			</div>
+          </div>
+    </form>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

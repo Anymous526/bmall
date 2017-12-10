@@ -1,0 +1,92 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的礼品金</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/briberymoney.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+		<div class="s_m">  
+		  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <a href="$!webPath/buyer/my_gold_consume.htm"><span>我的礼品金</span></a>  > <span>红包</span></div></div>
+		  <div class="productmain">
+				<div class="mg_iconbox" style="position: relative;height: 100px;">
+					<div><img src="$!webPath/assets/img/redbag_img01.png" alt="" style="width:100px; position: absolute;bottom: 0;left: 10px;"/></div>
+				</div>
+				<div>
+					<p style="font-size: 20px;color: #ea5052;font-weight: bold;margin-top: 25px;">天使Amall互助红包</p>
+					<p style="float: left;">快给你的好友发红包吧！</p>
+ 					<!-- <a href="$!webPath/buyer/my_briberymoney_send.htm" style="float: left;margin-top: -25px;margin-left: 100px;"><span class="mgc_btn01">我要发红包</span></a> -->
+				</div>
+		  </div>
+		  <div class="productmain"> 
+			<div class="container">
+				<ul class="section" style="padding: 0;">
+					<li class=""><a href="$!webPath/buyer/my_briberymoney.htm">我收到的红包</a></li>
+					<li class="li_this"><a href="$!webPath/buyer/my_briberymoney02.htm">我发出的红包</a></li>
+				</ul>
+			</div> 
+			<div class="ordercon" style="width: 836px;padding-top: 0;">
+				<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+					<tr style="border-bottom: 1px solid #d8d8d8;font-weight:bold;">
+						<td width="10%" style="font-size:14px;">红包</td>
+						<td width="10%" style="font-size:14px;">用户名</td>
+						<td width="25%" style="font-size:14px;">回复</td>
+						<td width="10%" style="font-size:14px;">礼品金</td>
+						<td width="25%" style="font-size:14px;">时间</td>
+						<td width="20%" style="font-size:14px;">操作</td>
+					</tr> 
+					
+					<tr style="border-bottom: 1px solid #d8d8d8;">
+						<td style="text-align: center;"><img src="$!webPath/assets/img/receive_briberymoney_icon01.png" style="width: 30px;display: inline-block;"></td>
+						<td>李老板</td>
+						<td>谢谢李老板！共创天使伟业！</td>
+						<td><span>100</span>个礼品金</td>
+						<td>2016-04-15 16:46:15</td>
+						<td>
+							<span>已接受</span>
+						</td>
+					</tr>
+					<tr style="border-bottom: 1px solid #d8d8d8;">
+						<td style="text-align: center;"><img src="$!webPath/assets/img/receive_briberymoney_icon01.png" style="width: 30px;display: inline-block;"></td>
+						<td>李老板</td>
+						<td>谢谢李老板！共创天使伟业！</td>
+						<td><span>100</span>个礼品金</td>
+						<td>2016-04-15 16:46:15</td>
+						<td>
+							<span>已退回</span>
+						</td>
+					</tr>
+					
+					  
+				</table>
+				<div class="att_list" style="height:150px;line-height:150px;text-align:center;">您暂时还没有<span style="color:red">发出红包</span>哦~</div>
+			</div>
+	        <div class="bottom_page" style="margin-top: 25px;">
+				<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" /> $!gotoPageFormHTML
+			</div>
+          </div>
+          </form>
+          </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

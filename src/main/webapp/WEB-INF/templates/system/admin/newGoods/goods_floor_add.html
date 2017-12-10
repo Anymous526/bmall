@@ -1,0 +1,203 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+	
+  //图片上传
+  jQuery("#img").change(function(){
+	  jQuery("#file_val").val(jQuery(this).val());
+  });
+ 	//改变系统提示的样式
+  jQuery("span .w").mousemove(function(){
+	var id=jQuery(this.parentNode).attr("id");
+	if(id="nothis"){
+	   jQuery(this.parentNode).attr("id","this")
+	}
+  }).mouseout(function(){
+     var id=jQuery(this.parentNode).attr("id");
+	 if(id="this"){
+	   jQuery(this.parentNode).attr("id","nothis")
+	 }
+  });
+//
+  jQuery("#theForm").validate({
+    rules:{
+	  gfName:{required :true},
+	  gfCss:{required :true}
+	 },
+	messages:{
+	  gfName:{required:"楼层标题不能为空"},
+	  gfCss:{required:"楼层样式不能为空"}
+	}
+  });
+ //
+ jQuery("#gf_display_img").click(function(){
+   var gf_display=jQuery("#gf_display").val();
+   if(gf_display=="true"){
+     jQuery("#gf_display_img").attr("src","$!webPath/resources/style/system/manage/$!{config.websitecss}/images/off.jpg");
+	 jQuery("#gf_display").val("false");
+    }else{
+     jQuery("#gf_display_img").attr("src","$!webPath/resources/style/system/manage/$!{config.websitecss}/images/on.jpg");
+	 jQuery("#gf_display").val("true");
+   }
+ });
+ //是否启用商品特卖
+ jQuery("#gf_type_img").click(function(){
+   var gf_display=jQuery("#gf_type_input").val();
+   var pid = $("#pid option:selected").val();
+   if(gf_display=="off"){
+     jQuery("#gf_type_img").attr("src","$!webPath/resources/style/system/manage/$!{config.websitecss}/images/on.jpg");
+	 jQuery("#gf_type_input").val("bargain");
+	 jQuery(".sett2").hide();
+	 $("#gf_css_info").attr("data_info","gf_css_info");
+	 if(pid != ""){
+		jQuery("#gf_css_info").show();
+		jQuery("#pid").val("");
+	 }
+    }else{
+     jQuery("#gf_type_img").attr("src","$!webPath/resources/style/system/manage/$!{config.websitecss}/images/off.jpg");
+	 jQuery("#gf_type_input").val("off");
+	 jQuery(".sett2").show();
+	 $("#gf_css_info").removeAttr("data_info","gf_css_info");
+	 if(pid != ""){
+			jQuery("#gf_css_info").hide(); 
+		}
+   }
+ });
+ 
+ jQuery("#pid").change(function(){
+    var pid=jQuery(this).val();
+	if(pid==""){
+      jQuery("#gf_css_info").show();
+	}else{
+	  jQuery("#gf_css_info").hide();	
+	}
+  });
+ //
+ var gf_display=jQuery("#gf_display").val();
+ if(gf_display=="true"){
+   jQuery("#gf_display_img").attr("src","$!webPath/resources/style/system/manage/$!{config.websitecss}/images/on.jpg");
+ }else{
+   jQuery("#gf_display_img").attr("src","$!webPath/resources/style/system/manage/$!{config.websitecss}/images/off.jpg");
+ }
+ //
+ jQuery("#pid").val("$!obj.parentId");
+});
+
+function saveForm(method){
+	var gf_css_info = $("#gf_css_info").attr("data_info");
+	if(gf_css_info =="gf_css_info"){
+		var goodId = $(".goodId").val();
+		var reg = /\d$/g;
+		if(goodId == ""){
+			$(".floor_err").html("商品ID不能为空");
+			$(".floor_err").css("color","red");
+			$(".floor_err").focus();
+			return false;
+		}
+		if(!reg.test(goodId)){
+			$(".floor_err").css("color","red");
+			$(".floor_err").focus();
+			return false;
+		}
+	}
+   jQuery("#theForm").submit();
+}
+
+
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">首页楼层</h1>
+  <div class="settab"><span class="tab-one"></span>
+      <span class="tabs">
+       <a href="$!webPath/admin/newGoods/goods_floor_list.htm">管理</a> |
+       <a href="$!webPath/admin/newGoods/goods_floor_add.htm" #if(!$!edit)class="this"#end>新增</a>	   
+       #if($!edit) | 
+	   <a href="javascript:void(0);" class="this">编辑</a>
+	   #end
+	   </span>
+      
+      <span class="tab-two"></span></div>
+ <form name="theForm" id="theForm" action="$!webPath/admin/newGoods/goods_floor_save.htm" method="post" enctype="multipart/form-data">
+ <input name="id" type="hidden" id="id" value="$!obj.id" />
+  <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+  <input name="list_url" type="hidden" id="list_url" value="$!webPath/admin/newGoods/goods_floor_list.htm" />
+  <input name="add_url" type="hidden" id="add_url" value="$!webPath/admin/newGoods/goods_floor_add.htm" />
+  <div class="setcont">
+  	<ul class="set1">
+      <li><strong class="orange fontsize20"></strong>是否启用首页特卖</li>
+      <li><input name="type" id="gf_type_input"  type="hidden" value="off" />
+          <img src="$!webPath/resources/style/system/manage/$!{config.websitecss}/images/off.jpg" width="61" height="23" id="gf_type_img"  style="cursor:pointer"/>
+      </li>
+    </ul>
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>楼层标题</li>
+      <li><span class="webname">
+        	<input name="gfName" type="text" id="gf_name" value="$!obj.gfName" size="40" />
+      	  </span>
+      </li>
+    </ul>
+    <ul class="set1 sett2">
+      <li>上级楼层</li>
+      <li><span class="webnamesec sizese">
+        <select name="pid" id="pid">
+              <option value="">请选择上级楼层...</option>
+			  #foreach($gf in $gfs)
+              <option value="$!gf.id">$!gf.gfName</option>
+              #end
+         </select>
+      </span><span id="nothis"><strong class="q"></strong><strong class="w">如果选择上级分类，那么新增的分类则为被选择上级分类的子分类</strong><strong class="c"></strong></span></li>
+    </ul>
+    #if(! $obj.gfLevel || $!obj.gfLevel==0 )
+    <ul class="set1" id="gf_css_info">
+    	<li id="user_adv_img"> 
+          <strong class="orange fontsize20">*</strong>商品ID: <br/>
+      	  <span class="floor_adv_sp">
+       	 	 <input name="goodId"  type="text" class="goodId" style="margin-left:-7px;padding:4px;"/>
+          </span>
+          <i class="floor_adv_i floor_err" style="margin-top:0">商品ID必须为数字</i> 
+      	</li>
+		<li id="user_adv_img"> 
+          <span>楼层图片上传：</span> <br/>
+      	  <span class="floor_adv_sp">
+       	 	 <input name="file_val"  type="text" class="floor_file_txt" id="file_val" #if($!obj.gfLevel==0) value="$!webPath/$!acc_path" #end />
+       		 <input name="button" type="button" class="floor_file_btn" value=""/>
+       		 <input  type="file"  size="33" class="flooor_file" id="img" name="img"/>
+          </span>
+          <i class="floor_adv_i">建议上传130*60像素图片</i> 
+      </li>
+      <li id="user_adv_url"> 
+      	 <span>楼层链接：</span><br/>
+         <span class="floor_adv_sp">
+        	<input name="gf_url" type="text"class="floor_file_txt2" id="gf_url" value="$!acc_url" />
+         </span>
+      </li>
+    </ul>
+    #end
+    <ul class="set1">
+      <li>显示</li>
+     <li><input name="gfDisplay" id="gf_display" type="hidden" value="$!obj.gfDisplay" />
+          <img src="$!webPath/resources/style/system/manage/$!{config.websitecss}/images/on.jpg" width="61" height="23" id="gf_display_img"  style="cursor:pointer"/></li>
+    </ul>
+	<ul class="set1">
+	  <li>排序</li>
+      <li><span class="webname">
+        <input name="gfSequence" type="text" id="gf_sequence" value="$!obj.gfSequence" />
+      </span><span id="nothis"><strong class="q"></strong><strong class="w">序号越小，楼层显示越靠前</strong><strong class="c"></strong></span></li>
+    </ul>
+  </div>
+  </form>
+  <div class="submit">
+    <input name="save" type="button" value="提交" onclick="saveForm()" />
+  </div>
+</div>
+</body>
+</html>

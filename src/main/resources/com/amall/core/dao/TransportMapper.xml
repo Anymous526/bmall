@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.TransportMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Transport" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="trans_ems" property="transEms" jdbcType="BIT" />
+    <result column="trans_express" property="transExpress" jdbcType="BIT" />
+    <result column="trans_mail" property="transMail" jdbcType="BIT" />
+    <result column="trans_name" property="transName" jdbcType="VARCHAR" />
+    <result column="store_id" property="storeId" jdbcType="BIGINT" />
+    <result column="trans_time" property="transTime" jdbcType="INTEGER" />
+    <result column="trans_type" property="transType" jdbcType="INTEGER" />
+    <association property="store" column="store_id" javaType="com.amall.core.bean.Store"
+    		select="com.amall.core.dao.StoreMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.TransportWithBLOBs" extends="BaseResultMap" >
+    <result column="trans_ems_info" property="transEmsInfo" jdbcType="LONGVARCHAR" />
+    <result column="trans_express_info" property="transExpressInfo" jdbcType="LONGVARCHAR" />
+    <result column="trans_mail_info" property="transMailInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, trans_ems, trans_express, trans_mail, trans_name, store_id, 
+    trans_time, trans_type
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    trans_ems_info, trans_express_info, trans_mail_info
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.TransportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_transport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.TransportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_transport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.TransportExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_transport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_transport
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_transport
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.TransportExample" >
+    delete from amall_transport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.TransportWithBLOBs" >
+    insert into amall_transport (  id, addTime, deleteStatus, 
+      trans_ems, trans_express, trans_mail, 
+      trans_name, store_id, trans_time, 
+      trans_type, trans_ems_info, trans_express_info, 
+      trans_mail_info)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{transEms,jdbcType=BIT}, #{transExpress,jdbcType=BIT}, #{transMail,jdbcType=BIT}, 
+      #{transName,jdbcType=VARCHAR}, #{storeId,jdbcType=BIGINT}, #{transTime,jdbcType=INTEGER}, 
+      #{transType,jdbcType=INTEGER}, #{transEmsInfo,jdbcType=LONGVARCHAR}, #{transExpressInfo,jdbcType=LONGVARCHAR}, 
+      #{transMailInfo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.TransportWithBLOBs" >
+    
+    insert into amall_transport
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="transEms != null" >
+        trans_ems,
+      </if>
+      <if test="transExpress != null" >
+        trans_express,
+      </if>
+      <if test="transMail != null" >
+        trans_mail,
+      </if>
+      <if test="transName != null" >
+        trans_name,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="transTime != null" >
+        trans_time,
+      </if>
+      <if test="transType != null" >
+        trans_type,
+      </if>
+      <if test="transEmsInfo != null" >
+        trans_ems_info,
+      </if>
+      <if test="transExpressInfo != null" >
+        trans_express_info,
+      </if>
+      <if test="transMailInfo != null" >
+        trans_mail_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="transEms != null" >
+        #{transEms,jdbcType=BIT},
+      </if>
+      <if test="transExpress != null" >
+        #{transExpress,jdbcType=BIT},
+      </if>
+      <if test="transMail != null" >
+        #{transMail,jdbcType=BIT},
+      </if>
+      <if test="transName != null" >
+        #{transName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="transTime != null" >
+        #{transTime,jdbcType=INTEGER},
+      </if>
+      <if test="transType != null" >
+        #{transType,jdbcType=INTEGER},
+      </if>
+      <if test="transEmsInfo != null" >
+        #{transEmsInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="transExpressInfo != null" >
+        #{transExpressInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="transMailInfo != null" >
+        #{transMailInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.TransportExample" resultType="java.lang.Integer" >
+    select count(*) from amall_transport
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_transport
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.transEms != null" >
+        trans_ems = #{record.transEms,jdbcType=BIT},
+      </if>
+      <if test="record.transExpress != null" >
+        trans_express = #{record.transExpress,jdbcType=BIT},
+      </if>
+      <if test="record.transMail != null" >
+        trans_mail = #{record.transMail,jdbcType=BIT},
+      </if>
+      <if test="record.transName != null" >
+        trans_name = #{record.transName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.transTime != null" >
+        trans_time = #{record.transTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.transType != null" >
+        trans_type = #{record.transType,jdbcType=INTEGER},
+      </if>
+      <if test="record.transEmsInfo != null" >
+        trans_ems_info = #{record.transEmsInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.transExpressInfo != null" >
+        trans_express_info = #{record.transExpressInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.transMailInfo != null" >
+        trans_mail_info = #{record.transMailInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_transport
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      trans_ems = #{record.transEms,jdbcType=BIT},
+      trans_express = #{record.transExpress,jdbcType=BIT},
+      trans_mail = #{record.transMail,jdbcType=BIT},
+      trans_name = #{record.transName,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=BIGINT},
+      trans_time = #{record.transTime,jdbcType=INTEGER},
+      trans_type = #{record.transType,jdbcType=INTEGER},
+      trans_ems_info = #{record.transEmsInfo,jdbcType=LONGVARCHAR},
+      trans_express_info = #{record.transExpressInfo,jdbcType=LONGVARCHAR},
+      trans_mail_info = #{record.transMailInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_transport
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      trans_ems = #{record.transEms,jdbcType=BIT},
+      trans_express = #{record.transExpress,jdbcType=BIT},
+      trans_mail = #{record.transMail,jdbcType=BIT},
+      trans_name = #{record.transName,jdbcType=VARCHAR},
+      store_id = #{record.storeId,jdbcType=BIGINT},
+      trans_time = #{record.transTime,jdbcType=INTEGER},
+      trans_type = #{record.transType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.TransportWithBLOBs" >
+    update amall_transport
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="transEms != null" >
+        trans_ems = #{transEms,jdbcType=BIT},
+      </if>
+      <if test="transExpress != null" >
+        trans_express = #{transExpress,jdbcType=BIT},
+      </if>
+      <if test="transMail != null" >
+        trans_mail = #{transMail,jdbcType=BIT},
+      </if>
+      <if test="transName != null" >
+        trans_name = #{transName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="transTime != null" >
+        trans_time = #{transTime,jdbcType=INTEGER},
+      </if>
+      <if test="transType != null" >
+        trans_type = #{transType,jdbcType=INTEGER},
+      </if>
+      <if test="transEmsInfo != null" >
+        trans_ems_info = #{transEmsInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="transExpressInfo != null" >
+        trans_express_info = #{transExpressInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="transMailInfo != null" >
+        trans_mail_info = #{transMailInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.TransportWithBLOBs" >
+    update amall_transport
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      trans_ems = #{transEms,jdbcType=BIT},
+      trans_express = #{transExpress,jdbcType=BIT},
+      trans_mail = #{transMail,jdbcType=BIT},
+      trans_name = #{transName,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=BIGINT},
+      trans_time = #{transTime,jdbcType=INTEGER},
+      trans_type = #{transType,jdbcType=INTEGER},
+      trans_ems_info = #{transEmsInfo,jdbcType=LONGVARCHAR},
+      trans_express_info = #{transExpressInfo,jdbcType=LONGVARCHAR},
+      trans_mail_info = #{transMailInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Transport" >
+    update amall_transport
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      trans_ems = #{transEms,jdbcType=BIT},
+      trans_express = #{transExpress,jdbcType=BIT},
+      trans_mail = #{transMail,jdbcType=BIT},
+      trans_name = #{transName,jdbcType=VARCHAR},
+      store_id = #{storeId,jdbcType=BIGINT},
+      trans_time = #{transTime,jdbcType=INTEGER},
+      trans_type = #{transType,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

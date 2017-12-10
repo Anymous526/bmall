@@ -1,0 +1,149 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script><!-- 分页需要引入的js文件，里面有gotoPage()函数 -->
+<script type="text/javascript">
+function allClass()
+{
+	var gc_ids="";
+	#foreach($obj in $groupClassList)
+	gc_ids=gc_ids+'$!obj.id'+',';
+	#end
+	gc_ids=gc_ids.substring(0,gc_ids.length-1);
+	jQuery("#gc_id").val(gc_ids);
+	ajaxPage('$!webPath/bulkitembody.htm',1,this);
+}
+
+function allOrder()
+{
+var orderBys="",orderTypes="";
+jQuery(".menuw_r a[orderBy][orderType]").each(function(index){
+	orderBys=orderBys+jQuery(this).attr("orderBy")+",";
+	orderTypes=orderTypes+jQuery(this).attr("orderType")+",";
+});
+orderBys=orderBys.substring(0,orderBys.length-1);
+orderTypes=orderTypes.substring(0,orderTypes.length-1);
+jQuery("#orderBy").val(orderBys);
+jQuery("#orderType").val(orderTypes);
+ajaxPage('$!webPath/bulkitembody.htm',1,this);
+
+}
+
+
+function setClass(gc_id)
+{
+jQuery("#gc_id").val(gc_id);
+ajaxPage('$!webPath/bulkitembody.htm',1,this);
+}
+jQuery(document).ready(function(){
+	jQuery(".menuw_r a[orderBy][orderType]").bind("click",function(){
+		var orderBy=jQuery(this).attr("orderBy");
+		var orderType=jQuery(this).attr("orderType");
+		jQuery("#orderBy").val(orderBy);
+		jQuery("#orderType").val(orderType);
+		ajaxPage('$!webPath/bulkitembody.htm',1,this);
+	});
+	
+	
+});
+
+function ajaxPage(url,currentPage,obj) {
+	var totalPages =jQuery("#totalPages").val();
+	var orderBy=jQuery("#orderBy").val();
+	var orderType=jQuery("#orderType").val();
+	var gc_id=jQuery("#gc_id").val();
+	if(currentPage < 1) {
+		currentPage = 1;
+	}else if(currentPage > totalPages) {
+		currentPage = totalPages;
+	}
+	jQuery.ajax({
+				 type:'POST',
+				 url:url,
+				 data:{"currentPage":currentPage,"orderBy":orderBy,"orderType":orderType,"gc_id":gc_id},
+				 success :　function(data) {
+					 $("#add").html(data);
+				 },
+				 error : function(){
+					 alert("已到第一页");
+				 }
+				});
+}
+
+
+
+</script>
+
+</head>
+<body>
+
+<div id="add">
+<div id="mydiv" class="tuan_nav">
+	<div class="menw">
+    	<span class="menuw_l">分类</span>
+        <span class="menuw_r">
+        	<a class="currr" href="javascript:void(0);" onclick="allClass()">全  部</a>
+        	#foreach($obj in $goodsClassList)
+            <a href="javascript:void(0);" onclick="setClass('$!obj.id')">$!obj.classname</a>
+            #end
+        </span>
+    </div>
+    
+    
+    <div class="menw">
+    	<span class="menuw_l">综合</span>
+        <span class="menuw_r">
+        	<a class="currr" href="javascript:void(0);" onclick="allOrder()">全  部</a>
+            <a href="javascript:void(0);" orderBy="gg_price" orderType="asc"><strong style="font-size:14px">↑</strong> 价格</a>
+            <a href="javascript:void(0);" orderBy="gg_def_count" orderType="desc"><strong style="font-size:14px">↓</strong> 销量</a>
+
+        </span>
+    </div>
+</div>
+
+
+
+<div class="hotbrand">
+  <div class="free">
+  <form action="$!webPath/bulkitembody.htm" method="post" id="ListForm" name="ListForm">
+    <ul>
+ #foreach($obj in $objs)
+    <li>
+    	<a href="$!webPath/groupExcessive.htm?gg_id=$!obj.id">
+    		<img src="$!{config.imagewebserver}/$!obj.ggImg.path/$!obj.ggImg.name" width="284" height="284" original="$!webPath/$!obj.ggImg.path/$!obj.ggImg.name" onerror="this.src='$!webPath/$!{config.goodsImage.path}/$!{config.goodsImage.name}';"/>
+    	</a>
+        <div class="free_info">
+        	<a href="$!webPath/groupExcessive.htm?gg_id=$!obj.id">$!obj.ggName</a>
+        </div>
+        <div class="free_price">
+        	<div class="free_price_num"><span>¥ $!obj.ggPrice</span></div>
+            <div class="yiqiang">已抢<i>$!obj.ggDefCount</i>件</div>
+        </div>        
+    </li>
+ #end 
+    </ul>
+    
+    <input type="hidden" name="gc_id" id="gc_id" value="$!gc_id"/>
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    <input name="orderBy" type="hidden" id="orderBy" value="$!orderBy" />
+    <input name="orderType" type="hidden" id="orderType" value="$!orderType" /> 
+    <input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+    
+    </form>
+    
+    
+  </div>
+  <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+</div>
+<!--兑换   end --> 
+
+</div>
+
+</body>
+</html>

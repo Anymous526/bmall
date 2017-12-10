@@ -1,0 +1,28 @@
+$!httpInclude.include("/buyer/my_benefit_head.htm")
+		
+		<div class="productmain" style="border:1px solid #acc7e2">
+			<div class="tixian_tit"><b style="font-size:14px">平台公司：深圳市天使互助网络有限公司</b></div>
+			
+	 <div class="pay_21">
+	<div class="pay_img">
+	<span><img src="$!webPath/assets/img/x_alt_512px_1119926_easyicon.net.png" width="28px" /></span>
+	<span>支付失败</span>
+	</div>
+	<div class="tis">
+	<span>失败原因: $!message</span>
+    </div>
+    
+    <div class="w96" style="background: none;margin-top:40px">
+	<button class="pay_btn11" onclick="javascript:history.go(-1)">重新支付</button>
+	<button class="pay_btn21" onclick="location='$!webPath/buyer/buyer_index.htm'">返回个人中心</button>
+    </div>
+</div> 
+
+			   
+			
+        </div>
+	</div>
+</div>
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>

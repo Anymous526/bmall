@@ -1,0 +1,81 @@
+﻿<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/yg.index.js"></script>
+ 
+<script type="text/javascript">
+$(document).ready(function(){
+	var searchType = $("#appType").val();
+	if(searchType == "store"){
+		$("#appShop").addClass("a_cur");
+	}else{
+		$("#appGoods").addClass("a_cur");	
+	}
+	$("#keyword").focus();
+	$("#appShop").bind("click",function(){
+		$(this).addClass("a_cur").siblings().removeClass("a_cur");
+		$("#appType").val("store"); 
+		$("#keyword").focus(); 
+	});
+	$("#appGoods").bind("click",function(){
+		$(this).addClass("a_cur").siblings().removeClass("a_cur");
+		$("#appType").val("goods"); 
+		$("#keyword").focus(); 
+	});
+});
+function search_form(keyword,type) {
+	
+	var keyword=arguments[0];
+	var type=arguments[1];
+	if(keyword!=""&&keyword!=undefined){
+	   jQuery("#keyword").val(keyword);
+	}
+	if(type!=""&&type!=undefined){
+	    jQuery("#type").val(type);
+	}
+	jQuery("#J_TopSearchForm").submit();	
+	jQuery("#keyword").val("");
+}
+</script> 
+<div class="yg_header mb20" id="yg_header" style="margin-top:20px;"> 
+  <div id="yg_logo_tab" class="clearfix ygwrap">
+    <a href="$webPath/index.htm"><div class="s_logo fl" style="margin-top:-5px;"> </div></a> 
+     <div class="tejiatxt2" style="margin-top:20px;margin-left:-20px;">  
+    	全球招商
+    	<p id="blink" style="text-align:center;font-size: 14px;text-decoration:blink;color: #a90000;">火爆进行中</p>
+ </div>
+   
+    <form action="$!webPath/search.htm" onsubmit="" name="" id="J_TopSearchForm" method="post" class="search_box clearfix fl" style="margin-top:20px;">
+      <div class="zs_left fl"></div>
+      <div class="input_box fl">
+      	<div class="a_chos_list">
+            <span id="appGoods">商品</span>
+            <span id="appShop">商铺</span>
+        </div>
+        <input type="text" id="keyword" name="keyword" maxlength="80" class="search flc" autocomplete="off" style="height:22px;background:#FFF;margin-top:6px;">
+        <input type="hidden" id="appType" name="type" value="$!type"/>
+        <ul class="searchmenu" style="display: none;">
+        </ul>
+      </div>
+      <div class="zs_right fl"></div>
+      <div class="search_btn fl"></div>
+    </form>
+  </div>
+  <div class="yg_sites_tabtn"></div>
+</div>
+<script type = "text/javascript" ><!-- 文字闪烁效果 -->  
+function blinklink() {
+    if (!document.getElementById('blink').style.color) {
+        document.getElementById('blink').style.color = "red";
+    }
+    if (document.getElementById('blink').style.color == "red") {
+        document.getElementById('blink').style.color = "#333333";
+    } else {
+        document.getElementById('blink').style.color = "red";
+    }
+    timer = setTimeout("blinklink()", 400);
+}
+function stoptimer() {
+    clearTimeout(timer);
+} 
+blinklink()
+</script>
+

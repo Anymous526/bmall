@@ -1,0 +1,136 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="cont">
+  <div class="orderdetail">
+    <div class="orderh">兑换信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">兑换单号:</span><span>$!obj.igoOrderSn</span></li>
+       #if($!obj.igoStatus==-1)
+                  #set($status="已取消")
+                #end
+                #if($!obj.igoStatus==0)
+                  #set($status="待付款")
+                #end
+                #if($!obj.igoStatus==10)
+                  #set($status="线下支付待审核")
+                #end
+                #if($!obj.igoStatus==20)
+                  #set($status="已付款，待发货")
+                #end
+                #if($!obj.igoStatus==30)
+                  #set($status="已发货")        
+                #end                
+                #if($!obj.igoStatus==40)
+                #set($status="已收货完成")
+                #end     
+        <li><span class="ordertitle"> 兑换状态:</span><span>$!status</span></li>
+        <li><span class="ordertitle"> 兑换礼品金:</span><span>$!{obj.igoTotalGold}</span></li>
+        <li><span class="ordertitle">运费金额:</span><span><strong class="orange" style="padding-right:10px;">¥$!{obj.igoTransFee}</strong></span></li>
+        <li><span class="ordertitle">下单时间:</span><span>$!CommUtil.formatLongDate($!obj.addtime)</span></li>
+      </ul>
+    </div>
+    <div class="orderh">兑换详情</div>
+    <div class="orderhh">会员信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">会员名:</span><span>$!{obj.igoUser.username}</span></li>
+        <li><span class="ordertitle">会员Email:</span><span>$!{obj.igoUser.email}</span></li>
+        <li><span class="ordertitle">兑换留言:</span><span>$!{obj.igoMsg}</span></li>
+      </ul>
+    </div>
+   <div class="orderhh">支付信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">支付方式:</span><span>礼品金</span></li>
+        <li><span class="ordertitle">支付时间:</span><span>$!CommUtil.formatLongDate($!obj.igoPayTime)</span></li>
+        <li><span class="ordertitle">支付留言:</span><span>$!obj.igoPayMsg</span></li>
+      </ul>
+    </div>
+    <div class="orderhhh">收货人及发货信息</div>
+    <div class="orderul">
+      <ul>
+      #if($!obj.id > 110)
+        <li><span class="ordertitle">收货人姓名:</span><span>$!{obj.igoAddr.truename}</span></li>
+        <li><span class="ordertitle">所在地区:</span><span>$!{obj.igoAddr.province} $!{obj.igoAddr.city} $!{obj.igoAddr.area}</span></li>
+       <!--  <li><span class="ordertitle">邮政编码:</span><span>$!{obj.igoAddr.zip}</span></li> -->
+        <li><span class="ordertitle">电话号码:</span><span>$!{obj.igoAddr.telephone}</span></li>
+        <li><span class="ordertitle">详细地址:</span><span>$!{obj.igoAddr.areaInfo}</span></li>
+        #if($!obj.igoShipTime)
+        <li><span class="ordertitle">发货时间:</span><span>$!CommUtil.formatLongDate($!{obj.igoShipTime})</span></li>
+        #end
+        #if($!obj.ec)
+        	<li><span class="ordertitle">物流公司:</span><span>$!{obj.ec.companyName}</span></li>
+        #end
+        
+        #if($!obj.igoShipCode)
+        <li><span class="ordertitle">物流单号:</span><span>$!{obj.igoShipCode}</span></li>
+        #end
+        #if($!obj.igoShipContent)
+        <li><span class="ordertitle">发货说明:</span><span>$!{obj.igoShipContent}</span></li>
+        #end
+        #else
+       <li><span class="ordertitle">收货人姓名:</span><span>$!{address.truename}</span></li>
+        <li><span class="ordertitle">所在地区:</span><span>$!{address.area.parent.parent.areaname} $!{address.area.parent.areaname} $!{address.area.areaname}</span></li>
+        <li><span class="ordertitle">邮政编码:</span><span>$!{address.zip}</span></li>
+        <li><span class="ordertitle">电话号码:</span><span>$!{address.mobile}</span></li>
+        <li><span class="ordertitle">详细地址:</span><span>$!{address.areaInfo}</span></li>
+        #if($!obj.igoShipTime)
+        <li><span class="ordertitle">发货时间:</span><span>$!CommUtil.formatLongDate($!{obj.igoShipTime})</span></li>
+        #end
+        #if($!obj.ec)
+        	<li><span class="ordertitle">物流公司:</span><span>$!{obj.ec.companyName}</span></li>
+        #end
+        
+        #if($!obj.igoShipCode)
+        <li><span class="ordertitle">物流单号:</span><span>$!{obj.igoShipCode}</span></li>
+        #end
+        #if($!obj.igoShipContent)
+        <li><span class="ordertitle">发货说明:</span><span>$!{obj.igoShipContent}</span></li>
+        #end
+        #end
+      </ul>
+    </div>
+    <div class="orderhhh">兑换商品信息</div>
+    <div class="ordetable">
+      <table width="95%" border="0" cellspacing="0" cellpadding="0" class="orde_table">
+        <tr style="border-bottom:1px dotted #CCEAF4">
+          <td width="15%">&nbsp;</td>
+          <td width="40%"><strong>礼品信息</strong></td>
+          <td width="15%"><strong>兑换数量</strong></td>
+          <td><strong>兑换总计礼品金</strong></td>
+        </tr>
+        <tr style="border-bottom:1px dotted #CCEAF4"> 
+           #if($!obj.ig.igGoodsImg)
+             #set($img="$!{config.imagewebserver}/$!obj.ig.igGoodsImg.path/$!obj.ig.igGoodsImg.name")
+           #else
+             #set($img="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+           #end
+          <td><img src="$!img" width="45" height="45" /></td>
+          <td><a href="$!webPath/exchange/exchange_view.htm?id=$!obj.ig.id" target="_blank" class="blue2">$!obj.ig.igGoodsName</a></td>
+          <td>$!obj.igoTotalIntegral</td>
+          <td>$!obj.igoTotalGold</td>
+        </tr>
+      </table>
+    </div>
+    <div class="orderhhh">物流信息</div>
+    <div class="orderul_record">
+      <ul>
+        #foreach($info in $!transInfo)
+        <li><strong>$!info.time </strong><strong>$!info.context</strong></li>
+        #end
+      </ul>
+    </div>
+<div class="submit">
+    <input name="go" type="button" value="返回列表" onclick="window.location.href='$!webPath/admin/integral_order.htm'" />
+  </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+#if($!obj.apType=="img")  
+  document.write("<div style='float:left;overflow:hidden;'>");
+  document.write("<a href='$!webPath/advert_redirect.htm?url=$!obj.apAccUrl&id=$!obj.advId' target='_blank'>");
+  document.write("<img width='$!obj.apWidth' height='$!obj.apHeight' src='$!{config.imagewebserver}/$!obj.apAcc.path/$!obj.apAcc.name' style='border:none;' />");
+  document.write("</a>");
+  document.write("</div>"); 
+#end
+#if($!obj.apType=="slide")
+  document.write("<script\/>");
+  document.write("jQuery('document').ready(function(){");  
+document.write("jQuery('#advert').KinSlideshow({btn:{btn_bgColor:'#FFFFFF',btn_bgHoverColor:'#FF8921',btn_fontColor:'#000000',btn_fontHoverColor:'#EEEEEE',btn_borderColor:'#666666',btn_borderHoverColor:'#FFFFFF',btn_borderWidth:1}});");
+  document.write("})");
+  document.write("</script>");
+  document.write("<div class='hdp' id='advert'><!-- style='visibility:hidden;' -->");
+  document.write("<ul>");
+  #foreach($adv in $obj.advs)
+  document.write("<a href='$!webPath/advert_redirect.htm?url=$!adv.adUrl&id=$!adv.id' target='_blank'><img src='$!{config.imagewebserver}/$!adv.adAcc.path/$!adv.adAcc.name' width='$!obj.apWidth' height='$!obj.apHeight' /></a>");
+  #end
+  document.write("</ul>");
+  document.write("</div>");
+#end
+#if($!obj.apType=="scroll")
+ #if($obj.advs.size()>0)
+  document.write("<div class='conti_left' id='advert_left'><span></span></div>");
+  document.write("<div class='conti'>");
+  document.write("<ul>");
+  #foreach($adv_list in $CommUtil.toRowChildList($obj.advs,4))
+  #foreach($adv in $adv_list)
+  document.write("<li>");
+  document.write("<a href='$!webPath/advert_redirect.htm?url=$!adv.adUrl&id=$!adv.id' target='_blank'><img src='$!{config.imagewebserver}/$!adv.adAcc.path/$!adv.adAcc.name' width='$!obj.apWidth' height='$!obj.apHeight' /></a>");
+  document.write("</li>");
+  #end
+  #end
+  document.write("</ul>");
+  document.write("</div>");
+  document.write("<div class='conti_right' id='advert_right'><span></span></div>");
+  #end
+#end
+#if($!obj.apType=="text")  
+  document.write("<div style='width='$!obj.apWidth';height='$!obj.apHeight';float:left;overflow:hidden;'>");
+  document.write("<a href='$!webPath/advert_redirect.htm?url=$!obj.apAccUrl&id=$!obj.advId' target='_blank'>");
+  document.write("$!obj.apText");
+  document.write("</a>");
+  document.write("</div>"); 
+#end

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.SmsVerificationMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.SmsVerification" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sms_phone" property="smsPhone" jdbcType="VARCHAR" />
+    <result column="sms_create_date" property="smsCreateDate" jdbcType="VARCHAR" />
+    <result column="sms_count" property="smsCount" jdbcType="INTEGER" />
+    <result column="sms_code" property="smsCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sms_phone, sms_create_date, sms_count, sms_code
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.SmsVerificationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_sms_verification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_sms_verification
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_sms_verification
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.SmsVerificationExample" >
+    delete from amall_sms_verification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.SmsVerification" >
+    insert into amall_sms_verification (id, sms_phone, sms_create_date, 
+      sms_count, sms_code)
+    values (#{id,jdbcType=BIGINT}, #{smsPhone,jdbcType=VARCHAR}, #{smsCreateDate,jdbcType=VARCHAR}, 
+      #{smsCount,jdbcType=INTEGER}, #{smsCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.SmsVerification" >
+    insert into amall_sms_verification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="smsPhone != null" >
+        sms_phone,
+      </if>
+      <if test="smsCreateDate != null" >
+        sms_create_date,
+      </if>
+      <if test="smsCount != null" >
+        sms_count,
+      </if>
+      <if test="smsCode != null" >
+        sms_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="smsPhone != null" >
+        #{smsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCreateDate != null" >
+        #{smsCreateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCount != null" >
+        #{smsCount,jdbcType=INTEGER},
+      </if>
+      <if test="smsCode != null" >
+        #{smsCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.SmsVerificationExample" resultType="java.lang.Integer" >
+    select count(*) from amall_sms_verification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_sms_verification
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.smsPhone != null" >
+        sms_phone = #{record.smsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsCreateDate != null" >
+        sms_create_date = #{record.smsCreateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsCount != null" >
+        sms_count = #{record.smsCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsCode != null" >
+        sms_code = #{record.smsCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_sms_verification
+    set id = #{record.id,jdbcType=BIGINT},
+      sms_phone = #{record.smsPhone,jdbcType=VARCHAR},
+      sms_create_date = #{record.smsCreateDate,jdbcType=VARCHAR},
+      sms_count = #{record.smsCount,jdbcType=INTEGER},
+      sms_code = #{record.smsCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.SmsVerification" >
+    update amall_sms_verification
+    <set >
+      <if test="smsPhone != null" >
+        sms_phone = #{smsPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCreateDate != null" >
+        sms_create_date = #{smsCreateDate,jdbcType=VARCHAR},
+      </if>
+      <if test="smsCount != null" >
+        sms_count = #{smsCount,jdbcType=INTEGER},
+      </if>
+      <if test="smsCode != null" >
+        sms_code = #{smsCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.SmsVerification" >
+    update amall_sms_verification
+    set sms_phone = #{smsPhone,jdbcType=VARCHAR},
+      sms_create_date = #{smsCreateDate,jdbcType=VARCHAR},
+      sms_count = #{smsCount,jdbcType=INTEGER},
+      sms_code = #{smsCode,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

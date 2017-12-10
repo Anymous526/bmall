@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/public.css" />
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/specialty.css" /> 
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<style>
+.ttc-wei4{height:72px;}
+</style>
+<script>
+$(document).ready(function(e) {
+     $("#ttc-wei2 li:eq(3),#ttc-wei2 li:eq(7)").css("margin-right","0");
+}); 
+</script> 
+<script type="text/javascript">
+$(function(){
+var imgWid = 0 ;
+var imgHei = 0 ; //变量初始化
+var big = 1.2;//放大倍数
+
+$("#ttc-wei2 li").hover(function(){
+	
+     $(this).find("img").stop(true,true);
+ 
+     imgWid=294;imgHei=200;
+     
+	imgWid2 = imgWid * big;//放大后的宽度
+	imgHei2 = imgHei * big;
+  
+    $(this).find("img").css({"z-index":2});
+
+    $(this).find("img").animate({"width":353,"height":240,"margin-left":-36.75,"margin-top":-30});
+
+ },function(){$(this).find("img").stop().animate({"width":294,"height":200,"margin-left":0,"margin-top":0,"z-index":1});});
+})
+</script>
+<style>
+body{overflow-x: hidden;}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")   
+$!httpInclude.include("/specialpricehead.htm")
+<div class="shop_menu default_color">
+	<div class="shop_menu_nav" style="width:1200px; margin:0 auto">
+        <ul>
+          <li><a href="$!webPath/specialty.htm">特产首页</a></li>
+          	#if($!floorList.size()>0)
+				#foreach($floor in $floorList)
+					<li><a href="$!webPath/specialty_area.htm?floorId=$!floor.id">$!floor.floorname</a></li>
+				#end
+			#end
+        </ul>
+	</div>
+</div>  
+ 
+<!-- <div class="sp_big_banner"> 
+    <div class="slideBox">
+      <div class="hd" style="margin-top:55px;">
+        <ul>
+        	#if($obj)
+  			#foreach($adv in $obj.advs)
+          <li></li>
+          	#end
+        	#end
+        </ul>
+      </div>
+      <div class="bd">
+        <ul id="wei21tc">
+        #if($obj)
+  		#foreach($adv in $obj.advs)
+          <li style="background: url($!{config.imagewebserver}/$!adv.adAcc.path/$!adv.adAcc.name) 50% 0px no-repeat;"></li>
+        #end
+        #end  
+        </ul>
+      </div>
+    </div> 
+</div>   -->
+
+
+
+
+
+<div class="sp_big_banner"> 
+    <div class="slideBox">
+      <div class="hd" style="margin-top:55px;">
+        <ul>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
+      <div class="bd">
+        <ul id="wei21tc">
+          <li><img src="$!webPath/assets/img/tubanner3.png" /></li>
+          <li><img src="$!webPath/assets/img/tubanner1.jpg" /></li>
+          <li><img src="$!webPath/assets/img/tubanner3.jpg" /></li>
+        </ul>
+      </div>
+    </div> 
+</div>  
+
+
+
+
+<div class="w100 bg_fff"> 
+  <div class="w1200"> 
+  <div class="hwfloor theme0" style="margin-top: 10px;">
+  <div class="ttc-wei"><span class="ttc-wei1">生活的橱窗</span><span class="ttc-wei0">精彩展示每一天！</span></div>
+  <ul id="ttc-wei2">
+  #foreach($goods in $!gds)
+  		#set($gmp = $!goods.goodsMainPhoto)
+        #set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+  		<li title="$!goods.goodsName" onclick="javascript:window.location.href='$!goods_url'">
+  			<img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" />
+  			<div class="ttc-wei3">
+	  			<p class="ttc-wei4">$!goods.goodsName</p>
+	  			<p class="ttc-wei5">
+	  			#if($!goods.goodsCurrentPrice)
+          				<i>¥</i>$!goods.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!goods.goodsPrice
+          				#end 
+          				<span class="in_goodsC_price">¥$!goods.goodsPrice</span></p>
+	  			</p>
+  			</div>
+  		</li>
+  #end		
+  </ul> 
+  </div>
+  
+  <div style="width:100%; display:block; overflow:hidden; margin-top: 50px;">	
+  	#if($!floorList.size()>0)
+		#foreach($floor in $!floorList)
+		#if($!floor.goodsList.size()>0)
+    <div class="hwfloor theme${velocityCount}" style="width:100%; display: block; margin-top:50px;">
+     
+      <div class="ttc-weil"><span class="ttc-wei1"><div id="lou"><!-- ${velocityCount}F --></div>$!floor.floorname</span><span class="ttc-wei0">
+      			#foreach($area in $!floor.areas)
+      				<a href="$!webPath/specialty_province.htm?areaId=$!area.id">$!area.areaname</a>
+      			#end
+      			</span>
+      			 <div class="floor_more">
+        			<a href="$!webPath/specialty_area.htm?floorId=$!floor.id" style="color:#666">更多>></a>
+     			 </div>
+      </div>
+  
+      <div class="floor_left"> 
+        <a href="$!webPath/specialty_area.htm?floorId=$!floor.id"><img src="assets/img/ttc21_${velocityCount}.jpg"/></a>
+      </div>
+        <dl>
+        	#foreach($goods in $floor.goodsList)
+          <dd>
+          	#set($gmp = $!goods.goodsMainPhoto)
+          	#set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+          	<a href="$!goods_url">
+            	<span class="h_list_fl_img"><img title="$goods.goodsName" src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" /></span>
+                <span class="h_list_fl_name" style="width:64%; margin: 0 auto;text-align:left;margin-top:8px;" title="$goods.goodsName">$goods.goodsName</span>
+                <span class="h_list_price">
+                	<!-- #if($!goods.goodsCurrentPrice)
+                	<i class="a_pri">¥$!goods.goodsCurrentPrice</i>
+                	<i class="y_pri">¥$!goods.goodsPrice</i></span>
+                	#else
+                	<i class="a_pri">¥$!goods.goodsPrice</i></span>
+                	#end -->
+                	#if($!goods.goodsCurrentPrice)
+          				<i>¥</i>$!goods.goodsCurrentPrice 
+          				#else
+          				<i>¥</i>$!goods.goodsPrice
+          				#end 
+                	
+                	<span class="in_goodsC_price">¥$!goods.goodsPrice</span>
+                </span>
+            </a>
+          </dd>
+          	#end
+        </dl>
+    </div>
+    	#end
+		#end
+	#end
+</div>
+
+  </div>
+</div> 
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script>
+<script src="$!webPath/assets/js/jquery.SuperSlide.2.1.1.js"></script> 
+  <script type="text/javascript">
+    $(".slideBox,.slideBox2").slide({mainCell:".bd ul",effect:"leftLoop",autoPlay:true,});
+  </script>
+<script type="text/javascript" src="$!webPath/assets/js/animatescroll.js"></script><!-- 顺序别乱动哈 ，必须放低部-->
+
+$!httpInclude.include("/footer.htm")
+
+<div class="m_side_btns" id="m_side_btns"> 
+	<a class="side_btn toTopBtn" href="javascript:;" id="returnToTop" style="display:none;">回 到顶 部</a> 
+	<a class="side_btn surveyBtn" href="$!webPath/survey.htm">问 卷调 查</a> 
+	<a class="side_btn helpBtn" href="http://help.amall.com/help/help_c.html">帮 助中 心</a> 
+	<a class="side_btn fbBtn" href="$!webPath/feedbacks.htm">意 见反 馈</a> 
+</div>   
+<script src="$!webPath/assets/js/goto_top.js" type="text/javascript"></script> <!-- 返回页面顶部 --> 
+</body>
+</html>
+
+

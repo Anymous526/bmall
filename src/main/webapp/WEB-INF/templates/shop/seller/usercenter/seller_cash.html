@@ -1,0 +1,543 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>提现申请 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com"/>
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved"/>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet"/>
+<link href="http://pc2.amallcdn.cn/assets/css/my_asset.css" type="text/css" rel="stylesheet" />
+<script src="$!webPath/assets/js/luhm.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=buyer_cash")
+
+<div class="s_m"> 
+	<div class="buyer_position">
+        <div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>申请提现</span></div></div>
+        <div class="productmain">
+	      <div class="container" style="height:37px">
+             <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href='$!webPath/seller/seller_cash.htm' >提现申请</a></li>
+                <li class=""><a href='$!webPath/seller/seller_cash_list.htm'>申请列表</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <!-- <div class="addnav">
+                <form action="$!webPath/seller/seller_cash_save.htm" method="post" name="theForm" id="theForm">
+                  <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                    <tr>
+                      <td align="right" valign="top" class="modifysp">可提余额：</td>
+                      <td  class="px10">¥$!cashAmount</td>
+                    </tr>
+                    <tr>
+                      <td width="102" align="right" valign="top" class="modifysp"><span>提现方式：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td width="603"  class="px10">
+                      	<select name="cashPayment" id="cash_payment" style="height: 24px;">
+                          <option value="" selected="selected" style="height: 24px;">请选择支付方式</option>
+                          <option value="alipay" style="height: 24px;">支付宝</option>
+                        </select>
+                       </td>
+                    </tr>
+                    <tr>
+                      <td width="102" align="right" valign="top" class="modifysp"><span>提现金额：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td  class="px10">
+                      	<span class="setinputtext">
+                        	<input name="cashAmount" type="text" id="cash_amount" style="" />
+                        </span>
+                      </td>
+                    </tr>
+                    <tr id="cash_user_tr" style="display:none;">
+                      <td align="right" valign="top" class="modifysp"><span>收款人姓名：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td  class="px10">
+                      	<span class="setinputtext">
+                        	<input name="cashUsername" type="text" id="cash_userName" style="display:none;" />
+                        </span>
+                      </td>
+                    </tr>
+                    <tr id="cash_bank_tr" style="display:none;">
+                      <td align="right" valign="top" class="modifysp"><span>收款银行：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td  class="px10"><span class="setinputtext">
+                        <input name="cashBank" type="text" id="cash_bank" style="display:none;" />
+                        </span></td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top" class="modifysp"><span>收款账号：</span><span><strong class="red" style="font-size:14px;">* </strong></span></td>
+                      <td  class="px10"><span class="setinputtext">
+                        <input name="cashAccount" type="text" id="cash_account" style=""/>
+                        </span></td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top" class="modifysp"><span>提现备注：</span></td>
+                      <td  class="px10"><span class="setinput">
+                        <textarea name="cashInfo" cols="40" rows="6" id="cashInfo" style="border: 1px solid #a7a7a7;"></textarea>
+                        </span></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td class="px10"><span class="setsub">
+                        <input name="" type="submit"  value="提交"  class="input_submit" style="cursor:pointer;height: 29px;border: 0;"/>
+                        </span></td>
+                    </tr>
+                  </table>
+                </form>
+              </div> -->
+              <div class="productmain" style="border:1px solid #acc7e2">
+			<div class="tixian_tit"><b style="font-size:14px">平台公司：深圳市天使互助网络有限公司</b></div>
+			<!-- <div class="tixian_list"><a style="color:red;padding-left:10px;" href="$!webPath/buyer/tixian_list.htm">提现记录</a></div> -->
+			<input type="hidden" id="enableCash" value="$!fee" />
+			<form action="$!webPath/seller/seller_cash_save.htm" method="post" id="theForm">
+			
+			<div class="tixianuser">
+				<span>姓 名：$!user.truename</span>
+				<input type="hidden" name="cashUsername"  value="$!user.truename"/>
+				<span>可提余额：¥<i id="xu_cashAmount" style="font-size:14px;padding-left:4px;">$!cashAmount</i></span>
+				<span>提现方式:<label><input type="radio" checked="checked" data_role="yh" name="cashPayment"  id="check_item" value="bank"/>银行卡 </label>
+					<label><input type="radio" name="cashPayment" data_role="zfb"  id="" value="alipay"/>支付宝</label>
+				</span>
+			</div>
+			
+			<div class="bank">
+				
+				<div class="tixian_li">
+					<div class="left">提现金额：</div>
+					<div class="right"><input type="text" class="tixianinput" name="cashAmount" id="cashFee" placeholder="请输入金额" />  元
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">银行所在城市：</div>
+					<div class="right">
+						<input type="text" name="cashBankCity" id=cashBankCity class="tixianinput" placeholder="北京" /> 
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">银行名称：</div>
+					<div class="right"><!--<input type="text" name="address" id="address" class="tixianinput" placeholder="中国银行华强北支行" value="$!userCashDepositLog.address"/> -->
+						<select class="tixianinput" style="width:306px; height:40px;" name="cashBank">
+							<option value="中国银行">中国银行</option>
+							<option value="中国工商银行">中国工商银行</option>
+							<option value="中国农业银行">中国农业银行</option>
+							<option value="中国建设银行">中国建设银行</option>
+							<option value="招商银行">招商银行</option>
+							<option value="中国民生银行">中国民生银行</option>
+							<option value="中国光大银行">中国光大银行</option>
+							<option value="中信银行">中信银行</option>
+							<option value="中国邮政储蓄银行">中国邮政储蓄银行</option>
+							<option value="交通银行">交通银行</option>
+							<option value="兴业银行">兴业银行</option>
+							<option value="浦发银行">浦发银行</option>
+							<option value="华夏银行">华夏银行</option>
+							<option value="平安银行">平安银行</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">银行卡号：</div>
+					<div class="right"><input type="text" name="cashAccount" id="cardId" class="tixianinput" placeholder="输入卡号" value="$!userCashDepositLog.cardId"/>
+					<!-- <input type="hidden" name="cardId1" id="cardId1" class="tixianinput" placeholder="输入卡号" value="$!userCashDepositLog.cardId"/> -->
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">手机号码：</div>
+					<div class="right"><input type="text" maxlength="11"  id="cardId1" class="tixianinput" placeholder="输入手机号码" value=""/>
+					
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">验证码：</div>
+					<div class="right"><input type="text" class="tixianinput"  id="smsCode" placeholder="" style="width:188px;" /><input class="sendsms" id="sendSms" type="button" value="获取验证码">
+					</div>
+				</div>
+			
+			<div class="tixian_li" style="margin-top: 30px;">
+				<input class="tixianbtn" type="button" id="subBtn" value="申请提现" />
+			</div>
+			</div>
+			</form>	
+			<!-- 支付宝提现 start -->
+			<form action="$!webPath/seller/seller_cash_save.htm" method="post" id="theForm2">
+			<input type="hidden" name="cashUsername"  value="$!user.truename"/>		
+			<div class="alipay"style="display:none;">				
+				<div class="tixian_li">
+					<div class="left">提现金额：</div>
+					<div class="right"><input type="text" class="tixianinput" name="cashAmount" id="cashFee2" placeholder="请输入金额" />  元
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">支付宝账号：</div>
+					<div class="right"><input type="text" name="cardId" id="zfbNum"   class="tixianinput" placeholder="请输入账号" value=""/>
+				
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">账号人姓名：</div>
+					<div class="right"><input type="text" name="cardName" id="cardName2"  class="tixianinput" placeholder="请输入姓名" value=""/>
+					<!-- <input type="hidden" name="cardId1" id="cardId1" class="tixianinput" placeholder="输入卡号" value="$!userCashDepositLog.cardId"/> -->
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">手机号码：</div>
+					<div class="right"><input type="text" name="cardId1"  id="phNum" maxlength="11" class="tixianinput" placeholder="请输入手机号码" value=""/>
+					
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">验证码：</div>
+					<div class="right"><input type="text" name="smsCode" class="tixianinput smscode"  placeholder="短信验证码" style="width:188px;" /><input class="sendsms" id="sendSms_s" type="button" value="获取验证码">
+					</div>
+				</div>
+			
+			<div class="tixian_li" style="margin-top: 30px;">
+				<input class="tixianbtn" type="button" id="subBtn2" value="申请提现" />
+			</div>
+			</div>
+			</form>
+			<!-- 支付宝提现end -->	
+			<div class="tixiantxt">
+				<p><strong>Amall商城全面保障您的资金安全</strong></p>
+				<p style="text-indent:2em">Amall商城为你量身定制的账户系统与支付服务系统。一方面，为Amall商城平台开发定制账户系统，提供系统外包运营服务；另一方面，为Amall商城平台提供支付和结算服务，帮助平台和用户实现充值、取现、资金划拨等服务；投资人资金划入虚拟账户后，平台无法触碰资金，避免了资金池模式。但是，我们对投资风险（包括但不限于平台或其他借款人违约）不承担任何责任，投资需谨慎。</p>
+			</div>	
+    </div>
+            </div>
+          </div>
+  </div>
+  </div>
+  </div>
+$!httpInclude.include("/footer.htm") 
+</body>
+</html> 
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<!-- <script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({
+       rules: {
+			cashPayment:{required:true},
+			cashAmount:{required:true,range:[0.01,$!{cashAmount}]},
+			cashUserName:{required:true},
+			cashBank:{required:true},
+			cashAccount:{required:true},
+		  },
+	   messages: {
+		    cashPayment:{required:"支付方式不能为空"},
+			cashAmount:{required:"提现金额不能为空",range:"请输入大于{0}-{1}的金额数字"},
+			cashUserName:{required:"收款人不能为空"},
+			cashBank:{required:"收款银行不能为空"},
+			cashAccount:{required:"收款账号不能为空"},
+	     }
+  }); 
+ jQuery("#cash_payment").change(function(){
+    var val=jQuery(this).val();
+	if(val=="outline"){
+	  jQuery("tr[id^=cash_]").show();
+	  jQuery("tr[id^=cash_] input").show();
+	}else{
+	  jQuery("tr[id^=cash_]").hide();
+	   jQuery("tr[id^=cash_] input").hide();
+	}
+  });
+});
+</script> -->
+<script type="text/javascript">
+$(document).ready(function(){
+		
+	function checkInfo()
+	{
+		var cashFee = $("#cashFee").val();
+		
+		var enableCash = $("#xu_cashAmount").html()
+		var subValue= enableCash - cashFee;
+		
+		if(cashFee == "")
+		{
+			$("#cashFee").val("");
+			$("#cashFee").attr("placeholder", "请输入提现金额");
+			$("#cashFee").focus();
+			return false;
+		}
+		
+		if(parseFloat(cashFee) < 10){
+			$("#cashFee").val("");
+			$("#cashFee").attr("placeholder", "提现金额不能小于10元");
+			return false;
+		}
+		
+		if(subValue < 0)
+		{
+			$("#cashFee").val("");
+			$("#cashFee").attr("placeholder", "超出可提现金额");
+			return false;
+		}
+		
+		if($("#cardCity").val() == "")
+		{
+			$("#cardCity").val("");
+			$("#cardCity").attr("placeholder", "开户行所在城市必填");
+			return false;
+		}
+		
+		if($("#cardId").val() == "")
+		{
+			$("#cardId").val("");
+			$("#cardId").attr("placeholder", "请输入卡号");
+			return false;
+		}
+		if($("#cardId1").val() == null || $("#cardId1").val() == "")
+		{
+			if(!luhmCheck($("#cardId").val()))
+			{
+				$("#cardId").val("");
+				$("#cardId").attr("placeholder", "卡号不符合规范");
+				return false;
+			}
+		}
+		
+		
+		
+		if($("#cardName").val() == "")
+		{
+			$("#cardName").val("");
+			$("#cardName").attr("placeholder", "请输入卡号对应的用户名");
+			return false;
+		}
+		
+		
+		return true;
+	}
+	
+	
+	 $("#subBtn").click(function(){
+		if(!checkInfo())
+		{
+			return false;
+		}
+		//$("#theForm").submit();
+		 var smscode = $("#smsCode").val();
+		
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/verify_sms_code.htm",
+			data : {"smscode":smscode},
+			success : function(ret) {
+				//正确才能注册
+				if(ret == "true")
+				{
+					$("#theForm").submit();
+				}
+				else
+				{
+					alert("验证码错误或验证码超时");
+				}
+					
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("验证码错误或验证码超时");
+				refreshCode();
+			}
+		}); 
+		
+		
+	}); 
+	
+	$("#sendSms").click(function(){
+		
+		if(!checkInfo())
+		{
+			return false;
+		}
+		
+		$("#sendSms").attr("disabled",true);
+		var messageArray = new Array();
+		messageArray[0] = "请输入手机号";
+		messageArray[1] = "手机号已注册";
+		messageArray[2] = "今天短信次数超限,请明天再次尝试";
+		messageArray[3] = "两次发送间隔太短，请稍候再试";
+		messageArray[4] = "短信发送失败，请再次尝试";
+		messageArray[5] = "短信发送成功，请查收";
+		messageArray[6] = "请填写账号注册手机号";
+		
+		//var phoneNum = "$!user.username";
+		var phoneNum = $("#cardId1").val();
+		
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/send_sms.htm",
+			data : {"phoneNum":phoneNum,"forgot":"true"},
+			success : function(ret) {
+				$("#sendSms").attr("disabled",false);
+					sendRemainTime(messageArray[ret]);
+					
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				//alert(errorThrown);
+				$("#smsCode").attr("placeholder", "短信验证码发送失败");
+			}
+		});
+	});
+		 
+	function sendRemainTime(str){ 
+		$("#smsCode").attr("placeholder", str);
+	} 
+	
+	//支付宝是支付宝还是银行
+	$("input[name='cashPayment']").click(function(){
+		var data_role = $(this).attr("data_role");
+		if(data_role == "zfb"){
+			$(".alipay").show();
+			$(".bank").hide();
+		}else{
+			$(".alipay").hide();
+			$(".bank").show();
+		}
+	});
+	
+	function checkInfo2()
+	{
+		var cashFee = $("#cashFee2").val();
+		
+		var enableCash = $("#xu_cashAmount").html()
+		var subValue= enableCash - cashFee;
+		
+		if(cashFee == "")
+		{
+			$("#cashFee2").val("");
+			$("#cashFee2").attr("placeholder", "请输入提现金额");
+			$("#cashFee2").focus();
+			return false;
+		}
+		
+		if(parseFloat(cashFee) < 10){
+			$("#cashFee2").val("");
+			$("#cashFee2").attr("placeholder", "提现金额不能小于10元");
+			return false;
+		}
+		
+		if(subValue < 0)
+		{
+			$("#cashFee2").val("");
+			$("#cashFee2").attr("placeholder", "超出可提现金额");
+			return false;
+		}
+		
+		if($("#zfbNum").val() == "")
+		{
+			$("#zfbNum").val("");
+			$("#zfbNum").attr("placeholder", "请输入卡号");
+			return false;
+		}
+		
+		
+		
+		if($("#cardName2").val() == "")
+		{
+			$("#cardName2").val("");
+			$("#cardName2").attr("placeholder", "请输入账号对应的姓名");
+			return false;
+		}
+		var phNum =$("#phNum").val();
+		if(phNum == ""){
+			$("#phNum").val("");
+			$("#phNum").attr("placeholder", "请输入手机号码");
+			return false;
+		}
+		var reg = /^1\d{10}$/g;
+		if(!reg.test(phNum)){
+			$("#phNum").val("");
+			$("#phNum").attr("placeholder", "请输入正确的手机号码");
+			return false;
+		}
+		
+		
+		return true;
+	}
+	
+	
+	 $("#subBtn2").click(function(){
+		if(!checkInfo2())
+		{
+			return false;
+		}
+		//$("#theForm").submit();
+		 var smscode = $(".smscode").val();
+		
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/verify_sms_code.htm",
+			data : {"smscode":smscode},
+			success : function(ret) {
+				//正确才能注册
+				if(ret == "true")
+				{
+					$("#theForm2").submit();
+				}
+				else
+				{
+					alert("验证码错误或验证码超时");
+				}
+					
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("验证码错误或验证码超时");
+				refreshCode();
+			}
+		}); 
+		
+		
+	}); 
+	
+	$("#sendSms_s").click(function(){
+		
+		if(!checkInfo2())
+		{
+			return false;
+		}
+		
+		$("#sendSms_s").attr("disabled",true);
+		var messageArray = new Array();
+		messageArray[0] = "请输入手机号";
+		messageArray[1] = "手机号已注册";
+		messageArray[2] = "今天短信次数超限,请明天再次尝试";
+		messageArray[3] = "两次发送间隔太短，请稍候再试";
+		messageArray[4] = "短信发送失败，请再次尝试";
+		messageArray[5] = "短信发送成功，请查收";
+		messageArray[6] = "请填写账号注册手机号";
+		
+		//var phoneNum = "$!user.username";
+		var phoneNum = $("#phNum").val();
+		
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/send_sms.htm",
+			data : {"phoneNum":phoneNum,"forgot":"true"},
+			success : function(ret) {
+				$("#sendSms_s").attr("disabled",false);
+					sendRemainTime(messageArray[ret]);
+					
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				//alert(errorThrown);
+				$(".smscode").attr("placeholder", "短信验证码发送失败");
+			}
+		});
+	});
+		 
+	function sendRemainTime(str){ 
+		$(".smscode").attr("placeholder", str);
+	} 
+	
+});
+</script>

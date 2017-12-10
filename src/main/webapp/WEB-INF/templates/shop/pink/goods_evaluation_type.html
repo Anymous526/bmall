@@ -1,0 +1,185 @@
+
+            <div class="tabcon" id="normalcon_c">
+                <div class="sublist">
+                	<!--table header 开始-->
+                    <div class="comments-table">
+                    	<div class="com-table-header">
+                        	<span class="item column1">评价心得</span>
+                            <span class="item column2">顾客满意度</span>
+                            <span class="item column3">购买信息</span>
+                            <span class="item column4">评论者</span>
+                        </div>
+                    </div>
+                    <!--table header 结束-->
+                    
+                    
+                    <!--评论循环1 开始-->
+                    #foreach($eva in $objs)
+                    <div class="com-table-main">
+                    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td class="column1_1">
+                            	<div class="p-comment">
+                                	<span class="time" style="width: 100%;display: block;">$!CommUtil.formatLongDate($!eva.addtime)</span>
+                                	<span class="desc">$!eva.evaluateInfo</span>
+                                </div>
+                            </td>
+							#set($grade = $!{eva.descriptionEvaluate})
+							#if($!grade == 1.00)
+								#set($cla = 'grade-star g-star1')
+							#elseif($!grade == 2.00)
+								#set($cla = 'grade-star g-star2')
+							#elseif($!grade == 3.00)
+								#set($cla = 'grade-star g-star3')
+							#elseif($!grade == 4.00)
+								#set($cla = 'grade-star g-star4')
+							#elseif($!grade == 5.00)
+								#set($cla = 'grade-star g-star5')
+							#end
+                            <td class="column2"><div class="$!cla">&nbsp;</div></td>
+                            <td class="column3">
+                            	<div class="type-item">
+                                	<span class="label">$!{eva.goodsSpec}</span> 
+                            		<span class="text">$!{eva.goodsSpec}</span>	
+                                </div>
+                             </td>
+                            <td class="column4">
+                            	#if(!$!{eva.evaluate_user.photo})
+                            		#set($pSrc = "$!webPath/assets/img/user1.png")
+                            	#else
+                            		<!-- #set($userPhoto = $!{eva.evaluate_user.photo})
+                            		#set($pSrc = "$!webPath/$!{userPhoto.path}/$!{userPhoto.name}") -->
+                            		#set($userPhoto = $!{eva.evaluate_user.photo})
+                            		#set($pSrc = "$!{config.imagewebserver}/$!{userPhoto.path}/$!{userPhoto.name}")
+                            	#end
+                            	<div style="width:66px;margin:0 auto;">
+                            	<img src="$!pSrc" width="64" height="64" />
+                            	</div>
+                                <span class="xu_username"><a href="#">$!{eva.evaluate_user.truename}</a></span>
+                                #set($level = $!{eva.evaluate_user.creditlevel})
+	                            #if($!level == 1)
+	                            	<span class=""><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 2)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 3)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 4)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 5)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_0.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 6)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 7)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 8)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 9)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 10)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_1.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 11)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 12)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 13)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 14)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /></span>
+	                            #elseif($!level == 15)
+	                             	<span class="" ><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /><img src="$!webPath/resources/style/common/images/level_2.gif" width="15" height="14" /></span>
+	                            #end
+                            </td>
+                          </tr>
+                        </table>
+                        
+                        #if($!eva.evaluateSellerInfo)
+						<div class="message-box">
+                          <span>【客服回复：】$!eva.evaluateSellerInfo</span>
+                          <div class="triangle-css3 transform ie-transform-filter"></div>
+                        </div>
+                        #end                                    
+                    </div>  
+                    #end 
+                     <!--评论循环1 结束-->
+                     <div class="bottom_page">
+						<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+						<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+						$!gotoPageAjaxHTML
+					</div>
+                </div>
+            </div>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".user_rep a").toggle(		
+			function(){
+				var evaid = $(this).attr("id");
+				var value = $(this).attr("value");
+				var url = "$!webPath/evaOpr.htm";
+				var opr = "add";
+				jQuery.ajax({
+					type : 'POST',
+					url : url,
+				    data : {"evaid":evaid,"value":value,"opr":opr},
+				    success : function(data){
+				    	alert(data);
+				    	$(this).next().html(data);
+				    },
+				    error : function(){
+				    	alert("请检查内部错误");
+				    }
+				 });
+				 
+		  },function(){
+			  var evaid = $(this).attr("id");
+			  var value = $(this).attr("value");
+			  var url = "$!webPath/evaOpr.htm";
+			  var opr = "subs";
+			  jQuery.ajax({
+					type : 'POST',
+					url : url,
+				    data : {"evaid":evaid,"value":value,"opr":opr},
+				    success : function(data){
+				    	alert(data);
+				    	$(this).next().html(data);
+				    },
+				    error : function(){
+				    	alert("请检查内部错误");
+				    }
+			 });
+			 
+		  });
+		
+	});
+	
+	function ajaxPage(url,currentPage,obj) {
+		var totalPages =$("#totalPages").val();
+		var goodsId = $("#goodsId").val();
+		var eType = $("#eType").val();
+		if(currentPage < 1) {
+			currentPage = 1;
+		}else if(currentPage > totalPages) {
+			currentPage = totalPages;
+		}
+		jQuery.ajax({
+					 type:'POST',
+					 url:url,
+					 data:{"currentPage":currentPage,"goodsId":goodsId,"evaType":eType},
+					 success :　function(data) {
+						 $("#normalcon_c").html(data);
+					 },
+					 error : function(){
+						 alert("已到第一页");
+					 }
+					});
+	}
+</script>
+
+<script>
+$(function(){
+	var xu_val=$(".xu_username a").html();
+	var val_sub=xu_val.substring(0,1);
+	var aa=xu_val.replace(val_sub,"*");
+	$(".xu_username a").html(aa);
+});
+</script>

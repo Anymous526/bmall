@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>天使AmallAMALL.COM—全民合伙玩电商—天使商城官方网站</title> 
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/duigou21.css"> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc5.amallcdn.cn/assets/js/12vb.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$(".floortu li").mouseenter(function(){  
+		$(this).find(".anniu").addClass("anniuhover");
+		$(this).find("a").css("color","#a90000");
+	});
+	$(".floortu li").mouseleave(function(){
+		$(this).find(".anniu").removeClass("anniuhover");
+		$(this).find("a").css("color","#666");
+	});
+});
+</script>
+<script type="text/javascript">
+$(function(){
+var imgWid = 0 ;
+var imgHei = 0 ; //变量初始化
+var big = 1.2;//放大倍数
+
+$(".floortu li").hover(function(){
+	
+     $(this).find("img").stop(true,true);
+ 
+     imgWid=200;imgHei=200;
+     
+	imgWid2 = imgWid * big;//放大后的宽度
+	imgHei2 = imgHei * big;
+  
+    $(this).find("img").css({"z-index":2});
+
+    $(this).find("img").animate({"width":220,"height":220,"margin-left":-10,"margin-top":-10},300);
+
+ },function(){$(this).find("img").stop().animate({"width":200,"height":200,"margin-left":0,"margin-top":0,"z-index":1});});
+})
+</script>
+<script type="text/javascript">
+$(function(){
+	$(".yjiex li").mouseenter(function(){ 
+		$(this).addClass("hover");
+	});
+	$(".yjiex li").mouseleave(function(){
+		$(this).removeClass("hover");
+	}); 
+});
+</script> 
+<script type="text/javascript">
+$(function(){
+var weit = $(".floortu li"); 
+jQuery.each(weit,function(index,val){//index为遍历的索引值，val为该索引的对象值			
+	var t1 = (index+1)%4;//能被4整除 
+	if(t1 == 0){
+		$(this).css({"border-right":"1px solid #e4e4e4"});
+	}
+ })
+})
+</script> 
+</head>
+<body>
+
+<!--*即将揭晓*-->
+<div style="width: 1194px;margin-left:5px;display: block;overflow: hidden;border-bottom: 3px solid #a90000;">
+  <div style="font-size: 20px;float: left;margin-left: 6px;margin-top: 30px;">互助兑</div>
+</div>
+
+<div class="floortu">
+  <ul> 
+  	#foreach($obj in $!cloudGoodsList)  
+    <li > <!-- onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$obj.id'" target="_blank" -->
+    <a href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="$obj.goodsName" target="_blank">
+    <div class="border_top"></div>
+    <div class="border_right"></div>
+    <div class="border_bottom"></div>
+    <div class="border_left"></div>
+      <div class="tu"><span id="weihzg"><img src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name"/></span></div>
+      <div class="wenzi"> 
+      	<a href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="$obj.goodsName" target="_blank">(序号:$obj.id)$!CommUtil.substring("$obj.goodsName",13)
+        	<p>价值：￥$obj.goodsPrice</p>
+        </a>
+      </div>
+      <div class="duigou_load">
+		<span class="now_load" id="$obj.id"></span>	
+	  </div>
+      <div id="we721">
+	      <p  class="settime21" endtime="$CommUtil.formatLongDate($obj.endTime)">00.00:00:00</p>
+	      <p class="cur9"  id="212"></p>  
+      </div>                
+      <div class="leftshuzi">$obj.buyerCodeCount</div>
+      <div class="rightshuzi">#set($count=$obj.goodsCount - $obj.buyerCodeCount)$!count</div>
+      <div class="yicyu">已参与</div>
+      <div class="shengyu">剩余</div>
+      <div class="tshibi">
+        <div class="wu">$obj.goodsNumber</div>
+        <div class="tsb">礼品金</div>
+      </div>
+      <a class="anniu" href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="$obj.goodsName" target="_blank">立刻参与</a>
+      </a>
+    </li>
+    #end   
+  </ul>
+</div>
+
+
+</body>
+
+
+<!-- 轮播 -->
+<script type="text/javascript"> 
+$(function(){
+updateEndTime();
+});
+ 
+//倒计时函数 
+var time=$!nowDate;//系统部署在哪里，就获取哪里的时间 
+function updateEndTime()
+{
+//var date = new Date();
+//var time = date.getTime(); //当前时间距1970年1月1日之间的毫秒数
+
+   time=time+1000; //每次加1秒  
+$(".settime21").each(function(i){
+var endDate =this.getAttribute("endTime"); //结束时间字符串
+//转换为时间日期类型
+var endDate1 = eval('new Date(' + endDate.replace(/\d+(?=-[^-]+$)/, function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) +')');
+var endTime = endDate1.getTime(); //结束时间毫秒数
+var lag = (endTime - time) / 1000; //当前时间和结束时间之间的秒数
+if(lag > 0)
+{
+var second = Math.floor(lag % 60); 
+var minite = Math.floor((lag / 60) % 60);
+var hour = Math.floor((lag / 3600) % 24);
+var day = Math.floor((lag / 3600) / 24);
+ 
+ if(day<10){ 	
+   day="0"+day;
+ }
+ if(hour<10){
+   hour="0"+hour;
+ }
+  if(minite<10){
+   minite="0"+minite;
+  }
+  if(second<10){
+   second="0"+second;
+  }
+$(this).html("<div>剩余时间：<span id='gtbg21'>"+day+"</span>天<span id='gtbg21'>"+hour+"</span>时<span id='gtbg21'>"+minite+"</span>分<span id='gtbg21'>"+second+"</span>秒</div>");
+}
+else{
+$(this).removeClass("settime21");
+//alert($(this).attr("id"));
+$(this).html("活动已结束！");
+
+//  alert("活动时间结束！ajax触发
+}
+});
+setTimeout("updateEndTime()",1000);
+} 
+</script> 
+<script type="text/javascript">  
+$(document).ready(function(){
+	#set($i=1);
+	#foreach($obj in $!cloudGoodsList)
+	 var we21_$i=Math.round(($obj.buyerCodeCount/$obj.goodsCount)*100);   
+     var vd=$('#$obj.id').css("width",we21_$i+"%");
+     #set($i=$i+1)
+     #end
+})  
+</script>  
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/jquery.slider.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function ($) {
+	$(".slider").slideshow({
+		width: 945,
+		height: 368,
+		transition: ['bar', 'Rain', 'square', 'squareRandom', 'explode']
+	});
+});
+</script>
+ 
+ 
+ 
+ <script type="text/javascript">
+	jQuery(function(){
+		var lis = jQuery(".yjiex li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%4;
+			if(t == 0){
+				jQuery(this).css("margin-right","0px");
+			}
+		});
+	});
+</script> 
+<!-- 轮播 -->
+
+</html>

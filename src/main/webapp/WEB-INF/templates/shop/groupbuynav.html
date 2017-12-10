@@ -1,0 +1,94 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="assets/css/tuangou.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+
+<link href="assets/css/xinpin.css" rel="stylesheet" type="text/css"> <!--新品样式-->
+<link href="assets/css/amall_big_banner.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/jquery-ui.js"></script>
+
+<script src="$!webPath/assets/js/top_menu.js" type="text/javascript"></script>  <!--顶部菜单鼠标指向下拉-->
+<script type="text/javascript">
+$(document).ready(function(){
+	 
+	// 导航左侧栏js效果 start
+	$(".pullDownList li").hover(function(){
+		$(".slide").hide();
+		$(".yBanner").show();
+		//当前li显示,其他隐藏
+		$(this).addClass("menulihover").siblings().removeClass("menulihover");
+		//显示当前li下的子菜单
+		$(this).find("div[name='yMenuListCon']").show(); 
+	},function(){
+		$(this).find("div[name='yMenuListCon']").hide();
+	}); 
+}); 
+</script>
+</head>
+
+<body>
+<div class="border3px"></div>
+<!--  顶部    start-->
+<div class="yHeader"> 
+  <!-- 导航   start  -->
+  <div class="yNavIndex">
+	  <div class="pullDown">
+      <h2 class="pullDownTitle" onclick="javascript:location.href='$!webPath/goods_class.htm'">所有商品分类</h2>
+      <ul class="pullDownList">
+        
+        #foreach($gc in $objs)
+        	
+        	#if($!gc.iconAcc)
+        	#set($img = "$!{config.imagewebserver}/$!{gc.iconAcc.path}/$!{gc.iconAcc.name}")
+        	#else
+        	#set($img = "")
+        	#end <!--  -->
+	        <li name="gc_li">
+	          <img src="$!img">
+		      <b style="margin: 0;padding: 0;">
+		      	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">$!gc.classname</a>
+	          </b>
+	          <!-- 下拉详细列表具体分类 -->
+		      <div class="yMenuListCon" name="yMenuListCon">
+		        <div class="yMenuListConin" name="classdiv">
+		        #foreach($c_g in $gc.childs)
+		          <div class="yMenuLCinList" style="display:block">
+		            <h3>
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_g.id" target="_blank" class="yListName" style="display:block">$!c_g.classname</a>
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank" class="yListMore">更多 ></a></h3>
+		            <p> 
+		            	#foreach($c_cg in $c_g.childs)
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_cg.id" target="_blank" class="" style="display:block; text-align: left;">$!c_cg.classname</a>
+		            	#end
+		            </p>
+		          </div>
+		      
+		        #end
+		        </div>
+		   	 </div>
+	        </li>
+        #end
+     </ul>   
+    </div> 
+    <ul class="yMenuIndex">
+      <li><a href="$!webPath/index.htm" class="yMenua">首页</a></li>
+      <li><a href="$!webPath/groupbrand.htm" class="yMenua">品牌团</a></li>
+      <li><a href="$!webPath/bulkitem.htm" class="yMenua">单品团</a></li>
+
+    </ul>
+  </div>
+  <!-- 导航   end  --> 
+</div>
+<!--  顶部    end--> 
+
+
+</body>
+</html>

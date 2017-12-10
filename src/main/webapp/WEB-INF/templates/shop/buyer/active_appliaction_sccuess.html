@@ -1,0 +1,42 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>支付结果 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/head.htm")
+<div class="w100 bg_fff">
+  <div class="w1190">
+    <div class="root-nav"> 
+		当前位置：<a href="$!webPath/index.htm" >首页</a> > <span>支付结果</span>
+	</div>
+    <div class="shop_content">
+		<div class="c_right">
+			<div class="su_let">
+				<div class="su_let_t">
+					<img src="$!webPath/assets/img/success_48px_.png" />恭喜您，支付成功啦！
+				</div>
+				<div class="su_let_c">
+					<span>你已成功支付  <label> $!payment </label>元</span>
+					<span>温馨提示：您支付成功后，订单状态的更新可能存在短期的延迟，建议您半小时之后再查询您的支付情况。</span>
+					<span class="mt20"> <input class="jxgw" type="button" value="个人中心" onclick="window.location='$!webPath/buyer/buyer_index.htm'" /> </span>
+				</div> 
+			</div>
+			<div class="su_rig"><img src="$!webPath/assets/img/400.jpg" /></div>
+		</div>
+    </div> 
+  </div>
+</div>  
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

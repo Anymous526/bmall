@@ -1,0 +1,149 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>我的关注  </title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/user_main.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+<script type="text/javascript">
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+function cmd(){
+	var url=arguments[0];
+	var mulitId="";
+	jQuery(":checkbox:checked").each(function(){
+	  if(jQuery(this).val()!=""){	  
+	    mulitId=mulitId+","+jQuery(this).val();
+	  }
+	});
+	if(mulitId!=""){
+	  jQuery("#ListForm #mulitId").val(mulitId);
+	  if(confirm("确定要执行该操作？")){
+	     jQuery("#ListForm").attr("action",url);
+	     jQuery("#ListForm").submit();
+	  }
+	}else{
+       alert("至少选择一条数据记录");
+	}
+}
+
+function selectAll(obj){
+	var status=jQuery(obj).attr("checked");
+	var id=jQuery(obj).attr("id");
+  	if(status=="checked"){
+		jQuery(":checkbox[id!="+id+"]").attr("checked","checked");
+	}else{
+	    jQuery(":checkbox[id!="+id+"]").attr("checked",false);	
+	}
+}
+		    
+$(document).ready(function(){
+	var lis = jQuery(".tools ul li"); 
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+	
+
+	
+	
+	
+});
+</script>
+
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我关注的商品</span></div></div>  
+	<div class="productmain">
+	   	<div class="order-top">
+			<form action="$!webPath/buyer/buyer_favorite_goodsSearch.htm" method="post">
+	          	<span style="padding-left: 10px;font-size: 14px;color: #000;height: 40px;line-height: 40px;">我关注的商品</span>
+	          	<div class="sch">
+	           		<input class="inputtxt" type="text" style="height:26px;" name="searchContent"  /> 
+	            	<input class="inputbtn" type="submit" value="搜索" style="height:26px;"/>
+	           	</div>
+			</form>
+		</div>
+			
+		<form action="$!webPath/buyer/buyer_favorite_goods.htm" method="post" id="ListForm">
+	        <input name="mulitId" type="hidden" id="mulitId"/>
+	        <div class="my_att" >   
+	        	#if($!objs.size()>0)
+		        	<div class="p_tit"><input type="checkbox" onclick="selectAll(this);" id="all1" name="all1" value="" style="padding-bottom: 4px;margin-left: 15px;"/>全选 <span><a href="">加入购物车</a></span><span><a href="javascript:void(0);" onclick="cmd('$!webPath/buyer/buyer_favorite_del.htm?type=0','')">取消关注</a></span></div>     	
+		            <ul class="att_list">
+		            #foreach($obj in $objs)
+		            	<li>
+		                	<div class="p_img"><a href="$!webPath/goods.htm?id=$!obj.goods.id">
+		                		#set($gmp = $!obj.goods.goodsMainPhoto)
+		                		<img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" width="190" height="190" /></a>
+		                	</div>
+		                    <div class="p_info">
+		                   		<input type="checkbox" id="id" name="id" value="$!obj.id" style="padding-bottom: 4px;"/>
+	                   		 	<a title="$!obj.store.storeName $!obj.goods.goodsName" href="$!webPath/goods.htm?id=$!obj.goods.id">
+	                   		 		$!obj.store.storeName $!obj.goods.goodsName
+	                   		 	</a>
+		                    </div>
+		                    <div class="p_pri"><strong>¥：$!obj.goods.goodsPrice</strong></div>
+		                    <div class="p_btn">
+		                    		<input type="button"  value="加入购物车" onclick="window.location.href='$!webPath/goods.htm?id=$!obj.goods.id'"/>
+		                    		<input type="button" value="立即购买" onclick="window.location.href='$!webPath/goods.htm?id=$!obj.goods.id'"/>
+		                    		<input type="button" value="取消关注" onclick="if(confirm('是否取消关注?'))window.location.href='$!webPath/buyer/buyer_favorite_del.htm?mulitId=$!obj.id&currentPage=$!currentPage&type=0'"/>           
+		                    </div>
+		                </li>
+		            #end
+		            </ul>
+		        #else
+		        	<div class="att_list" style="height:250px;line-height:250px;text-align:center;">您还没有<span style="color:red">关注的商品</span>,先去逛逛吧~</div>
+		        #end
+	        </div>
+	        
+	        
+	        
+			#if($!objs.size()>0)
+	    	<!--分页开始-->        
+	        <div class="bottom_page">
+				<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+				<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+				$!gotoPageAjaxHTML
+			</div>
+	        
+	        <!--分页结束-->
+	        #end
+	    </form>
+
+
+    </div><!-- end of productmain -->
+</div>
+
+</div>	
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<!--[if IE]>
+<style type="text/css">
+.input{behavior: url($!webPath/resources/style/common/css/ie-css3.htc);}
+</style>
+<![endif]-->
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+function pushMsgToAll(){
+	var content = $("#content_toAll").val();
+	var platform  = $("#stAll").val()
+	
+	if(content_toAll == "")
+	{
+		alert("请输入消息内容");
+		return false;
+	}
+	
+	if(content_toAll.length > 200)
+	{
+		alert("消息内容不要超过200字");	
+		return false
+	}
+	
+	if(platform == -1){
+		alert("请选择平台");
+		return false;
+	}
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$webPath/admin/push_message_to_all.htm",
+		data : {"content":content,"platform":platform},
+		success : function() {
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("发送失败");
+			return false;
+		}
+	});
+	
+}
+
+function pushMsgToOne()
+{
+	var phone = $("#phone").val();
+	var content = $("#content_toOne").val();
+	var platform  = $("#stOne").val()
+	
+	if(!(/^1\d{10}$/.test)(phone))
+	{
+		alert("请输入正确的手机号码");
+		return false;
+	}
+	
+	
+	if(content == "")
+	{
+		alert("请输入消息内容");
+		return false;
+	}
+	
+	if(content.length > 200)
+	{
+		alert("消息内容不要超过200字");	
+		return false
+	}
+	
+	if(platform == -1){
+		alert("请选择平台");
+		return false;
+	}
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$webPath/admin/push_message_to_one.htm",
+		data : {"phone":phone,"content":content,"platform":platform},
+		success : function() {
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("发送失败");
+			return false;
+		}
+	});
+}
+
+
+</script>
+<style>
+.mp_textarea{
+	display: block;
+	float: left;
+	height: 120px;
+	border: 1px solid #d8d8d8;
+	padding:10px 5px;
+}
+.mp_btn_search{display: block;float: left;margin-top: 114px;margin-left: -165px;}
+.mp_select{float: left;margin-left: 10px;display: block;overflow: hidden;}
+</style>
+</head>
+<body scroll="yes">
+<div class="cont">
+  <h1 class="seth1">消息发送</h1>
+  <div class="settab"> 
+  <span class="tab-two"></span>	</div>
+    <div class="allmem_search">
+      <ul>
+        <li>
+        <span class="giftsh">1、推送消息给所以用户</span><br/> 
+          <h2 style="padding: 5px 0;">消息内容</h2>
+      		<li>
+      		<textarea name="content_toAll" cols="50" rows="4" id="content_toAll" class="mp_textarea"></textarea>
+      		</li>
+	      	<li class="mp_select">
+		      	<lable>请选择平台：</lable>
+		      	<select id="stAll" name="stAll">
+		      		<option value="-1">请选择...</option>
+		      		<option value="1">安卓平台</option>
+		      		<option value="2">IOS平台</option>
+		      		<option value="3">所有平台</option>
+		      	</select>
+	      	</li>	
+         <span class="btn_search mp_btn_search">
+          <input onclick="pushMsgToAll()" type="button" value="发送" style="cursor:pointer;" />
+        </span>
+        <p style="clear:both; color: red;margin-top: 5px;">限制字数不超过200字</p> 
+        </li>
+        
+        <li style="clear: both;">
+        <span  class="giftsh" style="margin-bottom: 10px;">2、推送消息给指定用户</span><br/> 
+			<span>手机号码</span> 
+			<span class="allmen size4">
+			  <input name="phone" type="text" id="phone" />
+			</span>
+         <h2 style="padding: 5px 0;">消息内容</h2>
+      		<li>
+      		<textarea name="content_toOne" cols="50" rows="4" id="content_toOne" class="mp_textarea"></textarea>
+      		</li>
+	      	<li class="mp_select">
+		      	<lable>请选择平台：</lable>
+		      	<select id="stOne">
+		      		<option value="-1">请选择...</option>
+		      		<option value="1">安卓平台</option>
+		      		<option value="2">IOS平台</option>
+		      		<option value="3">所有平台</option>
+		      	</select>
+	      	</li>	
+         <span class="btn_search mp_btn_search">
+          <input onclick="pushMsgToOne()" type="button" value="发送" style="cursor:pointer;" />
+        </span> 
+        </li>
+      </ul>
+    </div>
+  
+</div>
+</body>
+</html>

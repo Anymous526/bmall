@@ -1,0 +1,183 @@
+﻿<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+
+
+$!httpInclude.include("/login_block.htm")
+
+
+
+
+<div class="yg_header mt30" id="yg_header"> 
+  <div id="yg_logo_tab" class="clearfix ygwrap" style="padding-top:10px; padding-bottom:10px;">
+    <div class="s_logo fl"> <a href="index.html"></a> </div>
+    <div class="slogo"> <a class="slogo-shopname"><strong>$!store.storeName</strong></a>
+      <div class="bShop"><span class="flagship-icon"><span class="flagship-icon-font">品牌直销</span></span></div>
+    </div>
+    <div id="shop-info">
+      <div class="main-info">
+        <div class="shopdsr-item">
+          <div class="shopdsr-title"> 描述 </div>
+          <div class="shopdsr-score shopdsr-score-down-ctrl"> <span class="shopdsr-score-con">$!{store.point.descriptionEvaluate}</span> <s class="shopdsr-score-up"><strong>↑</strong></s> </div>
+        </div>
+        <div class="shopdsr-item">
+          <div class="shopdsr-title"> 服务 </div>
+          <div class="shopdsr-score shopdsr-score-down-ctrl"> <span class="shopdsr-score-con">$!{store.point.serviceEvaluate}</span> <s class="shopdsr-score-down"><strong>↓</strong></s> </div>
+        </div>
+        <div class="shopdsr-item">
+          <div class="shopdsr-title"> 物流 </div>
+          <div class="shopdsr-score shopdsr-score-down-ctrl"> <span class="shopdsr-score-con">$!{store.point.shipEvaluate}</span> <s class="shopdsr-score-down"><strong>↓</strong></s> </div>
+        </div>
+      </div>
+    </div>
+    <div class="wuliu">
+      <div class="hd" id="j_ExtraInfoHd"> <a class="shop-logo" href=""><img src="$!{config.imagewebserver}/$!store.storeLogo.path/$!store.storeLogo.name"></a>
+        <p class="shop-follow"> <a class="follow-btn" href="javascript:void(0);" onclick="storeShouCang();"><span>关注</span><b></b></a> </p>
+        <p><strong>$!favorites.size()</strong> 关注</p>
+        <!-- <p style="margin-top:145px"><a href="$!webPath/buyer/stor_report.htm" style="color:#ff3c3c">举报该店铺</a></p> -->
+        <p style="margin-top:145px"><a href="javascript:void(0);" onclick="reportStore();" style="color:#ff3c3c">举报该店铺</a></p>
+      </div>
+      <div class="bd">
+        <div class="shop-rate">
+          <h4>店铺动态评分<span class="compare">与同行业相比</span></h4>
+          <ul class="render-byjs">
+            <li> 描述相符： <a href=""> <em class="count">$!{store.point.descriptionEvaluate}</em> <span class="rateinfo"> <b class="lower"></b> <i>$!description_type</i> <em class="lower">$!description_result</em> </span> </a> </li>
+            <li> 服务态度： <a target="_blank" href=" "> <em class="count">$!{store.point.serviceEvaluate}</em> <span class="rateinfo"> <b class="lower"></b> <i>$!service_type</i> <em class="lower">$!service_result</em> </span> </a> </li>
+            <li> 发货速度： <a href=""> <em class="count" title="4.68836">$!{store.point.shipEvaluate}</em> <span class="rateinfo"> <b class="lower"></b> <i>$!ship_type</i> <em class="lower">$!ship_result</em> </span> </a> </li>
+          </ul>
+        </div>
+        <div class="extend">
+          <h4 class="title">店铺服务</h4>
+          <ul>
+            <li>
+              <label class="bt02"> 公 司 名： </label>
+              <div class="right"> $!store.companyName </div>
+            </li>
+            <li class="locus">
+              <label class="bt02"> 所 在 地： </label>
+              <div class="right"> $!store.storeAddress </div>
+            </li>
+            <li>
+              <label class="bt02">工商执照：</label>
+              <div class="right"> <a href="#" class="tm-gsLink" ><img width="20" height="22" src="http://assets.taobaocdn.com/app/marketing/xfile/national_emblem_light.png" alt=""></a> </div>
+            </li>
+          </ul>
+        </div>
+        <div class="other_t">
+        	<a class="enter-shop" href="$!webPath/store.htm?id=$!store.id"><span>◎ 进店逛逛</span></a>
+        	<a id="xshop_collection_href" href="javascript:void(0);" onclick="storeShouCang();"><span>★ 收藏本店</span> </a>
+        </div>
+      </div>
+    </div>
+    <form action="$!webPath/store_goods_search.htm" onsubmit="" name="" id="J_TopSearchForm" method="post" class="search_box clearfix fl">
+      <div class="zs_left fl"></div>
+      <div class="input_box fl">
+        <input type="text" type="search" id="keyword" name="keyword" maxlength="80" class="search flc" autocomplete="off" >
+        <input name="store_id" type="hidden" id="store_id" value="$!store.id" />
+        <ul class="searchmenu" style="display: none;">
+        </ul>
+      </div>
+      <div class="zs_right fl"></div>
+      <div class="search_btn fl"></div>
+    </form>
+  </div>
+  <div class="yg_sites_tabtn"></div>
+</div>
+
+<script type="text/javascript">
+	/**
+	 * 收藏商品
+	 */
+ 	function storeShouCang(){
+ 		#if(!$!user)
+ 			$(".login_bg").show();
+ 		#end
+ 		#if($!user)
+	 		#if($!user.id==$!store.userId)
+	 			alert("不能收藏自己的店铺！");
+	 		#else
+	 			jQuery.post("$!webPath/add_store_favorite.htm",{"storeId":"$!store.id"},function(data){
+					 if(data=="0"){
+					     alert("店铺收藏成功！");
+					 }else if(data=="1"){
+					    alert("该店铺已经被收藏！");
+					 }else{
+						 alert("收藏失败！");
+					 }
+				   },"text");
+	 		#end
+	 	#end
+ 	}
+ 	/**
+ 	*举报店铺
+ 	*/
+ 	
+ 	function reportStore(){
+ 		#if(!$!user)
+ 			$(".login_bg").show();
+ 		#end
+ 		#if($!user)
+	 		#if($!user.id==$!store.userId)
+	 			alert("不能举报自己的店铺！");
+	 		#else
+	 			window.location.href="$!webPath/buyer/store_report.htm?storeId="+$!store.id;
+	 		#end
+	 	#end
+ 	}
+ 	
+	$("#login_buttom").bind("click",function(){		
+		var username = jQuery.trim($("#username").val());
+		var password = jQuery.trim($("#password").val());
+		var code = jQuery.trim($("#code").val());
+		if (username == '') {
+            alert('请输入用户名');
+            return false;
+        }
+        if (password == '') {
+            alert('请输入密码');
+            return false;
+        }
+        if (password.length < 6 || password.length > 20) {
+			alert('请输入长度为6-20位的密码');
+			return false;
+		}
+        if (code == '') {
+            alert('请输入验证码');
+            return false;
+        }
+     
+        var url = $("#url").val();
+		var goodsId = $("#goodsId").val();
+		
+        jQuery.post("$!webPath/amall_login.htm?url="+url,{"username":username,"password":password,"code":code,"ajax_login":true,"url":url},function(data){
+            if(data=="success"){
+	             window.location.reload();
+	          }else{
+	             alert("用户名、密码或验证码错误，请重新输入");
+	          }
+           },"text");
+		
+	});
+	$("#app_block_close").bind("click",function(){
+		$(".login_bg").hide();
+	});
+	
+	
+	function search_form(){
+		  var keyword=arguments[0];
+		  if(keyword!=""&&keyword!=undefined){
+		   jQuery("#keyword").val(keyword);
+		  }
+		  jQuery("#searchForm").submit();	
+		  jQuery("#keyword").val("");
+		}
+</script>
+
+#if($!store.storeBanner)
+	#set($img="$!{config.imagewebserver}/$!store.storeBanner.path/$!store.storeBanner.name")
+#else
+	#set($img="$!webPath/assets/img/shop/bann-1.png")
+#end
+
+<div class="shop_index1"><img src="$!img" />  </div>
+</div>

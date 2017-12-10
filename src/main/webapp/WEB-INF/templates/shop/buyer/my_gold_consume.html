@@ -1,0 +1,148 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的礼品金</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/briberymoney.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+};
+function show(o){
+	var o = document.getElementById(o);
+	o.style.display = "";
+	};
+	function hide(o){
+	var o = document.getElementById(o);
+	o.style.display = "none";
+	window.location = url;
+	};
+</script>
+
+<style>
+
+/*充值按钮弹出层样式  2016-05-07*/
+.pop {
+	position: absolute;
+	left: 45%;
+	top: 40%;
+	width: 200px;
+	height: 100px;
+	background: red;
+	border: 1px solid red
+}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+<!-- 升级选择弹出层样式 -->
+	<!-- <div id="pop" class="pop" style="display: none">
+		<div class="pop_head">
+			<a href="javascript:void(0);" onclick="hide('pop')">关闭</a>
+		</div>
+		<div class="pop_body" style="">
+			<center style="margin-top: 20px;">
+				<button
+					onclick="javascript:location.href='$!webPath/buyer/myAssets_consumption.htm'">充值礼品金</button>
+				<button
+					onclick="javascript:location.href='$!webPath/buyer/jihuo.htm'">升级会员</button>
+			</center>
+		</div>
+	</div> -->
+<div class="user_main w1200">
+
+$!httpInclude.include("/buyer/buyer_left.htm")
+
+		<div class="s_m">  
+		  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的礼品金</span></div></div>
+		  
+          <div class="productmain">
+		      	<div style="width: 100%;margin: 0 auto;">
+					<img src="$!webPath/assets/img/my_gold.png" alt="我的礼品金" style="width:101%;"/>
+				</div>
+		  </div>
+		  <form action="$!webPath/buyer/myAssets_consumption.htm" method="post" id="ListForm">
+		  <div class="productmain"> 
+			<div style="width: 100%;padding-top: 20px;">
+  				<div class="mg_iconbox">
+  					<span class="mg_iconimg"><img src="$!webPath/assets/img/mg1.png" alt="" width="100%"/></span>
+  					<br/><span style="display: inline-block;">我当前的礼品金：$!user.gold 个</span>
+  				</div>
+  				<div class="mg_iconbox">
+  					<span class="mg_iconimg"><img src="$!webPath/assets/img/mg2.png" alt="" width="100%"/></span>
+  					<br/><span style="display: inline-block;">已消费的礼品金：$!cost 个</span>
+  				</div>
+  				<div class="mg_iconbox">
+	  				<a href="$!webPath/buyer/chongz.htm" onclick="show('pop')"><span class="mgc_btn01" style="margin-top:15px;">充值</span></a>
+	  				 <!-- <a href="$!webPath/buyer/my_briberymoney.htm"><span class="mgc_btn01" style="margin-top:10px;">红包</span></a> -->
+  				</div>				 			
+  			</div> 
+		      <div class="ordercon" style="width:953px;border-bottom: 1px solid #d8d8d8;">
+		    #if($!objs.size()>0)
+		       <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+		       	<tr style="border-bottom: 1px solid #d8d8d8;font-weight:bold;background:#eee!important">
+		       		<td width="20%" align="center">兑换商品名</td>
+			        <td width="10%" align="left">会员手机号</td>
+			        <td width="10%" align="center">兑换礼品金</td>
+			        <td width="10%" align="center">运费</td>
+			        <td width="10%" align="center">支付方式</td>
+			        <td width="10%" align="center">兑换时间</td>
+			        <td width="10%" align="center">状态</td>
+		       	</tr> 
+		            #foreach($obj in $objs)
+		            <tr>
+					 	<td align="center">$!{obj.ig.igGoodsName}</td>
+				        <td align="left">$!{obj.igoUser.username}</td>
+				        <td align="center"> $!{obj.igoTotalGold}</td>
+				        <td align="center">$!{obj.ig.igTransfee}</td>
+				
+				        <td align="center">礼品金 </td>
+				        <td align="center">$!CommUtil.formatLongDate($!obj.addtime)</td>
+			               #if($!obj.igoStatus==-1)
+			                  #set($status="已取消")
+			                #end
+			                #if($!obj.igoStatus==0)
+			                  #set($status="待付款")
+			                #end
+			                #if($!obj.igoStatus==10)
+			                  #set($status="线下支付待审核")
+			                #end
+			                #if($!obj.igoStatus==20)
+			                  #set($status="已付款，待发货")
+			                #end
+			                #if($!obj.igoStatus==30)
+			                  #set($status="已发货")        
+			                #end                
+			                #if($!obj.igoStatus==40)
+			                #set($status="已收货完成")
+			                #end    
+       					<td align="center">$!status</td>
+					</tr> 
+					#end
+		       </table>
+		         
+		        #else
+		          <div class="att_list" style="height:150px;line-height:150px;text-align:center;">您暂时还没有<span style="color:red">消费记录哦</span>,先去逛逛吧~</div>
+		         #end  
+		       </div>
+		       <div class="bottom_page" style="margin-top: 25px;">
+					<input name="currentPage" type="hidden" id="currentPage"
+					value="$!currentPage" /> $!gotoPageFormHTML
+			</div>
+          </div>
+          </form>
+          </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

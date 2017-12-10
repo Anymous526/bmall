@@ -1,0 +1,69 @@
+.skSlider{width:100%;height:400px;position:relative;background:#000}
+.mtsBanner{width:auto;height:400px;background:#f6f6f6;overflow:hidden}
+.mtsBanner .bannerWrap{position:relative;width:auto;height:400px;overflow:hidden;box-shadow:inset 0 -2px 5px #dedede}
+.mtsBanner .bannerWrap li img{-webkit-transition:all .3s ease-in;-moz-transition:all .3s ease-in;-ms-transition:all .3s ease-in;transition:all .3s ease-in}
+.mtsBanner .bannerWrap li img{position:absolute}
+.mtsBanner .bannerWrap li img.mts_big{left:50%;margin-left:-430px}
+.mtsBanner .bannerWrap li img.mts_small{left:50%;margin-left:160px}
+.mtsBanner .bannerWrap li.on img.mts_big{animation:img-move-right 2s forwards;-o-animation:img-move-right 2s forwards;-moz-animation:img-move-right 2s forwards;-webkit-animation:img-move-right 2s forwards}
+.mtsBanner .bannerWrap li.on img.mts_small{animation:img-move-left 1s forwards;-o-animation:img-move-left 1s forwards;-moz-animation:img-move-left 1s forwards;-webkit-animation:img-move-left 1s forwards}
+@keyframes img-move-right{0%{transform:translate(0,0)}100%{transform:translate(10px,0)}}
+@-webkit-keyframes img-move-right{0%{-webkit-transform:translate(0,0)}100%{-webkit-transform:translate(10px,0)}}
+@-o-keyframes img-move-right{0%{-o-transform:translate(0,0)}100%{-o-transform:translate(10px,0)}}
+@-moz-keyframes img-move-right{0%{-moz-transform:translate(0,0)}100%{-moz-transform:translate(10px,0)}}
+@keyframes img-move-left{0%{transform:translate(0,0)}100%{transform:translate(-10px,0)}}
+@-o-keyframes img-move-left{0%{-o-transform:translate(0,0)}100%{-o-transform:translate(-10px,0)}}
+@-moz-keyframes img-move-left{0%{-moz-transform:translate(0,0)}100%{-moz-transform:translate(-10px,0)}}
+@-webkit-keyframes img-move-left{0%{-webkit-transform:translate(0,0)}100%{-webkit-transform:translate(-10px,0)}}
+.slide_control{position:absolute;z-index:20;left:10px;bottom:15px}
+.mtsBanner a.move_left,.mtsBanner a.move_right{display:none;position:absolute;width:40px;height:100px;background:url(../img/slide_btn.png) no-repeat;left:50%;top:50%;margin-top:-50px;z-index:10;opacity:.5;filter:alpha(opacity=50)}
+.mtsBanner a.move_left{margin-left:-410px}
+.mtsBanner a.move_right{margin-left:560px;background-position:right 0}
+.mtsBanner a:hover.move_left,.mtsBanner a:hover.move_right{opacity:1;filter:alpha(opacity=100)}
+.mtsBanner .slide_control{position:absolute;z-index:20;bottom:10px;left:50%;margin-left:-230px;background:rgba(0,0,0,0.2)!important;filter:Alpha(opacity=50);background:#000;border-radius:10px;*padding:2px 0}
+.bgty{width:100%;height:10px;position:absolute;top:0;left:0;background:url(../img/pic31.png) repeat-x;z-index:7}
+.mtsBanner .bannerWrap li a{width:100%;height:400px;display:block}
+.mtsBanner .mall_dot,.mtsBanner .mall_dot_hover{width:10px;height:10px;line-height:15px;text-decoration:none;float:inherit;display:inline-block}.mtsBanner .mall_dot{background:#fff;text-indent:-20px;position:relative}
+.mtsBanner .mall_dot_hover{background:#a90000;text-indent:-20px;-moz-opacity:1;opacity:1;filter:alpha(opacity=100)}
+.mall_dot,.mall_dot_hover{float:left;margin:0 5px;width:14px;overflow:hidden;height:14px;line-height:100px;text-align:center;font-weight:800;font-size:12px;color:white;cursor:pointer;font-family:Tahoma;text-decoration:none;background:#9d9fa2;border-radius:50%}
+.mall_dot_hover{background:#ed145b}
+.nContanier {
+    clear: both;
+    width: 100%;
+    position: relative;
+    z-index: 1; 
+}
+.floorList, .skSmallStyle .floorList {
+    width: 1200px; 
+    margin: 0 auto;
+}
+.floor01 {
+    width: 100%;
+    height:170px;
+    overflow: hidden;
+    padding-top: 12px;
+    font-size: 0;
+    text-align: right;
+}
+.floor01 p {
+    display: inline-block;
+    width: 329px;
+    height: 198px;
+    margin-left: 10px;
+    _display: inline;
+    -webkit-transition: width .4s ease-in-out,height .4s ease-in-out;
+    -moz-transition: width .4s ease-in-out,height .4s ease-in-out;
+    -ms-transition: width .4s ease-in-out,height .4s ease-in-out;
+    transition: width .4s ease-in-out,height .4s ease-in-out;
+}
+.floor01 img {
+    -webkit-transition: width .4s ease-in-out,height .4s ease-in-out;
+    -moz-transition: width .4s ease-in-out,height .4s ease-in-out;
+    -ms-transition: width .4s ease-in-out,height .4s ease-in-out;
+    transition: width .4s ease-in-out,height .4s ease-in-out;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+}

@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.EvaluateMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Evaluate" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="evaluate_buyer_val" property="evaluateBuyerVal" jdbcType="INTEGER" />
+    <result column="evaluate_seller_time" property="evaluateSellerTime" jdbcType="TIMESTAMP" />
+    <result column="evaluate_seller_val" property="evaluateSellerVal" jdbcType="INTEGER" />
+    <result column="evaluate_status" property="evaluateStatus" jdbcType="INTEGER" />
+    <result column="evaluate_type" property="evaluateType" jdbcType="VARCHAR" />
+    <result column="evaluate_goods_id" property="evaluateGoodsId" jdbcType="BIGINT" />
+    <result column="evaluate_seller_user_id" property="evaluateSellerUserId" jdbcType="BIGINT" />
+    <result column="evaluate_user_id" property="evaluateUserId" jdbcType="BIGINT" />
+    <result column="of_id" property="ofId" jdbcType="BIGINT" />
+    <result column="img1_id" property="img1id" jdbcType="BIGINT" />
+    <result column="img2_id" property="img2id" jdbcType="BIGINT" />
+    <result column="img3_id" property="img3id" jdbcType="BIGINT" />
+    <result column="description_evaluate" property="descriptionEvaluate" jdbcType="DECIMAL" />
+    <result column="service_evaluate" property="serviceEvaluate" jdbcType="DECIMAL" />
+    <result column="ship_evaluate" property="shipEvaluate" jdbcType="DECIMAL" />
+    <result column="useful" property="useful" jdbcType="INTEGER"/>
+    <result column="parise" property="parise" jdbcType="INTEGER"/>
+    <association property="of" column="of_id" javaType="com.amall.core.bean.OrderForm" select="com.amall.core.dao.OrderFormMapper.selectByPrimaryKey"/>
+    <association property="img1" column="img1_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey" />
+    <association property="img2" column="img2_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey" />
+    <association property="img3" column="img3_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey" />
+    <association property="evaluate_user" column="evaluate_user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="evaluate_seller_user" column="evaluate_seller_user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="evaluate_goods" column="evaluate_goods_id" javaType="com.amall.core.bean.Goods" select="com.amall.core.dao.GoodsMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.EvaluateWithBLOBs" extends="BaseResultMap" >
+    <result column="evaluate_admin_info" property="evaluateAdminInfo" jdbcType="LONGVARCHAR" />
+    <result column="evaluate_info" property="evaluateInfo" jdbcType="LONGVARCHAR" />
+    <result column="evaluate_seller_info" property="evaluateSellerInfo" jdbcType="LONGVARCHAR" />
+    <result column="goods_spec" property="goodsSpec" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, evaluate_buyer_val, evaluate_seller_time, evaluate_seller_val, 
+    evaluate_status, evaluate_type, evaluate_goods_id, evaluate_seller_user_id, evaluate_user_id, 
+    of_id, img1_id, img2_id, img3_id, description_evaluate, service_evaluate, ship_evaluate,useful,parise
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    evaluate_admin_info, evaluate_info, evaluate_seller_info, goods_spec
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.EvaluateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.EvaluateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.EvaluateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_evaluate
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_evaluate
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.EvaluateExample" >
+    delete from amall_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.EvaluateWithBLOBs" >
+    insert into amall_evaluate (  id, addTime, deleteStatus, 
+      evaluate_buyer_val, evaluate_seller_time, 
+      evaluate_seller_val, evaluate_status, evaluate_type, 
+      evaluate_goods_id, evaluate_seller_user_id, evaluate_user_id, 
+      of_id, img1_id, img2_id, img3_id, description_evaluate, service_evaluate, 
+      ship_evaluate, evaluate_admin_info, evaluate_info, 
+      evaluate_seller_info, goods_spec,useful,parise)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{evaluateBuyerVal,jdbcType=INTEGER}, #{evaluateSellerTime,jdbcType=TIMESTAMP}, 
+      #{evaluateSellerVal,jdbcType=INTEGER}, #{evaluateStatus,jdbcType=INTEGER}, #{evaluateType,jdbcType=VARCHAR}, 
+      #{evaluateGoodsId,jdbcType=BIGINT}, #{evaluateSellerUserId,jdbcType=BIGINT}, #{evaluateUserId,jdbcType=BIGINT}, 
+      #{ofId,jdbcType=BIGINT}, #{img1id,jdbcType=BIGINT}, #{img2id,jdbcType=BIGINT},#{img3id,jdbcType=BIGINT},#{descriptionEvaluate,jdbcType=DECIMAL}, #{serviceEvaluate,jdbcType=DECIMAL}, 
+      #{shipEvaluate,jdbcType=DECIMAL}, #{evaluateAdminInfo,jdbcType=LONGVARCHAR}, #{evaluateInfo,jdbcType=LONGVARCHAR}, 
+      #{evaluateSellerInfo,jdbcType=LONGVARCHAR}, #{goodsSpec,jdbcType=LONGVARCHAR},#{useful},#{parise})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.EvaluateWithBLOBs" >
+    
+    insert into amall_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="evaluateBuyerVal != null" >
+        evaluate_buyer_val,
+      </if>
+      <if test="evaluateSellerTime != null" >
+        evaluate_seller_time,
+      </if>
+      <if test="evaluateSellerVal != null" >
+        evaluate_seller_val,
+      </if>
+      <if test="evaluateStatus != null" >
+        evaluate_status,
+      </if>
+      <if test="evaluateType != null" >
+        evaluate_type,
+      </if>
+      <if test="evaluateGoodsId != null" >
+        evaluate_goods_id,
+      </if>
+      <if test="evaluateSellerUserId != null" >
+        evaluate_seller_user_id,
+      </if>
+      <if test="evaluateUserId != null" >
+        evaluate_user_id,
+      </if>
+      <if test="ofId != null" >
+        of_id,
+      </if>
+      <if test="img1id != null">
+      	img1_id,
+      </if>
+      <if test="img2id != null">
+      	img2_id,
+      </if>
+      <if test="img3id != null">
+      	img3_id,
+      </if>
+      <if test="descriptionEvaluate != null" >
+        description_evaluate,
+      </if>
+      <if test="serviceEvaluate != null" >
+        service_evaluate,
+      </if>
+      <if test="shipEvaluate != null" >
+        ship_evaluate,
+      </if>
+      <if test="evaluateAdminInfo != null" >
+        evaluate_admin_info,
+      </if>
+      <if test="evaluateInfo != null" >
+        evaluate_info,
+      </if>
+      <if test="evaluateSellerInfo != null" >
+        evaluate_seller_info,
+      </if>
+      <if test="goodsSpec != null" >
+        goods_spec,
+      </if>
+      <if test= "useful != null">
+      	useful,
+      </if>
+      <if test="parise != null">
+      	parise
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="evaluateBuyerVal != null" >
+        #{evaluateBuyerVal,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateSellerTime != null" >
+        #{evaluateSellerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluateSellerVal != null" >
+        #{evaluateSellerVal,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateStatus != null" >
+        #{evaluateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateType != null" >
+        #{evaluateType,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateGoodsId != null" >
+        #{evaluateGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="evaluateSellerUserId != null" >
+        #{evaluateSellerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="evaluateUserId != null" >
+        #{evaluateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ofId != null" >
+        #{ofId,jdbcType=BIGINT},
+      </if>
+      <if test="img1id != null">
+      	#{img1id,jdbcType=BIGINT},
+      </if>
+      <if test="img2id != null">
+      	#{img2id,jdbcType=BIGINT},
+      </if>
+      <if test="img3id != null">
+      	#{img3id,jdbcType=BIGINT},
+      </if>
+      <if test="descriptionEvaluate != null" >
+        #{descriptionEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceEvaluate != null" >
+        #{serviceEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="shipEvaluate != null" >
+        #{shipEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluateAdminInfo != null" >
+        #{evaluateAdminInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="evaluateInfo != null" >
+        #{evaluateInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="evaluateSellerInfo != null" >
+        #{evaluateSellerInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="goodsSpec != null" >
+        #{goodsSpec,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="useful != null">
+      	#{useful,jdbcType=INTEGER},
+      </if>
+      <if test="parise != null">
+      	#{parise,jdbc=INTEGER}
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.EvaluateExample" resultType="java.lang.Integer" >
+    select count(*) from amall_evaluate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_evaluate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.evaluateBuyerVal != null" >
+        evaluate_buyer_val = #{record.evaluateBuyerVal,jdbcType=INTEGER},
+      </if>
+      <if test="record.evaluateSellerTime != null" >
+        evaluate_seller_time = #{record.evaluateSellerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.evaluateSellerVal != null" >
+        evaluate_seller_val = #{record.evaluateSellerVal,jdbcType=INTEGER},
+      </if>
+      <if test="record.evaluateStatus != null" >
+        evaluate_status = #{record.evaluateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.evaluateType != null" >
+        evaluate_type = #{record.evaluateType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.evaluateGoodsId != null" >
+        evaluate_goods_id = #{record.evaluateGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.evaluateSellerUserId != null" >
+        evaluate_seller_user_id = #{record.evaluateSellerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.evaluateUserId != null" >
+        evaluate_user_id = #{record.evaluateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ofId != null" >
+        of_id = #{record.ofId,jdbcType=BIGINT},
+      </if>
+      <if test="record.img1id != null">
+      	img1_id = #{record.img1id,jdbcType=BIGINT},
+      </if>
+      <if test="record.img2id != null">
+      	img2_id = #{record.img2id,jdbcType=BIGINT},
+      </if>
+      <if test="record.img3id != null">
+      	img3_id = #{record.img3id,jdbcType=BIGINT},
+      </if>
+      <if test="record.descriptionEvaluate != null" >
+        description_evaluate = #{record.descriptionEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serviceEvaluate != null" >
+        service_evaluate = #{record.serviceEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shipEvaluate != null" >
+        ship_evaluate = #{record.shipEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.evaluateAdminInfo != null" >
+        evaluate_admin_info = #{record.evaluateAdminInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.evaluateInfo != null" >
+        evaluate_info = #{record.evaluateInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.evaluateSellerInfo != null" >
+        evaluate_seller_info = #{record.evaluateSellerInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.goodsSpec != null" >
+        goods_spec = #{record.goodsSpec,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.useful != null">
+      	useful = #{record.useful,jdbcType=INTEGER},
+      </if>
+      <if test="record.parise != null">
+      	parise = #{record.parise,jdbcType=INTEGER}
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_evaluate
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      evaluate_buyer_val = #{record.evaluateBuyerVal,jdbcType=INTEGER},
+      evaluate_seller_time = #{record.evaluateSellerTime,jdbcType=TIMESTAMP},
+      evaluate_seller_val = #{record.evaluateSellerVal,jdbcType=INTEGER},
+      evaluate_status = #{record.evaluateStatus,jdbcType=INTEGER},
+      evaluate_type = #{record.evaluateType,jdbcType=VARCHAR},
+      evaluate_goods_id = #{record.evaluateGoodsId,jdbcType=BIGINT},
+      evaluate_seller_user_id = #{record.evaluateSellerUserId,jdbcType=BIGINT},
+      evaluate_user_id = #{record.evaluateUserId,jdbcType=BIGINT},
+      of_id = #{record.ofId,jdbcType=BIGINT},
+      img1_id = #{record.img1id,jdbcType=BIGINT},
+      img2_id = #{record.img2id,jdbcType=BIGINT},
+      img3_id = #{record.img3id,jdbcType=BIGINT},
+      description_evaluate = #{record.descriptionEvaluate,jdbcType=DECIMAL},
+      service_evaluate = #{record.serviceEvaluate,jdbcType=DECIMAL},
+      ship_evaluate = #{record.shipEvaluate,jdbcType=DECIMAL},
+      evaluate_admin_info = #{record.evaluateAdminInfo,jdbcType=LONGVARCHAR},
+      evaluate_info = #{record.evaluateInfo,jdbcType=LONGVARCHAR},
+      evaluate_seller_info = #{record.evaluateSellerInfo,jdbcType=LONGVARCHAR},
+      goods_spec = #{record.goodsSpec,jdbcType=LONGVARCHAR},
+      useful = #{record.useful,jdbcType=INTEGER},
+      parise = #{record.parise,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_evaluate
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      evaluate_buyer_val = #{record.evaluateBuyerVal,jdbcType=INTEGER},
+      evaluate_seller_time = #{record.evaluateSellerTime,jdbcType=TIMESTAMP},
+      evaluate_seller_val = #{record.evaluateSellerVal,jdbcType=INTEGER},
+      evaluate_status = #{record.evaluateStatus,jdbcType=INTEGER},
+      evaluate_type = #{record.evaluateType,jdbcType=VARCHAR},
+      evaluate_goods_id = #{record.evaluateGoodsId,jdbcType=BIGINT},
+      evaluate_seller_user_id = #{record.evaluateSellerUserId,jdbcType=BIGINT},
+      evaluate_user_id = #{record.evaluateUserId,jdbcType=BIGINT},
+      of_id = #{record.ofId,jdbcType=BIGINT},
+      img1_id = #{record.img1id,jdbcType=BIGINT},
+      img2_id = #{record.img2id,jdbcType=BIGINT},
+      img3_id = #{record.img3id,jdbcType=BIGINT},
+      description_evaluate = #{record.descriptionEvaluate,jdbcType=DECIMAL},
+      service_evaluate = #{record.serviceEvaluate,jdbcType=DECIMAL},
+      ship_evaluate = #{record.shipEvaluate,jdbcType=DECIMAL},
+      useful = #{record.useful,jdbcType=INTEGER},
+      parise = #{record.parise,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.EvaluateWithBLOBs" >
+    update amall_evaluate
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="evaluateBuyerVal != null" >
+        evaluate_buyer_val = #{evaluateBuyerVal,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateSellerTime != null" >
+        evaluate_seller_time = #{evaluateSellerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evaluateSellerVal != null" >
+        evaluate_seller_val = #{evaluateSellerVal,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateStatus != null" >
+        evaluate_status = #{evaluateStatus,jdbcType=INTEGER},
+      </if>
+      <if test="evaluateType != null" >
+        evaluate_type = #{evaluateType,jdbcType=VARCHAR},
+      </if>
+      <if test="evaluateGoodsId != null" >
+        evaluate_goods_id = #{evaluateGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="evaluateSellerUserId != null" >
+        evaluate_seller_user_id = #{evaluateSellerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="evaluateUserId != null" >
+        evaluate_user_id = #{evaluateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ofId != null" >
+        of_id = #{ofId,jdbcType=BIGINT},
+      </if>
+      <if test="img1id != null">
+      	img1_id = #{img1id,jdbcType=BIGINT},
+      </if>
+      <if test="img2id != null">
+      	img2_id = #{img2id,jdbcType=BIGINT},
+      </if>
+      <if test="img3id != null">
+      	img3_id = #{img3id,jdbcType=BIGINT},
+      </if>
+      <if test="descriptionEvaluate != null" >
+        description_evaluate = #{descriptionEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceEvaluate != null" >
+        service_evaluate = #{serviceEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="shipEvaluate != null" >
+        ship_evaluate = #{shipEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="evaluateAdminInfo != null" >
+        evaluate_admin_info = #{evaluateAdminInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="evaluateInfo != null" >
+        evaluate_info = #{evaluateInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="evaluateSellerInfo != null" >
+        evaluate_seller_info = #{evaluateSellerInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="goodsSpec != null" >
+        goods_spec = #{goodsSpec,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="useful != null">
+      	useful = #{useful,jdbcType=INTEGER},
+      </if>
+      <if test="parise != null">
+      	parise = #{parise,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.EvaluateWithBLOBs" >
+    update amall_evaluate
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      evaluate_buyer_val = #{evaluateBuyerVal,jdbcType=INTEGER},
+      evaluate_seller_time = #{evaluateSellerTime,jdbcType=TIMESTAMP},
+      evaluate_seller_val = #{evaluateSellerVal,jdbcType=INTEGER},
+      evaluate_status = #{evaluateStatus,jdbcType=INTEGER},
+      evaluate_type = #{evaluateType,jdbcType=VARCHAR},
+      evaluate_goods_id = #{evaluateGoodsId,jdbcType=BIGINT},
+      evaluate_seller_user_id = #{evaluateSellerUserId,jdbcType=BIGINT},
+      evaluate_user_id = #{evaluateUserId,jdbcType=BIGINT},
+      of_id = #{ofId,jdbcType=BIGINT},
+      img1_id = #{img1id,jdbcType=BIGINT},
+      img2_id = #{img2id,jdbcType=BIGINT},
+      img3_id = #{img3id,jdbcType=BIGINT},
+      description_evaluate = #{descriptionEvaluate,jdbcType=DECIMAL},
+      service_evaluate = #{serviceEvaluate,jdbcType=DECIMAL},
+      ship_evaluate = #{shipEvaluate,jdbcType=DECIMAL},
+      evaluate_admin_info = #{evaluateAdminInfo,jdbcType=LONGVARCHAR},
+      evaluate_info = #{evaluateInfo,jdbcType=LONGVARCHAR},
+      evaluate_seller_info = #{evaluateSellerInfo,jdbcType=LONGVARCHAR},
+      goods_spec = #{goodsSpec,jdbcType=LONGVARCHAR},
+      useful = #{useful,jdbcType=INTEGER},
+      parise = #{parise,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Evaluate" >
+    update amall_evaluate
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      evaluate_buyer_val = #{evaluateBuyerVal,jdbcType=INTEGER},
+      evaluate_seller_time = #{evaluateSellerTime,jdbcType=TIMESTAMP},
+      evaluate_seller_val = #{evaluateSellerVal,jdbcType=INTEGER},
+      evaluate_status = #{evaluateStatus,jdbcType=INTEGER},
+      evaluate_type = #{evaluateType,jdbcType=VARCHAR},
+      evaluate_goods_id = #{evaluateGoodsId,jdbcType=BIGINT},
+      evaluate_seller_user_id = #{evaluateSellerUserId,jdbcType=BIGINT},
+      evaluate_user_id = #{evaluateUserId,jdbcType=BIGINT},
+      of_id = #{ofId,jdbcType=BIGINT},
+      img1_id = #{img1id,jdbcType=BIGINT},
+      img2_id = #{img2id,jdbcType=BIGINT},
+      img3_id = #{img3id,jdbcType=BIGINT},
+      description_evaluate = #{descriptionEvaluate,jdbcType=DECIMAL},
+      service_evaluate = #{serviceEvaluate,jdbcType=DECIMAL},
+      ship_evaluate = #{shipEvaluate,jdbcType=DECIMAL},
+      useful = #{useful,jdbcType=INTEGER},
+      parise = #{parise,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select   id="selectByOfLeftJoinStoreId" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+  		SELECT DISTINCT e.* , o.*  
+  		FROM amall_evaluate e 
+  		LEFT JOIN amall_orderform o ON e.of_id = o.id
+		WHERE o.store_id = #{store_id}
+  </select>
+  
+  <select   id="selectByDistinctGoods" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+  		select distinct obj.evaluate_goods_id from amall_evaluate obj
+  </select>
+  
+  
+</mapper>

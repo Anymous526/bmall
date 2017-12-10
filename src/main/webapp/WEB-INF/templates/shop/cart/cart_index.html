@@ -1,0 +1,229 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<script type="text/javascript">
+$(document).ready(function () {
+
+	//jquery特效制作复选框全选反选取消(无插件)
+	// 全选        
+	
+	$(".tcs .allselect").click(function () {
+		if($(this).is(":checked")){
+			$("input[name='newslist']").each(function () {
+				//$(this).attr("checked", true);
+				$(":checkbox").prop("checked", "checked");  
+			});
+		}else{
+			$("input[name='newslist']").each(function () {
+				//$(this).attr("checked", false);
+				$(":checkbox").attr("checked", false);  
+			});
+		}
+		
+		GetCount();
+	});
+	
+	// 所有复选(:checkbox)框点击事件
+	$("input[name='newslist']").click(function () {
+		$("input[name='newslist']").each(function () {
+			if(!$(this).is(":checked")){
+				 $(".allselect").prop("checked", false); 
+				}
+		});
+		selectAllCheck();
+	});
+	
+	function selectAllCheck(){
+		var countCheck = $("input[name=newslist]").length;
+		var countChecked = $("input[name=newslist]:checked").length
+		if(countCheck == countChecked){
+			$(".allselect").prop("checked", true); 
+		} 
+	}
+	
+
+	// 输出
+	$(".gwc_tb2 input[name=newslist]").click(function () {
+		//$("#total2").html() = GetCount($(this));
+		GetCount();
+		//alert(conts);
+	});
+});
+//******************
+function GetCount() {
+	var totalPrice = 0;
+	var aa = 0;
+	var count = 0;
+	var price = 0;
+	var arr;
+	
+	$(".gwc_tb2 input[name=newslist]").each(function () {
+		if ($(this).is(":checked")) {
+			for (var i = 0; i < $(this).length; i++) {
+				arr = $(this).val().split("|");
+				count = arr[1];
+				price = arr[0];
+				count = $("#text_box" + count).val();
+				totalPrice = totalPrice + (count * (price * 100)) / 100;
+				aa = aa + parseInt(count);
+			}
+		}
+	});
+	
+	$("#shuliang").text(aa);
+	$("#zong1").html((totalPrice).toFixed(2));
+	if(aa > 0){
+		$("#jz1").css("display", "none");
+		$("#jz2").css("display", "block");
+	}else{
+		$("#jz1").css("display", "block");
+		$("#jz2").css("display", "none");
+	}
+	
+}
+
+function btnSubmit(){
+	var goodsIds = "";
+	var arr;
+	
+	$("input[name=newslist]").each(function () {
+		if ($(this).is(":checked")) {
+			for (var i = 0; i < $(this).length; i++) {
+				arr = $(this).val().split("|");
+				goodsIds = goodsIds + arr[2] + "^";
+				if(arr[3] != "")
+				{
+					goodsIds = goodsIds + arr[3];
+				}
+				
+				goodsIds = goodsIds + "|";
+			}
+		}
+	});
+	
+	$("#goodsIds").val(goodsIds);
+	$("#cartForm").submit();
+}
+
+function queryCountExist(goodsId, oldGoodsCount, goodsCount, id){
+	var count = oldGoodsCount + goodsCount;
+	var countId = "text_box" + id;
+	var isExist = "isExist" + id;
+	var goodsProperty = $("#goodsProperty" + id).val();
+	if(count <= 0)
+	{
+		return false;
+	}
+	
+	jQuery.ajax({type:'POST',url:'$!webPath/cart/goods_count_adjust.htm',async:false,data:{
+		"goodsId":goodsId,"goodsCount":count,"goodsProperty":goodsProperty,"cartUUID":$("#cartUUID").val()
+		},success:function(data){
+		if(data=="true"){
+			$("#" + isExist).text("有货");
+		  	$("#" + countId).val(count);
+		  	GetCount();
+		}else{
+		  $("#" + isExist).text("无货");
+		  window.location.href=window.location.href;
+		}
+		$("#delete" + id).removeAttr("onclick"); 
+		$("#add" + id).removeAttr("onclick"); 
+		$("#delete" + id).attr("onclick", "queryCountExist(" +goodsId +", " + count + ", -1, " + id +")"); 
+		$("#add" + id).attr("onclick", "queryCountExist(" +goodsId +", " + count + ", 1, " + id + ")"); 
+	}});
+}
+
+function deleteGoods(id)
+{
+	$("#deleteForm" + id).submit();
+}
+</script>
+</head> 
+<body>
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/cart/cart_search.htm")
+$!httpInclude.include("/cart/cart_login.htm")
+<div class="cart_tit w990">
+
+</div> 
+<div class="gwc" style="margin: 0 auto;">
+	<table cellpadding="0" cellspacing="0" class="gwc_tb1 tcs">
+		<tr>
+			<td class="td1"><label for="checkAllUp"><input id="checkAllUp" class="allselect" type="checkbox"  style="padding-bottom: 4px;" /> 全选</label></td>
+			<td class="td2">商品图</td>
+			<td class="td3">商品信息</td>
+			<td class="td4">单价</td>
+			<td class="td5">数量</td>
+			<td class="td7">操作</td>
+		</tr>
+	</table>
+		   
+	
+	#if($!cartGoodsShow.size()>0) 
+	#set($count=1)
+	#foreach($!cartGoodsStore in $!cartGoodsShow) 
+		<table cellpadding="0" cellspacing="0" class="gwc_tb2">
+			#foreach($!cartGoods in $!cartGoodsStore.goodsList)
+			<input type="hidden" value="$!cartGoods.goodsProperty" id="goodsProperty$count" />
+			<tr style="border-bottom: 1px dotted #ccc; background-color: #fff">
+				<td class="tb2_td1">
+					<input style="margin-left:20px;"  type="checkbox" value="$!cartGoods.goodsPrice|$count|$!cartGoods.goodsId|$!cartGoods.goodsProperty" name="newslist" id="newslist" />
+				</td>
+				<td class="tb2_td2" style="padding-top:10px; padding-bottom:10px;"><a href="$!webPath/goods.htm?id=$!cartGoods.goodsId"><img src="$!cartGoods.goodsImg" style="width:50px; height: 50px;" /></a></td>
+				<td class="tb2_td3">
+	            	<span><a href="$!webPath/goods.htm?id=$!cartGoods.goodsId">$!cartGoods.goodsName &nbsp; $!cartGoods.goodsProperty</a></span>
+	            </td>
+	            <td class="tb1_td4">$!cartGoods.goodsPrice</td>
+				<td class="tb1_td5">
+					<input id="delete$count" onclick="queryCountExist($!cartGoods.goodsId, $!cartGoods.count, -1, $count)" class="num_btn" type="button" value="-" style="width:20px; height:20px;" />
+					<input id="text_box$count" disabled="disabled" class="cart_ipn" name="" type="text" value="$!cartGoods.count" />
+					<input id="add$count" onclick="queryCountExist($!cartGoods.goodsId, $!cartGoods.count ,1, $count)" class="num_btn" type="button" value="+" style="width:20px; height:20px;" />
+					<span id="isExist$count">有货</span>
+				</td>
+				<td class="tb1_td7">
+					<a style="background-color:#df2b2b; padding:3px 7px 3px 7px; color:#fff; cursor: pointer; " onclick="deleteGoods($count); " >删除</a>
+				</td>
+				<form action="$!webPath/cart/remove_goods_cart.htm" id="deleteForm$!count" method="post">
+				<input type="hidden" name="goodsId" value="$!cartGoods.goodsId"/>
+				<input type="hidden" id="cartUUID" name="cartUUID" value="$!cartGoods.cartUUID"/>
+				<input type="hidden" name="goodsProperty" value="$!cartGoods.goodsProperty"/>
+				</form>
+			</tr>
+			#set($count=$count+1)
+		#end
+		</table>
+	#end
+	#else
+		 <div style="line-height:70px;height:50px;font-size:14px;text-align:center">亲，您的购物车暂时为空，赶紧去挑选自己喜欢的商品吧~</div>
+	#end
+	<form action="$!webPath/cart/cart_settle_accounts.htm" method="post" id="cartForm">
+	<input type="hidden" id="goodsIds" name="goodsIds"/>
+	</form>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb3 tcs">
+    	<tr>
+        	<td style="width:300px; padding-left:20px;"><label for="checkAllDown"><input id="checkAllDown" class="allselect" type="checkbox" style="padding-bottom: 4px;" /> 全选</label></td>
+            <td>已选商品 <label id="shuliang" style="color:#ff5500;font-size:14px; font-weight:bold;">0</label> 件</td>
+            <td>合计(不含运费):<span>￥</span><span style=" color:#ff5500;"><label id="zong1" style="color:#ff5500;font-size:14px; font-weight:bold;">0.00</label></span></td>
+            <td><span id="jz1">结算</span><a onclick="btnSubmit();" style="cursor:pointer;display:none;cursor: pointer; background-color: #df2b2b;" class="jz2" id="jz2">
+            	<label style="color:#fff; font-size:16px;">结算</label>
+            </a></td>
+        </tr>
+    </table>
+
+</div>
+
+$!httpInclude.include("/cart/scrollList.htm")
+$!httpInclude.include("/footer1.htm")
+</body>
+<script>
+$(document).ready(function(){
+	//默认全选 
+	$(".gwc_tb2 input[name=newslist]").click();
+	$("#checkAllUp,#checkAllDown").attr("checked","checked")
+	GetCount(); 
+})
+</script>

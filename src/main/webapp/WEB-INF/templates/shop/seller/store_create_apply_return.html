@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!config.title </title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" /><!-- 大方块样式 -->
+
+<!-- 买家中心模块 -->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css"/>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+		
+	});
+} 
+
+}
+</script>
+
+</head>
+
+<body style="background-color:#fff">
+
+<!--买家中心模块  -->
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+	<div class="user_main w1200">
+		$!httpInclude.include("/buyer/buyer_left.htm")
+		
+		<div id="rightBody">
+			<div class="seller_shop" style="margin-left: 10px;height:500px;">
+				<h3>开通店铺</h3>
+				
+					<div class="create_guide_one">
+						<span class="create_guide_img_span_1">选择店铺类型</span>
+						<span class="create_guide_img_span_2_1" style="color: #fff">填写店主与店铺信息</span>
+						<span class="create_guide_img_span_2_1"  style="color: #fff">提交审核</span>
+						<span class="create_guide_img_span_2_1"  style="color: #fff">申请结果</span>
+					</div>
+					
+					<div class="create_apply_cn_box">
+						<!-- 内容 -->
+						<div class="apply_success_icon_box" >
+							#if($!store.storeStatus==1)
+								<span class="apply_success_icon"><img alt="" src="$!webPath/assets/img/shehezhong.gif"></span>
+							#end
+							#if($!store.storeStatus==-1)
+								<span class="apply_success_icon"><img alt="" src="$!webPath/assets/img/exchange_failure_icon.png"></span>
+							#end
+							#if($!store.storeStatus==4)
+								<span class="apply_success_icon"><img alt="" src="$!webPath/assets/img/exchange_success_icon.png"></span>
+							#end
+				   		</div>
+				   		
+				   		<div class="apply_success_connent">
+							<span style="font-size: 26px;font-weight: 900;color: #323232">
+							#if($!store.storeStatus==1)正在审核中... #end
+							#if($!store.storeStatus==-1)审核未通过，再次<a href="$!webPath/seller/store_create_second.htm" style="font-size: 26px;font-weight:normal;">提交审核</a>
+							#end
+							#if($!store.storeStatus==3)店铺因为违规而被关闭#end
+							#if($!store.storeStatus==4)
+								#if($!store.partnerId!="")
+									请等待您的会员审批
+								#else
+									申请成功，立即<a href="$!webPath/seller/seller_cash_deposit.htm" style="font-size: 26px;">缴纳保证金</a> 
+								#end
+								
+							#end
+							
+							</span>
+							<div style="height: 20px;width: 20px;"></div>
+							<div class="store_base_connent_box" >
+								
+								#if($!store.storeStatus==-1)
+									<span style="font-size: 14px;font-weight: 900;color: #323232">申请失败，原因如下</span>
+									<div style="width:auto;height:auto;">
+									<span>$!store.refuseReason</span>
+									</div>
+								#end
+								
+								#if($!store.storeStatus==3)
+									<span style="font-size: 14px;font-weight: 900;color: #323232">违规关闭，原因如下</span>
+									<div style="width:auto;height:auto;">
+									<span>$!store.violationReseaon</span>
+									</div>
+								#end
+								
+								<span>店铺名字：<a>$!store.storeName</a></span>
+								<br/><span>店主名字：<a>$!store.storeOwer</a></span>
+								<br/><span>店铺分类：<a>$!store.sc.classname</a></span>
+								<br/><span>认证日期：<a>$CommUtil.format2Date($!store.addtime)</a></span>
+								#if($!store.partnerId=="")<br/><span style="padding-bottom: 40px;">需缴纳保证金额：<a>$!store.grade.price</a></span>#end
+								
+							</div>
+							<br/><span style="height:20px;width:400px; border-bottom: 1px solid #f0f0f0;"></span>
+							<br/><span>如有疑问，请联系客服。客服电话：<a style="font-size: 18px;font-weight: 800px;">4007777017</a></span>
+							<br/><span>如果在审核过程中遇到问题，请前往<a target="_blank" href="http://help.amall.com/help/help_c.html">&nbsp; 帮助中心&nbsp;</a>寻找帮助。</span>
+						</div>
+				   		
+					</div>
+					
+			</div>
+		</div>
+	</div>
+$!httpInclude.include("/footer.htm")
+</body>
+
+</html>

@@ -1,0 +1,438 @@
+$!httpInclude.include("/buyer/my_benefit_head.htm")
+<script src="$!webPath/assets/js/luhm.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+		
+	function checkInfo()
+	{
+		var cashFee = $("#cashFee").val();
+		
+		var enableCash = $("#enableCash").val()
+		
+		var subValue= enableCash - cashFee;
+		
+		if(cashFee == "")
+		{
+			$("#cashFee").val("");
+			$("#cashFee").attr("placeholder", "请输入提现金额");
+			return false;
+		}
+		
+		if(parseFloat(cashFee) < 10){
+			$("#cashFee").val("");
+			$("#cashFee").attr("placeholder", "提现金额不能小于10元");
+			return false;
+		}
+		
+		if(subValue < 0)
+		{
+			$("#cashFee").val("");
+			$("#cashFee").attr("placeholder", "超出可提现金额");
+			return false;
+		}
+		
+		/* if($("#check_item").val() == "bank")
+		{
+			if($("#address").val() == "" || $("#address").val() == null )
+			{
+				$("#address").attr("placeholder", "请输入开户行地址");
+				return false;
+			}
+		} */
+		
+		if($("#cardId").val() == "")
+		{   
+			$("#cardId").val("");
+			$("#cardId").attr("placeholder", "请输入卡号");
+			return false;
+		}
+		if($("#cardId1").val() == null || $("#cardId1").val() == "")
+		{
+			if(!luhmCheck($("#cardId").val()))
+			{
+				$("#cardId").val("");
+				$("#cardId").attr("placeholder", "卡号不符合规范");
+				return false;
+			}
+		}
+		
+		
+		
+		if($("#cardName").val() == "")
+		{
+			$("#cardName").val("");
+			$("#cardName").attr("placeholder", "请输入卡号对应的用户名");
+			return false;
+		}
+		
+		return true;
+	}
+	
+	
+	 $("#subBtn").click(function(){
+		
+		if(!checkInfo())
+		{
+			return false;
+		}
+		//$("#theForm").submit();
+		 var smscode = $("#smsCode").val();
+		
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/verify_sms_code.htm",
+			data : {"smscode":smscode},
+			success : function(ret) {
+				//正确才能注册
+				if(ret == "true")
+				{
+					$("#theForm").submit();
+				}
+				else
+				{
+					alert("验证码错误或验证码超时");
+				}
+					
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				alert("验证码错误或验证码超时");
+				refreshCode();
+			}
+		}); 
+		
+		
+	}); 
+	
+	$("#sendSms").click(function(){
+		
+		if(!checkInfo())
+		{
+			return false;
+		}
+		
+		$("#sendSms").attr("disabled",true);
+		var messageArray = new Array();
+		messageArray[0] = "请输入手机号";
+		messageArray[1] = "手机号已注册";
+		messageArray[2] = "今天短信次数超限,请明天再次尝试";
+		messageArray[3] = "两次发送间隔太短，请稍候再试";
+		messageArray[4] = "短信发送失败，请再次尝试";
+		messageArray[5] = "短信发送成功，请查收";
+		
+		//var phoneNum = "$!user.username";
+		var phoneNum = $("#cardId1").val();
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/send_sms.htm",
+			data : {"phoneNum":phoneNum,"forgot":"true"},
+			success : function(ret) {
+				$("#sendSms").attr("disabled",false);
+					sendRemainTime(messageArray[ret]);
+					
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				$("#smsCode").attr("placeholder", "短信验证码发送失败");
+			}
+		});
+	});
+		 
+	function sendRemainTime(str){ 
+		$("#smsCode").attr("placeholder", str);
+	}  
+	
+});
+
+/* $(document).ready(function() {
+	$("input[id=check_item]").click(function() {
+		$("input[id=check_item]").each(function() {
+			$(this).attr("checked", false);
+			$(this).removeClass("checked");
+		});
+
+		$(this).attr("checked", true);
+		$(this).addClass("checked");
+	});
+}) */
+</script>	
+		
+		
+		<div class="productmain" style="border:1px solid #acc7e2">
+			<div class="tixian_tit"><b style="font-size:14px">平台公司：深圳市天使互助网络有限公司</b></div>
+			<!-- <div class="tixian_list"><a style="color:red;padding-left:10px;" href="$!webPath/buyer/tixian_list.htm">提现记录</a></div> -->
+			<input type="hidden" id="enableCash" value="$!fee" />
+			<form action="$!webPath/apply_cash_deposit.htm" method="post" id="theForm">
+			
+			<div class="tixianuser">
+				<span>姓 名：$!user.truename</span>
+				<span>提现方式:<label><input type="radio" checked="checked" data_role="yh" name="webbankpay"  id="check_item" value="bank"/>银行卡 </label>
+					<label><input type="radio" name="webbankpay" data_role="zfb"  id="zfb" value="alipay"/>支付宝</label>
+				</span>
+			</div>
+			
+			<div class="bank">
+				
+				<div class="tixian_li">
+					<div class="left">提现金额：</div>
+					<div class="right"><input type="text" class="tixianinput" name="cashFee" id="cashFee" placeholder="请输入金额" />  元
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">银行所在城市：</div>
+					<div class="right">
+						<input type="text" name="cardCity" id="cardCity" class="tixianinput" placeholder="如：北京" /> 
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">银行名称：</div>
+					<div class="right"><!--<input type="text" name="address" id="address" class="tixianinput" placeholder="中国银行华强北支行" value="$!userCashDepositLog.address"/> -->
+						<select class="tixianinput" style="width:306px; height:40px;">
+							<option value="1">中国银行</option>
+							<option value="2">中国工商银行</option>
+							<option value="3">中国农业银行</option>
+							<option value="4">中国建设银行</option>
+							<option value="5">招商银行</option>
+							<option value="6">中国民生银行</option>
+							<option value="7">中国光大银行</option>
+							<option value="8">中信银行</option>
+							<option value="9">中国邮政储蓄银行</option>
+							<option value="10">交通银行</option>
+							<option value="11">兴业银行</option>
+							<option value="12">浦发银行</option>
+							<option value="13">平安银行</option>
+							<option value="14">华夏银行</option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">银行卡号：</div>
+					<div class="right"><input type="text" name="cardId" id="cardId" class="tixianinput" placeholder="输入卡号" value="$!userCashDepositLog.cardId"/>
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">手机号码：</div>
+					<div class="right"><input type="text" name="cardId1" id="cardId1" class="tixianinput" placeholder="输入手机号码" value=""/>
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">验证码：</div>
+					<div class="right"><input type="text" class="tixianinput" name="smsCode" id="smsCode" placeholder="短信验证码" style="width:188px;"/><input class="sendsms" id="sendSms" type="button" value="获取验证码">
+					</div>
+				</div>
+			
+			<div class="tixian_li" style="margin-top: 30px;">
+				<input class="tixianbtn" type="button" id="subBtn" value="申请提现" />
+			</div>
+			</div>
+			</form>
+			<!-- 支付宝提现 start -->
+			<form action="$!webPath/apply_cash_deposit.htm" method="post" id="theForm2">
+			<input type="hidden" name="cashUsername"  value="$!user.truename"/>		
+			<div class="alipay"style="display:none;">				
+				<div class="tixian_li">
+					<div class="left">提现金额：</div>
+					<div class="right"><input type="text" class="tixianinput" name="cashFee" id="cashFee2" placeholder="请输入金额" />  元
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">支付宝账号：</div>
+					<div class="right"><input type="text" name="cardId" id="zfbNum"   class="tixianinput" placeholder="请输入账号" value="$!userCashDepositLog.cardId"/>
+				
+					</div>
+				</div>
+				
+				<div class="tixian_li">
+					<div class="left">账号人姓名：</div>
+					<div class="right"><input type="text" name="cardName" id="cardName2"  class="tixianinput" placeholder="请输入姓名" value=""/>
+					<!-- <input type="hidden" name="cardId1" id="cardId1" class="tixianinput" placeholder="输入卡号" value="$!userCashDepositLog.cardId"/> -->
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">手机号码：</div>
+					<div class="right"><input type="text" name="cardId1"  id="phNum" maxlength="11" class="tixianinput" placeholder="请输入手机号码" value=""/>
+					
+					</div>
+				</div>
+				<div class="tixian_li">
+					<div class="left">验证码：</div>
+					<div class="right"><input type="text" name="smsCode" class="tixianinput smscode"  placeholder="短信验证码" style="width:188px;" /><input class="sendsms" id="sendSms_s" type="button" value="获取验证码">
+					</div>
+				</div>
+			
+			<div class="tixian_li" style="margin-top: 30px;">
+				<input class="tixianbtn" type="button" id="subBtn2" value="申请提现" />
+			</div>
+			</div>
+			<input type="hidden" name="webbankpay"  id="zfb_val"/>
+			</form>
+			<!-- 支付宝提现end -->	
+			<div class="tixiantxt">
+				<p><strong>Amall商城全面保障您的资金安全</strong></p>
+				<p style="text-indent:2em">Amall商城为你量身定制的账户系统与支付服务系统。一方面，为Amall商城平台开发定制账户系统，提供系统外包运营服务；另一方面，为Amall商城平台提供支付和结算服务，帮助平台和用户实现充值、取现、资金划拨等服务；投资人资金划入虚拟账户后，平台无法触碰资金，避免了资金池模式。但是，我们对投资风险（包括但不限于平台或其他借款人违约）不承担任何责任，投资需谨慎。</p>
+			</div>
+			
+			
+			
+    </div>
+  </div></div></div>
+<script>
+//支付宝是支付宝还是银行
+$("input[name='webbankpay']").click(function(){
+	var data_role = $(this).attr("data_role");
+	if(data_role == "zfb"){
+		var zfb = $("#zfb").val();
+		$("#zfb_val").val(zfb);
+		$(".alipay").show();
+		$(".bank").hide();
+	}else{
+		$(".alipay").hide();
+		$(".bank").show();
+	}
+});
+
+function checkInfo2()
+{
+	var cashFee = $("#cashFee2").val();
+	
+	var enableCash = $("#xu_cashAmount").html()
+	var subValue= enableCash - cashFee;
+	
+	if(cashFee == "")
+	{
+		$("#cashFee2").val("");
+		$("#cashFee2").attr("placeholder", "请输入提现金额");
+		$("#cashFee2").focus();
+		return false;
+	}
+	
+	if(parseFloat(cashFee) < 10){
+		$("#cashFee2").val("");
+		$("#cashFee2").attr("placeholder", "提现金额不能小于10元");
+		return false;
+	}
+	
+	if(subValue < 0)
+	{
+		$("#cashFee2").val("");
+		$("#cashFee2").attr("placeholder", "超出可提现金额");
+		return false;
+	}
+	
+	if($("#zfbNum").val() == "")
+	{
+		$("#zfbNum").val("");
+		$("#zfbNum").attr("placeholder", "请输入卡号");
+		return false;
+	}
+	
+	if($("#cardCity").val() == "")
+	{
+		$("#cardCity").val("");
+		$("#cardCity").attr("placeholder", "开户行所在城市必填");
+		return false;
+	}
+	
+	if($("#cardName2").val() == "")
+	{
+		$("#cardName2").val("");
+		$("#cardName2").attr("placeholder", "请输入账号对应的姓名");
+		return false;
+	}
+	var phNum =$("#phNum").val();
+	if(phNum == ""){
+		$("#phNum").val("");
+		$("#phNum").attr("placeholder", "请输入手机号码");
+		return false;
+	}
+	var reg = /^1\d{10}$/g;
+	if(!reg.test(phNum)){
+		$("#phNum").val("");
+		$("#phNum").attr("placeholder", "请输入正确的手机号码");
+		return false;
+	}
+	
+	
+	return true;
+}
+
+
+ $("#subBtn2").click(function(){
+	if(!checkInfo2())
+	{
+		return false;
+	}
+	//$("#theForm").submit();
+	 var smscode = $(".smscode").val();
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/verify_sms_code.htm",
+		data : {"smscode":smscode},
+		success : function(ret) {
+			//正确才能注册
+			if(ret == "true")
+			{
+				$("#theForm2").submit();
+			}
+			else
+			{
+				alert("验证码错误或验证码超时");
+			}
+				
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("验证码错误或验证码超时");
+			refreshCode();
+		}
+	}); 
+	
+	
+}); 
+
+$("#sendSms_s").click(function(){
+	
+	if(!checkInfo2())
+	{
+		return false;
+	}
+	
+	$("#sendSms_s").attr("disabled",true);
+	var messageArray = new Array();
+	messageArray[0] = "请输入手机号";
+	messageArray[1] = "手机号已注册";
+	messageArray[2] = "今天短信次数超限,请明天再次尝试";
+	messageArray[3] = "两次发送间隔太短，请稍候再试";
+	messageArray[4] = "短信发送失败，请再次尝试";
+	messageArray[5] = "短信发送成功，请查收";
+	messageArray[6] = "请填写账号注册手机号";
+	
+	//var phoneNum = "$!user.username";
+	var phoneNum = $("#phNum").val();
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/send_sms.htm",
+		data : {"phoneNum":phoneNum,"forgot":"true"},
+		success : function(ret) {
+			$("#sendSms_s").attr("disabled",false);
+				sendRemainTime(messageArray[ret]);
+				
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			//alert(errorThrown);
+			$(".smscode").attr("placeholder", "短信验证码发送失败");
+		}
+	});
+});
+	 
+function sendRemainTime(str){ 
+	$(".smscode").attr("placeholder", str);
+} 
+
+</script>
+</body>
+</html>
+ $!httpInclude.include("/footer1.htm") 

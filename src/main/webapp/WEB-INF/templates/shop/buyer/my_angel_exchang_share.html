@@ -1,0 +1,116 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>晒单分享</title>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+
+<style type="text/css">
+.shaidan_yes{}
+.shaidan_yes p{width:100%; text-align: center;}
+
+.shaidan_none{width:100%; display: block; overflow: hidden;border:1px solid #ccc;}
+
+.shaid_list{padding: 10px;}
+.shaid_list li{margin-bottom: 20px;}
+
+
+.de_sh_user{width:90px;margin:10px;overflow:hidden;padding: 5px; float:left}
+.de_sh_user img{width:90px; height: 90px;overflow:hidden;border-radius:5px;}
+.de_sh_user p{width:90px; text-align: center; margin-top:10px; color:red}
+.de_sh_info{overflow: hidden;padding: 5px;float:left;width:670px;}
+.sh_info_tit{height: 30px; line-height:30px; border-bottom: 1px dashed #ccc; display: block;}
+.sh_info_tit_left{float:left; padding-left: 5px; font-weight:900; font-size:14px;}
+.sh_info_tit_right{float:right; padding-right: 5px;}
+
+.de_content{width: 100%; margin:10px; display:block;}
+.de_img_three{width:100%; margin-bottom: 20px; display:block; margin-left: 5px;}
+.de_img_three img{width:150px; height: 150px; padding:2px;float:left; margin-right: 15px; margin-top: 20px;}
+</style>
+
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>   
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m">  
+			<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的晒单</span></div></div>
+			<div class="productmain">
+            	<div class="pdctitle blue2">我的晒单</div>
+
+	            <div class="operation" style="margin-bottom: 0px;padding-bottom: 0px;">
+	              
+	              <ul class="shaid_list" style="padding: 10px;">
+	              
+	              #foreach($obj in $!objs)
+	              	<li>
+		              	<div class="shaidan_none">
+							<div class="de_sh_user">
+								#if($!obj.user.photo)
+		            			#set($avatar = "$!{config.imagewebserver}/$!obj.user.photo.path/$!obj.user.photo.name")
+		            			#else
+		            			#set($avatar = "$!webPath/assets/img/user2.jpg")
+		            			#end
+								<img src="$!avatar" />
+								<p><a href="#">$obj.user.truename</a></p>
+							</div>
+							<div class="de_sh_info">
+								<div class="sh_info_tit">
+									<span class="sh_info_tit_left">$obj.cloudGoods.goodsName</span>
+									<span class="sh_info_tit_right">$CommUtil.formatLongDate($obj.addtime)</span>
+								</div>
+								
+								<div>
+									<span class="de_content">$obj.context</span>
+									<span class="de_img_three">
+										#if($obj.accessory_one)
+			                                <img src="$!{config.imagewebserver}/$!obj.accessory_one.path/$!obj.accessory_one.name" alt=""/>
+			                            #end
+			                           #if($obj.accessory_two)
+			                                <img src="$!{config.imagewebserver}/$!obj.accessory_two.path/$!obj.accessory_two.name" alt=""/>
+			                            #end
+			                            #if($obj.accessory_three)
+			                                <img src="$!{config.imagewebserver}/$!obj.accessory_three.path/$!obj.accessory_three.name" alt=""/>
+			                            #end
+									</span>
+								</div>
+							</div>
+						</div>	              	
+	              	</li>
+	              	#end
+	              	
+	              </ul>
+	              
+	            </div> 
+	            #if($!objs.size()>0)
+		        <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageHTML
+				</div>
+		  #end           
+          </div>
+
+    </div>
+</div>
+
+$!httpInclude.include("/footer.htm")
+
+</body>
+</html>

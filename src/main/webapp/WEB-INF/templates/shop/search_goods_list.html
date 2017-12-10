@@ -1,0 +1,404 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" ype="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/index.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/goodshidden.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/system/front/default/css/search.css" type="text/css" rel="stylesheet" />
+
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+
+<script>
+
+jQuery(document).ready(function(){
+	  
+	  //商品结果集列表排序
+	  jQuery(".brandsort_sort a").click(function(){
+		   var orderBy = jQuery(this).attr("orderBy");
+		   var orderType = jQuery(this).attr("orderType");
+		   jQuery("#orderBy").val(orderBy);
+		   jQuery("#orderType").val(orderType);
+		   if(orderBy == "addTime"){
+			   $("#appsprice").val("");
+			   $("#appeprice").val("");
+		   }
+		   jQuery("#ListForm").submit();
+	  });
+
+	 
+
+	 
+	 //更多的显示控制
+	 jQuery("#all_property_open").mouseover(function(){
+	    jQuery(this).css("cursor","pointer");
+	  }).click(function(){
+		jQuery("#all_property_status").val("open"); 
+	    jQuery(".classia").show();
+		jQuery("#all_property_close").show();
+		jQuery("#all_property_open").hide();
+	 });
+	 jQuery("#all_property_close").mouseover(function(){
+	    jQuery(this).css("cursor","pointer");
+	  }).click(function(){
+		jQuery("#all_property_status").val("close"); 
+	    jQuery(".classia:gt(2)").hide();
+		jQuery("#all_property_open").show();
+		jQuery("#all_property_close").hide();
+	 });
+	 
+
+	 
+	 //品牌,分类,规格更多控制
+	 jQuery(".classmore a").each(function(){
+	    jQuery(this).click(function(){
+		   if(jQuery(this).index()==0){ 
+		   	var mark = jQuery(this).attr("mark");
+			 jQuery("#detail_property_status").val(jQuery("#detail_property_status").val()+","+mark);					
+		     jQuery(this).parent().parent().find(".classb span").show();
+		     jQuery(this).hide();
+		     jQuery(this).parent().find("a:last").show();
+		   }
+		   if(jQuery(this).index()==1){ 
+		     jQuery(this).parent().parent().find(".classb span:gt(12)").hide();
+			 jQuery(this).hide();
+		     jQuery(this).parent().find("a:first").show();
+		   }
+		});
+	 });
+	 
+
+	  //商品结果条件查询
+	  var search_bar_top=jQuery("#search_bar").offset().top;
+	  jQuery(window).scroll(function(){
+	      var top= jQuery("#search_bar").offset().top;
+		  var scrolla=jQuery(window).scrollTop();
+		  var i=top-scrolla;
+		 if(i<=0){
+		   jQuery("#search_bar").addClass("brandsort_screen_top");	  
+		 }
+		 if(scrolla<search_bar_top){
+		   jQuery("#search_bar").removeClass("brandsort_screen_top");
+		 }
+	  });
+	  
+	  //按照销量,人气,价格排序,显示商品
+	  #if($!orderBy == 'goodsSalenum')
+		  #if($!orderType == 'asc')
+			$("a[orderBy='goodsSalenum']").attr("orderType","desc");
+			$("a[orderBy='goodsSalenum']").children().first().attr("class","sort_a1");
+		  #else
+		  	$("a[orderBy='goodsSalenum']").attr("orderType","asc");
+		  	$("a[orderBy='goodsSalenum']").children().first().attr("class","sort_a2");
+		  #end
+	  #elseif($!orderBy == 'goodsCollect')
+		  #if($!orderType == 'asc')
+			$("a[orderBy='goodsCollect']").attr("orderType","desc");
+			$("a[orderBy='goodsCollect']").children().first().attr("class","sort_a1");
+		  #else
+		  	$("a[orderBy='goodsCollect']").attr("orderType","asc");
+		  	$("a[orderBy='goodsCollect']").children().first().attr("class","sort_a2");
+		  #end
+	  #else
+	  	  #if($!orderType == 'asc')
+			$("a[orderBy='goodsPrice']").attr("orderType","desc");
+			$("a[orderBy='goodsPrice']").children().first().attr("class","sort_a1");
+		  #else
+		  	$("a[orderBy='goodsPrice']").attr("orderType","asc");
+		  	$("a[orderBy='goodsPrice']").children().first().attr("class","sort_a2");
+		  #end
+	  #end	  
+	  
+	  //开始价格-结束价格
+	  jQuery(".brandsort_fineprice").hover(function(){
+			jQuery(".brandsort_price_bottom").css("display","block");	
+		},function(){
+			jQuery(".brandsort_price_bottom").css("display","none");	
+		});
+		  
+	  jQuery(".brandsort_price_bottom a").click(function(){
+		 	var mark = jQuery(this).attr("mark");
+		    if(mark=="clear"){
+				jQuery(".brandsort_price_top input").val("");	
+			}else{
+				var sprice = jQuery.trim($("#store_price_begin").val());
+				var eprice = jQuery.trim($("#store_price_end").val());
+				$("#appsprice").val(sprice);
+				$("#appeprice").val(eprice);
+				$("#orderBy").val("goodsPrice");
+				jQuery("#ListForm").submit();
+			}
+					   
+		});	
+	});
+	
+	//已选择控制,删除已选择,重新提交请求
+	function goods_property_remove(type,id,value){
+		if(type=="brand"){
+		   jQuery("#appbrandId").val("");
+		   jQuery("#ListForm").submit();	  
+		}
+		if(type=="gs"){
+		   jQuery("#appbrandSpceId").val("");
+		   jQuery("#ListForm").submit();	 
+		}
+		if(type=="gc"){
+		   jQuery("#appgcId").val("");
+		   jQuery("#ListForm").submit();	 
+		}	
+	}
+	
+	
+	
+	//品牌,分类,规格的值组装,然后提交请求
+	function goods_property_generic(type,id,value){
+		
+	   if(type=="brand"){
+		   $("#appbrandId").val(id);
+		   jQuery("#ListForm").submit();  
+	   }
+	   
+	   if(type=="gs"){
+		   $("#appbrandSpceId").val(id);
+		   jQuery("#ListForm").submit();
+	   }
+	   if(type=="gc"){
+		   $("#appgcId").val(id);
+		   jQuery("#ListForm").submit();
+	   }	
+	   
+	}
+</script>  
+
+</head>
+<body class="main_t">
+$!httpInclude.include("/top.htm")
+<div>
+	$!httpInclude.include("/head.htm?type=$!type")
+	$!httpInclude.include("/bulkitem_nav.htm")
+	<div class="w100 bg_fff">
+		<div class="w1190">
+			<div class="root-nav">
+				<span class="f_yahei">当前位置</span> > <a href="$!webPath/index.htm">首页</a> > 搜索结果
+			</div>
+			$!httpInclude.include("/brand_goods_left.htm")
+	
+			<div class="search_v_list2">
+				<form action="$!webPath/search.htm" method="post" id="ListForm">
+					<input type="hidden" name="keyword" id="keyword" value="$!keyword" />
+					<input type="hidden" name="orderBy" id="orderBy" value="$!orderBy" />
+					<input type="hidden" name="orderType" id="orderType" value="$!orderType" />
+					<!-- 开始价格 -->
+					<input type="hidden" name="sprice" id="appsprice" value="$!sprice" />
+					<!-- 结束价格 -->
+					<input type="hidden" name="eprice" id="appeprice" value="$!eprice" />
+					
+					<!-- 品牌 -->
+					<input type="hidden" name="brandId" id="appbrandId" value="$!brandId" />
+					<!-- 规格 -->
+					<input type="hidden" name="brandSpceId" id="appbrandSpceId" value="$!brandSpceId" />
+					<!-- 分类 -->
+					<input type="hidden" name="gcId" id="appgcId" value="$!gcId" />
+					
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					
+					#if($!gbs.size()>0 || $!spces || $!gcs.size()>0)
+					<div class="opclass">
+						
+						
+							<div class="classify">
+							
+								<!-- 已经选择 start -->
+								<div class="chosen">
+										<div class="chosena">您已经选择：</div>
+										
+										#if($!goods_property.size()>0)
+											<div class="chosenb">
+												#foreach($map in $goods_property) 
+												<span class="chose">
+													<strong class="hui2">$!map.get("name"):</strong> 
+													<strong class="orange">$!map.get("value")</strong> 
+													<strong class="close_chose"></strong> 
+													<strong class="del_chose">
+														<img src="$!webPath/resources/style/system/front/default/images/close.jpg" width="14" height="14" onclick="goods_property_remove('$!map.get("type")','$!map.get("id")','$!map.get("value")')" />
+													</strong>
+												</span> 
+												#end
+											</div>
+										#end 
+										
+										<span class="chosen_sp"> 
+											<img src="$!webPath/resources/style/system/front/default/images/more_sp.gif" width="26" height="26" id="all_property_open" /> 
+											<img src="$!webPath/resources/style/system/front/default/images/more_sp2.gif" width="26" height="26" style="display: none" id="all_property_close" />
+										</span>
+								</div>
+								<!-- 已经选择 end -->
+								
+								
+								
+								<!-- 商品品牌 start -->
+								#if($!gbs.size()>0)
+									<div class="classia">
+									
+										<div class="classa">品牌:</div>
+										<div class="classb">
+											#foreach($info in $gbs) <span>
+											 <a href="javascript:void(0);"
+												onclick="goods_property_generic('brand','$!{info.id}','$!{info.goodsBrandName}')">$!info.goodsBrandName</a>
+											</span> #end
+										</div>
+									</div>
+								#end 
+								<!-- 商品品牌 end -->
+								
+								
+								<!-- 商品分类 start -->
+								#if($!gcs.size()>0)
+									<div class="classia">
+									
+										<div class="classa">类型:</div>
+										<div class="classb">
+											#foreach($gc in $gcs) 
+											<span> 
+												<a href="javascript:void(0);" onclick="goods_property_generic('gc','$!{gc.id}','$!{gc.className}')">$!gc.className</a>
+											</span> #end
+										</div>
+									</div>
+								#end 
+								<!-- 商品分类 end -->
+								
+													
+								<!-- 商品规格 start -->		
+								
+								#if($!spces)
+									<div class="classia">
+									
+										 #foreach($member in $spces.entrySet())
+										 	<div class="classa">$!member.key.goodsSpecificationName:</div>
+											<div class="classb">
+												#foreach($v_info in $member.value) <span> <a
+													href="javascript:void(0);"
+													onclick="goods_property_generic('gs','$!{v_info.id}','$!{v_info.goodsSpecPropertyValue}')">$!v_info.goodsSpecPropertyValue</a>
+												</span> #end
+											</div> 
+										 #end 
+										 
+									</div>
+								#end
+								
+								<!-- 商品规格 end -->
+						</div>
+					
+					</div>
+					#end
+				
+				
+					<!--商品列表开始-->
+					<div class="allgoods">
+					
+							<!-- 商品结果条件排序 start -->
+							<div class="brandsort_screen" id="search_bar">
+								<div class="brandsort_sort">
+									<a href="javascript:void(0);" class="sort_a this"
+										orderBy="addTime" orderType="asc">默认排序</a> <a
+										href="javascript:void(0);" class="sort_a"
+										orderBy="goodsSalenum" orderType="desc"><i class="sort_a1">销量</i></a>
+									<a href="javascript:void(0);" class="sort_a"
+										orderBy="goodsCollect" orderType="desc"><i class="sort_a2">人气</i></a>
+									<a href="javascript:void(0);" class="sort_a"
+										orderBy="goodsPrice" orderType="asc"><i class="sort_a1">价格</i></a>
+								</div>
+								<div class="brandsort_fineprice">
+									<div class="brandsort_price_top">
+										<input placeholder="¥" name="store_price_begin" id="store_price_begin"
+											value="$!store_price_begin" type="text" title="按照价格区间筛选 最低价"
+											class="brandsort_price_input" /> <i>-</i> <input
+											placeholder="¥" name="store_price_end" id="store_price_end"
+											value="$!store_price_end" type="text" title="按照价格区间筛选 高价"
+											class="brandsort_price_input" />
+									</div>
+									<div class="brandsort_price_bottom" style="display: none">       <!-- 军哥删了个display: none -->
+										<a href="javascript:void(0);" mark="clear" class="brandsort_btn_clear">清空</a> 
+										<a href="javascript:void(0);" class="brandsort_btn_com">确定</a>
+									</div>
+								</div>
+							</div>
+							<!-- 商品结果条件排序 end -->
+							
+							#if($!objs.size())
+							
+								<!-- 商品列表 start -->
+								<div class="search_img_list">
+									#foreach($obj in $objs)
+									<ul>
+										#set($img=$!storeTools.genericImageById($!{obj.goodsMainPhotoId}))
+										
+										#set($goods_url="$!webPath/goods_$!{obj.id}.htm")
+										#if($!config.secondDomainOpen)
+											#set($goods_url="http://$!{obj.goodsStore.storeSecondDomain}.$!{domainPath}/goods_$!{obj.id}.htm")
+										#end
+			
+			
+										<li class="goodsimgs">
+											<div class="s_img">
+												<a href="$!goods_url" target="_blank"> 
+													<img src="$!img" original="$!img" width="220" height="220" />
+												</a>
+											</div>
+											<div class="s_info">
+												<a href="$!goods_url" title='$!CommUtil.substring("$!obj.goodsName",50)' target="_blank">$!CommUtil.substring("$!obj.goodsName",14)</a>
+											</div>
+											<div class="s_pri">
+												<span class="prinum">¥$!{obj.goodsPrice}</span>
+												 #if($!obj.deliveryStatus > 0)
+												 <span><a class="property1" title="购买本商品可获积分">积分</a></span>
+												 #end 
+												 #if($!obj.activityStatus == 2)
+												 <span><a class="property2" title="购买本商品商家包邮">包邮</a></span>
+												 #end
+											</div>
+										</li>
+									</ul>
+									#end
+								</div>
+								<!-- 商品列表 end -->
+								
+							#else
+								<!-- 没有查询到商品 start -->
+								<div class="starshop_list" style="height: 500px;">
+									<div class="sigh">
+										<span><img src="$!webPath/assets/img/1968.gif" /></span> <b>对不起，没有对应的数据!</b>
+									</div>
+								</div>
+								<!-- 没有查询到商品 end -->
+							#end
+							
+						</div>
+						
+				</form>
+			</div>
+			
+			<!-- 商品分页 start -->		
+			<div class="bottom_page">
+				$!gotoPageHTML
+			</div>
+			<!-- 商品分页 end -->
+				
+		</div>
+		
+	</div>
+	
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+
+</html>

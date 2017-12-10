@@ -1,0 +1,230 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>咨询商品</title>
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/service/css/service.css">
+<!-- 环信SDK -->
+<script type="text/javascript" src="$!webPath/im/js/bootstrap.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/jquery-1.11.1.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/strophe.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/easemob.im-1.1.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/easemob.im-1.1.shim.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/advisory.js"></script>
+<script type="text/javascript" src="$!webPath/im/js/easemob.im.config.js"></script>
+<script>
+	 $(document).ready(function() {
+		$("#login").trigger('click');
+	}); 
+
+	//禁止浏览器F5刷新
+	document.onkeydown = function(e) {
+		var ev = window.event || e;
+		var code = ev.keyCode || ev.which;
+		if (code == 116) {
+			ev.keyCode ? ev.keyCode = 0 : ev.which = 0;
+			cancelBubble = true;
+			return false;
+		}
+		if (code == 13) {
+			var text = $('#rl_exp_input').val();
+			if (null != text && trim(text).length > 0) {
+				sendText();
+				//取消enter 事件 换行
+				return false;
+			}
+		}
+	};
+	
+	//去空格
+	var trim = function(str){
+		 return str.replace(/(^\s*)|(\s*$)/g, ""); 
+	};
+	var onclickFile = function() {
+		$("#fileInput").trigger('click');
+	};
+	//关闭页面
+	var closePage = function(){
+		if(confirm("亲,确定要结束本次咨询吗?咨询记录将不会保存哦~")){
+			window.opener=null;
+			window.open('','_self','');
+			window.close();
+		}
+	}
+</script>
+</script>
+<style>
+input,button,select,textarea{ outline:none;}
+textarea{resize:none;}
+</style>
+</head>
+<body style="overflow-x: hidden;overflow-y: hidden;">
+<input type="hidden" id="webpath" value="$!webPath" />
+	<!-- login -->
+	<div class="loginmodal" id="loginmodal" name="loginmodal" style="visibility: hidden;">
+		<div>
+			<h3>用户登录</h3>
+		</div>
+		<div>
+			<table>
+				<tr>
+					<td width="50%">
+						<label>用户名：</label> <input type="text" id="username" name="username" value="$!obj.username" tabindex="1" />
+						<label>密码：</label> <input type="password" id="password" name="password" value="$!obj.password" tabindex="2" /> 
+						<label>令牌：</label> <input type="text" id="token" name="token" value="$!obj.token" disabled="disabled" tabindex="3" />
+					</td>
+				</tr>
+			</table>
+			<label> 
+				<input type="checkbox" name="usetoken" id="usetoken" tabindex="4" />使用令牌登录 
+			</label>
+		</div>
+		<div>
+			<button id="login" onclick="login()" tabindex="3">登录</button>
+		</div>
+	</div>
+	<!-- 登录图片 -->
+	<div id="waitLoginmodal" name="waitLoginmodal">
+		<img src="$!webPath/service/img/waitting.gif"/><br><br>加载中...
+	</div>
+
+	<!-- 隐藏保存当前页面需要联系人 -->
+	<input type="hidden" name="currentChatId" id="currentChatId" value="$!storeUserId" />
+
+	<!-- 聊天页面 -->
+	<div class="service" id="main_inner" style="display: none">
+
+		<div class="" style="position: absolute; top: 20px; right: 15px; z-index: 1; cursor: pointer">
+			<img src="$!webPath/service/img/c.png" width="20" onclick="closePage()"/>
+		</div>
+
+		<div class="top">
+			<img src="$!webPath/service/logo.png" />
+			<!-- 当前聊天对象 -->
+			<div>
+				<span id="title_name"></span>
+			</div>
+		</div>
+		<div class="sbody">
+			<div class="left">
+				<!-- 聊天内容主页面 -->
+				<div id="chat_main">
+					<div class="chatcontent" id="wei_co_21"></div>
+				</div>
+				<div class="tool">
+					<ul class="list">
+						<li>
+							<img src="$!webPath/service/img/add_image_24px.png" onclick="onclickFile()" /> 
+							<input type="file" id="fileInput"style="display: none;" onchange="sendPic()" />
+						</li>
+						<!-- 表情<li>	
+							<img src="$!webPath/service/img/face.png" />
+							<input type='file' id="fileInput" style="display: none;" onchange="sendPic()"/>
+						</li>
+						截图
+						<li>							
+							<img src="$!webPath/service/img/cut_24px.png"  />
+							<input type='file' id="fileInput" style="display: none;" onchange="sendPic()"/>
+						</li> -->
+					</ul>
+				</div>
+				<div class="edit">
+					<div class="edit_t">
+						<textarea name="test" id="rl_exp_input"
+							placeholder="请简要描述你的问题，如退换货运费怎么算" style="outline:none;"></textarea>
+					</div>
+					<div class="btn">
+						<span>还可以输入 350 个字</span> <span> <!-- <input class="close"
+							type="button" value="关闭" onclick="close_page()" /> -->
+						</span> <span> <input class="send" type="button" id="send_text"
+							onclick="sendText()" value="发送" />
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="right">
+				<div class="zzsc">
+					<div class="tab">
+						<a href="javascript:;" class="on">商品信息</a>
+					</div>
+					<div class="content">
+						<ul>
+							<li style="display: block; padding: 10px;">
+								<div class="shop_info">
+									<div class="shop_img">
+										#set($gmp = $!goods.goodsMainPhoto) 
+										<a href="#"> 
+										<img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" />
+										</a>
+									</div>
+								</div>
+								<div class="cart">
+									<div class="shop_txt">
+										<span class="s_name">商品名称：<a href="#" id="goods_name">$!goods.goodsName</a></span>
+										<span class="s_info" id="goods_info">商品信息：$!goods.goodsInfo</span>
+									</div>
+									<p>
+									<dd>天 使 价：</dd>
+									<dt id="goods_price">
+										<strong class="cred"> 
+											#if($!obj.goodsCurrentPrice)
+											¥$!goods.goodsCurrentPrice 
+											#else 
+											¥$!goods.goodsPrice 
+											#end
+										</strong>
+									</dt>
+									</p>
+									<p>
+									<dd>促销信息：</dd>
+									<dt id="goods_promotion">$!goods.salesPromotion</dt>
+									</p>
+									<p>
+									<dd style="clear:both">库&nbsp;&nbsp;存：</dd>
+									<dt id="good_inventory">$!goods.goodsInventory</dt>
+									</p>
+									<p>
+									<dd>服&nbsp;&nbsp;务：</dd>
+									<dt>
+										#if($!goods.refundServerTime == 100) 
+										<span style="color: red">该商品非质量问题不支持无理由退换货</span>
+										#elseif($!goods.refundServerTime == 101) 七天无理由退换
+										#elseif($!goods.refundServerTime == 102) 十五天无理由退换 
+										#else 三十天无理由退换
+										#end
+									</dt>
+									</p>
+									<p>
+									<dd>店铺信息：</dd>
+									<dt>
+										<img src="$!webPath/assets/img/ss.png" width="20" height="16" style="display: inline-block; margin-top: -2px;" />
+										<a href="$!webPath/store.htm?id=$!goods.goodsStore.id" style="display: inline-block; margin-top: -4px;" target="_blank">$!goods.goodsStore.storeName</a>
+									</dt>
+									</p>
+								</div>
+							</li>
+
+							<li id="wei22" style="overflow-y: auto; height: 550px; background: #e4e4e4">
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="rl_exp" id="rl_bq" style="display: none;">
+				<ul class="rl_exp_tab clearfix">
+					<li><a href="javascript:void(0);" class="selected">默认</a></li>
+					<li><a href="javascript:void(0);">拜年</a></li>
+					<li><a href="javascript:void(0);">浪小花</a></li>
+					<li><a href="javascript:void(0);">暴走漫画</a></li>
+				</ul>
+				<ul class="rl_exp_main clearfix rl_selected"></ul>
+				<ul class="rl_exp_main clearfix" style="display: none;"></ul>
+				<ul class="rl_exp_main clearfix" style="display: none;"></ul>
+				<ul class="rl_exp_main clearfix" style="display: none;"></ul>
+				<a href="javascript:void(0);" class="closeface">×</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

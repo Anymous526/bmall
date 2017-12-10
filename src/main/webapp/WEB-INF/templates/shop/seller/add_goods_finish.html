@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品发布成功 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div class="main">
+  <div class="seller-container">
+  <div class="navdetai2"> <span class="navadd1 addcolor">选择商品所在分类</span> <span class="navadd2 addcolor">填写商品详细信息</span> <span class="navadd3  white">商品发布成功</span> </div>
+  <div class="success">
+    <div class="okimg"><img src="$!webPath/resources/style/system/front/default/images/usercenter/dui.jpg" width="60" height="66" /></div>
+    <div class="success_mid">
+      <h1>恭喜您！商品已发布成功！</h1>
+      <span>#if($!obj.goodsStatus ==0)<a href="$!webPath/goods_$!{obj.id}.htm" target="_blank">查看商品详情>> </a>#else
+      		<a href="$!webPath/seller/seller_goods_storage.htm" >到仓库中查看>> #end</a>
+      </span><span> <a href="$!webPath/seller/goods_edit.htm?id=$!obj.id">编辑刚发布的商品>></a></span></div>
+    <div class="success_right">
+      <h2>您还可以:</h2>
+      <ul>
+        <li> 1. 继续 <a href="$!webPath/seller/add_goods_first.htm">"发布新商品"</a></li>
+        <li> 2. 进入 <a href="$!webPath/seller/seller_index.htm">"卖家中心"</a> 管理 <a href="$!webPath/seller/seller_goods.htm">"商品列表"</a></li>
+        <li> 3. 参与<a href="$!webPath/seller/activity.htm">"商城活动"</a></li>
+      </ul>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div style="position: absolute;bottom: 0px;left: 0px;width: 100%;margin: 0 auto;">
+$!httpInclude.include("/footer.htm")
+</div>
+</body>
+</html>

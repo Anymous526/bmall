@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+
+</head>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+	
+});
+
+function saveForm(){
+   jQuery("#theForm").submit();
+   
+
+}
+
+
+</script>
+<body>
+<div class="cont">
+  <h1 class="seth1">商品审核</h1>
+
+ 
+ 
+  <div class="setcont">
+    <!--鼠标经过样式-->
+    <ul class="set1">
+      <li><strong class="orange fontsize20"></strong>商品名称</li>
+      <li><span class="webname">
+      $!goods.goodsName
+      </span></li>
+    </ul>
+      <ul class="set1">
+      <li>品牌</li>
+      <li>
+      	<span class="webname">
+      		$!goods.GoodsBrand.name
+        </span>
+      </li>
+    </ul>
+    <ul class="set1">
+      <li>单价</li>
+      <li><span class="webname">
+         $!goods.goodsPrice元
+      </span></li>
+    </ul>
+	<ul class="set1">
+      <li>分类名</li>
+      <li>
+      	<span class="webname">
+	          #if($!goods.floor.moduleId==3)
+	          		海外购
+	          	#end
+	          	#if($!goods.floor.moduleId==1)
+	          		土特产
+	          	#end
+	          	#if($!goods.floor.moduleId==2)
+	          		新奇特
+	          	#end
+	          	#if($!goods.floor.moduleId==4)
+	          		大健康
+	          	#end
+	          	#if($!goods.floor.moduleId==9999)
+	          		特卖场
+	          	#end
+	    </span>
+	  </li>
+	</ul>
+	<ul class="set1">
+      <li>所在店铺</li>
+      <li>
+      	<span class="webname">
+	               $!goods.goodsStore.storeName
+	    </span>
+	  </li>
+	</ul>
+	
+	<ul class="set1">
+      <li>商品图片</li>
+      <li>
+       #if($!goods.goodsMainPhoto)
+          #set($img="$!{config.imagewebserver}/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+          #else
+          #set($img="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+          #end
+      	<span class="webname">
+	        <img src="$!img"/>
+	    </span>
+	  </li>
+	</ul>
+	<form name="theForm" id="theForm" action="$!webPath/admin/check.htm" method="post">
+  		<input type="hidden" name="id" value="$!goods.id"/>
+	   	 <ul class="set1">
+	        <li><strong class="orange fontsize20">*</strong>审核状态</li>
+	        <li><span class="webname">
+	          <select name="chekedId">
+	          	<option value="0">审核通过</option>
+	          	<option value="1">审核不通过</option>
+	          </select>
+	          </span></li>
+	      </ul>
+	      <ul class="set1">
+	        <li><strong class="orange fontsize20">*</strong>描述</li>
+	        <li><span class="webname">
+	          <textarea name="content" cols="40" rows="4" id="verifyRemark"></textarea>
+	          </span></li>
+	      </ul>
+      
+	  </form>
+  
+    </div>
+    
+  
+  
+  <div class="submit">
+    <input name="save" type="button" value="提交" onclick="saveForm()" />
+  </div>
+</div>
+</body>
+</html>

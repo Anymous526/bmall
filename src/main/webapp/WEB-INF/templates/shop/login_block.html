@@ -1,0 +1,137 @@
+<head>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/login/js/jquery.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/jquery.validate.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/cryptographic.js"></script>
+<link rel="stylesheet" href="$!webPath/assets/css/loginb.css" type="text/css" />
+<script>  
+function btnSubmit()
+{
+	if($("#username").val() == "")
+	{
+		$(".login_error_sp").css("display","block");
+		alert("用户名不能为空"); 
+		$("#username").focus(); 
+		return;
+	} 
+	if($("#username").val() != "")
+	{
+		$(".login_error_sp").css("display","none"); 
+	} 
+	if($("#password").val() == "")
+	{
+		$(".login_error_sp1").css("display","block");
+		alert("密码不能为空"); 
+		$("#password").focus(); 
+		return;
+	}
+	if($("#password").val() != "")
+	{
+		$(".login_error_sp1").css("display","none");  
+	} 
+	if($("#code").val() == "")
+	{
+		$(".login_error_sp2").css("display","block");
+		alert("　 验证码不能为空");  
+		$("#code").focus(); 
+		return;
+	} 
+	if(!(/^\d{4}$/.test)($("#code").val()))
+	{
+		$(".login_error_sp2").css("display","block");
+		alert("　 验证码错误");  
+		$("#code").focus(); 
+		return;
+	} 
+	if($("#remember").attr("checked"))
+	{
+		$("#autologin").val("true");
+	}
+	else
+	{
+		$("#autologin").val("false");
+	}
+
+	//加密
+	var shaObj = new amallEncryption($("#password").val());
+	var str = shaObj.getHash();
+	$("#password").val(str);
+	
+	jQuery("#theForm").submit();
+}
+/*这里与商品页 搜索的enter键冲突了
+  var EnterSubmit = function(evt){
+evt = window.event || evt;
+ if (evt.keyCode == 13)
+ { 
+	 btnSubmit();
+ }
+}
+window.document.onkeydown=EnterSubmit;
+*/
+jQuery(document).ready(function(){
+     if(top.location!=this.location)top.location=this.location;//跳出框架在主窗口登录
+	jQuery('#username').focus();	
+});
+
+</script> 
+</head>
+<form action="$!webPath/amall_login.htm" method="post" name="theForm" id="theForm">
+<div class="login_bg">
+	<div class="login_area">
+    	<div class="login_a_tit">
+        	<span>欢迎光临天使互助</span>
+            <span class="close_img"><a href=""><img src="assets/img/close2.png" id="app_block_close"/></a></span>
+        </div>
+        <div style="width:100%; padding:5%;">
+        	<div class="login_tab">
+            	<a href="#"><span class="login_tab_li1">登 录</span></a>
+                <a href="$!webPath/register.htm"><span class="login_tab_li2" id="app_reg">注 册</span></a>
+            </div>
+            <div>
+            	<input type="hidden" id="url" name="url" value="$!webPath/goods.htm?id=$!{goodsId}&currentPage=$!currentPage"/>
+    			<input type="hidden" id="currentPage" name="currentPage" value="$!currentPage"/>
+    			
+            </div>
+            <div class="pt20">
+            	<ul class="ml20">
+                <li class="edit_li">
+                	<span class="edit_txt">账号:</span>
+                    <span style="float:left;">
+                    	<input class="login_input" type="text" name="username"  id="username" />
+                    </span>
+                </li>
+                
+                
+                <li class="edit_li">
+                	<span class="edit_txt">密码:</span>
+                    <span style="float:left;height:36px;">
+                    	<input class="login_input" type="password" name="password"  id="password"/>
+                    </span>
+                </li> 
+    			 
+                <li class="edit_li_code" >
+                	<span class="edit_txt_code" style="float:left;width:40px;">验证码:</span>
+                    <span style="float:left;height:36px;">
+                		<input class="loogin_input_code" type="text" name="code" style="width:130px" id="code" /> 
+                	</span>
+                </li>
+                <img class="" src="$!webPath/verify.htm" id="code_img"  onclick="refreshCode();" style="float:left;margin-left:220px; margin-top: -30px" />  
+                </ul> 
+                <span class="ml20"><input type="checkbox" name="chkRememberMe" id="remember" style="margin-top:5px;clear:both"/> 自动登录</span>
+                <span class="ml20 mt10 block">
+                	<input name="login" type="submit" onclick="btnSubmit()" id="login_buttom" class="login_buttom" value="登 录" />
+                </span>
+                <span class="ml20 mt10 block"><a style="color:#666" href="$!webPath/forget.htm">忘记密码？</a></span>
+            </div>
+            
+        </div>
+    </div>
+</div>
+</form>
+  
+<script>
+function refreshCode(){
+        jQuery("#code_img").attr("src","$!webPath/verify.htm?d"+new Date().getTime());
+}
+</script>

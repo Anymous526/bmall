@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.CouponMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Coupon" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="coupon_amount" property="couponAmount" jdbcType="DECIMAL" />
+    <result column="coupon_begin_time" property="couponBeginTime" jdbcType="DATE" />
+    <result column="coupon_count" property="couponCount" jdbcType="INTEGER" />
+    <result column="coupon_end_time" property="couponEndTime" jdbcType="DATE" />
+    <result column="coupon_name" property="couponName" jdbcType="VARCHAR" />
+    <result column="coupon_order_amount" property="couponOrderAmount" jdbcType="DECIMAL" />
+    <result column="coupon_acc_id" property="couponAccId" jdbcType="BIGINT" />
+    <association property="couponAcc" column="coupon_acc_id" javaType="com.amall.core.bean.Accessory"
+    			select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <collection property="couponinfos" column="couponinfos_id" ofType="com.amall.core.bean.CouponInfo" 
+    			select="com.amall.core.dao.CouponInfoMapper.selectByExample"/>
+    
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, coupon_amount, coupon_begin_time, coupon_count, coupon_end_time, 
+    coupon_name, coupon_order_amount, coupon_acc_id
+  </sql>
+  <cache/>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CouponExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_coupon
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.CouponExample" >
+    delete from amall_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.Coupon" >
+    insert into amall_coupon (  id, addTime, deleteStatus, 
+      coupon_amount, coupon_begin_time, coupon_count, 
+      coupon_end_time, coupon_name, coupon_order_amount, 
+      coupon_acc_id)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{couponAmount,jdbcType=DECIMAL}, #{couponBeginTime,jdbcType=DATE}, #{couponCount,jdbcType=INTEGER}, 
+      #{couponEndTime,jdbcType=DATE}, #{couponName,jdbcType=VARCHAR}, #{couponOrderAmount,jdbcType=DECIMAL}, 
+      #{couponAccId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.Coupon" >
+  	
+  	
+    insert into amall_coupon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="couponAmount != null" >
+        coupon_amount,
+      </if>
+      <if test="couponBeginTime != null" >
+        coupon_begin_time,
+      </if>
+      <if test="couponCount != null" >
+        coupon_count,
+      </if>
+      <if test="couponEndTime != null" >
+        coupon_end_time,
+      </if>
+      <if test="couponName != null" >
+        coupon_name,
+      </if>
+      <if test="couponOrderAmount != null" >
+        coupon_order_amount,
+      </if>
+      <if test="couponAccId != null" >
+        coupon_acc_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="couponAmount != null" >
+        #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponBeginTime != null" >
+        #{couponBeginTime,jdbcType=DATE},
+      </if>
+      <if test="couponCount != null" >
+        #{couponCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponEndTime != null" >
+        #{couponEndTime,jdbcType=DATE},
+      </if>
+      <if test="couponName != null" >
+        #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponOrderAmount != null" >
+        #{couponOrderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponAccId != null" >
+        #{couponAccId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.CouponExample" resultType="java.lang.Integer" >
+    select count(*) from amall_coupon
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_coupon
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.couponAmount != null" >
+        coupon_amount = #{record.couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponBeginTime != null" >
+        coupon_begin_time = #{record.couponBeginTime,jdbcType=DATE},
+      </if>
+      <if test="record.couponCount != null" >
+        coupon_count = #{record.couponCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.couponEndTime != null" >
+        coupon_end_time = #{record.couponEndTime,jdbcType=DATE},
+      </if>
+      <if test="record.couponName != null" >
+        coupon_name = #{record.couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.couponOrderAmount != null" >
+        coupon_order_amount = #{record.couponOrderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.couponAccId != null" >
+        coupon_acc_id = #{record.couponAccId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_coupon
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      coupon_amount = #{record.couponAmount,jdbcType=DECIMAL},
+      coupon_begin_time = #{record.couponBeginTime,jdbcType=DATE},
+      coupon_count = #{record.couponCount,jdbcType=INTEGER},
+      coupon_end_time = #{record.couponEndTime,jdbcType=DATE},
+      coupon_name = #{record.couponName,jdbcType=VARCHAR},
+      coupon_order_amount = #{record.couponOrderAmount,jdbcType=DECIMAL},
+      coupon_acc_id = #{record.couponAccId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.Coupon" >
+    update amall_coupon
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="couponAmount != null" >
+        coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponBeginTime != null" >
+        coupon_begin_time = #{couponBeginTime,jdbcType=DATE},
+      </if>
+      <if test="couponCount != null" >
+        coupon_count = #{couponCount,jdbcType=INTEGER},
+      </if>
+      <if test="couponEndTime != null" >
+        coupon_end_time = #{couponEndTime,jdbcType=DATE},
+      </if>
+      <if test="couponName != null" >
+        coupon_name = #{couponName,jdbcType=VARCHAR},
+      </if>
+      <if test="couponOrderAmount != null" >
+        coupon_order_amount = #{couponOrderAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="couponAccId != null" >
+        coupon_acc_id = #{couponAccId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Coupon" >
+    update amall_coupon
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      coupon_amount = #{couponAmount,jdbcType=DECIMAL},
+      coupon_begin_time = #{couponBeginTime,jdbcType=DATE},
+      coupon_count = #{couponCount,jdbcType=INTEGER},
+      coupon_end_time = #{couponEndTime,jdbcType=DATE},
+      coupon_name = #{couponName,jdbcType=VARCHAR},
+      coupon_order_amount = #{couponOrderAmount,jdbcType=DECIMAL},
+      coupon_acc_id = #{couponAccId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

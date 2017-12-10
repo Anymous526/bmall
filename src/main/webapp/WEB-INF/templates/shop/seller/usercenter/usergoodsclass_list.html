@@ -1,0 +1,170 @@
+<!doctype html>
+<html> 
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品分类列表 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com" />
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="$!webPath/resources/js/jquery.shop.common.js"></script>
+<script src="$!webPath/resources/js/jquery.validate.min.js"></script>
+<script type="text/javascript">
+function hideThis() {
+	$("tr[name='ugcChilds']").each(function() {
+		$(this).hide();
+		$("#jian").attr("src", "$!webPath/resources/style/system/front/default/images/usercenter/jia.jpg");
+		$("#jian").attr("onclick", "showThis()");
+		$("#jian").attr("id", "jia");
+	});
+}
+
+function showThis() {
+	$("tr[name='ugcChilds']").each(function() {
+		$(this).show();
+		$("#jia").attr("src", "$!webPath/resources/style/system/front/default/images/usercenter/jian.jpg");
+		$("#jia").attr("onclick", "hideThis()");
+		$("#jia").attr("id", "jian");
+	});
+}
+</script>
+</head> 
+<body> 
+$!httpInclude.include("/top.htm") 
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=usergoodsclass") 
+<div class="s_m">   
+<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>商品分类管理</span></div></div>
+<div class="productmain"> 
+<div class="pdctitle blue2">商品分类管理</div> 
+<div class="all_select">
+<label for="all">
+<input name="all" type="checkbox" id="all" value="" onclick="selectAll(this)" class="all_select_checkbox"/>&nbsp;全选&nbsp;&nbsp;&nbsp;&nbsp; 
+</label>
+<span>
+<a class="all_select_button" href="javascript:void(0);" onclick="cmd('$!webPath/seller/usergoodsclass_del.htm','')">删除</a>
+</span>
+<span style="float: right;margin-right: 10px;margin-top: 10px;">
+<a class="all_select_button" href="$!webPath/seller/usergoodsclass_add.htm?currentPage=$!currentPage" dialog_uri="$!webPath/seller/usergoodsclass_add.htm?currentPage=$!currentPage" dialog_title="新增分类" dialog_width="480" dialog_height="100" dialog_id="cart_address">新增分类</a>
+</span>			        
+</div>
+
+<form action="" method="post" name="ListForm" id="ListForm">
+	<div class="operation">
+		<table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable">
+			<tr id="opertitle">
+				<td class="classname">分类名称
+					<input name="mulitId" type="hidden" id="mulitId" />
+				</td>
+				<td class="sort" align="center">排序</td>
+				<td class="show">显示</td>
+				<td align="center">操作</td>
+			</tr>
+ 	 #if($objs.size() > 0)  
+			#foreach($obj in $objs)
+			<tr class="opertr">
+				<td class="classname">
+					<span style="margin-top: 4px;"><input name="id" type="checkbox" id="id" value="$!obj.id" /></span>
+	
+	<span class="classname2">
+		#if($!obj.childs.size()>0)
+			<img src="$!webPath/resources/style/system/front/default/images/usercenter/jian.jpg" width="14" height="14" onclick="hideThis()" id="jian" />
+		#else 
+			<img src="$!webPath/resources/style/system/front/default/images/usercenter/xiaji.jpg" onclick="showThis()" id="jia"/>
+		#end
+	</span>
+	
+	
+	<span class="classname3">$!obj.classname</span>
+	
+	<span class="classname4">
+	<a href="javascript:void(0);" dialog_uri="$!webPath/seller/usergoodsclass_add.htm?pid=$!obj.id&currentPage=$!currentPage" dialog_title="新增分类" dialog_width="480" dialog_height="100" dialog_id="cart_address">新增下级</a>
+	</span>
+	
+</td>
+<td class="sort" align="center">$!obj.sequence</td>
+<td class="show">
+	<img src="$!webPath/resources/style/system/front/default/images/usercenter/$!{obj.display}.jpg" width="16" height="14" />
+</td>
+
+<td class="operajt">
+	<span class="edit"><a href="javascript:void(0);" dialog_uri="$!webPath/seller/usergoodsclass_edit.htm?id=$!obj.id&currentPage=$!currentPage" dialog_title="编辑地址" dialog_width="480" dialog_height="100" dialog_id="cart_address">编辑</a></span> 
+	#if($!obj.audit!=1) 
+       <span class="del"><a href="javascript:void(0);" onclick="if(confirm('是否确定删除商品分类?'))window.location.href='$!webPath/seller/usergoodsclass_del.htm?mulitId=$!obj.id'">删除</a></span> #end
+	</td>
+	
+</tr>
+#foreach($child in $obj.childs)
+<tr class="opertr" name="ugcChilds">
+	<td class="classname">
+		<span> <input name="id"	type="checkbox" id="id" value="$!child.id" class="checkname"/>
+		</span>
+		<span class="classname2">&nbsp;</span>
+		<span class="classname5">$!child.classname</span>
+	</td>
+	<td class="sort" align="center">$!{child.sequence}</td>
+	<td class="show">
+		<img src="$!webPath/resources/style/system/front/default/images/usercenter/$!{child.display}.jpg" width="16" height="14" />
+	</td>
+	<td class="operajt">
+		<span class="edit"><a href="javascript:void(0);" dialog_uri="$!webPath/seller/usergoodsclass_edit.htm?id=$!child.id&currentPage=$!currentPage" dialog_title="编辑地址" dialog_width="480" dialog_height="100" dialog_id="cart_address">编辑</a></span>
+		<span class="del"><a onclick="if(confirm('是否确定删除商品分类?'))window.location.href='$!webPath/seller/usergoodsclass_del.htm?mulitId=$!child.id'" href="javascript:void(0);">删除</a></span>
+	</td>
+</tr>
+#end #end
+ #else
+           
+           	<tr class="opertr">
+          <td colspan="4" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">商品分类</span>哦,先去看看吧~ </td>
+             </tr>  
+               
+               #end		
+		</table>
+	</div>
+</form>
+
+
+<div class="all_select">
+
+             <label for="all1">
+             	<input name="all" type="checkbox" id="all1" value="" onclick="selectAll(this)" class="all_select_checkbox"/>&nbsp;全选&nbsp;&nbsp;&nbsp;&nbsp; 
+         </label>
+         <span>
+         	<a class="all_select_button"  href="javascript:void(0);" onclick="cmd('$!webPath/seller/usergoodsclass_del.htm','')">删除</a>
+             </span>
+         </div>
+           
+<div class="userfenye" style="margin:10px 5px 20px 0;">$!gotoPageHTML</div> 
+			</div>
+		</div>
+		</div>
+$!httpInclude.include("/footer.htm")
+	</body>
+<script>
+	$("#all1").click(function(){
+		var flage = $(this).is(":checked");
+		$("input[class='checkname']").each(function(){
+			$(this).prop("checked",flage);
+		});
+		$("#all").removeAttr("checked");
+	});
+	$("#all").click(function(){
+		var flage = $(this).is(":checked");
+		$("input[class='checkname']").each(function(){
+			$(this).prop("checked",flage);
+		});
+		
+	});
+	$("#"+dialog_id+" .white_content").draggable({handle:" .white_box h1"});
+	
+</script>
+</html>

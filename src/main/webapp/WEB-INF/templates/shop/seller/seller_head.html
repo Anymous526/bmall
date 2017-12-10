@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>卖家中心 </title>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css"> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>  
+</head>
+<body style="background-color:#f4f4f4">
+<div class="top_div">
+  <div class="w1200">
+    <div class="user_logo"> <a href="$!webPath/index.htm"><img src="$!webPath/assets/img/logow.png" /></a>
+    <!--  <a href="" class="fore2">个人中心</a> --> </div>
+    <div class="user_menu"> <span><a href="$!webPath/seller/seller_index.htm">首页</a></span>
+     <!-- <span><a href="$!webPath/buyer/buyer_index.htm" target="_blank">商家信息</a></span> --> 
+     <span>#if($!{config.configPaymentType}==0)<a href="$!webPath/seller/payment.htm">账户设置</a>#end</span> 
+     <span><a href="$!webPath/store_$!{user.storeId}.htm" target="_blank">我的店铺</a></span> 
+      <span><a href="$!webPath/easemobLogin.htm" target="_blank">我的消息</a></span></div>
+    
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript">
+function setTime()
+{
+var groupGoodsId='$!groupGoods.id';
+   jQuery.ajax({
+	type : 'POST',
+	url : "$!webPath/setExcessiveTime.htm",
+	data : {"groupGoodsId":groupGoodsId},
+	success : function(time) {
+		if(time!="")
+		{
+			jQuery("#remainTime").html(time);
+		}
+	},
+	error : function(jqXHR, textStatus, errorThrown) {
+		alert("操作错误！");
+	}
+});	
+}
+setInterval(setTime,1000);
+setTime();
+</script>
+
+
+</head>
+<body>
+
+<div class="w100">
+<div class="mrkia" style="padding:30px; height:400px">
+    <div class="tuan_img">
+    <a href="$!webPath/goods.htm?id=$!{groupGoods.ggGoodsId}&type=group">
+<!--  <img alt="" src="$!{config.imagewebserver}/$!groupGoods.ggImg.path/$!groupGoods.ggImg.name" width="400" height="400px" original="$!webPath/$!groupGoods.ggImg.path/$!groupGoods.ggImg.name" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';"/>  --> 
+    <img alt="" src="$!{config.imagewebserver}/$!groupGoods.ggImg.path/$!groupGoods.ggImg.name" width="400" height="400px" original="$!webPath/$!groupGoods.ggImg.path/$!groupGoods.ggImg.name" />
+    </a> </div>
+    <div class="tuan_info">
+        <span>$!groupGoods.ggName</span>
+        <label><i>¥</i>$!groupGoods.ggPrice</label>
+        #set($buyer_count=$!groupGoods.ggDefCount+$!groupGoods.ggVirCount)
+        <p>购买人数：$!buyer_count人已团</p>
+        <p>剩余时间：<div id="remainTime"></div></p>
+        <button onclick="window.location.href='$!webPath/goods.htm?id=$!{groupGoods.ggGoodsId}&type=group'">立即抢购</button>
+    </div>
+</div>
+
+
+    <div class="mrkia2">
+        <div class="left" style="background-color:#fff">
+		<div style="width:100%;">
+    <div class="tabPanel">
+		<ul>
+			<li class="hits">团购简介</li>
+			<li>团购清单</li>
+		</ul>
+		<div class="panes">
+			<div class="pane" style="display:block;">
+           	  $!groupGoods.ggContent
+            </div>
+			
+            <div class="pane">
+            	$!groupGoods.ggPackList
+            </div>
+            
+		</div>
+    </div> 
+</div> 
+        </div>
+        <div class="right" style="background-color:#fff">
+        	$!httpInclude.include("/groupExcessive_bodyright.htm?goodsId=$!groupGoods.ggGoodsId")
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

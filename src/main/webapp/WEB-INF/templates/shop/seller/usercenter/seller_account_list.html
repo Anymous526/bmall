@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的子账号</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){	
+   //
+});
+
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=buyer_cash")
+<div class="s_m"> 
+	<div class="buyer_position">
+		<div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">我的账户</a> > <span>我的子账号</span></div>
+	</div>
+    <div class="productmain">
+	<div class="container" style="height:37px">
+        <ul class="section"  style="padding: 0;" >
+				<li class="li_this"><a href='$!webPath/seller/seller_account_list.htm'>子账号列表</a></li>
+				<li class=""><a href='$!webPath/seller/seller_account_edit.htm' >添加子账号</a></li>
+            </ul>
+        </div>
+        <div class="ordercon">
+			<div class="operation">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width=30>序号</td>
+                    <td width="70">申请时间</td>
+                    <td width="70">账号真实姓名</td>
+                    <td width="70">用户账号</td>
+                    <td width="70">权限资源</td>
+                    <td width="70">状态</td>
+                    <td width="70">操作</td>
+                  </tr>
+                  	
+	               	 #if($!objs.size()>0)    
+	               	  #set($i=1)  
+	                  #foreach($obj in $!objs)
+	                  <tr class="opertr">
+	                    <td>$i</td>
+	                    <td>$!CommUtil.formatLongDate($!obj.addtime)</td>
+	                    <td>$!obj.user.truename</td>
+	                    <td>$!obj.user.username</td>
+	                    <td>
+	                    	<script>
+	                    		var res = $!obj.resource;
+	                    		var vals = res[0].value.split("|");
+	                    		jQuery.each(vals,function(i,v){
+	                    			if(v == 'appGoods'){
+	                    				document.write("商品管理");	
+	                    				document.write("<br/>");
+	                    			}
+	                    			if(v == 'appOrder'){
+	                    				document.write("交易管理");
+	                    				document.write("<br/>");
+	                    			}
+	                    			if(v == 'appSets'){
+	                    				document.write("店铺管理");
+	                    				document.write("<br/>");
+	                    			}
+	                    			if(v == 'appServer'){
+	                    				document.write("客户服务管理");
+	                    				document.write("<br/>");
+	                    			}
+	                    			if(v == 'appActivity'){
+	                    				document.write("促销管理");	
+	                    			}
+	                    				
+	                    		});
+	                    		
+	                    	</script>
+	                    </td>
+	                    <td>
+	                    	#if($!obj.status == 1)
+	                    		正常
+	                    	#else
+	                    		停用
+	                    	#end
+	                    </td>
+	                    <td>
+	                    	<a href="$!webPath/seller/seller_account_edit.htm?id=$!obj.id">编辑</a>
+	                    	#if($!obj.status == 0)
+	                    		<a href="$!webPath/seller/seller_account_upd.htm?id=$!obj.id&status=1">启用</a>
+	                    	#else
+	                    		<a href="$!webPath/seller/seller_account_upd.htm?id=$!obj.id&status=0">停用</a>
+	                    	#end
+	                    	
+	                    </td>
+	                  </tr>
+	                   #set($i=$i+1)  
+	                  #end
+                    #else
+                  
+                  	<tr class="opertr">
+	                	<td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">子账号</span> </td> 
+	                </tr>  
+	                  
+                  #end    
+                </table>
+              </div>
+           
+            </div>
+          </div>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

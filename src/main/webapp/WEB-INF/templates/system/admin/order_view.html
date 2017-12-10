@@ -1,0 +1,167 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="cont">
+  <div class="orderdetail">
+    <div class="orderh">订单状态</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">订单号:</span><span>$!obj.orderId</span></li>
+        #if($!obj.orderStatus==0)
+        #set($status="已取消")
+        #end
+        #if($!obj.orderStatus==10)
+        #set($status="待付款")
+        #end
+        #if($!obj.orderStatus==15)
+        #set($status="线下支付待审核")
+        #end
+        #if($!obj.orderStatus==16)
+        #set($status="货到付款待发货")
+        #end
+        #if($!obj.orderStatus==20)
+        #set($status="已付款")
+        #end
+        #if($!obj.orderStatus==30)
+        #set($status="已发货")        
+        #end                
+        #if($!obj.orderStatus==40)
+        #set($status="已收货")
+        #end
+        #if($!obj.orderStatus==50)
+        #set($status="已完成,已评价")                                              
+        #end
+        #if($!obj.orderStatus==60)
+        #set($status="已结束")                                              
+        #end
+        <li><span class="ordertitle"> 订单状态:</span><span>$!status</span></li>
+         <li><span class="ordertitle">运费:</span><span>¥$!CommUtil.null2Float($!{obj.shipPrice})#if($!obj.transport)[$!{obj.transport}]#end</span></li>
+         #if($!obj.ci)
+         <li><span class="ordertitle"> 使用优惠券:</span><span>$!{obj.ci.couponSn}<strong style="color:#F90">[¥$!{obj.ci.coupon.couponAmount}]</strong></span></li>
+         #end
+        <li><span class="ordertitle">订单总额:</span><span><strong class="orange" style="padding-right:10px;">¥$!{obj.totalprice}</strong></span></li>
+        #if($!obj.orderType==2000)
+        <li><span class="ordertitle">实际激活总金额:</span><span><strong class="orange" style="padding-right:10px;">¥$!TotalFee</strong></span></li>
+        #end
+      </ul>
+    </div>
+    <div class="orderh">订单详情</div>
+    <div class="orderhh">订单信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">买家名称:</span><span>$!obj.user.username</span></li>
+        <li><span class="ordertitle"> 卖家名称:</span><span>$!obj.store.storeName</span></li>
+        #set($payment="未支付")
+        #if($!obj.payment.mark=="alipay")
+        #set($payment="支付宝")
+        #end
+        #if($!obj.payment.mark=="Unionpay")
+        #set($payment="银联在线")
+        #end
+        #if($!obj.payment.mark=="WXPay")
+        #set($payment="微信支付")
+        #end  
+        <li><span class="ordertitle">支付方式:</span><span>$!{obj.Payment.name}</span></li>
+        <li><span class="ordertitle">下单时间:</span><span>$!CommUtil.formatLongDate($!obj.addtime)</span></li>
+      </ul>
+    </div>
+    <div class="orderhhh">收货人及发货信息</div>
+    <div class="orderul">
+      <ul>
+        <li><span class="ordertitle">收货人姓名:</span><span>$!obj.addr.truename</span></li>
+        <li><span class="ordertitle">所在地区:</span><span>$!{obj.addr.province} $!{obj.addr.city} $!{obj.addr.area} </span></li>
+        <li><span class="ordertitle">电话号码:</span><span>$!{obj.addr.telephone}</span></li>
+        <li><span class="ordertitle">详细地址:</span><span>$!{obj.addr.areaInfo}</span></li>
+        <li><span class="ordertitle">配送方式:</span><span>$!obj.shipcode</span></li>
+      </ul>
+    </div>
+    <div class="orderhhh">商品信息</div>
+    <div class="ordetable">
+      <table width="90%" border="0" cellspacing="0" cellpadding="0" class="orde_table">
+        <tr style="border-bottom:1px dotted #CCEAF4">
+          <td width="20%">&nbsp;</td>
+          <td width="10%"><strong>商品名称</strong></td>
+          <td width="10%"><strong>商品属性</strong></td>
+          <td width="10%"><strong>单价</strong></td>
+          <td width="10%"><strong>数量</strong></td>
+          <td width="10%"><strong>总价</strong></td>
+        </tr>
+      
+       #foreach($item in $obj.items)
+        <tr style="border-bottom:1px dotted #CCEAF4"> #if($!item.goods.goodsMainPhoto)
+          #set($img="$!{config.imagewebserver}/$!{item.goods.goodsMainPhoto.path}/$!{item.goods.goodsMainPhoto.name}")
+          #else
+          #set($img="$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+          #end
+          <td><a href="$!webPath/goods_$!{item.goods.id}.htm" target="_blank" class="blue"><img src="$!img" width="45" height="45" /></a></td>
+          <td><a href="$!webPath/goods_$!{item.goods.id}.htm" target="_blank" class="blue">$!{item.goods.goodsName}</a> 
+              #if($!{item.goods.groupBuy}==2) <span style="color:#F00">(团购)</span> #end
+              #if($!{item.goods.deliveryStatus}==2) <span style="color:#F00">[买就送]</span> #end
+              #if($!{item.goods.bargainStatus}==2) <span style="color:#F00">(特价)</span> #end
+          </td>
+          <td>$!item.specInfo</td>
+          <td><strong class="orange">¥</strong><strong style="color:#F90">#if($!item.goods.groupBuy==2)$!{item.goods.groupGoods.ggPrice}#else $!{item.goods.goodsPrice}#end</strong></td>
+          <td>$!item.goodsCount</td>
+          <td>#set($total=$CommUtil.mulBigDecimal($!{item.goodsPrice},$!item.goodsCount))$total</td>
+        </tr>
+        #end
+      </table>
+    </div>
+        <div class="orderhhh">物流信息</div>
+    <div class="orderul_record">
+      <ul>
+        #foreach($info in $!transInfo)
+        <li><strong>$!info.time </strong><strong>$!info.context</strong></li>
+        #end
+      </ul>
+    </div>
+    
+    
+    <div class="orderhhh">操作历史</div>
+    <div class="orderul_record">
+      <ul>
+      #foreach($ofl in $!obj.ofls)
+        <li><strong style="color:#F90">$!{ofl.logUser.username}</strong>于<strong><em>$!CommUtil.formatLongDate($!ofl.addtime)</em></strong>$!ofl.logInfo #if($!ofl.stateInfo)操作原因:<strong><em>$!{ofl.stateInfo}</em></strong>#end</li>
+        #end
+      </ul>
+    </div>
+   #if($!obj.rls && $!obj.rls.size()>0)    
+   <div class="orderhhh">退款日志</div>
+    <div class="orderul_record">
+      <ul>
+       #foreach($rl in $!obj.rls)
+        <li><strong style="color:#F90">$!{rl.refundUser.username}</strong>于<strong><em>$!CommUtil.formatLongDate($!rl.addtime)</em></strong>使用<strong><em>$!rl.refundType</em></strong>退款<strong><em>¥$!{rl.refund}</em></strong></li>
+       #end
+      </ul>
+    </div>
+    #end
+   #if($!obj.grls && $!obj.grls.size()>0)    
+   <div class="orderhhh">退货日志</div>
+    <div class="orderul_record">
+      <ul>
+      #foreach($grl in $!obj.grls)
+        #foreach($item in $grl.gr.items)  
+        <li><strong><em>$!CommUtil.formatLongDate($!grl.addtime)</em></strong>订单：<strong><em>$!item.gr.of.orderId</em></strong>$!{item.goods.goodsName}  
+          #foreach($gsp in $obj.gsps)
+             #if($!gsp.spec)
+                 $!gsp.spec.name: $!gsp.value
+             #end
+          #end
+                  数量:$!{item.count}</li>
+         #end
+        #end
+      </ul>
+    </div>
+    #end
+  </div>
+  <div class="submit">
+    <input name="go" type="button" value="返回列表" onclick="window.location.href='$!webPath/admin/order_list.htm'" />
+  </div>
+</div>
+</body>
+</html>

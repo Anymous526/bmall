@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.ComplaintMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Complaint" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="appeal_time" property="appealTime" jdbcType="TIMESTAMP" />
+    <result column="handle_time" property="handleTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="cs_id" property="csId" jdbcType="BIGINT" />
+    <result column="from_acc1_id" property="fromAcc1Id" jdbcType="BIGINT" />
+    <result column="from_acc2_id" property="fromAcc2Id" jdbcType="BIGINT" />
+    <result column="from_acc3_id" property="fromAcc3Id" jdbcType="BIGINT" />
+    <result column="from_user_id" property="fromUserId" jdbcType="BIGINT" />
+    <result column="handle_user_id" property="handleUserId" jdbcType="BIGINT" />
+    <result column="of_id" property="ofId" jdbcType="BIGINT" />
+    <result column="to_acc1_id" property="toAcc1Id" jdbcType="BIGINT" />
+    <result column="to_acc2_id" property="toAcc2Id" jdbcType="BIGINT" />
+    <result column="to_acc3_id" property="toAcc3Id" jdbcType="BIGINT" />
+    <result column="to_user_id" property="toUserId" jdbcType="BIGINT" />
+     <association property="fromUser" column="from_user_id" javaType="com.amall.core.bean.User" 
+     		select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="toUser" column="to_user_id" javaType="com.amall.core.bean.User" 
+    		select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>   
+    <association property="cs" column="cs_id" javaType="com.amall.core.bean.ComplaintSubject" 
+    		select="com.amall.core.dao.ComplaintSubjectMapper.selectByPrimaryKey"/>
+    <association property="handleUser" column="handle_user_id" javaType="com.amall.core.bean.User" 
+    		select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="of" column="of_id" javaType="com.amall.core.bean.OrderFormWithBLOBs" 
+    		select="com.amall.core.dao.OrderFormMapper.selectByPrimaryKey"/> 
+    <association property="fromAcc1" column="from_acc1_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="fromAcc2" column="from_acc2_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="fromAcc3" column="from_acc3_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="toAcc1" column="to_acc1_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="toAcc2" column="to_acc2_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="toAcc3" column="to_acc3_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <collection property="cgs" ofType="com.amall.core.bean.ComplaintGoods" column="complaintgoods_id" 
+    		select="com.amall.core.dao.ComplaintGoodsMapper.selectByExampleWithBLOBs"/>  
+    
+    
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.ComplaintWithBLOBs" extends="BaseResultMap" >
+    <result column="from_user_content" property="fromUserContent" jdbcType="LONGVARCHAR" />
+    <result column="handle_content" property="handleContent" jdbcType="LONGVARCHAR" />
+    <result column="talk_content" property="talkContent" jdbcType="LONGVARCHAR" />
+    <result column="to_user_content" property="toUserContent" jdbcType="LONGVARCHAR" />
+     
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, appeal_time, handle_time, status, type, cs_id, from_acc1_id, 
+    from_acc2_id, from_acc3_id, from_user_id, handle_user_id, of_id, to_acc1_id, to_acc2_id, 
+    to_acc3_id, to_user_id
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    from_user_content, handle_content, talk_content, to_user_content
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.ComplaintExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_complaint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.ComplaintExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_complaint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.ComplaintExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_complaint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_complaint
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_complaint
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.ComplaintExample" >
+    delete from amall_complaint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.ComplaintWithBLOBs" >
+    insert into amall_complaint (  id, addTime, deleteStatus, 
+      appeal_time, handle_time, status, 
+      type, cs_id, from_acc1_id, 
+      from_acc2_id, from_acc3_id, from_user_id, 
+      handle_user_id, of_id, to_acc1_id, 
+      to_acc2_id, to_acc3_id, to_user_id, 
+      from_user_content, handle_content, 
+      talk_content, to_user_content)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{appealTime,jdbcType=TIMESTAMP}, #{handleTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
+      #{type,jdbcType=VARCHAR}, #{csId,jdbcType=BIGINT}, #{fromAcc1Id,jdbcType=BIGINT}, 
+      #{fromAcc2Id,jdbcType=BIGINT}, #{fromAcc3Id,jdbcType=BIGINT}, #{fromUserId,jdbcType=BIGINT}, 
+      #{handleUserId,jdbcType=BIGINT}, #{ofId,jdbcType=BIGINT}, #{toAcc1Id,jdbcType=BIGINT}, 
+      #{toAcc2Id,jdbcType=BIGINT}, #{toAcc3Id,jdbcType=BIGINT}, #{toUserId,jdbcType=BIGINT}, 
+      #{fromUserContent,jdbcType=LONGVARCHAR}, #{handleContent,jdbcType=LONGVARCHAR}, 
+      #{talkContent,jdbcType=LONGVARCHAR}, #{toUserContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.ComplaintWithBLOBs" >
+    
+    insert into amall_complaint
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="appealTime != null" >
+        appeal_time,
+      </if>
+      <if test="handleTime != null" >
+        handle_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="csId != null" >
+        cs_id,
+      </if>
+      <if test="fromAcc1Id != null" >
+        from_acc1_id,
+      </if>
+      <if test="fromAcc2Id != null" >
+        from_acc2_id,
+      </if>
+      <if test="fromAcc3Id != null" >
+        from_acc3_id,
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id,
+      </if>
+      <if test="handleUserId != null" >
+        handle_user_id,
+      </if>
+      <if test="ofId != null" >
+        of_id,
+      </if>
+      <if test="toAcc1Id != null" >
+        to_acc1_id,
+      </if>
+      <if test="toAcc2Id != null" >
+        to_acc2_id,
+      </if>
+      <if test="toAcc3Id != null" >
+        to_acc3_id,
+      </if>
+      <if test="toUserId != null" >
+        to_user_id,
+      </if>
+      <if test="fromUserContent != null" >
+        from_user_content,
+      </if>
+      <if test="handleContent != null" >
+        handle_content,
+      </if>
+      <if test="talkContent != null" >
+        talk_content,
+      </if>
+      <if test="toUserContent != null" >
+        to_user_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="appealTime != null" >
+        #{appealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleTime != null" >
+        #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="csId != null" >
+        #{csId,jdbcType=BIGINT},
+      </if>
+      <if test="fromAcc1Id != null" >
+        #{fromAcc1Id,jdbcType=BIGINT},
+      </if>
+      <if test="fromAcc2Id != null" >
+        #{fromAcc2Id,jdbcType=BIGINT},
+      </if>
+      <if test="fromAcc3Id != null" >
+        #{fromAcc3Id,jdbcType=BIGINT},
+      </if>
+      <if test="fromUserId != null" >
+        #{fromUserId,jdbcType=BIGINT},
+      </if>
+      <if test="handleUserId != null" >
+        #{handleUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ofId != null" >
+        #{ofId,jdbcType=BIGINT},
+      </if>
+      <if test="toAcc1Id != null" >
+        #{toAcc1Id,jdbcType=BIGINT},
+      </if>
+      <if test="toAcc2Id != null" >
+        #{toAcc2Id,jdbcType=BIGINT},
+      </if>
+      <if test="toAcc3Id != null" >
+        #{toAcc3Id,jdbcType=BIGINT},
+      </if>
+      <if test="toUserId != null" >
+        #{toUserId,jdbcType=BIGINT},
+      </if>
+      <if test="fromUserContent != null" >
+        #{fromUserContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="handleContent != null" >
+        #{handleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="talkContent != null" >
+        #{talkContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="toUserContent != null" >
+        #{toUserContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.ComplaintExample" resultType="java.lang.Integer" >
+    select count(*) from amall_complaint
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_complaint
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.appealTime != null" >
+        appeal_time = #{record.appealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.handleTime != null" >
+        handle_time = #{record.handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.csId != null" >
+        cs_id = #{record.csId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fromAcc1Id != null" >
+        from_acc1_id = #{record.fromAcc1Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.fromAcc2Id != null" >
+        from_acc2_id = #{record.fromAcc2Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.fromAcc3Id != null" >
+        from_acc3_id = #{record.fromAcc3Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.fromUserId != null" >
+        from_user_id = #{record.fromUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.handleUserId != null" >
+        handle_user_id = #{record.handleUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ofId != null" >
+        of_id = #{record.ofId,jdbcType=BIGINT},
+      </if>
+      <if test="record.toAcc1Id != null" >
+        to_acc1_id = #{record.toAcc1Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.toAcc2Id != null" >
+        to_acc2_id = #{record.toAcc2Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.toAcc3Id != null" >
+        to_acc3_id = #{record.toAcc3Id,jdbcType=BIGINT},
+      </if>
+      <if test="record.toUserId != null" >
+        to_user_id = #{record.toUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.fromUserContent != null" >
+        from_user_content = #{record.fromUserContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.handleContent != null" >
+        handle_content = #{record.handleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.talkContent != null" >
+        talk_content = #{record.talkContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.toUserContent != null" >
+        to_user_content = #{record.toUserContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_complaint
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      appeal_time = #{record.appealTime,jdbcType=TIMESTAMP},
+      handle_time = #{record.handleTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      cs_id = #{record.csId,jdbcType=BIGINT},
+      from_acc1_id = #{record.fromAcc1Id,jdbcType=BIGINT},
+      from_acc2_id = #{record.fromAcc2Id,jdbcType=BIGINT},
+      from_acc3_id = #{record.fromAcc3Id,jdbcType=BIGINT},
+      from_user_id = #{record.fromUserId,jdbcType=BIGINT},
+      handle_user_id = #{record.handleUserId,jdbcType=BIGINT},
+      of_id = #{record.ofId,jdbcType=BIGINT},
+      to_acc1_id = #{record.toAcc1Id,jdbcType=BIGINT},
+      to_acc2_id = #{record.toAcc2Id,jdbcType=BIGINT},
+      to_acc3_id = #{record.toAcc3Id,jdbcType=BIGINT},
+      to_user_id = #{record.toUserId,jdbcType=BIGINT},
+      from_user_content = #{record.fromUserContent,jdbcType=LONGVARCHAR},
+      handle_content = #{record.handleContent,jdbcType=LONGVARCHAR},
+      talk_content = #{record.talkContent,jdbcType=LONGVARCHAR},
+      to_user_content = #{record.toUserContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_complaint
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      appeal_time = #{record.appealTime,jdbcType=TIMESTAMP},
+      handle_time = #{record.handleTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      cs_id = #{record.csId,jdbcType=BIGINT},
+      from_acc1_id = #{record.fromAcc1Id,jdbcType=BIGINT},
+      from_acc2_id = #{record.fromAcc2Id,jdbcType=BIGINT},
+      from_acc3_id = #{record.fromAcc3Id,jdbcType=BIGINT},
+      from_user_id = #{record.fromUserId,jdbcType=BIGINT},
+      handle_user_id = #{record.handleUserId,jdbcType=BIGINT},
+      of_id = #{record.ofId,jdbcType=BIGINT},
+      to_acc1_id = #{record.toAcc1Id,jdbcType=BIGINT},
+      to_acc2_id = #{record.toAcc2Id,jdbcType=BIGINT},
+      to_acc3_id = #{record.toAcc3Id,jdbcType=BIGINT},
+      to_user_id = #{record.toUserId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.ComplaintWithBLOBs" >
+    update amall_complaint
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="appealTime != null" >
+        appeal_time = #{appealTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleTime != null" >
+        handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="csId != null" >
+        cs_id = #{csId,jdbcType=BIGINT},
+      </if>
+      <if test="fromAcc1Id != null" >
+        from_acc1_id = #{fromAcc1Id,jdbcType=BIGINT},
+      </if>
+      <if test="fromAcc2Id != null" >
+        from_acc2_id = #{fromAcc2Id,jdbcType=BIGINT},
+      </if>
+      <if test="fromAcc3Id != null" >
+        from_acc3_id = #{fromAcc3Id,jdbcType=BIGINT},
+      </if>
+      <if test="fromUserId != null" >
+        from_user_id = #{fromUserId,jdbcType=BIGINT},
+      </if>
+      <if test="handleUserId != null" >
+        handle_user_id = #{handleUserId,jdbcType=BIGINT},
+      </if>
+      <if test="ofId != null" >
+        of_id = #{ofId,jdbcType=BIGINT},
+      </if>
+      <if test="toAcc1Id != null" >
+        to_acc1_id = #{toAcc1Id,jdbcType=BIGINT},
+      </if>
+      <if test="toAcc2Id != null" >
+        to_acc2_id = #{toAcc2Id,jdbcType=BIGINT},
+      </if>
+      <if test="toAcc3Id != null" >
+        to_acc3_id = #{toAcc3Id,jdbcType=BIGINT},
+      </if>
+      <if test="toUserId != null" >
+        to_user_id = #{toUserId,jdbcType=BIGINT},
+      </if>
+      <if test="fromUserContent != null" >
+        from_user_content = #{fromUserContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="handleContent != null" >
+        handle_content = #{handleContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="talkContent != null" >
+        talk_content = #{talkContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="toUserContent != null" >
+        to_user_content = #{toUserContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.ComplaintWithBLOBs" >
+    update amall_complaint
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      appeal_time = #{appealTime,jdbcType=TIMESTAMP},
+      handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      cs_id = #{csId,jdbcType=BIGINT},
+      from_acc1_id = #{fromAcc1Id,jdbcType=BIGINT},
+      from_acc2_id = #{fromAcc2Id,jdbcType=BIGINT},
+      from_acc3_id = #{fromAcc3Id,jdbcType=BIGINT},
+      from_user_id = #{fromUserId,jdbcType=BIGINT},
+      handle_user_id = #{handleUserId,jdbcType=BIGINT},
+      of_id = #{ofId,jdbcType=BIGINT},
+      to_acc1_id = #{toAcc1Id,jdbcType=BIGINT},
+      to_acc2_id = #{toAcc2Id,jdbcType=BIGINT},
+      to_acc3_id = #{toAcc3Id,jdbcType=BIGINT},
+      to_user_id = #{toUserId,jdbcType=BIGINT},
+      from_user_content = #{fromUserContent,jdbcType=LONGVARCHAR},
+      handle_content = #{handleContent,jdbcType=LONGVARCHAR},
+      talk_content = #{talkContent,jdbcType=LONGVARCHAR},
+      to_user_content = #{toUserContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Complaint" >
+    update amall_complaint
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      appeal_time = #{appealTime,jdbcType=TIMESTAMP},
+      handle_time = #{handleTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      cs_id = #{csId,jdbcType=BIGINT},
+      from_acc1_id = #{fromAcc1Id,jdbcType=BIGINT},
+      from_acc2_id = #{fromAcc2Id,jdbcType=BIGINT},
+      from_acc3_id = #{fromAcc3Id,jdbcType=BIGINT},
+      from_user_id = #{fromUserId,jdbcType=BIGINT},
+      handle_user_id = #{handleUserId,jdbcType=BIGINT},
+      of_id = #{ofId,jdbcType=BIGINT},
+      to_acc1_id = #{toAcc1Id,jdbcType=BIGINT},
+      to_acc2_id = #{toAcc2Id,jdbcType=BIGINT},
+      to_acc3_id = #{toAcc3Id,jdbcType=BIGINT},
+      to_user_id = #{toUserId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

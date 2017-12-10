@@ -1,0 +1,123 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/tuangou.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/koala.min.1.5.js"></script> 
+</head> 
+<body>
+<!-- banner   start -->
+
+<div class="tuangou_banner">
+    
+  <div id="fsD1" class="focus">  
+    <div id="D1pic1" class="fPic">  
+    	
+    	 #foreach($adv in $obj1.advs)
+    	 
+     		<div class="fcon" style="display: none;">
+	            <a href="$!webPath/advert_redirect.htm?url=$!adv.adUrl&id=$!adv.id" target='_blank'>
+	            	<img src="$!{config.imagewebserver}/$!adv.adAcc.path/$!adv.adAcc.name" style="opacity: 1; ">
+	            </a>
+	            <span class="shadow"><a href="#">$!adv.adTitle</a></span>
+	        </div> 
+         #end 
+    </div>
+    <div class="fbg">  
+    <div class="D1fBt" id="D1fBt">
+	    #set($i=0)  
+	    #foreach($adv in $obj1.advs)
+	    	<a href="javascript:void(0)" hidefocus="true" class=""><i>$i</i></a>
+	    #set($i=$i+1)
+	    #end 
+    </div>  
+    </div>    
+</div>  
+<script type="text/javascript">
+	Qfast.add('widgets', { path: "$!webPath/assets/js/terminator2.2.min.js", type: "js", requires: ['fx'] });  
+	Qfast(false, 'widgets', function () {
+		K.tabs({
+			id: 'fsD1',   //焦点图包裹id  
+			conId: "D1pic1",  //** 大图域包裹id  
+			tabId:"D1fBt",  
+			tabTn:"a",
+			conCn: '.fcon', //** 大图域配置class       
+			auto: 1,   //自动播放 1或0
+			effect: 'fade',   //效果配置
+			eType: 'click', //** 鼠标事件
+			pageBt:true,//是否有按钮切换页码
+			bns: ['.prev', '.next'],//** 前后按钮配置class                          
+			interval: 4500  //** 停顿时间  
+		}) 
+	})    
+</script>
+<!-- 代码 结束 -->
+  
+  
+</div>
+
+
+
+
+<ul class="ad_list">
+#foreach($adv2 in $obj2.advs)
+	<li>
+		<a href='$!webPath/advert_redirect.htm?url=$!adv2.adUrl&id=$!adv2.id' target='_blank'>
+			<img src='$!{config.imagewebserver}/$!adv2.adAcc.path/$!adv2.adAcc.name' />
+		</a>
+	</li>
+#end 		
+</ul>
+
+<ul class="small-banner">
+#foreach($adv3 in $obj3.advs)
+<script src="$!webPath/advert_invoke.htm?id=$!obj3.id"></script>
+<li>
+	<a href='$!webPath/advert_redirect.htm?url=$!adv3.adUrl&id=$!adv3.id' target='_blank'>
+		<img src='$!{config.imagewebserver}/$!adv3.adAcc.path/$!adv3.adAcc.name' />
+	</a>
+</li>
+#end
+</ul>
+
+
+
+<script type="text/javascript">
+var forEach = function(array, callback, thisObject){
+	if(array.forEach){
+		array.forEach(callback, thisObject);
+	}else{
+		for (var i = 0, len = array.length; i < len; i++) { callback.call(thisObject, array[i], i, array); }
+	}
+}
+
+var st = new SlideTrans("idContainer2", "idSlider2", 5, { Vertical: false });
+
+var nums = [];
+//插入数字
+for(var i = 0, n = st._count - 1; i <= n;){
+	(nums[i] = jQuery("idNum").appendChild(document.createElement("li"))).innerHTML = ++i;
+}
+
+forEach(nums, function(o, i){
+	o.onmouseover = function(){ o.className = "on"; st.Auto = false; st.Run(i); }
+	o.onmouseout = function(){ o.className = ""; st.Auto = true; st.Run(); }
+})
+
+//设置按钮样式
+st.onStart = function(){
+	forEach(nums, function(o, i){ o.className = st.Index == i ? "on" : ""; })
+}
+st.Run();
+</script>
+
+
+
+</body>
+</html>

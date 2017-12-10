@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>充值详情 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div class="main"> 
+    <div class="user_center">
+    <table width="800" border="0" cellspacing="0" cellpadding="0" class="user_table">
+      <tr>
+        $!httpInclude.include("/seller/seller_nav.htm?op=gold_record")
+        <td id="centerbg" valign="top">
+        <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_sindex.htm">卖家中心</a> > <span>兑换详情</span></div></div>
+        <div class="productmain">
+            <div class="container">
+             <ul class="section" style="padding: 0;">
+                <li class=""><a href='$!webPath/seller/gold_record.htm' >金币兑换</a></li>
+                <li class=""><a href='$!webPath/seller/gold_record_list.htm' >兑换列表</a></li>
+                <li class=""><a href='$!webPath/seller/gold_log.htm'>兑换日志</a></li>
+                <li class="li_this"><a href="#">兑换详情</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav">
+                <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                  <tr>
+                    <td width="100" align="right" valign="top">兑换编号：</td>
+                    <td class="px10 message">$!obj.gold_sn</td>
+                  </tr>
+                  #foreach($reply in $obj.replys)
+				  #end
+                  <tr>
+                    <td align="right" valign="top">兑换金额：</td>
+                    <td class="px10">¥$!{obj.goldMoney}</td>
+                  </tr>
+                  <tr>
+                    <td  align="right" valign="top">兑换金币：</td>
+                    <td class="px10">$!{obj.goldCount}金币                  </td>
+                  </tr>
+                  <tr>
+                    <td  align="right" valign="top">兑换时间：</td>
+                    <td class="px10">$!CommUtil.formatLongDate($!obj.addtime)</td>
+                  </tr>
+                  <tr>
+                    <td  align="right" valign="top">支付方式：</td>
+                    #if($!obj.goldPayment=="alipay")
+                      #set($goldPayment="支付宝")
+                    #end
+                    #if($!obj.goldPayment=="bill")
+                      #set($goldPayment="快钱")
+                    #end
+                    #if($!obj.goldPayment=="chinabank")
+                      #set($goldPayment="网银在线")
+                    #end
+                    #if($!obj.goldPayment=="tenpay")
+                      #set($goldPayment="财付通")
+                    #end
+                    #if($!obj.goldPayment=="outline")
+                      #set($goldPayment="线下支付")
+                    #end
+                    <td class="px10">$!gold_payment</td>
+                  </tr>
+                  <tr>
+                    <td  align="right" valign="top">兑换状态：</td>
+                     #if($!obj.goldStatus==0)
+                      #set($goldStatus="等待支付")
+                    #end
+                    #if($!obj.goldStatus==1)
+                      #set($goldStatus="支付完成")
+                    #end
+                    <td class="px10">$!goldStatus</td>
+                  </tr>
+                  <tr>
+                    <td  align="right" valign="top">支付状态：</td>
+                    #if($!obj.goldPayStatus==0)
+                      #set($goldPayStatus="等待支付")
+                    #end
+                    #if($!obj.goldPayStatus==1)
+                      #set($goldPayStatus="等待审核")
+                    #end
+                    #if($!obj.goldPayStatus==2)
+                      #set($goldPayStatus="支付完成")
+                    #end
+                    <td class="px10">$!goldPayStatus</td>
+                  </tr>
+                  #if($!obj.goldPayment=="outline")
+                  <tr>
+                    <td  align="right" valign="top">兑换备注：</td>
+                    <td class="px10">$!obj.goldExchangeInfo</td>
+                  </tr>
+                  #end
+                  #if($!obj.goldAdmin)
+                  <tr>
+                    <td  align="right" valign="top">操作管理员：</td>
+                    <td class="px10">$!obj.goldAdmin.username</td>
+                  </tr>
+                  #end
+                  #if($!obj.goldAdminInfo)
+                  <tr>
+                    <td  align="right" valign="top">操作备注：</td>
+                    <td class="px10">$!obj.goldAdminInfo</td>
+                  </tr>
+                  #end
+                  <tr>
+                    <td  align="right" valign="top">&nbsp;</td>
+                    <td class="px10"><span class="setsub">
+                        <input type="button"  value="返回列表" style="cursor:pointer;" onclick="window.location.href='$!webPath/seller/gold_record_list.htm'" />
+                        </span></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div></td>
+      </tr>
+    </table>
+  </div>
+   
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

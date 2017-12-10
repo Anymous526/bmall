@@ -1,0 +1,289 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({
+    rules:{
+	 apTitle:{required:true},
+ 	 apContent:{required:true},
+	 apPrice:{required:true,digits:true},
+	 apWidth:{required:true,digits:true},
+	 apHeight:{required:true,digits:true},
+	 acc:{
+	    accept:"$!config.imagesuffix"
+	  }
+	 },
+    messages:{
+	 apTitle:{required:"广告标题不能为空"},
+	 apContent:{required:"广告简介不能为空"},
+	 apPrice:{required:"广告价格不能为空",digits:"广告价格只能为整数"},
+	 apWidth:{required:"广告宽度不能为空",digits:"广告宽度只能为整数"},
+	 apHeight:{required:"广告高度不能为空",digits:"广告高度只能为整数"},
+	 acc:{
+	    accept:"不允许的图片格式"
+	  }
+	}
+  });
+ 	//改变系统提示的样式
+  jQuery("span .w").mousemove(function(){
+	var id=jQuery(this.parentNode).attr("id");
+	if(id="nothis"){
+	   jQuery(this.parentNode).attr("id","this")
+	}
+  }).mouseout(function(){
+     var id=jQuery(this.parentNode).attr("id");
+	 if(id="this"){
+	   jQuery(this.parentNode).attr("id","nothis")
+	 }
+  });
+    //
+  jQuery("#logoShow").mouseover(function(){
+	    jQuery("#logoImg").css('display','block');
+   }).mouseout(function(){
+		jQuery("#logoImg").css('display','none');
+	});
+  //
+  jQuery("#acc").change(function(){
+	 jQuery("#textfield1").val(jQuery("#acc").val());
+   })
+	//
+  jQuery("#ap_type").val("$!obj.apType");
+   jQuery(":radio[id=ap_sys_type][value=$!obj.apSysType]").attr("checked","checked");
+  jQuery(":radio[id=ap_show_type][value=$!obj.apShowType]").attr("checked",true); 
+  jQuery(":radio[id=ap_status][value=$!obj.apStatus]").attr("checked",true); 
+  #if($!obj.ap_type=="text")
+	jQuery("#advert_text").show();
+	jQuery("#advert_img").hide();
+  #else
+ 	jQuery("#advert_text").hide();
+	jQuery("#advert_img").show();	  
+  #end
+  //
+  jQuery("#ap_type").change(function(){
+    var type=jQuery(this).val();
+	if(type=="text"){
+	  jQuery("#advert_text").show();
+	  jQuery("#advert_img").hide();
+	}else{
+	  jQuery("#advert_text").hide();
+	  jQuery("#advert_img").show();	  
+	}
+  });
+  jQuery("#seq").hide();
+  bindApMark();
+  jQuery("#ap_mark").bind("change",function(){
+	 var value=jQuery(this).val();
+	 if(value=="index")//首页，2个广告位
+	{
+		jQuery("#seq").show();
+		jQuery("#sequence").html("");
+		jQuery("#sequence").append("<option value='1'>位置1</option><option value='2'>位置2</option>");
+    }else if(value=="groupbuy")//团购,3个广告位
+    {
+    	jQuery("#seq").show();
+    	jQuery("#sequence").html("");
+    	jQuery("#sequence").append("<option value='1'>位置1</option><option value='2'>位置2</option><option value='3'>位置3</option>");
+    }else if(value=="new")
+    {
+    	jQuery("#seq").show();
+		jQuery("#sequence").html("");
+		jQuery("#sequence").append("<option value='1'>位置1</option><option value='2'>位置2</option>");
+    }else{
+       jQuery("#seq").hide();
+       jQuery("#sequence").html("");
+    }
+  });
+  
+});
+
+function saveForm(){
+	jQuery("#theForm").submit();
+}
+
+function bindApMark()
+{
+    var apMark="$!obj.apMark";
+	if(apMark.indexOf("new")!=-1)
+    {
+		jQuery("#ap_mark").val("new");
+		jQuery("#seq").hide();
+		jQuery("#sequence").html("");
+		jQuery("#sequence").append("<option value='1'>位置1</option><option value='2'>位置2</option>");
+	}else if(apMark=="sale")
+	{
+		jQuery("#ap_mark").val("sale");
+		jQuery("#seq").hide();
+	    jQuery("#sequence").html("");
+	}else if(apMark=="customize")
+	{
+		jQuery("#ap_mark").val("customize");
+		jQuery("#seq").hide();
+	    jQuery("#sequence").html("");
+	}else if(apMark.indexOf("index")!=-1)
+	{
+		jQuery("#ap_mark").val("index");
+		jQuery("#seq").show();
+		jQuery("#sequence").html("");
+		jQuery("#sequence").append("<option value='1'>位置1</option><option value='2'>位置2</option>");
+	}else if(apMark.indexOf("groupbuy")!=-1)
+    {
+		jQuery("#ap_mark").val("groupbuy");
+		jQuery("#seq").show();
+    	jQuery("#sequence").html("");
+    	jQuery("#sequence").append("<option value='1'>位置1</option><option value='2'>位置2</option><option value='3'>位置3</option>");
+    }
+}
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">广告管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/advert_list.htm">所有广告</a>| <a href="$!webPath/admin/advert_list_audit.htm" >未审核广告</a> | <a href="$!webPath/admin/advert_add.htm" >新增广告</a>| <a href="$!webPath/admin/adv_pos_list.htm">所有广告位</a>| <a href="$!webPath/admin/adv_pos_add.htm" #if(!$!edit)class="this"#end>新增广告位</a>  #if($!edit) | 
+	   <a href="javascript:void(0);" class="this">编辑</a>
+	   #end</span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/adv_pos_save.htm" method="post" enctype="multipart/form-data" id="theForm">
+  <div class="setcont">
+    <!--鼠标经过样式-->
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>广告位名称</li>
+      <li><span class="webname">
+        <input name="apTitle" type="text" id="ap_title" value="$!obj.apTitle" />
+        </span></li>
+    </ul>
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>广告位简介</li>
+      <li><span class="webtj">
+        <textarea name="apContent" cols="" rows="" id="ap_content">$!obj.apContent</textarea>
+        </span></li>
+    </ul>
+    <!--鼠标未经过样式-->
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>广告位类别</li>
+      <li><span class="webnamesec sizese">
+        <select name="apType" id="ap_type">
+          <option value="img">图片</option>
+          <option value="slide">幻灯</option>
+          <option value="scroll">滚动</option>
+          <option value="text">文字</option>
+        </select>
+        </span><span id="nothis"><strong class="q"></strong><strong class="w">选择此广告位广告的形式</strong><strong class="c"></strong></span></li>
+    </ul>
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>广告位价格</li>
+      <li><span class="webname">
+        <input name="apPrice" type="text" id="ap_price" value="$!obj.apPrice" />
+        </span><span id="nothis"><strong class="q"></strong><strong class="w">礼品金/月</strong><strong class="c"></strong></span></li>
+    </ul>
+    <ul class="set4">
+      <li>系统广告</li>
+      <li class="radiosp"><span>
+        <input name="apSysType" id="apSysType" type="radio" value="0" />
+        </span><span>是</span><span>
+        <input name="apSysType" id="apSysType" type="radio" value="1" checked="checked" />
+        </span><span>否</span><span id="nothis"><strong class="q"></strong><strong class="w">系统广告不可删除，主要处理商城预留广告位</strong><strong class="c"></strong></span></li>
+    </ul>
+    <ul class="set4">
+      <li>是否启用</li>
+      <li class="radiosp"><span>
+        <input name="apStatus"  id="ap_status" type="radio" value="1" />
+        </span><span>是</span><span>
+        <input name="apStatus" id="ap_status" type="radio" value="0" checked="checked" />
+        </span><span>否</span></li>
+    </ul>
+    <ul class="set4">
+      <li>展示方式</li>
+      <li  class="radiosp"><label><span>
+        <input name="apShowType" id="ap_show_type" type="radio" value="1" />
+        </span><span>可以发布多条广告并随机展示</span></label></li>
+      <li class="radiosp"><label><span>
+        <input name="apShowType" id="ap_show_type" type="radio" value="0" checked="checked" />
+        </span><span>只允许发布并展示一条广告</span></label></li>
+    </ul>
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>广告位宽度</li>
+      <li><span class="webname">
+        <input name="apWidth" type="text" id="ap_width" value="$!obj.apWidth" />
+        </span></li>
+    </ul>
+    <ul class="set1">
+      <li><strong class="orange fontsize20">*</strong>广告位高度</li>
+      <li><span class="webname">
+        <input name="apHeight" type="text" id="ap_height" value="$!obj.apHeight" />
+        </span></li>
+    </ul>
+    <ul class="set1" id="advert_img">
+        <li>广告位默认图片</li>
+        <li>
+         
+       
+          <span class="size13" >
+          		<input name="textfield" type="text" id="textfield1"    #if($!obj.apAcc) value="$!webPath/$!obj.apAcc.path/$!obj.apAcc.name"  #end/>
+          </span>
+          
+           <span class="filebtn">
+          <input name="button" type="button" id="button1" value=""/>
+          </span> <span style="float:left;" class="file">
+          <input name="acc" type="file" id="acc" class="file-text" size="30"/>
+          </span> <span class="preview"> <img src="$!webPath/resources/style/system/manage/blue/images/preview.jpg" width="25" height="25"  id="logoShow" style="cursor:help"/> </span>#if(!$!obj.apAcc)<span id="nothis"><strong class="q"></strong><strong class="w">暂无图片</strong><strong class="c"></strong></span>#end
+          #if($!obj.apAcc)
+          <div class="bigimgpre" id="logoImg" style="display:none;"><img src="$!{config.imagewebserver}/$!obj.apAcc.path/$!obj.apAcc.name"  width="$!obj.apWidth" height="$!obj.apHeight" id="logoShow2"/> </div>
+          #end
+        </li>
+      </ul>
+     <ul class="set1" id="advert_text" style="display:none;">
+      <li>默认文字：</li>
+      <li><span class="webname">
+        <input name="apText" type="text" id="ap_text" value="$!obj.apText" />
+        </span></li>
+    </ul> 
+     <ul class="set1">
+      <li>默认链接：</li>
+      <li><span class="webname">
+        <input name="apAccUrl" type="text" id="ap_acc_url" value="$!obj.apAccUrl" />
+        </span></li>
+    </ul> 
+    <ul class="set1">
+      <li>广告位位置:</li>
+      <li><span class="webname">
+        <select name="apMark" id="ap_mark">
+        <option value="">请选择广告位位置</option>
+        <option value="index">首页</option>
+        <option value="new">新品</option>
+        <option value="sale">特价</option>
+        <option value="groupbuy">团购</option>
+        <option value="customize">订制</option>
+        <option value="oversea">海外购</option>
+        <option value="specialty">土特产</option>
+        <option value="xqt">新奇特</option>
+        </select>
+        </span></li>
+    </ul>
+    <ul class="set1" id="seq">
+      <li>广告位位置序列:</li>
+      <li><span class="webname">
+        <select name="sequence" id="sequence">
+        </select>
+        </span></li>
+    </ul>
+  </div>
+  <div class="submit">
+    <input name="" type="button" value="提交" onclick="saveForm();" />
+    <input name="add_url" type="hidden" id="add_url" value="$!webPath/admin/adv_pos_add.htm" />
+    <input name="list_url" type="hidden" id="list_url" value="$!webPath/admin/adv_pos_list.htm" />
+    <input name="id" type="hidden" id="id" value="$!obj.id" />
+  </div>
+  </form>
+</div>
+</body>
+</html>

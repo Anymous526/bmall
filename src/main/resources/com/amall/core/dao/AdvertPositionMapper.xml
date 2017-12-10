@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.AdvertPositionMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.AdvertPosition" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="ap_acc_url" property="apAccUrl" jdbcType="VARCHAR" />
+    <result column="ap_height" property="apHeight" jdbcType="INTEGER" />
+    <result column="ap_price" property="apPrice" jdbcType="INTEGER" />
+    <result column="ap_sale_type" property="apSaleType" jdbcType="INTEGER" />
+    <result column="ap_show_type" property="apShowType" jdbcType="INTEGER" />
+    <result column="ap_status" property="apStatus" jdbcType="INTEGER" />
+    <result column="ap_sys_type" property="apSysType" jdbcType="INTEGER" />
+    <result column="ap_text" property="apText" jdbcType="VARCHAR" />
+    <result column="ap_title" property="apTitle" jdbcType="VARCHAR" />
+    <result column="ap_type" property="apType" jdbcType="VARCHAR" />
+    <result column="ap_use_status" property="apUseStatus" jdbcType="INTEGER" />
+    <result column="ap_width" property="apWidth" jdbcType="INTEGER" />
+    <result column="ap_acc_id" property="apAccId" jdbcType="BIGINT" />
+    <result column="ap_mark" property="apMark" jdbcType="VARCHAR" />
+    <association property="apAcc" column="ap_acc_id" javaType="com.amall.core.bean.Accessory"
+    			select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.AdvertPositionWithBLOBs" extends="BaseResultMap" >
+    <result column="ap_code" property="apCode" jdbcType="LONGVARCHAR" />
+    <result column="ap_content" property="apContent" jdbcType="LONGVARCHAR" />
+    <collection property="advs" ofType="com.amall.core.bean.Advert" column="adv_id" select="com.amall.core.dao.AdvertMapper.selectByExample"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, ap_acc_url, ap_height, ap_price, ap_sale_type, ap_show_type, 
+    ap_status, ap_sys_type, ap_text, ap_title, ap_type, ap_use_status, ap_width, ap_acc_id, ap_mark
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    ap_code, ap_content
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.AdvertPositionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_adv_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.AdvertPositionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_adv_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.AdvertPositionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_adv_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_adv_pos
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_adv_pos
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.AdvertPositionExample" >
+    delete from amall_adv_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.AdvertPositionWithBLOBs" >
+    insert into amall_adv_pos (  id, addTime, deleteStatus, 
+      ap_acc_url, ap_height, ap_price, 
+      ap_sale_type, ap_show_type, ap_status, 
+      ap_sys_type, ap_text, ap_title, 
+      ap_type, ap_use_status, ap_width, 
+      ap_acc_id, ap_code, ap_content, ap_mark
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{apAccUrl,jdbcType=VARCHAR}, #{apHeight,jdbcType=INTEGER}, #{apPrice,jdbcType=INTEGER}, 
+      #{apSaleType,jdbcType=INTEGER}, #{apShowType,jdbcType=INTEGER}, #{apStatus,jdbcType=INTEGER}, 
+      #{apSysType,jdbcType=INTEGER}, #{apText,jdbcType=VARCHAR}, #{apTitle,jdbcType=VARCHAR}, 
+      #{apType,jdbcType=VARCHAR}, #{apUseStatus,jdbcType=INTEGER}, #{apWidth,jdbcType=INTEGER}, 
+      #{apAccId,jdbcType=BIGINT}, #{apCode,jdbcType=LONGVARCHAR}, #{apContent,jdbcType=LONGVARCHAR},
+      #{apMark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.AdvertPositionWithBLOBs" >
+    
+    insert into amall_adv_pos
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="apAccUrl != null" >
+        ap_acc_url,
+      </if>
+      <if test="apHeight != null" >
+        ap_height,
+      </if>
+      <if test="apPrice != null" >
+        ap_price,
+      </if>
+      <if test="apSaleType != null" >
+        ap_sale_type,
+      </if>
+      <if test="apShowType != null" >
+        ap_show_type,
+      </if>
+      <if test="apStatus != null" >
+        ap_status,
+      </if>
+      <if test="apSysType != null" >
+        ap_sys_type,
+      </if>
+      <if test="apText != null" >
+        ap_text,
+      </if>
+      <if test="apTitle != null" >
+        ap_title,
+      </if>
+      <if test="apType != null" >
+        ap_type,
+      </if>
+      <if test="apUseStatus != null" >
+        ap_use_status,
+      </if>
+      <if test="apWidth != null" >
+        ap_width,
+      </if>
+      <if test="apAccId != null" >
+        ap_acc_id,
+      </if>
+      <if test="apCode != null" >
+        ap_code,
+      </if>
+      <if test="apContent != null" >
+        ap_content,
+      </if>
+      <if test="apMark != null" >
+        ap_mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="apAccUrl != null" >
+        #{apAccUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="apHeight != null" >
+        #{apHeight,jdbcType=INTEGER},
+      </if>
+      <if test="apPrice != null" >
+        #{apPrice,jdbcType=INTEGER},
+      </if>
+      <if test="apSaleType != null" >
+        #{apSaleType,jdbcType=INTEGER},
+      </if>
+      <if test="apShowType != null" >
+        #{apShowType,jdbcType=INTEGER},
+      </if>
+      <if test="apStatus != null" >
+        #{apStatus,jdbcType=INTEGER},
+      </if>
+      <if test="apSysType != null" >
+        #{apSysType,jdbcType=INTEGER},
+      </if>
+      <if test="apText != null" >
+        #{apText,jdbcType=VARCHAR},
+      </if>
+      <if test="apTitle != null" >
+        #{apTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="apType != null" >
+        #{apType,jdbcType=VARCHAR},
+      </if>
+      <if test="apUseStatus != null" >
+        #{apUseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="apWidth != null" >
+        #{apWidth,jdbcType=INTEGER},
+      </if>
+      <if test="apAccId != null" >
+        #{apAccId,jdbcType=BIGINT},
+      </if>
+      <if test="apCode != null" >
+        #{apCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="apContent != null" >
+        #{apContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="apMark != null" >
+        #{apMark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.AdvertPositionExample" resultType="java.lang.Integer" >
+    select count(*) from amall_adv_pos
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_adv_pos
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.apAccUrl != null" >
+        ap_acc_url = #{record.apAccUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apHeight != null" >
+        ap_height = #{record.apHeight,jdbcType=INTEGER},
+      </if>
+      <if test="record.apPrice != null" >
+        ap_price = #{record.apPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.apSaleType != null" >
+        ap_sale_type = #{record.apSaleType,jdbcType=INTEGER},
+      </if>
+      <if test="record.apShowType != null" >
+        ap_show_type = #{record.apShowType,jdbcType=INTEGER},
+      </if>
+      <if test="record.apStatus != null" >
+        ap_status = #{record.apStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.apSysType != null" >
+        ap_sys_type = #{record.apSysType,jdbcType=INTEGER},
+      </if>
+      <if test="record.apText != null" >
+        ap_text = #{record.apText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apTitle != null" >
+        ap_title = #{record.apTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apType != null" >
+        ap_type = #{record.apType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.apUseStatus != null" >
+        ap_use_status = #{record.apUseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.apWidth != null" >
+        ap_width = #{record.apWidth,jdbcType=INTEGER},
+      </if>
+      <if test="record.apAccId != null" >
+        ap_acc_id = #{record.apAccId,jdbcType=BIGINT},
+      </if>
+      <if test="record.apCode != null" >
+        ap_code = #{record.apCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.apContent != null" >
+        ap_content = #{record.apContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.apMark != null" >
+        ap_mark = #{record.apMark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_adv_pos
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      ap_acc_url = #{record.apAccUrl,jdbcType=VARCHAR},
+      ap_height = #{record.apHeight,jdbcType=INTEGER},
+      ap_price = #{record.apPrice,jdbcType=INTEGER},
+      ap_sale_type = #{record.apSaleType,jdbcType=INTEGER},
+      ap_show_type = #{record.apShowType,jdbcType=INTEGER},
+      ap_status = #{record.apStatus,jdbcType=INTEGER},
+      ap_sys_type = #{record.apSysType,jdbcType=INTEGER},
+      ap_text = #{record.apText,jdbcType=VARCHAR},
+      ap_title = #{record.apTitle,jdbcType=VARCHAR},
+      ap_type = #{record.apType,jdbcType=VARCHAR},
+      ap_use_status = #{record.apUseStatus,jdbcType=INTEGER},
+      ap_width = #{record.apWidth,jdbcType=INTEGER},
+      ap_acc_id = #{record.apAccId,jdbcType=BIGINT},
+      ap_code = #{record.apCode,jdbcType=LONGVARCHAR},
+      ap_content = #{record.apContent,jdbcType=LONGVARCHAR},
+      ap_mark = #{record.apMark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_adv_pos
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      ap_acc_url = #{record.apAccUrl,jdbcType=VARCHAR},
+      ap_height = #{record.apHeight,jdbcType=INTEGER},
+      ap_price = #{record.apPrice,jdbcType=INTEGER},
+      ap_sale_type = #{record.apSaleType,jdbcType=INTEGER},
+      ap_show_type = #{record.apShowType,jdbcType=INTEGER},
+      ap_status = #{record.apStatus,jdbcType=INTEGER},
+      ap_sys_type = #{record.apSysType,jdbcType=INTEGER},
+      ap_text = #{record.apText,jdbcType=VARCHAR},
+      ap_title = #{record.apTitle,jdbcType=VARCHAR},
+      ap_type = #{record.apType,jdbcType=VARCHAR},
+      ap_use_status = #{record.apUseStatus,jdbcType=INTEGER},
+      ap_width = #{record.apWidth,jdbcType=INTEGER},
+      ap_acc_id = #{record.apAccId,jdbcType=BIGINT},
+      ap_mark = #{record.apMark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.AdvertPositionWithBLOBs" >
+    update amall_adv_pos
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="apAccUrl != null" >
+        ap_acc_url = #{apAccUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="apHeight != null" >
+        ap_height = #{apHeight,jdbcType=INTEGER},
+      </if>
+      <if test="apPrice != null" >
+        ap_price = #{apPrice,jdbcType=INTEGER},
+      </if>
+      <if test="apSaleType != null" >
+        ap_sale_type = #{apSaleType,jdbcType=INTEGER},
+      </if>
+      <if test="apShowType != null" >
+        ap_show_type = #{apShowType,jdbcType=INTEGER},
+      </if>
+      <if test="apStatus != null" >
+        ap_status = #{apStatus,jdbcType=INTEGER},
+      </if>
+      <if test="apSysType != null" >
+        ap_sys_type = #{apSysType,jdbcType=INTEGER},
+      </if>
+      <if test="apText != null" >
+        ap_text = #{apText,jdbcType=VARCHAR},
+      </if>
+      <if test="apTitle != null" >
+        ap_title = #{apTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="apType != null" >
+        ap_type = #{apType,jdbcType=VARCHAR},
+      </if>
+      <if test="apUseStatus != null" >
+        ap_use_status = #{apUseStatus,jdbcType=INTEGER},
+      </if>
+      <if test="apWidth != null" >
+        ap_width = #{apWidth,jdbcType=INTEGER},
+      </if>
+      <if test="apAccId != null" >
+        ap_acc_id = #{apAccId,jdbcType=BIGINT},
+      </if>
+      <if test="apCode != null" >
+        ap_code = #{apCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="apContent != null" >
+        ap_content = #{apContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="apMark != null" >
+        ap_mark = #{apMark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.AdvertPositionWithBLOBs" >
+    update amall_adv_pos
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      ap_acc_url = #{apAccUrl,jdbcType=VARCHAR},
+      ap_height = #{apHeight,jdbcType=INTEGER},
+      ap_price = #{apPrice,jdbcType=INTEGER},
+      ap_sale_type = #{apSaleType,jdbcType=INTEGER},
+      ap_show_type = #{apShowType,jdbcType=INTEGER},
+      ap_status = #{apStatus,jdbcType=INTEGER},
+      ap_sys_type = #{apSysType,jdbcType=INTEGER},
+      ap_text = #{apText,jdbcType=VARCHAR},
+      ap_title = #{apTitle,jdbcType=VARCHAR},
+      ap_type = #{apType,jdbcType=VARCHAR},
+      ap_use_status = #{apUseStatus,jdbcType=INTEGER},
+      ap_width = #{apWidth,jdbcType=INTEGER},
+      ap_acc_id = #{apAccId,jdbcType=BIGINT},
+      ap_code = #{apCode,jdbcType=LONGVARCHAR},
+      ap_content = #{apContent,jdbcType=LONGVARCHAR},
+      ap_mark = #{apMark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.AdvertPosition" >
+    update amall_adv_pos
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      ap_acc_url = #{apAccUrl,jdbcType=VARCHAR},
+      ap_height = #{apHeight,jdbcType=INTEGER},
+      ap_price = #{apPrice,jdbcType=INTEGER},
+      ap_sale_type = #{apSaleType,jdbcType=INTEGER},
+      ap_show_type = #{apShowType,jdbcType=INTEGER},
+      ap_status = #{apStatus,jdbcType=INTEGER},
+      ap_sys_type = #{apSysType,jdbcType=INTEGER},
+      ap_text = #{apText,jdbcType=VARCHAR},
+      ap_title = #{apTitle,jdbcType=VARCHAR},
+      ap_type = #{apType,jdbcType=VARCHAR},
+      ap_use_status = #{apUseStatus,jdbcType=INTEGER},
+      ap_width = #{apWidth,jdbcType=INTEGER},
+      ap_acc_id = #{apAccId,jdbcType=BIGINT},
+      ap_mark = #{apMark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.CloudGoodsOrderMapper" >
+
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.CloudGoodsOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="msg" property="msg" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="ship_code" property="shipCode" jdbcType="VARCHAR" />
+    <result column="ship_content" property="shipContent" jdbcType="VARCHAR" />
+    <result column="ship_time" property="shipTime" jdbcType="TIMESTAMP" />
+    <result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+    <result column="ship_trans_fee" property="shipTransFee" jdbcType="DECIMAL" />
+    <result column="clouds_goods_id" property="cloudsGoodsId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="address_id" property="addressId" jdbcType="BIGINT" />
+	<result column="ec_id" property="ecId" jdbcType="BIGINT" />
+    
+    <association property="ec" column="ec_id" javaType="com.amall.core.bean.ExpressCompany" 
+    		select="com.amall.core.dao.ExpressCompanyMapper.selectByPrimaryKey"/>
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User"
+    			select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="cloudGoods" column="clouds_goods_id" javaType="com.amall.core.bean.CloudGoods"
+    			select="com.amall.core.dao.CloudGoodsMapper.selectByPrimaryKey"/>			
+  	<association property="address" column="address_id" javaType="com.amall.core.bean.OrderAddress" 
+    		select="com.amall.core.dao.OrderAddressMapper.selectByPrimaryKey"/>
+  	
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, add_time, deleteStatus, msg, order_id, ship_code, ship_content, ship_time, order_status, 
+    ship_trans_fee, clouds_goods_id, user_id, address_id, ec_id
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CloudGoodsOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_cloud_goods_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CloudGoodsOrderExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_cloud_goods_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_cloud_goods_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_cloud_goods_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.CloudGoodsOrderExample" >
+    delete from amall_cloud_goods_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.CloudGoodsOrder" >
+    insert into amall_cloud_goods_order (id, add_time, deleteStatus, 
+      msg, order_id, ship_code, 
+      ship_content, ship_time, order_status, 
+      ship_trans_fee, clouds_goods_id, user_id, 
+      address_id, ec_id)
+    values (#{id,jdbcType=BIGINT}, #{addTime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{msg,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{shipCode,jdbcType=VARCHAR}, 
+      #{shipContent,jdbcType=VARCHAR}, #{shipTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=INTEGER}, 
+      #{shipTransFee,jdbcType=DECIMAL}, #{cloudsGoodsId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, 
+      #{addressId,jdbcType=BIGINT}, #{ecId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.CloudGoodsOrder" >
+    insert into amall_cloud_goods_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="shipCode != null" >
+        ship_code,
+      </if>
+      <if test="shipContent != null" >
+        ship_content,
+      </if>
+      <if test="shipTime != null" >
+        ship_time,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="shipTransFee != null" >
+        ship_trans_fee,
+      </if>
+      <if test="cloudsGoodsId != null" >
+        clouds_goods_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="addressId != null" >
+        address_id,
+      </if>
+      <if test="ecId != null" >
+        ec_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="shipCode != null" >
+        #{shipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipContent != null" >
+        #{shipContent,jdbcType=VARCHAR},
+      </if>
+      <if test="shipTime != null" >
+        #{shipTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shipTransFee != null" >
+        #{shipTransFee,jdbcType=DECIMAL},
+      </if>
+      <if test="cloudsGoodsId != null" >
+        #{cloudsGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="addressId != null" >
+        #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="ecId != null" >
+        #{ecId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.CloudGoodsOrderExample" resultType="java.lang.Integer" >
+    select count(*) from amall_cloud_goods_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_cloud_goods_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.msg != null" >
+        msg = #{record.msg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipCode != null" >
+        ship_code = #{record.shipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipContent != null" >
+        ship_content = #{record.shipContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shipTime != null" >
+        ship_time = #{record.shipTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.shipTransFee != null" >
+        ship_trans_fee = #{record.shipTransFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.cloudsGoodsId != null" >
+        clouds_goods_id = #{record.cloudsGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.addressId != null" >
+        address_id = #{record.addressId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ecId != null" >
+        ec_id = #{record.ecId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_cloud_goods_order
+    set id = #{record.id,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      msg = #{record.msg,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      ship_code = #{record.shipCode,jdbcType=VARCHAR},
+      ship_content = #{record.shipContent,jdbcType=VARCHAR},
+      ship_time = #{record.shipTime,jdbcType=TIMESTAMP},
+      order_status = #{record.orderStatus,jdbcType=INTEGER},
+      ship_trans_fee = #{record.shipTransFee,jdbcType=DECIMAL},
+      clouds_goods_id = #{record.cloudsGoodsId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      address_id = #{record.addressId,jdbcType=BIGINT},
+      ec_id = #{record.ecId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.CloudGoodsOrder" >
+    update amall_cloud_goods_order
+    <set >
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="shipCode != null" >
+        ship_code = #{shipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shipContent != null" >
+        ship_content = #{shipContent,jdbcType=VARCHAR},
+      </if>
+      <if test="shipTime != null" >
+        ship_time = #{shipTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=INTEGER},
+      </if>
+      <if test="shipTransFee != null" >
+        ship_trans_fee = #{shipTransFee,jdbcType=DECIMAL},
+      </if>
+      <if test="cloudsGoodsId != null" >
+        clouds_goods_id = #{cloudsGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="addressId != null" >
+        address_id = #{addressId,jdbcType=BIGINT},
+      </if>
+      <if test="ecId != null" >
+        ec_id = #{ecId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.CloudGoodsOrder" >
+    update amall_cloud_goods_order
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      msg = #{msg,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=VARCHAR},
+      ship_code = #{shipCode,jdbcType=VARCHAR},
+      ship_content = #{shipContent,jdbcType=VARCHAR},
+      ship_time = #{shipTime,jdbcType=TIMESTAMP},
+      order_status = #{orderStatus,jdbcType=INTEGER},
+      ship_trans_fee = #{shipTransFee,jdbcType=DECIMAL},
+      clouds_goods_id = #{cloudsGoodsId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      address_id = #{addressId,jdbcType=BIGINT},
+      ec_id = #{ecId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

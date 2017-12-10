@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+#macro ( genericTree $somelist ) 
+#foreach ( $some in $somelist )
+<option value="$!some.id">
+#if($!some.level>0)
+#foreach($count in [-1..$!some.level])&nbsp;#end #end $!some.classname</option>
+#genericTree($some.childs) 
+#end 
+#end
+<!--[if IE]>
+<style type="text/css">
+.input{behavior: url($!webPath/resources/style/common/css/ie-css3.htc);}
+</style>
+<![endif]-->
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script>
+//
+function queryGoods(){
+	jQuery("#queryForm").submit();
+}
+
+function gotoPage(pageNo){	
+	$("#currentPage").val(pageNo);
+	queryGoods();
+}
+
+function ajax_update(id,fieldName,obj,value){
+   var val;
+   if(value==undefined){
+	 val=jQuery(obj).val();
+   }else val=value; 
+   jQuery.ajax({type:'POST',
+	              url:'$!webPath/admin/goods_ajax.htm',
+				  data:{"id":id,"fieldName":fieldName,"value":val},
+				beforeSend:function(){
+				  
+				},
+			   success:function(data){
+	             if(val==""){
+				   jQuery(obj).attr("src","$!webPath/resources/style/system/manage/blue/images/"+data+".png");
+				 }else{
+				   jQuery(obj).val(val);
+				 }    
+				 if(value!=undefined){
+				   jQuery(obj.parentNode.parentNode).remove();
+				 }
+              }
+	    });
+}
+jQuery(document).ready(function(){
+	jQuery("#goods_name").val($!goodsName);
+	jQuery("select[name='goodsBrandId']").val($!goodsBrandId);
+	jQuery("select[name='gcId']").val($!gcId);
+	jQuery("select[name='storeRecommend']").val($!storeRecommend);
+	
+});
+</script>
+</head>
+<body scroll="yes">
+<div class="cont">
+  <h1 class="seth1">商品管理</h1>
+  <div class="settab"> 
+	<span class="tab-one"></span> <span class="tabs"> 
+	<a href="$!webPath/admin/goods_list.htm" class="this">所有商品</a> |<a href="$!webPath/admin/goods_outline.htm">违规下架商品</a></span> 
+	<span class="tab-two"></span>	</div>
+	<form name="queryForm" id="queryForm" action="$!webPath/admin/goods_list.htm" method="post">
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    <div class="allmem_search">
+      <ul>
+        <li>
+          <span>商品名称</span> 
+          <span class="allmen size4">
+          <input name="goods_name" type="text" id="goods_name" value="$!goods_name"/>
+          </span>
+          <span>店铺名称</span>
+          <span class="allmen size4">
+          <input name="store_name" type="text" id="store_name" value="$!store_name"/>
+          </span>
+          <span>品牌名称</span> 
+          <select name="goodsBrandId" id="goodsBrandId">
+          <option value="">所有品牌</option>
+          #foreach($gb in $gbs)
+	          #if($!goodsBrandId)
+		          #if($!gb.id==$!goodsBrandId)
+		         	 <option value="$!gb.id" selected="selected">$!gb.name</option>
+		          #else
+		          	 <option value="$!gb.id">$!gb.name</option>
+		          #end
+		      #else
+		      		<option value="$!gb.id">$!gb.name</option>
+	          #end
+          #end
+          </select>
+          <span>类别</span>
+          <select name="gcId" id="gcId">
+          <option value="">所有分类</option>
+            
+           #genericTree($!gcs)
+          
+          </select>
+          <span>特别推荐</span>
+          <select name="store_recommend" id="store_recommend">
+            <option value="">是否特别推荐</option>
+            #if($!store_recommend)
+            	#if($!store_recommend=="true")
+            		<option value="true" selected="selected">是</option>
+            		<option value="false">否</option>
+            	#else
+            		<option value="true">是</option>
+            		<option value="false" selected="selected">否</option>
+            	#end
+            	
+            #else
+            <option value="true">是</option>
+            <option value="false">否</option>
+            #end
+		  </select>
+          <span class="btn_search">
+          <input name="" type="button"  value="搜索" style="cursor:pointer;" onclick="queryGoods();"/>
+        </span> </li>
+      </ul>
+    </div>
+  </form>
+  <div class="operation">
+    <h3>友情提示</h3>
+    <ul>
+      <li>上架商品，在商城前台所有访客均可查看，管理员和卖家都可以设置商品上架状态</li>
+      <li>违规商品，管理员根据商城访客举报结合实际情况设定违规，违规商品前台不可显示，只能管理员能取消违规</li>
+    </ul>
+  </div>
+    <div class="brandtable">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0" class="brand_table">
+        <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+          <td width="3%">&nbsp;</td>
+          <td width="15%" align="center">商品名称
+           </td>
+          <td width="7%" align="center">品牌</td>
+          
+          <td width="7%">单价</td>
+          <td width="7%">分类名</td>
+          
+          <td width="7%">成交量</td>
+          <td width="7%">收藏量</td>
+          <td width="7%">商品库存</td>
+          
+          
+          <td width="7%">所在店铺</td>
+          <td width="7%">商品状态</td>
+          <td width="7%" align="center">特别推荐</td>
+          <td width="7%" align="center">违规下架</td>
+          <td width="7%" align="center">查看次数</td>
+          <td  align="center" width="7%">操作</td>
+        </tr>
+        <script>
+        </script>
+      #foreach($obj in $objs)
+        <tr>
+          <td align="center"><input name="checkbox" type="checkbox" id="checkbox" value="$!obj.id" /></td>
+          <td><label>
+            <textarea name="textarea" cols="40" rows="3"  title="可编辑" onblur="ajax_update('$!obj.id','goodsName',this)">$!obj.goodsName</textarea>
+          </label></td>
+          <td>$!obj.goodsBrand.name</td> 
+          <td>0</td> 
+          <td>$!obj.gc.classname</td>
+          <td>0</td>
+          <td>0</td>
+          <td>0</td>
+          <td>$!obj.goodsStore.storeName</td>
+          #if($!obj.goodsStatus==0)
+           #set($goodsStatus="上架")
+          #end
+          #if($!obj.goodsStatus==1)
+           #set($goodsStatus="已下架")
+          #end
+          #if($!obj.goodsStatus==-1)
+           #set($goodsStatus="已下架")
+          #end
+          #if($!obj.goodsStatus==-2)
+           #set($goodsStatus="违规下架")
+          #end
+          <td>$!goodsStatus</td>
+          <td align="center"><img onclick="ajax_update('$!obj.id','storeRecommend',this)" src="$!webPath/resources/style/system/manage/blue/images/$!{obj.storeRecommend}.png" width="25" height="21" border="0" style="cursor:pointer;" title="特别推荐后在首页显示"/></td>
+          <td align="center"><img onclick="ajax_update('$!obj.id','goodsStatus',this,'-2')"  src="$!webPath/resources/style/system/manage/blue/images/weig.jpg"  border="0" style="cursor:pointer;" title="可编辑"/> </td>
+          <td align="center">$!obj.goodsClick</td>
+          <td class="ac8" align="center"><a href="$!webPath/goods.htm?id=$!obj.id" target="_blank">查看</a></td>
+        </tr>
+     #end
+		<tr>
+        <td align="center"><input type="checkbox" name="all" id="all" value="" onclick="selectAll(this)"/>
+          <input name="mulitId" type="hidden" id="mulitId" /></td>
+        <td colspan="2" class="bdel">
+		<span class="sp1">全部</span><span class="sp2">
+          <div class="shop_btn_del shopbtn">
+            <input name="" type="button" value="删除" onclick="cmd('$!webPath/admin/goods_del.htm');" style="cursor:pointer;" />
+          </div>
+          </span>		  </td>
+        <td colspan="11"></td>
+      </tr>
+    </table>
+	  <div class="fenye" align="right">
+       <span id="queryCondition" style="display:none">
+		   #foreach($sm in $sms)
+     <input name="$!sm.key" id="$!sm.key" type="hidden" value="$!sm.value"/>
+		   #end
+	 </span>
+	   $!gotoPageFormHTML </div>
+    </div>
+</div>
+</body>
+</html>

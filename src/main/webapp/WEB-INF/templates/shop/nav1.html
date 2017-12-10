@@ -1,0 +1,92 @@
+﻿<script type="text/javascript" src="$!webPath/assets/js/otherBanner/index_banner_menu_other.js"></script>
+
+<!--  顶部    start-->
+
+<div class="yHeader"> 
+  <!-- 导航   start  -->
+  <div class="yNavIndex">
+    <div class="pullDown">
+      <h2 class="pullDownTitle" id="pullDownTitle" onclick="javascript:location.href='$!webPath/goods_class.htm'">所有商品分类</h2>
+      <!-- 
+      <ul class="pullDownList" style="display:none" id="pullDownListOtherBanner">
+         #foreach($gc in $objs)
+        	
+        	#if($!gc.iconAcc)
+        	#set($img = "$!{config.imagewebserver}/$!{gc.iconAcc.path}/$!{gc.iconAcc.name}")
+        	#else
+        	#set($img = "")
+        	#end
+	        <li name="gc_li"> 
+		      <b style="margin:0;padding: 0;">
+		      	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">$!gc.classname <i class="fa fa-angle-right" style="float:right;line-height:70px;font-size:18px;margin-right:15px;"></i></a>
+	          </b>
+	         
+		      <div class="yMenuListCon" name="yMenuListCon">
+		        <div class="yMenuListConin" name="classdiv">
+		        #foreach($c_g in $gc.childs)
+		          <div class="yMenuLCinList" style="display:block;">
+		            <h3 style="height:30px;line-height:30px;">
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_g.id" target="_blank"  style="display:block;color:#850000;font-size:16px;margin-bottom:5px;">$!c_g.classname</a>
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank" class="yListMore" style="color:#333;font-size:14px;">更多 ></a>
+		            </h3>
+		            <p style="line-height:30px;"> 
+		            	#foreach($c_cg in $c_g.childs)
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_cg.id" target="_blank" style="color:#333;display:block;font-size:13px;margin-top:5px;font-family: tahoma,arial,\5b8b\4f53,sans-serif;text-align: left;">$!c_cg.classname</a>
+		            	#end
+		            </p>
+		          </div> 
+		        #end
+		        </div>
+		   	 </div>
+	        </li>
+        #end
+     </ul>  
+       -->
+  
+      
+     
+    </div>
+    <ul class="yMenuIndex">
+      <!-- 
+      <li><a href="$!webPath/index.htm" class="yMenua">首页</a></li>
+      <li><a href="$!webPath/new.htm">新品 <span></span></a></li>
+      <li><a href="$!webPath/specialprice.htm">特价</a></li>
+      <li><a href="$!webPath/groupbuy.htm">团购</a></li>
+      <li><a href="$!webPath/customize.htm">订制</a></li>
+      <li><a href="$!webPath/specialty.htm">特产</a></li>
+       -->
+     <li><a href="$!webPath/index.htm" class="yMenua">首页</a></li>
+      <!--<li><a href="$!webPath/angel_exchange.htm">互助兑</a></li>
+      <li><a href="$!webPath/exchange/exchange_index.htm">会员区</a></li> -->
+      <li id="xu_special"><a href="$!webPath/specialty.htm">中国特产</a>
+      	<ul id="ul_sub">
+      		<li style="padding-top:12px;"><a href="$!webPath/amall_xqt.htm">新奇特</a></li>
+      		<li><a href="$!webPath/area_sale.htm">特卖场</a></li>
+      	</ul>
+      </li>
+      <li><a href="$!webPath/over_shopping.htm">海外精品</a></li>
+       <li id="o2o"><a href="$!webPath/wealth_index.htm">实体店铺</a></li>
+      <li><a href="http://zhibo.amall.com/"  style="color:#af3d3d" target="_blank">店主直播</a></li> 
+      <!-- <li><a href="$!webPath/amall_xqt.htm">新奇特</a></li> -->
+      <!-- <li><a href="$!webPath/area_sale.htm">特卖场</a></li> -->
+      <!-- <li id="health"><a href="$!webPath/health.htm">大健康</a></li> -->
+      <li><a href="$!webPath/amall_member2.htm">礼品区</a></li> 
+      <!--  <li><a href="$!webPath/exchange/exchange_index.htm">兑换</a></li>--> 
+    </ul>
+  </div>
+  <!-- 导航   end  --> 
+  <div class="border3px"></div>
+</div>
+<script>
+ $("#o2o").click(function(e){
+	e.preventDefault();
+	alert("敬请期待...请先下载使用手机app");
+	return false;
+});
+ $("#xu_special").mouseover(function(){
+	 $("#ul_sub").show(); 
+ });
+ $("#xu_special").mouseout(function(){
+	 $("#ul_sub").hide(); 
+ });
+</script>

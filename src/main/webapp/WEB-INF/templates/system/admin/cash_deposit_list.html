@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/font-awesome.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<style>
+.cont .export_box{position:relative;}
+.export_box button{position:absolute;right:5%;bottom:1%;background:#2A7AD2;border:none;padding:6px 8px;color:#fff;border-radius:3px;letter-spacing:3px;padding-left:10px;}
+.export_box button:hover{background:#36C;}
+</style>
+<script>
+jQuery(document).ready(function(){
+  jQuery('#beginTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  //
+  jQuery("#export_btn").click(function(){
+	  var a=window.confirm("确定要导出所有退款的信息吗");
+	  if(a!=0){
+		  window.location.href="$webPath/admin/refundExport.htm";
+	  }
+  });
+});
+</script>
+</head>
+<body>
+
+<div class="cont">
+  <h1 class="seth1">退款管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/cash_deposit_list.htm" class="this">所有退款</a></span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/cash_deposit_list.htm" method="post" id="queryForm" >
+  <div class="orders">
+    <ul>
+      <li> <span>退款状态</span><span class="ordersel">
+        <select name="cash_status" id="cash_status">
+          <option value="0">等待退款</option>
+          <option value="1">已退款</option>
+          <option value="2">退款失败</option>
+        </select>
+      </span>
+  	  <span>下单时间</span><span class="order_input size2">
+       		<input name="beginTime" type="text" id="beginTime"  readonly="readonly"/>
+       		</span><span>—</span><span class="order_input size2">
+       		<input name="endTime" type="text" id="endTime" readonly="readonly" />
+       </span>
+       <span>退款商家</span><span class="order_input size2">
+        	<input name="userName" type="text" id="userName" />
+        	</span> <span class="btn_search">
+        	<input name="" type="submit"  value="搜索" style="cursor:pointer;"/>
+       </span>
+      </li>
+      
+    </ul>
+  </div>
+  </form>
+  <div class="export_box"><button id="export_btn"><i class="fa fa-table">导出</i></button></div>
+  <form action="$!webPath/admin/cash_deposit_list.htm" method="post" id="ListForm" >
+    <div class="allshop_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="20%">店铺名称</td>
+        <td width="8%">退款商家</td>
+        <td width="15%">支付订单号</td>
+        <td  width="10%">退款金额</td>
+        <td  width="15%">退款申请时间</td>
+        <td width="8%">支付方式</td>
+        <td width="8%">退款状态</td>
+        <td align="center">操作</td>
+      </tr>
+      #foreach($obj in $objs)
+      #set($dou = $!transportTools.dou("$!obj.AlipayOrder.orderId"))
+      <tr>
+        <td>$!obj.sellerUser.store.storeName</td>
+        <td>$!obj.sellerUser.username</td>
+        <td>$!obj.alipayOrder.orderId</td>
+        <td>$!obj.refund.refund元,#if($!dou.beanNum) 可退豆数量  $!dou.beanNum颗 #else 没有使用豆  #end</td> 
+        <td>$!CommUtil.formatLongDate($!obj.createTime)</td>
+            #if($!obj.alipayOrder.payment.mark=="alipay")
+            #set($payment="支付宝")
+            #end
+            #if($!obj.alipayOrder.payment.mark=="chinabank")
+            #set($payment="网银在线")
+            #end
+            #if($!obj.alipayOrder.payment.mark=="WXPay")
+            #set($payment="微信支付")
+            #end                          
+            #if($!obj.alipayOrder.payment.mark=="Unionpay")
+            #set($payment="银联支付")
+            #end
+            #if($!obj.alipayOrder.payment.mark=="AGPay")
+            #set($payment="余额支付")
+            #end
+        <td>$!payment</td>
+            #if($!obj.cashStatus=="0")
+            #set($status="等待退款")
+            #end
+            #if($!obj.cashStatus=="1")
+            #set($status="卖家已退款")
+            #end
+            #if($!obj.cashStatus=="2")
+            #set($status="卖家退款失败")
+            #end
+        <td>$!status</td>
+        <td align="center" class="blue xiahua" >
+        	#if($!obj.cashStatus=="0")
+        		<a target="_blank" href="$!webPath/refund_entrance.htm?id=$!obj.id&ofid=$!obj.refund.ofId">退款</a>
+        	#end
+        	#if($!obj.cashStatus=="1")
+        		已经退款
+        	#end
+        	#if($!obj.cashStatus=="2")
+        		<a target="_blank" href="$!webPath/refund_entrance.htm?id=$!obj.id">退款失败，再次退款</a>
+        	#end
+        </td>
+      </tr>
+     #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="endTime" type="hidden" id="endTime" value="$!endTime" />
+    <input name="beginTime" type="hidden" id="beginTime" value="$!beginTime" />
+    <input name="userName" type="hidden" id="userName" value="$!userName" />
+    <input name="cash_status" type="hidden" id="cash_status" value="$!cash_status" />
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

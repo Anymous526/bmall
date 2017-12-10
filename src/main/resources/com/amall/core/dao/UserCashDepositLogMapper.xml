@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.UserCashDepositLogMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.UserCashDepositLog" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="fee" property="fee" jdbcType="DECIMAL" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="VARCHAR" />
+    <result column="card_name" property="cardName" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="delete_status" property="deleteStatus" jdbcType="BIT" />
+    <result column="is_withdraw" property="isWithdraw" jdbcType="BIT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="tx_time" property="txTime" jdbcType="TIMESTAMP" />
+    <result column="admin_user_id" property="adminUserId" jdbcType="BIGINT" />
+    <result column="refuse_message" property="refuseMessage" jdbcType="VARCHAR" />
+     <result column="card_city" property="cardCity" jdbcType="VARCHAR" />
+    <association property="adminUser" column="admin_user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, add_time, fee, user_id, card_id, card_name, card_type, delete_status, is_withdraw, 
+    address, tx_time, admin_user_id, refuse_message, remark, cw_user_id, cw_withdraw, 
+    card_city
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.UserCashDepositLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_user_cash_deposit_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_user_cash_deposit_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select   id="selectByExampleAndPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.UserCashDepositLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_user_cash_deposit_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_user_cash_deposit_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.UserCashDepositLogExample" >
+    delete from amall_user_cash_deposit_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.UserCashDepositLog" >
+    insert into amall_user_cash_deposit_log (id, add_time, fee, 
+      user_id, card_id, card_name, 
+      card_type, delete_status, is_withdraw, 
+      address, tx_time, admin_user_id, 
+      refuse_message, remark, cw_user_id, 
+      cw_withdraw, card_city)
+    values (#{id,jdbcType=BIGINT}, #{addTime,jdbcType=TIMESTAMP}, #{fee,jdbcType=DECIMAL}, 
+      #{userId,jdbcType=BIGINT}, #{cardId,jdbcType=VARCHAR}, #{cardName,jdbcType=VARCHAR}, 
+      #{cardType,jdbcType=VARCHAR}, #{deleteStatus,jdbcType=BIT}, #{isWithdraw,jdbcType=BIT}, 
+      #{address,jdbcType=VARCHAR}, #{txTime,jdbcType=TIMESTAMP}, #{adminUserId,jdbcType=BIGINT}, 
+      #{refuseMessage,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{cwUserId,jdbcType=BIGINT}, 
+      #{cwWithdraw,jdbcType=BIGINT}, #{cardCity,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.UserCashDepositLog" >
+    insert into amall_user_cash_deposit_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="fee != null" >
+        fee,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="cardName != null" >
+        card_name,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="deleteStatus != null" >
+        delete_status,
+      </if>
+      <if test="isWithdraw != null" >
+        is_withdraw,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="txTime != null" >
+        tx_time,
+      </if>
+      <if test="adminUserId != null" >
+        admin_user_id,
+      </if>
+      <if test="refuseMessage != null" >
+        refuse_message,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="cwUserId != null" >
+        cw_user_id,
+      </if>
+      <if test="cwWithdraw != null" >
+        cw_withdraw,
+      </if>
+      <if test="cardCity != null" >
+        card_city,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null" >
+        #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null" >
+        #{deleteStatus,jdbcType=BIT},
+      </if>
+      <if test="isWithdraw != null" >
+        #{isWithdraw,jdbcType=BIT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="txTime != null" >
+        #{txTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminUserId != null" >
+        #{adminUserId,jdbcType=BIGINT},
+      </if>
+      <if test="refuseMessage != null" >
+        #{refuseMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="cwUserId != null" >
+        #{cwUserId,jdbcType=BIGINT},
+      </if>
+      <if test="cwWithdraw != null" >
+        #{cwWithdraw,jdbcType=BIGINT},
+      </if>
+      <if test="cardCity != null" >
+        #{cardCity,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.UserCashDepositLogExample" resultType="java.lang.Integer" >
+    select count(*) from amall_user_cash_deposit_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_user_cash_deposit_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.fee != null" >
+        fee = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cardId != null" >
+        card_id = #{record.cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardName != null" >
+        card_name = #{record.cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        card_type = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deleteStatus != null" >
+        delete_status = #{record.deleteStatus,jdbcType=BIT},
+      </if>
+      <if test="record.isWithdraw != null" >
+        is_withdraw = #{record.isWithdraw,jdbcType=BIT},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.txTime != null" >
+        tx_time = #{record.txTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adminUserId != null" >
+        admin_user_id = #{record.adminUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.refuseMessage != null" >
+        refuse_message = #{record.refuseMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cwUserId != null" >
+        cw_user_id = #{record.cwUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cwWithdraw != null" >
+        cw_withdraw = #{record.cwWithdraw,jdbcType=BIGINT},
+      </if>
+      <if test="record.cardCity != null" >
+        card_city = #{record.cardCity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_user_cash_deposit_log
+    set id = #{record.id,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      fee = #{record.fee,jdbcType=DECIMAL},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      card_id = #{record.cardId,jdbcType=VARCHAR},
+      card_name = #{record.cardName,jdbcType=VARCHAR},
+      card_type = #{record.cardType,jdbcType=VARCHAR},
+      delete_status = #{record.deleteStatus,jdbcType=BIT},
+      is_withdraw = #{record.isWithdraw,jdbcType=BIT},
+      address = #{record.address,jdbcType=VARCHAR},
+      tx_time = #{record.txTime,jdbcType=TIMESTAMP},
+      admin_user_id = #{record.adminUserId,jdbcType=BIGINT},
+      refuse_message = #{record.refuseMessage,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      cw_user_id = #{record.cwUserId,jdbcType=BIGINT},
+      cw_withdraw = #{record.cwWithdraw,jdbcType=BIGINT},
+      card_city = #{record.cardCity,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.UserCashDepositLog" >
+    update amall_user_cash_deposit_log
+    <set >
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fee != null" >
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null" >
+        card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteStatus != null" >
+        delete_status = #{deleteStatus,jdbcType=BIT},
+      </if>
+      <if test="isWithdraw != null" >
+        is_withdraw = #{isWithdraw,jdbcType=BIT},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="txTime != null" >
+        tx_time = #{txTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adminUserId != null" >
+        admin_user_id = #{adminUserId,jdbcType=BIGINT},
+      </if>
+      <if test="refuseMessage != null" >
+        refuse_message = #{refuseMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="cwUserId != null" >
+        cw_user_id = #{cwUserId,jdbcType=BIGINT},
+      </if>
+      <if test="cwWithdraw != null" >
+        cw_withdraw = #{cwWithdraw,jdbcType=BIGINT},
+      </if>
+      <if test="cardCity != null" >
+        card_city = #{cardCity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.UserCashDepositLog" >
+    update amall_user_cash_deposit_log
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      fee = #{fee,jdbcType=DECIMAL},
+      user_id = #{userId,jdbcType=BIGINT},
+      card_id = #{cardId,jdbcType=VARCHAR},
+      card_name = #{cardName,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      delete_status = #{deleteStatus,jdbcType=BIT},
+      is_withdraw = #{isWithdraw,jdbcType=BIT},
+      address = #{address,jdbcType=VARCHAR},
+      tx_time = #{txTime,jdbcType=TIMESTAMP},
+      admin_user_id = #{adminUserId,jdbcType=BIGINT},
+      refuse_message = #{refuseMessage,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      cw_user_id = #{cwUserId,jdbcType=BIGINT},
+      cw_withdraw = #{cwWithdraw,jdbcType=BIGINT},
+      card_city = #{cardCity,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,621 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.GoodsClassMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.GoodsClass" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="className" property="classname" jdbcType="VARCHAR" />
+    <result column="display" property="display" jdbcType="BIT" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="recommend" property="recommend" jdbcType="BIT" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="goodsType_id" property="goodstypeId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="icon_sys" property="iconSys" jdbcType="VARCHAR" />
+    <result column="icon_type" property="iconType" jdbcType="INTEGER" />
+    <result column="icon_acc_id" property="iconAccId" jdbcType="BIGINT" />
+    <result column="first_gcImg_id" property="firstGcImgId" jdbcType="BIGINT"/>
+    <result column="second_gcImg_id" property="secondGcImgId" jdbcType="BIGINT"/>
+    <result column="rate" property="rate" jdbcType="DECIMAL" />
+    <result column="group_id" property="groupId" jdbcType="BIGINT" />
+    <result column="description_evaluate" property="descriptionEvaluate" jdbcType="DECIMAL" />
+    <result column="service_evaluate" property="serviceEvaluate" jdbcType="DECIMAL" />
+    <result column="ship_evaluate" property="shipEvaluate" jdbcType="DECIMAL" />
+     <result column="module_id" property="moduleId" jdbcType="BIGINT" />
+    
+    <association property="goodsType"  column="goodsType_id" javaType="com.amall.core.bean.GoodsType"
+    		select="com.amall.core.dao.GoodsTypeMapper.selectByPrimaryKey"/>  
+    <association property="iconAcc" column="icon_acc_id" javaType="com.amall.core.bean.Accessory"
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="firstGcImg" column="first_gcImg_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="secondGcImg" column="second_gcImg_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>	
+    <association property="parent" column="parent_id" javaType="com.amall.core.bean.GoodsClassWithBLOBs"
+    		select="com.amall.core.dao.GoodsClassMapper.selectByPrimaryKey"/>
+    <association property="group" column="group_id" javaType="com.amall.core.bean.Group"
+    		select="com.amall.core.dao.GroupMapper.selectByPrimaryKey"/>
+    		
+    <collection property="childs" column="childs_id" ofType="com.amall.core.bean.GoodsClassWithBLOBs"
+    		select="com.amall.core.dao.GoodsClassMapper.selectByExampleWithBLOBs"/>
+    <collection property="goodsList" column="goodsList_id" ofType="com.amall.core.bean.GoodsWithBLOBs"
+    		select="com.amall.core.dao.GoodsClassMapper.selectByExampleWithBLOBs"/>
+    <collection property="gcss" column="gcss_id" ofType="com.amall.core.bean.GoodsClassStaple"
+    		select="com.amall.core.dao.GoodsClassMapper.selectByExample"/>
+    <collection property="consults" column="consults_id" ofType="com.amall.core.bean.Consult"
+    		select="com.amall.core.dao.GoodsClassMapper.selectByExample"/>
+    <collection property="evaluates" column="evaluates_id" ofType="com.amall.core.bean.Evaluate"
+    		select="com.amall.core.dao.GoodsClassMapper.selectByExample"/>
+    <collection property="favs" column="favs_id" ofType="com.amall.core.bean.Favorite"
+    		select="com.amall.core.dao.GoodsClassMapper.selectByExample"/>
+    
+    
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.GoodsClassWithBLOBs" extends="BaseResultMap" >
+    <result column="seo_description" property="seoDescription" jdbcType="LONGVARCHAR" />
+    <result column="seo_keywords" property="seoKeywords" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, className, display, level, recommend, sequence, goodsType_id, 
+    parent_id, icon_sys, icon_type, icon_acc_id, first_gcImg_id, second_gcImg_id, group_id,description_evaluate, 
+    service_evaluate, ship_evaluate, rate, module_id
+  </sql>
+  <cache/>
+  <cache />
+  <sql id="Blob_Column_List" >
+    seo_description, seo_keywords
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GoodsClassExample" useCache="true">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goodsclass
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GoodsClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goodsclass
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.GoodsClassExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_goodsclass
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+ <!--  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goodsclass
+    where id = #{id,jdbcType=BIGINT}
+  </select> -->
+  
+  <select   id="selectByPrimaryKey" parameterType="java.lang.Long" flushCache="true"  resultMap="ResultMapWithBLOBs">
+	select *,gc.id as gc_id, gt.id as gt_id from amall_goodsclass gc 
+	left join amall_goodstype gt on gc.goodsType_id=gt.id
+	where gc.id = #{id,jdbcType=BIGINT}
+  </select>
+ <!--  <select   id="selectByPrimaryKey" parameterType="java.lang.Long" flushCache="true"  resultMap="ResultMapWithBLOBs">
+	select gc.*,gt.* from amall_goodsclass gc , amall_goodstype gt where gc.goodsType_id=gt.id
+	and gc.id = #{id,jdbcType=BIGINT}
+  </select> -->
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_goodsclass
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.GoodsClassExample" >
+    delete from amall_goodsclass
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.GoodsClassWithBLOBs" >
+    insert into amall_goodsclass (  id, addTime, deleteStatus, 
+      className, display, level, rate,
+      recommend, sequence, goodsType_id, 
+      parent_id, icon_sys, icon_type, 
+      icon_acc_id, first_gcImg_id, secong_gcImg_id, seo_description, seo_keywords,
+      group_id, module_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{classname,jdbcType=VARCHAR}, #{display,jdbcType=BIT}, #{level,jdbcType=INTEGER}, 
+      #{recommend,jdbcType=BIT}, #{sequence,jdbcType=INTEGER}, #{goodstypeId,jdbcType=BIGINT}, 
+      #{parentId,jdbcType=BIGINT}, #{iconSys,jdbcType=VARCHAR}, #{iconType,jdbcType=INTEGER}, 
+      #{iconAccId,jdbcType=BIGINT},#{firstGcImgId,jdbcType=BIGINT},#{secondGcImgId,jdbcType=BIGINT},
+      #{seoDescription,jdbcType=LONGVARCHAR}, #{seoKeywords,jdbcType=LONGVARCHAR}, #{rate,jdbcType=DECIMAL},
+      #{moduleId,jdbcType=BIGINT}, #{groupId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.GoodsClassWithBLOBs" >
+    
+    insert into amall_goodsclass
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="classname != null" >
+        className,
+      </if>
+      <if test="display != null" >
+        display,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="goodstypeId != null" >
+        goodsType_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="iconSys != null" >
+        icon_sys,
+      </if>
+      <if test="iconType != null" >
+        icon_type,
+      </if>
+	  <if test="rate != null" >
+        rate,
+      </if>
+      <if test="iconAccId != null" >
+        icon_acc_id,
+      </if>
+      <if test="firstGcImgId != null">
+      	first_gcImg_id,
+      </if>
+      <if test="secondGcImgId != null">
+      	second_gcImg_id,
+      </if>
+      <if test="seoDescription != null" >
+        seo_description,
+      </if>
+      <if test="seoKeywords != null" >
+        seo_keywords,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="descriptionEvaluate != null" >
+        description_evaluate,
+      </if>
+      <if test="serviceEvaluate != null" >
+        service_evaluate,
+      </if>
+      <if test="shipEvaluate != null" >
+        ship_evaluate,
+      </if>
+        <if test="moduleId != null" >
+        module_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="classname != null" >
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null" >
+        #{display,jdbcType=BIT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+	  <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=BIT},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="goodstypeId != null" >
+        #{goodstypeId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="iconSys != null" >
+        #{iconSys,jdbcType=VARCHAR},
+      </if>
+      <if test="iconType != null" >
+        #{iconType,jdbcType=INTEGER},
+      </if>
+      <if test="iconAccId != null" >
+        #{iconAccId,jdbcType=BIGINT},
+      </if>
+      <if test="firstGcImgId != null">
+      	#{firstGcImgId,jdbcType=BIGINT},
+      </if>
+      <if test="secondGcImgId != null">
+      	#{secondGcImgId,jdbcType=BIGINT},
+      </if>
+      <if test="seoDescription != null" >
+        #{seoDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seoKeywords != null" >
+        #{seoKeywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="descriptionEvaluate != null" >
+        #{descriptionEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceEvaluate != null" >
+        #{serviceEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="shipEvaluate != null" >
+        #{shipEvaluate,jdbcType=DECIMAL},
+      </if>
+       <if test="moduleId != null" >
+        #{moduleId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.GoodsClassExample" resultType="java.lang.Integer" >
+    select count(*) from amall_goodsclass
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_goodsclass
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.classname != null" >
+        className = #{record.classname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.display != null" >
+        display = #{record.display,jdbcType=BIT},
+      </if>
+      <if test="record.level != null" >
+        level = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.recommend != null" >
+        recommend = #{record.recommend,jdbcType=BIT},
+      </if>
+      <if test="record.sequence != null" >
+        sequence = #{record.sequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodstypeId != null" >
+        goodsType_id = #{record.goodstypeId,jdbcType=BIGINT},
+      </if>
+	  <if test="record.rate != null" >
+        rate = #{record.rate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.iconSys != null" >
+        icon_sys = #{record.iconSys,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iconType != null" >
+        icon_type = #{record.iconType,jdbcType=INTEGER},
+      </if>
+      <if test="record.iconAccId != null" >
+        icon_acc_id = #{record.iconAccId,jdbcType=BIGINT},
+      </if>
+      <if test="record.firstGcImgId != null">
+      	first_gcImg_id = #{record.firstGcImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.secondGcImgId != null">
+      	second_gcImg_id = #{record.secondGcImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.seoDescription != null" >
+        seo_description = #{record.seoDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.seoKeywords != null" >
+        seo_keywords = #{record.seoKeywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.descriptionEvaluate != null" >
+        description_evaluate = #{record.descriptionEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.serviceEvaluate != null" >
+        service_evaluate = #{record.serviceEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shipEvaluate != null" >
+        ship_evaluate = #{record.shipEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.moduleId != null" >
+        module_id = #{record.moduleId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_goodsclass
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      className = #{record.classname,jdbcType=VARCHAR},
+      display = #{record.display,jdbcType=BIT},
+      level = #{record.level,jdbcType=INTEGER},
+      recommend = #{record.recommend,jdbcType=BIT},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      goodsType_id = #{record.goodstypeId,jdbcType=BIGINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      icon_sys = #{record.iconSys,jdbcType=VARCHAR},
+      icon_type = #{record.iconType,jdbcType=INTEGER},
+	  rate = #{record.rate,jdbcType=DECIMAL},
+      icon_acc_id = #{record.iconAccId,jdbcType=BIGINT},
+      first_gcImg_id = #{record.firstGcImgId,jdbcType=BIGINT},
+      second_gcImg_id = #{record.secondGcImgId,jdbcType=BIGINT},
+      seo_description = #{record.seoDescription,jdbcType=LONGVARCHAR},
+      seo_keywords = #{record.seoKeywords,jdbcType=LONGVARCHAR},
+      module_id = #{record.moduleId,jdbcType=BIGINT},
+      group_id = #{record.groupId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_goodsclass
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      className = #{record.classname,jdbcType=VARCHAR},
+      display = #{record.display,jdbcType=BIT},
+      level = #{record.level,jdbcType=INTEGER},
+      recommend = #{record.recommend,jdbcType=BIT},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      goodsType_id = #{record.goodstypeId,jdbcType=BIGINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      icon_sys = #{record.iconSys,jdbcType=VARCHAR},
+      icon_type = #{record.iconType,jdbcType=INTEGER},
+      icon_acc_id = #{record.iconAccId,jdbcType=BIGINT},
+      first_gcImg_id = #{record.firstGcImgId,jdbcType=BIGINT},
+	  rate = #{record.rate,jdbcType=DECIMAL},
+      second_gcImg_id = #{record.secondGcImgId,jdbcType=BIGINT},
+      group_id = #{record.groupId,jdbcType=BIGINT},
+       module_id = #{record.moduleId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.GoodsClassWithBLOBs" >
+    update amall_goodsclass
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="classname != null" >
+        className = #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="display != null" >
+        display = #{display,jdbcType=BIT},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=BIT},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="goodstypeId != null" >
+        goodsType_id = #{goodstypeId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="iconSys != null" >
+        icon_sys = #{iconSys,jdbcType=VARCHAR},
+      </if>
+      <if test="iconType != null" >
+        icon_type = #{iconType,jdbcType=INTEGER},
+      </if>
+      <if test="iconAccId != null" >
+        icon_acc_id = #{iconAccId,jdbcType=BIGINT},
+      </if>
+      <if test="firstGcImgId != null">
+      	first_gcImg_id = #{firstGcImgId,jdbcType=BIGINT},
+      </if>
+      <if test="secondGcImgId != null">
+      	second_gcImg_id = #{secondGcImgId,jdbcType=BIGINT},
+      </if>
+      <if test="seoDescription != null" >
+        seo_description = #{seoDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="seoKeywords != null" >
+        seo_keywords = #{seoKeywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="descriptionEvaluate != null" >
+        description_evaluate = #{descriptionEvaluate,jdbcType=DECIMAL},
+      </if>
+	  <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="serviceEvaluate != null" >
+        service_evaluate = #{serviceEvaluate,jdbcType=DECIMAL},
+      </if>
+      <if test="shipEvaluate != null" >
+        ship_evaluate = #{shipEvaluate,jdbcType=DECIMAL},
+      </if>
+        <if test="moduleId != null" >
+        module_id = #{moduleId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.GoodsClassWithBLOBs" >
+    update amall_goodsclass
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      className = #{classname,jdbcType=VARCHAR},
+      display = #{display,jdbcType=BIT},
+      level = #{level,jdbcType=INTEGER},
+      recommend = #{recommend,jdbcType=BIT},
+      sequence = #{sequence,jdbcType=INTEGER},
+      goodsType_id = #{goodstypeId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      icon_sys = #{iconSys,jdbcType=VARCHAR},
+      icon_type = #{iconType,jdbcType=INTEGER},
+      icon_acc_id = #{iconAccId,jdbcType=BIGINT},
+      first_gcImg_id = #{record.firstGcImgId,jdbcType=BIGINT},
+      second_gcImg_id = #{record.secondGcImgId,jdbcType=BIGINT},
+      seo_description = #{seoDescription,jdbcType=LONGVARCHAR},
+      seo_keywords = #{seoKeywords,jdbcType=LONGVARCHAR},
+	  rate = #{rate,jdbcType=DECIMAL},
+	  module_id = #{moduleId,jdbcType=BIGINT},
+      group_id = #{groupId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.GoodsClass" >
+    update amall_goodsclass
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      className = #{classname,jdbcType=VARCHAR},
+      display = #{display,jdbcType=BIT},
+      level = #{level,jdbcType=INTEGER},
+      recommend = #{recommend,jdbcType=BIT},
+      sequence = #{sequence,jdbcType=INTEGER},
+      goodsType_id = #{goodstypeId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      icon_sys = #{iconSys,jdbcType=VARCHAR},
+      icon_type = #{iconType,jdbcType=INTEGER},
+      icon_acc_id = #{iconAccId,jdbcType=BIGINT},
+      first_gcImg_id = #{record.firstGcImgId,jdbcType=BIGINT},
+      second_gcImg_id = #{record.secondGcImgId,jdbcType=BIGINT},
+	  rate = #{rate,jdbcType=DECIMAL},
+      group_id = #{groupId,jdbcType=BIGINT},
+      module_id = #{moduleId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectClass" parameterType="java.lang.Integer" resultType="com.amall.core.bean.GoodsSpecial">
+  	select a.id as classId,a.className as className from amall_goodsclass as a where a.level=0
+  </select>
+</mapper>

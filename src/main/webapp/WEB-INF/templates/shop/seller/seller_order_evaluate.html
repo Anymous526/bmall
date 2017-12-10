@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>订单商品评价 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div class="main"> 
+  <div class="position">当前位置：<a href="$!webPath/index.htm">首页</a> > <a href="$!webPath/buyer/buyer_index.htm">用户中心</a> > <a href="$!webPath/buyer/buyer_order.htm">订单列表</a> > 评价买家</div>
+  <form action="$!webPath/seller/order_evaluate_save.htm" method="post" id="theForm">
+    <div class="orderdetail">
+      <div class="orderdh">
+        <h1>对我的评价
+          <input name="id" type="hidden" id="id" value="$!obj.id" />
+        </h1>
+      </div>
+      <div class="ordersee">
+        <div class="order_eva">
+          <h2><i>店铺名：<strong>$!store.storeName</strong></i></h2>
+          #foreach($eva in $objs)
+          <div class="order_eva_table">
+            <table width="925" border="0" cellspacing="0" cellpadding="0" class="orderevatable">
+              <tr class="order_eva_th">
+                <td width="600"><strong class="eva_thname">商品名称</strong></td>
+                <td width="80" align="center">评价</td>
+                <td align="center">评语</td>
+              </tr>
+              <tr> 
+                #set($gmp = $!eva.evaluate_goods.goodsMainPhoto)
+                <td><span class="eva_img"><a href="$!webPath/goods_$!{eva.evaluate_goods.id}.htm" target="_blank"><img width="60" height="60" src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}" /></a></span><span class="eva_info">
+                  <h3 class="eva_h3"><a href="$!webPath/goods_$!{eva.evaluate_goods.id}.htm" target="_blank">$!eva.evaluate_goods.goodsName</a></h3>
+                  <b class="eva_b">$!{eva.goodsSpec}</b></span></td>
+                <td align="center"> #if($!{eva.evaluateBuyerVal}==1)<span style="color:#F00;font-weight:bold;">好评</span> #end #if($!{eva.evaluateBuyerVal}==0)<span style="color:#090;font-weight:bold;">中评</span> #end #if($!{eva.evaluateBuyerVal}==-1)<span style="font-weight:bold;">差评</span>#end </td>
+                <td align="center">$!{eva.evaluateInfo}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="my_eva"  style="margin-top:0px;padding-left:0px;padding-right:0px;width:950px;">
+          <!-- 
+            <div class="my_eva_left">
+              <h4>我对买家评价</h4>
+              <div class="my_eval"><span>
+                <input name="evaluate_seller_val${eva.id}" type="radio" value="1" checked="checked" />
+                <em class="red">好评</em><i class="hui2">(加1分)</i></span><span>
+                  <input name="evaluate_seller_val${eva.id}" type="radio" value="0" />
+                  <em class="green">中评</em><i class="hui2">(不加分)</i></span><span>
+                    <input name="evaluate_seller_val${eva.id}" type="radio" value="-1" />
+                    <em>差评</em><i class="hui2">(减1分)</i></span></div>
+              <div class="eva_text">
+                <textarea name="evaluate_info${eva.id}" cols="" rows="" id="evaluate_info${eva.id}"></textarea>
+              </div>
+             
+            </div>
+            <div class="my_eva_right" style="width: 30%;float: right;padding-right: 35px;">
+              <h4>注意</h4>
+              <p>评价后不可更改，请您根据本次交易，给予真实、客观、仔细地评价。
+                您的评价将是其他买家的参考，也将影响卖家的信用。
+                累积信用和计分规则：
+                中评不计分，但会影响卖家的好评率，请慎重本次评价。</p>
+                 
+	            <div class="" style="display:none">
+	            <span class="setsub">
+	            	<input name="提交" type="submit" value="评价" style="cursor:pointer;"/>
+	            </span>
+	            <span class="setsub2">
+	              <input name="input" type="button" value="以后在评" onclick="window.close();"  style="cursor:pointer;"/>
+	            </span>
+	            </div>
+            </div>
+             -->
+          </div>
+          #end
+          
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

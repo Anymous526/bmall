@@ -1,0 +1,149 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/user_main.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+<script type="text/javascript">
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+function cmd(){
+	var url=arguments[0];
+	var mulitId="";
+	jQuery(":checkbox:checked").each(function(){
+	  if(jQuery(this).val()!=""){	  
+	    mulitId=mulitId+","+jQuery(this).val();
+	  }
+	});
+	if(mulitId!=""){
+	  jQuery("#ListForm #mulitId").val(mulitId);
+	  if(confirm("确定要执行该操作？")){
+	     jQuery("#ListForm").attr("action",url);
+	     jQuery("#ListForm").submit();
+	  }
+	}else{
+       alert("至少选择一条数据记录");
+	}
+}
+
+function selectAll(obj){
+	var status=jQuery(obj).attr("checked");
+	var id=jQuery(obj).attr("id");
+  	if(status=="checked"){
+		jQuery(":checkbox[id!="+id+"]").attr("checked","checked");
+	}else{
+	    jQuery(":checkbox[id!="+id+"]").attr("checked",false);	
+	}
+}
+		    
+$(document).ready(function(){
+	var lis = jQuery(".tools ul li"); 
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+	
+
+	
+	
+	
+});
+</script>
+
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm") 
+<div class="u_m">
+	<div class="order-top">
+        	<div class="topname">我的关注</div>
+            <form action="$!webPath/buyer/buyer_favorite_storeSearch.htm" method="post">
+           		<div class="sch">
+	           		<input class="inputtxt" type="text" style="height:20px;" name="searchContent"  /> 
+	            	<input class="inputbtn" type="submit" value="搜索" style="height:22px;"/>
+            	</div>
+       		</form>
+		</div>
+	<form action="$!webPath/buyer/buyer_favorite_store.htm" method="post" id="ListForm">
+        
+        <input name="mulitId" type="hidden" id="mulitId"/>
+        
+        <div class="my_att">   
+            #if($!objs.size()>0)
+        	<div class="p_tit"><input type="checkbox" onclick="selectAll(this);" id="all1" name="all1" value="" />全选 <span><span><a href="javascript:void(0);" onclick="cmd('$!webPath/buyer/buyer_favorite_del.htm?type=1','')">取消关注</a></span></div>     	
+            <ul class="att_list">
+	            #foreach($obj in $objs)
+	            	<li>
+	            	#set($img = $obj.store.storeLogo)
+	            	#if($img)
+	            		#set($logo = "$!webPath/$!img.path/$!img.name")
+	            	#else
+	            		#set($logo = "")
+	            	#end
+	                	<div class="p_img"><a href="$!webPath/store.htm?id=$!obj.store.id"><img src="$!logo" width="160px" height="160px" /></a></div>
+	                    <div class="p_info">
+	                   		 <input type="checkbox" id="id" name="id" value="$!obj.id" />
+	                   		 	<a title="$!obj.store.storeName $!obj.goods.goodsName" href="$!webPath/store.htm?id=$!obj.store.id">
+	                   		 		$!obj.store.storeName
+	                   		 	</a>
+	                    </div>
+	                    <div class="p_btn">
+	                    		<input type="button" value="取消关注" onclick="if(confirm('是否取消关注?'))window.location.href='$!webPath/buyer/buyer_favorite_del.htm?mulitId=$!obj.id&currentPage=$!currentPage&type=1'"/>           
+	                    </div>
+	                </li>
+	            #end
+            </ul>
+	        #else
+	        	还没有关注的店铺哦 , 先去看看把~
+	        #end
+        </div>
+        
+        
+        
+		#if($!objs.size()>0)
+    	<!--分页开始-->
+        <div class="bottom_page">
+			<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+			<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+			$!gotoPageAjaxHTML
+		</div>
+        <!--分页结束-->
+        #end
+    </form>
+	</div>
+
+
+
+
+
+
+
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

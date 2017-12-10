@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.PredepositMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Predeposit" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="pd_amount" property="pdAmount" jdbcType="DECIMAL" />
+    <result column="pd_pay_status" property="pdPayStatus" jdbcType="INTEGER" />
+    <result column="pd_payment" property="pdPayment" jdbcType="VARCHAR" />
+    <result column="pd_remittance_bank" property="pdRemittanceBank" jdbcType="VARCHAR" />
+    <result column="pd_remittance_time" property="pdRemittanceTime" jdbcType="DATE" />
+    <result column="pd_remittance_user" property="pdRemittanceUser" jdbcType="VARCHAR" />
+    <result column="pd_sn" property="pdSn" jdbcType="VARCHAR" />
+    <result column="pd_status" property="pdStatus" jdbcType="INTEGER" />
+    <result column="pd_admin_id" property="pdAdminId" jdbcType="BIGINT" />
+    <result column="pd_user_id" property="pdUserId" jdbcType="BIGINT" />
+    <result column="log_id" property="logId" jdbcType="BIGINT" />
+    <association property="pdUser" column="pd_user_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="pdAdmin" column="pd_admin_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="log" column="log_id" javaType="com.amall.core.bean.PredepositLog" select="com.amall.core.dao.PredepositLogMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.PredepositWithBLOBs" extends="BaseResultMap" >
+    <result column="pd_admin_info" property="pdAdminInfo" jdbcType="LONGVARCHAR" />
+    <result column="pd_remittance_info" property="pdRemittanceInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, pd_amount, pd_pay_status, pd_payment, pd_remittance_bank, 
+    pd_remittance_time, pd_remittance_user, pd_sn, pd_status, pd_admin_id, pd_user_id,log_id
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    pd_admin_info, pd_remittance_info
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.PredepositExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_predeposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.PredepositExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_predeposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.PredepositExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_predeposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_predeposit
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_predeposit
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.PredepositExample" >
+    delete from amall_predeposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.PredepositWithBLOBs" >
+    insert into amall_predeposit (  id, addTime, deleteStatus, 
+      pd_amount, pd_pay_status, pd_payment, 
+      pd_remittance_bank, pd_remittance_time, pd_remittance_user, 
+      pd_sn, pd_status, pd_admin_id, 
+      pd_user_id, pd_admin_info, pd_remittance_info
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{pdAmount,jdbcType=DECIMAL}, #{pdPayStatus,jdbcType=INTEGER}, #{pdPayment,jdbcType=VARCHAR}, 
+      #{pdRemittanceBank,jdbcType=VARCHAR}, #{pdRemittanceTime,jdbcType=DATE}, #{pdRemittanceUser,jdbcType=VARCHAR}, 
+      #{pdSn,jdbcType=VARCHAR}, #{pdStatus,jdbcType=INTEGER}, #{pdAdminId,jdbcType=BIGINT}, 
+      #{pdUserId,jdbcType=BIGINT}, #{pdAdminInfo,jdbcType=LONGVARCHAR}, #{pdRemittanceInfo,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.PredepositWithBLOBs" >
+    
+    insert into amall_predeposit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="pdAmount != null" >
+        pd_amount,
+      </if>
+      <if test="pdPayStatus != null" >
+        pd_pay_status,
+      </if>
+      <if test="pdPayment != null" >
+        pd_payment,
+      </if>
+      <if test="pdRemittanceBank != null" >
+        pd_remittance_bank,
+      </if>
+      <if test="pdRemittanceTime != null" >
+        pd_remittance_time,
+      </if>
+      <if test="pdRemittanceUser != null" >
+        pd_remittance_user,
+      </if>
+      <if test="pdSn != null" >
+        pd_sn,
+      </if>
+      <if test="pdStatus != null" >
+        pd_status,
+      </if>
+      <if test="pdAdminId != null" >
+        pd_admin_id,
+      </if>
+      <if test="pdUserId != null" >
+        pd_user_id,
+      </if>
+      <if test="pdAdminInfo != null" >
+        pd_admin_info,
+      </if>
+      <if test="pdRemittanceInfo != null" >
+        pd_remittance_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="pdAmount != null" >
+        #{pdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="pdPayStatus != null" >
+        #{pdPayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pdPayment != null" >
+        #{pdPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="pdRemittanceBank != null" >
+        #{pdRemittanceBank,jdbcType=VARCHAR},
+      </if>
+      <if test="pdRemittanceTime != null" >
+        #{pdRemittanceTime,jdbcType=DATE},
+      </if>
+      <if test="pdRemittanceUser != null" >
+        #{pdRemittanceUser,jdbcType=VARCHAR},
+      </if>
+      <if test="pdSn != null" >
+        #{pdSn,jdbcType=VARCHAR},
+      </if>
+      <if test="pdStatus != null" >
+        #{pdStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pdAdminId != null" >
+        #{pdAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="pdUserId != null" >
+        #{pdUserId,jdbcType=BIGINT},
+      </if>
+      <if test="pdAdminInfo != null" >
+        #{pdAdminInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pdRemittanceInfo != null" >
+        #{pdRemittanceInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.PredepositExample" resultType="java.lang.Integer" >
+    select count(*) from amall_predeposit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_predeposit
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.pdAmount != null" >
+        pd_amount = #{record.pdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pdPayStatus != null" >
+        pd_pay_status = #{record.pdPayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdPayment != null" >
+        pd_payment = #{record.pdPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdRemittanceBank != null" >
+        pd_remittance_bank = #{record.pdRemittanceBank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdRemittanceTime != null" >
+        pd_remittance_time = #{record.pdRemittanceTime,jdbcType=DATE},
+      </if>
+      <if test="record.pdRemittanceUser != null" >
+        pd_remittance_user = #{record.pdRemittanceUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdSn != null" >
+        pd_sn = #{record.pdSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pdStatus != null" >
+        pd_status = #{record.pdStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.pdAdminId != null" >
+        pd_admin_id = #{record.pdAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pdUserId != null" >
+        pd_user_id = #{record.pdUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.pdAdminInfo != null" >
+        pd_admin_info = #{record.pdAdminInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.pdRemittanceInfo != null" >
+        pd_remittance_info = #{record.pdRemittanceInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_predeposit
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      pd_amount = #{record.pdAmount,jdbcType=DECIMAL},
+      pd_pay_status = #{record.pdPayStatus,jdbcType=INTEGER},
+      pd_payment = #{record.pdPayment,jdbcType=VARCHAR},
+      pd_remittance_bank = #{record.pdRemittanceBank,jdbcType=VARCHAR},
+      pd_remittance_time = #{record.pdRemittanceTime,jdbcType=DATE},
+      pd_remittance_user = #{record.pdRemittanceUser,jdbcType=VARCHAR},
+      pd_sn = #{record.pdSn,jdbcType=VARCHAR},
+      pd_status = #{record.pdStatus,jdbcType=INTEGER},
+      pd_admin_id = #{record.pdAdminId,jdbcType=BIGINT},
+      pd_user_id = #{record.pdUserId,jdbcType=BIGINT},
+      pd_admin_info = #{record.pdAdminInfo,jdbcType=LONGVARCHAR},
+      pd_remittance_info = #{record.pdRemittanceInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_predeposit
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      pd_amount = #{record.pdAmount,jdbcType=DECIMAL},
+      pd_pay_status = #{record.pdPayStatus,jdbcType=INTEGER},
+      pd_payment = #{record.pdPayment,jdbcType=VARCHAR},
+      pd_remittance_bank = #{record.pdRemittanceBank,jdbcType=VARCHAR},
+      pd_remittance_time = #{record.pdRemittanceTime,jdbcType=DATE},
+      pd_remittance_user = #{record.pdRemittanceUser,jdbcType=VARCHAR},
+      pd_sn = #{record.pdSn,jdbcType=VARCHAR},
+      pd_status = #{record.pdStatus,jdbcType=INTEGER},
+      pd_admin_id = #{record.pdAdminId,jdbcType=BIGINT},
+      pd_user_id = #{record.pdUserId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.PredepositWithBLOBs" >
+    update amall_predeposit
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="pdAmount != null" >
+        pd_amount = #{pdAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="pdPayStatus != null" >
+        pd_pay_status = #{pdPayStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pdPayment != null" >
+        pd_payment = #{pdPayment,jdbcType=VARCHAR},
+      </if>
+      <if test="pdRemittanceBank != null" >
+        pd_remittance_bank = #{pdRemittanceBank,jdbcType=VARCHAR},
+      </if>
+      <if test="pdRemittanceTime != null" >
+        pd_remittance_time = #{pdRemittanceTime,jdbcType=DATE},
+      </if>
+      <if test="pdRemittanceUser != null" >
+        pd_remittance_user = #{pdRemittanceUser,jdbcType=VARCHAR},
+      </if>
+      <if test="pdSn != null" >
+        pd_sn = #{pdSn,jdbcType=VARCHAR},
+      </if>
+      <if test="pdStatus != null" >
+        pd_status = #{pdStatus,jdbcType=INTEGER},
+      </if>
+      <if test="pdAdminId != null" >
+        pd_admin_id = #{pdAdminId,jdbcType=BIGINT},
+      </if>
+      <if test="pdUserId != null" >
+        pd_user_id = #{pdUserId,jdbcType=BIGINT},
+      </if>
+      <if test="pdAdminInfo != null" >
+        pd_admin_info = #{pdAdminInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="pdRemittanceInfo != null" >
+        pd_remittance_info = #{pdRemittanceInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.PredepositWithBLOBs" >
+    update amall_predeposit
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      pd_amount = #{pdAmount,jdbcType=DECIMAL},
+      pd_pay_status = #{pdPayStatus,jdbcType=INTEGER},
+      pd_payment = #{pdPayment,jdbcType=VARCHAR},
+      pd_remittance_bank = #{pdRemittanceBank,jdbcType=VARCHAR},
+      pd_remittance_time = #{pdRemittanceTime,jdbcType=DATE},
+      pd_remittance_user = #{pdRemittanceUser,jdbcType=VARCHAR},
+      pd_sn = #{pdSn,jdbcType=VARCHAR},
+      pd_status = #{pdStatus,jdbcType=INTEGER},
+      pd_admin_id = #{pdAdminId,jdbcType=BIGINT},
+      pd_user_id = #{pdUserId,jdbcType=BIGINT},
+      pd_admin_info = #{pdAdminInfo,jdbcType=LONGVARCHAR},
+      pd_remittance_info = #{pdRemittanceInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Predeposit" >
+    update amall_predeposit
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      pd_amount = #{pdAmount,jdbcType=DECIMAL},
+      pd_pay_status = #{pdPayStatus,jdbcType=INTEGER},
+      pd_payment = #{pdPayment,jdbcType=VARCHAR},
+      pd_remittance_bank = #{pdRemittanceBank,jdbcType=VARCHAR},
+      pd_remittance_time = #{pdRemittanceTime,jdbcType=DATE},
+      pd_remittance_user = #{pdRemittanceUser,jdbcType=VARCHAR},
+      pd_sn = #{pdSn,jdbcType=VARCHAR},
+      pd_status = #{pdStatus,jdbcType=INTEGER},
+      pd_admin_id = #{pdAdminId,jdbcType=BIGINT},
+      pd_user_id = #{pdUserId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

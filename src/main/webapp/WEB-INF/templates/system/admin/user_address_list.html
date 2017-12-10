@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">积分商城</h1>
+  <div class="settab"><span class="tab-one"></span> 
+  					<span class="tabs"> 
+	  					<a href="$!webPath/admin/integral_goods.htm"  class="this">兑换商品列表</a> | 
+	  					<a href="$!webPath/admin/integral_goods_add.htm">新增兑换商品</a> | 
+	  					<a href="$!webPath/admin/integral_order.htm">兑换列表</a> 
+	  					<a href="$!webPath/admin/navigation_list.htm">兑换导航管理</a> 
+	  					<a href="$!webPath/admin/navigation_add.htm">兑换导航新增</a>
+	  					<a href="$!webPath/admin/user_address.htm">会员默认地址查询</a>
+  					</span> 
+  					<span class="tab-two"></span>
+  </div>
+  <form method="post" id="queryForm">
+  <div class="allpro_search">
+    <ul>
+      <li> 
+      	<span>手机号码</span><span class="allpro size3">
+        	<input name="username" type="text" id="username" />
+        </span> 
+        <span class="btn_search">
+        	<input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+        </span> 
+      </li>
+    </ul>
+  </div>
+  </form>
+  <form method="post" id="ListForm" name="ListForm">
+  <div class="allpro_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td align="center">收货人</td>
+        <td align="center">默认区域</td>
+        <td align="center">详细地址</td>
+        <td align="center">收货联系电话</td>
+        <td align="center">邮编</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td align="center">$!{obj.truename}</td>
+        <td align="center">$!{obj.area.parent.parent.areaname} $!{obj.area.parent.areaname} $!{obj.area.areaname}</td>
+        <td align="center">$!{obj.areaInfo}</td>
+        <td align="center">$!{obj.mobile}</td>
+        <td align="center">$!{obj.zip}</td>
+      </tr>
+      #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="username" type="hidden" id="username" value="$!username" />
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

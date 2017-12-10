@@ -1,0 +1,66 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的人气 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" /> 
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+</head>
+<body style="background:#FFF">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m">  
+		<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的人气</span></div></div>  
+    	<form action="$!webPath/buyer/new_user_indirect_share.htm" method="post" id="ListForm">
+		<div class="productmain">
+        $!httpInclude.include("/buyer/ref_user_count.htm")
+           <div class="container" style="border-top:1px solid #ccc;height:37px;">
+            <ul class="section" style="padding: 0;" >
+              <li class=""><a href="$!webPath/buyer/new_user_share.htm">直接会员列表</a></li>
+              <li class="li_this"><a href="$!webPath/buyer/new_user_indirect_share.htm">间接会员列表</a></li>
+              <!-- <li class=""><a href="$!webPath/buyer/new_user_super_share.htm">三度空间用户列表</a></li> -->
+            </ul>
+          </div>
+          
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+            	<tr>
+            		<td width="20%">注册时间</td>
+            		<td width="50%">用户名</td>
+            	</tr>
+            #foreach($obj in $objs)
+            	<tr>
+            		<td>$!CommUtil.formatLongDate($!obj.addtime)</td>
+            		<td>$!CommUtil.hideUserName($!obj.truename)</td>
+            	</tr>
+            #end
+            </table>
+          </div>
+            
+        </div><!-- end of productmain -->
+
+        <div class="bottom_page" style="margin-top: 25px;">
+          <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+          $!gotoPageFormHTML
+        </div>
+    	</form>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

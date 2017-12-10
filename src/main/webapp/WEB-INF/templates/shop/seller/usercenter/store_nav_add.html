@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>导航设置 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/kindeditor.js"></script>
+<script charset="utf-8" src="$!webPath/resources/editor/lang/zh_CN.js"></script>
+<script>
+ jQuery(document).ready(function(){
+	var options = {
+        cssPath : '$!webPath/resources/editor/themes/default/default.css',
+        filterMode : true,
+		uploadJson:'$!webPath/upload.htm',
+		width : '700px',
+		height:'400px'
+    };
+	var editor = KindEditor.create('#content',options); 
+	//
+	jQuery("#theForm").validate({
+        rules:{
+	  	  title:{required :true}
+	  	 },
+	    messages:{
+	  	  title:{required:"标题不能为空"}
+	  	}
+     });
+	//
+	jQuery(":radio[value=$!obj.display]").attr("checked",true);
+	jQuery(":radio[value='$!obj.winType']").attr("checked",true);
+ });
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">  
+	
+         <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>新增导航</span></div></div>
+        <div class="productmain">
+	      <div class="container" style="height:37px;">
+           <ul class="section" style="padding: 0;">
+                <li class=""><a href='$!webPath/seller/store_nav.htm'>导航列表</a></li>
+                <li #if(!$!edit)class="li_this"#end><a href='$!webPath/seller/store_nav_add.htm'>新增导航</a></li>
+                #if($!edit)
+                 <li class="li_this"><a href='$!webPath/seller/store_nav_edit.htm?id=$!obj.id'>编辑导航</a></li>
+                #end
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav" style="width: 96%;margin: 0 auto;">
+                <form action="$!webPath/seller/store_nav_save.htm" method="post" name="theForm" id="theForm">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                    <tr>
+                      <td width="150" align="right"><input name="id" type="hidden" id="id" value="$!obj.id" />
+                      导航名称：</td>
+                      <td class="px10"><span class="setinput">
+                        <input name="title" type="text" id="title" value="$!obj.title" />
+                      </span></td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top">导航序号：</td>
+                      <td  class="px10"><span class="setinput">
+                        <input name="sequence" type="text" id="sequence" value="$!obj.sequence" />&nbsp;序号越小越靠前</span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top">导航URL：</td>
+                      <td  class="px10"><span class="setinput">
+                        <input name="url" type="text" id="url" value="$!obj.url" />
+                        URL需要带http://,输入URL后导航内容不显示</span></td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top">是否显示：</td>
+                      <td  class="px10"><input name="display" type="radio" id="display" value="true" checked="checked"  />
+                        是
+                          <input type="radio" name="display" id="display" value="false" />
+                        否</td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top">打开方式：</td>
+                      <td  class="px10"><input name="winType" type="radio" id="win_type"  value="cur_win" checked="checked"  />
+本页面
+  <input type="radio" name="winType" id="win_type" value="new_win"/>
+  新窗口</td>
+                    </tr>
+                    <tr>
+                      <td align="right" valign="top">导航内容：</td>
+                      <td  class="px10">
+                      	<span class="setinput">
+                        	<textarea name="content" id="content" style="resize:none;max-width: 700px;">$!obj.content</textarea>
+                        </span>
+                      </td>
+                    </tr>
+                    
+                    <tr>
+                      <td colspan="2" align="center">
+                      	
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td class="px10"><span class="setsub">
+                        <input type="submit"  value="保存"  class="input_submit" style="cursor:pointer;height: 29px;border: 0;"/>
+                        </span></td>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div></td>
+      </tr>
+    </table>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

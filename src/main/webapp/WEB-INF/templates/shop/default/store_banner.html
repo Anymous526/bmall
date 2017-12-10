@@ -1,0 +1,99 @@
+<div id="slide-index" style="overflow:hidden;min-height:396px;">
+	<div class="slides ac" style="min-height:396px;">
+  #if($!store.slides.size()>0)
+  
+      #foreach($slide in $store.slides)
+        <div class="slide autoMaxWidth" style="height:529px;">
+          <div id="bi_0" class="image">
+	          <a href="$!slide.url">
+	          	<img class="wei_1124"  src="$!{config.imagewebserver}/$!slide.acc.path/$!slide.acc.name" style="left:0 !important;">
+	          </a>
+          </div>
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div>
+        #end
+      #else  
+          <div class="slide autoMaxWidth">
+          <div id="bi_0" class="image">
+	          <a href="">
+	          	<img class="wei_1124" src="$!webPath/assets/img/moban31.jpg" style="left: 0px;">
+	          </a>
+          </div> 
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div> 
+        <div class="slide autoMaxWidth">
+          <div id="bi_0" class="image">
+	          <a href="">
+	          	<img class="wei_1124" src="$!webPath/assets/img/moban32.jpg" style="left: 0px;">
+	          </a>
+          </div> 
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div> 
+        <div class="slide autoMaxWidth">
+          <div id="bi_0" class="image">
+	          <a href="">
+	          	<img class="wei_1124" src="$!webPath/assets/img/moban33.jpg" style="left: 0px;">
+	          </a>
+          </div> 
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div> 
+	   #end   
+      </div>
+      
+       <div class=control>
+    #if($!store.slides.size()>0)   
+      #foreach($slide in $store.slides)
+         <a href="#"></a>
+        #end
+      #else  
+         <a href="#"></a>
+         <a href="#"></a>
+         <a href="#"></a> 
+       #end
+      </div>
+</div>
+<script type=text/javascript>
+	$(function(){	
+		indexSlides.ini();
+	});
+	var indexSlides={};
+	indexSlides.timer=false;
+	indexSlides.total=$('#slide-index .control a').length;
+	indexSlides.current=-1;
+	indexSlides.offScreenLeft=2000;
+	indexSlides.leaveScreenLeft=4000;
+	indexSlides.animating=false;
+	indexSlides.obj=$('#slide-index .slide');
+	indexSlides.style=[];
+	indexSlides.style[0]={
+		text:{left:'30px',top:'81px'},
+		button:{left:'30px',top:'244px'},
+		direction:'tb'
+	};
+		
+	indexSlides.style[1]={
+		text:{left:'30px',top:'81px'},
+		button:{left:'30px',top:'244px'},
+		direction:'tb'
+	};
+		
+	indexSlides.style[2]={
+		text:{left:'30px',top:'81px'},
+		button:{left:'30px',top:'244px'},
+		direction:'tb'
+	};
+	
+	$(document).ready(function(){ 
+		    $("#slide-index .wei_1124").width($(window).width());
+		    var hwei=$("#slide-index .wei_1124").height("529"); 
+			$("#slide-index .slide ").height("529");
+			 console.log($("#slide-index .slide").height());
+	}); 
+</script> 
+<script type=text/javascript src="$!webPath/assets/js/jquery.min.js"></script>
+<script type=text/javascript src="$!webPath/assets/js/shop_banner.js"></script> 
+

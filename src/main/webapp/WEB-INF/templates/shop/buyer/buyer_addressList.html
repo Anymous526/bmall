@@ -1,0 +1,157 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>收货地址管理 </title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+
+<script type="text/javascript">
+
+function ajaxPage(url,currentPage,obj) {
+	var totalPages =$("#totalPages").val();
+	if(currentPage < 1) {
+		currentPage = 1;
+	}else if(currentPage > totalPages) {
+		currentPage = totalPages;
+	}
+	jQuery.ajax({
+				 type:'POST',
+				 url:url,
+				 data:{"currentPage":currentPage},
+				 success :　function(data) {
+					 $("#addressList").html(data);
+				 },
+				 error : function(){
+					 alert("已到第一页");
+				 }
+				});
+}
+
+function addressAdd(){
+	if($!addresses.size()<20) {
+		location.href= "$!webPath/buyer/buyer_address_add.htm";
+	}else {
+		alert("地址不能超过20个");
+	}
+}
+
+function gotoStandardAddress(id) {
+	var currentPage = $("#currentPage").val();
+	jQuery.ajax({	
+		type : 'POST',
+		url : "$!webPath/buyer/buyer_address_standard.htm",
+		data : {"id":id},
+		success : function(data) {
+			if(data == "true"){
+				alert("设置成功!");
+				window.location.href="$!webPath/buyer/buyer_addressList.htm?currentPage="+currentPage;
+			}else {
+			 	alert("设置失败!")
+			}
+		},
+		error : function(){
+			alert("请检查内部错误");
+		}
+		
+	});
+}
+
+function delAddress(id){
+	var currentPage = $("#currentPage").val();
+		jQuery.ajax({
+			type:'POST',
+			url:"$!webPath/buyer/buyer_address_del.htm",
+			data:{"id":id},
+			success:function(data){
+				window.location.href="$!webPath/buyer/buyer_addressList.htm?currentPage=";
+			},
+			error:function(){
+				alert("请检查内部错误");
+			}
+		});
+}
+
+</script>
+
+</head>
+<body style="background-color:#fff" id="addressList">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200" >
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m"> 
+    	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>收货地址</span></div></div>
+	    
+	    <div class="productmain" style="padding-bottom: 0px;">
+		    <div class="my_address" id="formDiv" >
+		    	<div class="" style="margin-top: 20px;margin-left: 15px;">
+		    		<input type="button" value=" + 新增收货地址" id="add_address" onclick="addressAdd();" style="height: 24px; padding:0 4px 0 0;display: inline-block;margin-top: -6px;"/> 
+		    		<span>您已创建$!addresses.size()个收货地址，最多可创建20个</span>
+		    	</div>
+		    	
+		        <form action="$!webPath/buyer/buyer_addressList.htm" method="post" id="ListForm">
+		       	#if($!objs.size()>0)
+			        #foreach($obj in $objs)
+				        <div class="address_li" style="" >
+				        	<a href="javascript:void(0);"><span class="close" onclick="delAddress($!obj.id);"> X </span></a>	<!-- 删除该地址  -->
+				            <span class="title">$!obj.alias</span>
+				            <span class="edit" name="standAddress" id="$!obj.id"><a href="javascript:void(0);" onclick="gotoStandardAddress($!obj.id);">#if($!{obj.standStatus})
+				            	<span style="color:red;font-size:14px;">默认地址</span>#else 设为默认地址  #end</a>
+								<span><a href="$!webPath/buyer/buyer_address_edit.htm?id=$!obj.id&currentPage=$!currentPage">修改</a></span>
+				            </span>
+				            <table class="address_tab" width="100%" border="0" cellspacing="0" cellpadding="0">
+				              <tr>
+				                <td width="10%" align="right">收&nbsp;&nbsp;货&nbsp;&nbsp;人：</td>
+				                <td width="90%">$!obj.truename</td>
+				              </tr>
+				              <tr>
+				              
+				              	#set($address="$!{obj.area.parent.parent.areaname} $!{obj.area.parent.areaname} $!obj.area.areaname")
+				                <td align="right">所在地区：</td>
+				                <td>$!address</td>
+				              </tr>
+				              <tr>
+				                <td align="right">街道地址：</td>
+				                <td>$!obj.areaInfo</td>
+				              </tr>
+				              <tr>
+				                <td align="right">手机号码：</td>
+				                <td>$!obj.mobile</td>
+				              </tr>
+				              <tr>
+				                <td align="right">固定电话：</td>
+				                <td>$!obj.telephone</td>
+				              </tr>
+				            </table>
+							
+				        </div>
+			        #end
+			    #else
+			    	<div class="address_li" style="border: none;line-height: 230px;text-align: center;font-size:16px;">亲，你还没收货地址哦，先添加个收货地址吧?</div>
+			    #end
+		        #if($!objs.size()>0)
+		        <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+		              #end
+		          	</form>
+		    </div>
+    
+		</div>
+	</div>
+</div>
+$!httpInclude.include("/footer.htm");
+</body>
+</html>

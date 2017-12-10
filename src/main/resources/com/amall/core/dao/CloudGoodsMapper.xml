@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.CloudGoodsMapper" >
+
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.CloudGoods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="click_count" property="clickCount" jdbcType="INTEGER" />
+    <result column="ig_content" property="igContent" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
+    <result column="goods_number" property="goodsNumber" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="goods_sn" property="goodsSn" jdbcType="VARCHAR" />
+    <result column="goods_tag" property="goodsTag" jdbcType="VARCHAR" />
+    <result column="is_show" property="isShow" jdbcType="BIT" />
+    <result column="goods_img_id" property="goodsImgId" jdbcType="BIGINT" />
+    <result column="goods_class_id" property="goodsClassId" jdbcType="BIGINT" />
+    <result column="goods_pack_list" property="goodsPackList" jdbcType="VARCHAR" />
+    <result column="is_passed" property="isPassed" jdbcType="BIT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="open_winner_time" property="openWinnerTime" jdbcType="TIMESTAMP" />
+    <result column="exchange_limit" property="exchangeLimit" jdbcType="INTEGER" />
+    <result column="buyer_code_count" property="buyerCodeCount" jdbcType="INTEGER" />
+    <result column="open_winner_code" property="openWinnerCode" jdbcType="INTEGER" />
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User"
+    			select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+	<association property="gc" column="goods_class_id" javaType="com.amall.core.bean.GoodsClass"
+    			select="com.amall.core.dao.GoodsClassMapper.selectByPrimaryKey"/>
+    <association property="accessory" column="goods_img_id" javaType="com.amall.core.bean.Accessory"
+    			select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, deleteStatus, begin_time, click_count, ig_content, end_time, goods_count, 
+    goods_number, goods_name, goods_price, goods_sn, goods_tag, is_show, goods_img_id, 
+    goods_class_id, goods_pack_list, is_passed, user_id, open_winner_time, exchange_limit, 
+    buyer_code_count, open_winner_code
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CloudGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_cloud_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+   <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CloudGoodsExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_cloud_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_cloud_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_cloud_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.CloudGoodsExample" >
+    delete from amall_cloud_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.CloudGoods" >
+    insert into amall_cloud_goods (id, addTime, deleteStatus, 
+      begin_time, click_count, ig_content, 
+      end_time, goods_count, goods_number, 
+      goods_name, goods_price, goods_sn, 
+      goods_tag, is_show, goods_img_id, 
+      goods_class_id, goods_pack_list, is_passed, 
+      user_id, open_winner_time, exchange_limit, 
+      buyer_code_count, open_winner_code)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{beginTime,jdbcType=TIMESTAMP}, #{clickCount,jdbcType=INTEGER}, #{igContent,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{goodsCount,jdbcType=INTEGER}, #{goodsNumber,jdbcType=INTEGER}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, #{goodsSn,jdbcType=VARCHAR}, 
+      #{goodsTag,jdbcType=VARCHAR}, #{isShow,jdbcType=BIT}, #{goodsImgId,jdbcType=BIGINT}, 
+      #{goodsClassId,jdbcType=BIGINT}, #{goodsPackList,jdbcType=VARCHAR}, #{isPassed,jdbcType=BIT}, 
+      #{userId,jdbcType=BIGINT}, #{openWinnerTime,jdbcType=TIMESTAMP}, #{exchangeLimit,jdbcType=INTEGER}, 
+      #{buyerCodeCount,jdbcType=INTEGER}, #{openWinnerCode,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.CloudGoods" >
+    insert into amall_cloud_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="clickCount != null" >
+        click_count,
+      </if>
+      <if test="igContent != null" >
+        ig_content,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="goodsCount != null" >
+        goods_count,
+      </if>
+      <if test="goodsNumber != null" >
+        goods_number,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="goodsSn != null" >
+        goods_sn,
+      </if>
+      <if test="goodsTag != null" >
+        goods_tag,
+      </if>
+      <if test="isShow != null" >
+        is_show,
+      </if>
+      <if test="goodsImgId != null" >
+        goods_img_id,
+      </if>
+      <if test="goodsClassId != null" >
+        goods_class_id,
+      </if>
+      <if test="goodsPackList != null" >
+        goods_pack_list,
+      </if>
+      <if test="isPassed != null" >
+        is_passed,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="openWinnerTime != null" >
+        open_winner_time,
+      </if>
+      <if test="exchangeLimit != null" >
+        exchange_limit,
+      </if>
+      <if test="buyerCodeCount != null" >
+        buyer_code_count,
+      </if>
+      <if test="openWinnerCode != null" >
+        open_winner_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clickCount != null" >
+        #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="igContent != null" >
+        #{igContent,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsCount != null" >
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNumber != null" >
+        #{goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsSn != null" >
+        #{goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTag != null" >
+        #{goodsTag,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="goodsImgId != null" >
+        #{goodsImgId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsClassId != null" >
+        #{goodsClassId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsPackList != null" >
+        #{goodsPackList,jdbcType=VARCHAR},
+      </if>
+      <if test="isPassed != null" >
+        #{isPassed,jdbcType=BIT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="openWinnerTime != null" >
+        #{openWinnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exchangeLimit != null" >
+        #{exchangeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="buyerCodeCount != null" >
+        #{buyerCodeCount,jdbcType=INTEGER},
+      </if>
+      <if test="openWinnerCode != null" >
+        #{openWinnerCode,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.CloudGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from amall_cloud_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_cloud_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.beginTime != null" >
+        begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.clickCount != null" >
+        click_count = #{record.clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.igContent != null" >
+        ig_content = #{record.igContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.goodsCount != null" >
+        goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsNumber != null" >
+        goods_number = #{record.goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsPrice != null" >
+        goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsSn != null" >
+        goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsTag != null" >
+        goods_tag = #{record.goodsTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShow != null" >
+        is_show = #{record.isShow,jdbcType=BIT},
+      </if>
+      <if test="record.goodsImgId != null" >
+        goods_img_id = #{record.goodsImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsClassId != null" >
+        goods_class_id = #{record.goodsClassId,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsPackList != null" >
+        goods_pack_list = #{record.goodsPackList,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isPassed != null" >
+        is_passed = #{record.isPassed,jdbcType=BIT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.openWinnerTime != null" >
+        open_winner_time = #{record.openWinnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.exchangeLimit != null" >
+        exchange_limit = #{record.exchangeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyerCodeCount != null" >
+        buyer_code_count = #{record.buyerCodeCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.openWinnerCode != null" >
+        open_winner_code = #{record.openWinnerCode,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_cloud_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      click_count = #{record.clickCount,jdbcType=INTEGER},
+      ig_content = #{record.igContent,jdbcType=VARCHAR},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      goods_number = #{record.goodsNumber,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
+      goods_tag = #{record.goodsTag,jdbcType=VARCHAR},
+      is_show = #{record.isShow,jdbcType=BIT},
+      goods_img_id = #{record.goodsImgId,jdbcType=BIGINT},
+      goods_class_id = #{record.goodsClassId,jdbcType=BIGINT},
+      goods_pack_list = #{record.goodsPackList,jdbcType=VARCHAR},
+      is_passed = #{record.isPassed,jdbcType=BIT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      open_winner_time = #{record.openWinnerTime,jdbcType=TIMESTAMP},
+      exchange_limit = #{record.exchangeLimit,jdbcType=INTEGER},
+      buyer_code_count = #{record.buyerCodeCount,jdbcType=INTEGER},
+      open_winner_code = #{record.openWinnerCode,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.CloudGoods" >
+    update amall_cloud_goods
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clickCount != null" >
+        click_count = #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="igContent != null" >
+        ig_content = #{igContent,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsCount != null" >
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsNumber != null" >
+        goods_number = #{goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsSn != null" >
+        goods_sn = #{goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsTag != null" >
+        goods_tag = #{goodsTag,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null" >
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="goodsImgId != null" >
+        goods_img_id = #{goodsImgId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsClassId != null" >
+        goods_class_id = #{goodsClassId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsPackList != null" >
+        goods_pack_list = #{goodsPackList,jdbcType=VARCHAR},
+      </if>
+      <if test="isPassed != null" >
+        is_passed = #{isPassed,jdbcType=BIT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="openWinnerTime != null" >
+        open_winner_time = #{openWinnerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exchangeLimit != null" >
+        exchange_limit = #{exchangeLimit,jdbcType=INTEGER},
+      </if>
+      <if test="buyerCodeCount != null" >
+        buyer_code_count = #{buyerCodeCount,jdbcType=INTEGER},
+      </if>
+      <if test="openWinnerCode != null" >
+        open_winner_code = #{openWinnerCode,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.CloudGoods" >
+    update amall_cloud_goods
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      ig_content = #{igContent,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      goods_number = #{goodsNumber,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_sn = #{goodsSn,jdbcType=VARCHAR},
+      goods_tag = #{goodsTag,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=BIT},
+      goods_img_id = #{goodsImgId,jdbcType=BIGINT},
+      goods_class_id = #{goodsClassId,jdbcType=BIGINT},
+      goods_pack_list = #{goodsPackList,jdbcType=VARCHAR},
+      is_passed = #{isPassed,jdbcType=BIT},
+      user_id = #{userId,jdbcType=BIGINT},
+      open_winner_time = #{openWinnerTime,jdbcType=TIMESTAMP},
+      exchange_limit = #{exchangeLimit,jdbcType=INTEGER},
+      buyer_code_count = #{buyerCodeCount,jdbcType=INTEGER},
+      open_winner_code = #{openWinnerCode,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

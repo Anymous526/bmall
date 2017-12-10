@@ -1,0 +1,664 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>礼品区-$!config.title </title> 
+<meta name="baidu-site-verification" content="u7KaeCBGVW" />
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/amall_member.css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<style>
+	.hot_right{
+
+		/* margin-bottom:50px; */
+		/* border-top:2px solid red; */
+	}
+	.hot_right ul li{
+		border-right:1px solid #ddd;
+		border-bottom:1px solid #ddd;
+	} 
+	.hot_right li{
+		width:264px;
+		height:280px;0;
+		margin-left:0px;
+		
+	}
+	.hot_right{
+		height:640px;
+	}
+	.myimg img{
+		width:200px;
+		height:200px;
+		margin-left:30px;
+		border-radius:3px;
+	} 
+	.name-tit{
+		width:94%;
+		margin-left:5px;
+	}
+	.icon_pri{
+		margin-right:10px;
+	}
+	.icon_com{
+		margin-left:10px;
+	}
+	.font_size{
+		width:215px;
+		height:100px;
+		background:#ccccff;
+		display:inline-block;
+		margin-left:10px;
+		border-radius:3px;
+	}
+	.font_size img{
+		width:80px;
+		height:80px;
+		/* border:1px solid blue; */
+		float:left;
+		margin:10px 0 0 10px;
+	}
+	.font_size span{
+		font-size:14px;
+		width:100px;
+		height:80px;
+		/* border:1px solid red; */
+		float:left;
+		margin-top:10px;
+		line-height:40px;
+		margin-left:15px;
+	} 
+	#mb_lo22{
+		margin-top:40px;
+	}
+	.member_assets1 span{
+		line-height:30px;
+	}
+	.myimg{width:210px;height:210px;}
+	.goods_info{margin-top:15px;}
+	/* .myimg a:hover img{transform: scale(1.08);transition: all 1s ease 0s;-webkit-transform: scale(1.08);-webkit-transform: all 1s ease 0s;border-radius:3px;} */
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/head2.htm") 
+<div style="margin-top:-30px;">
+$!httpInclude.include("/nav2.htm") 
+</div>
+<div style="position:absolute;width: 100%;height:2px;background-color: #a90000;z-index: 9990;"></div>
+<div class="member2_banner">
+	<div id="slide-index">
+		<div class=slides>
+			<div class="slide autoMaxWidth">
+				<div id=bi_0 class=image><a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/index_584351896774326892.jpg"></A></div>
+				<div id=bt_0 class=text></div>
+				<div id=bb_0 class=button></div>
+			</div> 
+			<div class="slide autoMaxWidth">
+				<div id=bi_0 class=image><A href="" ><img src="$webPath/assets/img/index_1900x420hg123.jpg"></A></div>
+				<div id=bt_0 class=text></div>
+				<div id=bb_0 class=button></div>
+			</div>
+		</div>
+		<div class=control><A href="#" class="active"></A><A href="#"></A></div>
+	</div>
+	
+</div>
+<!--  
+<div class="mod_action" style="display: block;">
+	<div class="member_person" style="opacity:0.9;z-index:-1">
+	
+	#if($!user)
+	<div id="mb_lo22" style="z-index:99999;">
+	<div class="userimg1">
+	<img src="$webPath/assets/img/touxiang_tianshi.png" width="80">
+	</div>
+	<div class="welcome1">
+			<p><strong>你好，#if($!user.truename&&$!user.truename!='')$!user.truename#else无名#end</strong> </p>
+			#if($!user.levelAngel==0)
+			<p>普通会员</p>
+			#elseif($!user.levelAngel==1)
+			<p>初级会员</p>
+			#else
+			<p>联盟商家</p>
+			#end
+		</div>
+	<div class="member_assets1" style="padding-top:30px;">
+			<span><i class="fa fa-jpy"></i>我的礼品金：  $!user.gold</span>
+			<span><i class="fa fa-jpy"></i>我的现金：  $!user.currentFee</span>
+			<span><i class="fa fa-user"></i>我的人气数量：$!totalMember</span>
+		</div>
+	</div>	
+    #else
+         <div id="mb_lo21" style="z-index:99999;">
+		<a class="mod_btn_publish"  href="$webPath/register.htm">
+			<span class="mod_btn_l"><img src="$webPath/assets/img/member_reg.png" style="margin-top: 15px;" width="28" height="28" /></span>
+			<strong>快速注册</strong>
+			建议使用手机号注册
+		</a>
+		
+		
+		<a class="mod_btn_publish" id="mod_btn_publish21" href="$webPath/user/login.htm" style="background-color: #33e510">
+			<span class="mod_btn_ll"><img src="$webPath/assets/img/member_login.png" style="margin-top: 15px;" width="28" height="28" /></span>
+			<strong>立即登录</strong>
+			全民合伙玩电商
+		</a>
+	</div>
+	<span class="font_size">
+	    	<img src="$webPath/assets/img/Angel1.gif">
+	    	<span>欢迎光临Amall天使商城</span>
+    </span>
+    #end
+    	<!-- <span class="font_size">
+	    	<img src="$webPath/assets/img/Angel1.gif">
+	    	<span>欢迎光临Amall天使商城</span>
+    	</span> -->
+    	
+		<!-- <span class="amall_app">Amall商城客户端</span>
+		<span class="amall_appi">移动端下单更优惠</span>
+		<span class="amall_appd">
+			<label class="amall_appd_l"><a href=""><i class="a_down_app"></i>下载客户端</a></label>
+			<label class="amall_appd_r"><a href=""><i class="a_down_g"></i>关注公众号</a></label>
+		</span>  -->
+	<!--</div>
+	
+	
+	
+</div>
+-->
+<div class="mod_action" style="display: none;">
+	<div class="member_person">
+		<div class="user_l"></div>
+		<div class="user_icon"></div>
+		
+	</div>
+</div>
+<!--  
+<div class="member_cagry">
+	<ul>
+		<li class="mod_nav_item careee">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d1"></i>
+				<span>全部</span>
+			</a>
+		</li>
+		<li class="mod_nav_item carfff">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d2"></i>
+				<span>科技产品</span>
+			</a>
+		</li>
+		<li class="mod_nav_item careee">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d3"></i>
+				<span>生活用品</span>
+			</a>
+		</li>
+		<li class="mod_nav_item carfff">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d4"></i>
+				<span>服装首饰</span>
+			</a>
+		</li>
+		<li class="mod_nav_item careee">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d5"></i>
+				<span>手机电脑</span>
+			</a>
+		</li>
+		<li class="mod_nav_item carfff">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d6"></i>
+				<span>手机电脑</span>
+			</a>
+		</li>
+		<li class="mod_nav_item careee">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d7"></i>
+				<span>手机电脑</span>
+			</a>
+		</li>
+		<li class="mod_nav_item carfff">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d8"></i>
+				<span>手机电脑</span>
+			</a>
+		</li>
+		<li class="mod_nav_item careee">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d9"></i>
+				<span>手机电脑</span>
+			</a>
+		</li>
+		<li class="mod_nav_item carfff">
+			<a href="$webPath/exchange/exchange_index.htm">
+				<i class="d10"></i>
+				<span>手机电脑</span>
+			</a>
+		</li>
+	</ul>
+</div>
+-->
+<div class="w1190 hot_duihuan">
+	<div class="hot_left">
+		<a href="$webPath/exchange/exchange_index.htm?criteria=igClickCount"><img src="$webPath/assets/img/hot_left_remen.png" /></a>
+	</div>
+	<div class="hot_right"  style="border-top:2px solid #fc8b00;">
+		<ul>
+		#if($!hotGoods)
+			#foreach($goods in $hotGoods)
+			<li>
+				<div class="myimg"><a href="$webPath/exchange/exchange_view.htm?id=$!goods.id"><img src="$!{config.imagewebserver}/$!goods.igGoodsImg.path/$!goods.igGoodsImg.name" /></a></div>
+				<div class="name-tit">$!goods.igGoodsName</div>
+				<!-- <div class="name_de">新年礼物 会说话的熊大熊二熊出没点播故事机智能益智儿童玩具</div> -->		
+				<div class="goods_info">
+					<span class="icon_com"><img src="$webPath/assets/img/eye1.jpg" /> <label>$!goods.igClickCount</label></span>
+					<span class="icon_pri"><label>$!goods.igGoodsGoldNum</label>礼品金</span>
+				</div>
+			</li>
+			#end
+			
+			<!-- <li>
+				<div><a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/me2.jpg" /></a></div>
+				<div class="name-tit">正版熊出没公仔熊大毛绒玩具38cm</div>
+				<div class="name_de">新年礼物 会说话的熊大熊二熊出没点播故事机智能益智儿童玩具</div>		
+				<div class="goods_info">
+					<span class="icon_com"><img src="$webPath/assets/img/eye1.jpg" /> <label>1596</label></span>
+					<span class="icon_pri"><label>250</label>礼品金</span>
+				</div>
+			</li>
+			
+			<li>
+				<div><a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/me3.jpg" /></a></div>
+				<div class="name-tit">正版熊出没公仔熊大毛绒玩具38cm</div>
+				<div class="name_de">新年礼物 会说话的熊大熊二熊出没点播故事机智能益智儿童玩具</div>		
+				<div class="goods_info">
+					<span class="icon_com"><img src="$webPath/assets/img/eye1.jpg" /> <label>1596</label></span>
+					<span class="icon_pri"><label>250</label>礼品金</span>
+				</div>
+			</li> -->
+		</ul>
+		#end
+	</div>
+	<div class="hot_left"><a href="$webPath/exchange/exchange_index.htm?criteria=addTime"><img src="$webPath/assets/img/hot_left_renqi.png" /></a></div>
+	<div class="hot_right" style="border-top:2px solid #f84a2f;">
+		<ul>
+		#if($!newList)
+			#foreach($goods in $newList)
+			<li>
+				<div class="myimg"><a href="$webPath/exchange/exchange_view.htm?id=$!goods.id"><img src="$!{config.imagewebserver}/$!goods.igGoodsImg.path/$!goods.igGoodsImg.name" /></a></div>
+				<div class="name-tit">$!goods.igGoodsName</div>
+				<!-- <div class="name_de">新年礼物 会说话的熊大熊二熊出没点播故事机智能益智儿童玩具</div> -->		
+				<div class="goods_info">
+					<span class="icon_com"><img src="$webPath/assets/img/eye1.jpg" /> <label>$!goods.igClickCount</label></span>
+					<span class="icon_pri"><label>$!goods.igGoodsGoldNum</label>礼品金</span>
+				</div>
+			</li>
+			#end
+		</ul>
+		#end
+	</div>
+	<div class="hot_left"><a href="$webPath/exchange/exchange_index.htm?criteria=igGoodsGoldNum"><img src="$webPath/assets/img/hot_left_xiaoliang.png" /></a></div>
+	<div class="hot_right" style="border-top:2px solid #a40112;">
+		<ul>
+		#if($!priceList)
+			#foreach($goods in $priceList)
+			<li>
+				<div class="myimg"><a href="$webPath/exchange/exchange_view.htm?id=$!goods.id"><img src="$!{config.imagewebserver}/$!goods.igGoodsImg.path/$!goods.igGoodsImg.name" /></a></div>
+				<div class="name-tit">$!goods.igGoodsName</div>
+				<!-- <div class="name_de">新年礼物 会说话的熊大熊二熊出没点播故事机智能益智儿童玩具</div> -->		
+				<div class="goods_info">
+					<span class="icon_com"><img src="$webPath/assets/img/eye1.jpg" /> <label>$!goods.igClickCount</label></span>
+					<span class="icon_pri"><label>$!goods.igGoodsGoldNum</label>礼品金</span>
+				</div>
+			</li>
+			#end
+		</ul>
+		#end
+	</div>
+</div>
+
+
+
+<!-- <div class="floor">
+	<div class="floor_name"><h2><i class="d2"></i>科技产品<a href='$webPath/exchange/exchange_index.htm' style="float:right;font-size:14px;font-weight:500;color:#666">查看更多 >></a></h2></div>
+	<div class="floor_left">
+		<img src="$webPath/assets/img/index_17470948.jpg" />
+		<ul>
+			<li>IBM包</li>
+			<li>稻花香米</li>
+			<li>五常特产</li>
+			<li>秋木耳</li>
+			<li>蜜友</li>
+			<li>血压计</li>
+			<li>天使之翼</li>
+			<li>床上用品</li>
+			<li>波克斯顿</li>
+		</ul>
+	</div>
+	<div class="floor_right">
+		<ul>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/162.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/160.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/161.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/164.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/165.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/163.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/162.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/161.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+
+
+<div class="floor">
+	<div class="floor_name"><h2><i class="d2"></i>保健产品<a href='$webPath/exchange/exchange_index.htm' style="float:right;font-size:14px;font-weight:500;color:#666">查看更多 >></a></h2></div>
+	<div class="floor_left">
+		<img src="$webPath/assets/img/index_17470948.jpg" />
+		<ul>
+			<li>IBM包</li>
+			<li>稻花香米</li>
+			<li>五常特产</li>
+			<li>秋木耳</li>
+			<li>蜜友</li>
+			<li>血压计</li>
+			<li>天使之翼</li>
+			<li>床上用品</li>
+			<li>波克斯顿</li>
+		</ul>
+	</div>
+	<div class="floor_right">
+		<ul>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/162.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/160.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/161.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/164.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/165.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/163.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/162.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/161.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+
+
+
+<div class="floor">
+	<div class="floor_name"><h2><i class="d2"></i>生活用品<a href='$webPath/exchange/exchange_index.htm' style="float:right;font-size:14px;font-weight:500;color:#666">查看更多 >></a></h2></div>
+	<div class="floor_left">
+		<img src="$webPath/assets/img/index_17470948.jpg" />
+		<ul>
+			<li>IBM包</li>
+			<li>稻花香米</li>
+			<li>五常特产</li>
+			<li>秋木耳</li>
+			<li>蜜友</li>
+			<li>血压计</li>
+			<li>天使之翼</li>
+			<li>床上用品</li>
+			<li>波克斯顿</li>
+		</ul>
+	</div>
+	<div class="floor_right">
+		<ul>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/162.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/160.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/161.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/164.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/165.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/163.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/162.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+			<li>
+				<div>
+					<a href="$webPath/exchange/exchange_view.htm?id=26"><img src="$webPath/assets/img/161.jpg" /></a>
+				</div>
+				<div class="name_de2">新年礼物 会说话的熊大熊二熊出没点播故事机智能...</div>
+				<div class="member_pri2">
+					<span><label class="f22 colorred">250</label>礼品金</span>
+				</div>
+			</li>
+		</ul>
+	</div> 
+</div>-->
+
+
+
+
+
+
+
+
+
+
+$!httpInclude.include("/footer.htm")
+
+
+</body>
+
+
+<script type=text/javascript>
+$(function(){	
+	indexSlides.ini();
+});
+var indexSlides={};
+indexSlides.timer=false;
+indexSlides.total=$('#slide-index .control a').length;
+indexSlides.current=-1;
+indexSlides.offScreenLeft=2000;
+indexSlides.leaveScreenLeft=4000;
+indexSlides.animating=false;
+indexSlides.obj=$('#slide-index .slide');
+indexSlides.style=[];
+indexSlides.style[0]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+	
+indexSlides.style[1]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+}; 
+</script>
+
+<script type=text/javascript src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type=text/javascript src="$!webPath/assets/js/member2banner.js"></script>
+<script>
+$('.myimg a img').hover(function(){
+	$(this).stop().animate({width:210,height:210},500,"linear");
+},function(){
+	$(this).stop().animate({width:200,height:200},500,"linear");
+});
+</script>
+</html>

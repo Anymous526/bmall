@@ -1,0 +1,281 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>感恩豆交易</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" /> 
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="$!webPath/resources/style/system/front/default/css/briberymoney.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+<style>
+	.angel_bean_comment{
+	height:30px;
+	line-height:30px;
+	background:#FBF7B3;
+	padding-left:5px;
+	font-size:15px;
+	border: 1px solid #ddd;
+    border-top: none;
+    width: 948px;
+}
+</style>
+</head>
+<body  style="background:#FFF">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+  	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>感恩豆交易</span></div></div>
+  	<p class="angel_bean_comment"><marquee scrollamount="4" direction="left" width="500" onmouseover="stop()" onmouseout="start()">最新公告：最高单价$!maxprice元/颗，最低单价$!minprice元/颗</marquee></p>
+  	<div class="city_total" style="line-height:0">
+  		<p style="margin-top:46px;">总感恩豆： $!douNum(颗)</p> 
+  	</div>
+  	<div class="xu_btn_wrap">
+  		<a class="an_qushi" href="$!webPath/buyer/angel_bean_detail.htm" target="_blank">明细</a>
+  	    <button class="an_btn">发布</button>
+  		<a class="an_qushi" href="$!webPath/buyer/angel_bean_trend.htm" target="_blank">趋势</a>
+  	</div>
+          <form action="$!webPath/buyer/angel_bean_sale.htm" method="post" id="ListForm">
+          <div class="productmain">         
+           <div class="container" style="border-top:1px solid #ccc;height:37px;">
+            <ul class="section" style="padding: 0;">
+            <form action="$!webPath/buyer/angel_bean_sale.htm" method="post" id="mo_total">
+			<input type="hidden" name="identity" value="1"/>
+			<input type="hidden" name="page" value="0"/>
+			<li><a href="$!webPath/buyer/angel_bean_sale.htm"  id="fenhong_aa" class="ci_party" style="padding:0;"><button class="ci_party" id="yuefen_btn">卖单</button></a></li>
+		   </form>
+            <form action="$!webPath/buyer/angel_bean_buy.htm" method="post" id="fenhong">
+			<input type="hidden" name="identity" value="1"/>
+			<input type="hidden" name="page" value="0"/>
+			<li><a href="$!webPath/buyer/angel_bean_buy.htm" id="mo_total" class="ci_a" style="padding:0;"><button class="ci_party" id="fenhong_btn">买单</button></a></li>
+		   </form>
+            </ul>
+          </div>
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+            	<tr class="th_tr">
+            		<td width="25%">卖单</td>
+            		<td width="25%">颗数</td>
+            		<td width="25%">单价</td>
+            		<td width="25%">操作</td>        		
+            	</tr>            	
+	     		 #foreach($obj in $!objs)       	
+	     		<tr class="tb_tr">
+	     			<td>***</td>
+	     			<td>$!obj.totalDouNum颗</td>
+	     			<td>$!obj.price/颗</td>
+	     			<td><button class="buy_btn" style="margin-left:4px;"><a style="line-height:16px;color:#fff;text-align:left;font-size: 12px;" href="$!webPath/buy_dou.htm?Id=$!obj.id&dealUserId=$!userId">卖出</a></button></td>
+	     		</tr>
+	     		#end	
+            </table>
+            
+            </div>
+            <div class="bottom_page" style="margin-top: 25px;">
+				<input name="currentPage" type="hidden" id="currentPage" value="1">
+				<a href="javascript:void(0);" id="first_page"onclick="return gotoPage(1)">首页</a><a href="javascript:void(0);" onclick="return gotoPage(1)">上一页</a> 第　<a class="this" href="javascript:void(0);" id="current" onclick="return gotoPage(1)">1</a> 页 <a href="javascript:void(0);" id="next_page"onclick="return gotoPage(1)">下一页</a>　<a href="javascript:void(0);" style="margin-left:-10px" id="last_page" onclick="return gotoPage(1)">末页</a> 
+			</div>
+		        <!--分页结束-->   
+          </div>
+         </form>         
+  </div>
+</div>
+<div class="mb_bg" style="opacity: 0.4;filter:alpha(opacity=40);"></div>
+<div class="mb_bg03" style="opacity: 0.4;filter:alpha(opacity=40);"></div>
+<div class="mb_dioalog03" style="width:400px;">
+	<!-- <div class="mb_tit02"></div> -->
+	<a class="xu_an_close" href="javascript:void(0);">&times;</a>
+	<form action="$!webPath/buyer/dou_sale.htm" method="post" name="payPassword" id="sale_fabu">
+		<div class="xu_an_btnbox">
+			<p style="font-size:22px;position:relative;top:-22px;padding-bottom:10px;border-bottom:1px solid #ddd;color:#ea5052;">买入</p>
+		</div>
+		<ul class="ul_wrap" style="margin-top:5px">
+			<li><span>数量</span><input type="text" name="totalDouNums" class="angel_count"/>&nbsp;颗</li>
+			<li><span>单价</span><input type="text" name="prices" class="angel_price"/>&nbsp;元</li>
+			<li><span></span><input type="hidden" name="statuss" class="statuss" value="0"/></li>
+		</ul>
+    </form>
+	<div class="xu_an_okwrap">
+		<span class="xu_an_okbtn" style="cursor:pointer;margin-top:36px;" id="ok_fabu">确定</span>
+	</div>
+</div>
+<!-- 支付密码start -->
+<!-- <div class="mb_dioalog02">
+	<div class="mb_tit02">请输入支付密码</div>
+	<form action="$!webPath/buyer/upgrade_pay.htm" method="post" name="payPassword" id="form_paypsw">
+        <input type="hidden" value="" name="username" id="usernames"/>
+       
+        
+		<input type="password" value="" name="payment_pwd" class="payment_pwd" id="payment_pwd" maxlength="6" placeholder="请输入支付密码"/>
+		<a href="$!webPath/paymentpwd_forgot.htm" class="payment_a">忘记密码?</a>
+    </form>	
+	<div>
+		<span class="mb_nobtn02" style="cursor:pointer;margin-top:40px;">取消</span>
+		<span class="mb_okbtn02" style="cursor:pointer;margin-top:40px;">确定</span>
+	</div>
+</div>
+支付密码end 
+设置支付密码start
+<div class="py_dioalog03" >
+	<div class="mb_tit02">设置支付密码</div>
+	<form action="$!webPath/modifypwd.htm" method="get" name="payPassword" id="set_paypsw">
+		<span class="py_txt01">设置密码：</span><input type="password" value="" name="set_pwd" class="payment_pwds" maxlength="6" placeholder="请设置6位数的支付密码"/>
+		<span class="py_txt02">确认密码：</span><input type="password" value="" name="set_compwd" class="payment_pwds" maxlength="6" placeholder="请确认密码"/>
+    </form>	
+	<div>
+		<span class="mb_nobtn03" style="cursor:pointer;margin-top:40px;">取消</span>
+		<span class="mb_okbtn03" style="cursor:pointer;margin-top:40px;">确定</span>
+	</div>
+</div> -->
+<!-- 设置支付密码end  -->
+$!httpInclude.include("/footer.htm")
+<!-- <script>
+	$("#fenhong_btn").click(function(){
+		$("#fenhong").submit();
+	});
+	$("#yuefen_btn").click(function(){
+		$("#mo_total").submit();
+	});
+</script> -->
+<script>
+function gotoPage(n) {
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+<script>
+$(function(){
+	$(".an_btn").click(function(){
+		$(".mb_bg03").fadeIn(500);
+		$(".mb_dioalog03").fadeIn(500);
+	});
+	$(".xu_an_close").click(function(){
+		$(".mb_bg03").fadeOut(500);
+		$(".mb_dioalog03").fadeOut(500);
+	});
+	$(".xu_an_okbtn").click(function(){
+		var angel_count=$(".angel_count").val();
+		var angel_price=$(".angel_price").val();
+		var reg=/^\d+(\.\d)?$/;
+		var reg1=/^[0-9]+$/;
+		if(angel_count==""){
+		   $(".angel_count").attr("placeholder","数量不能为空");
+		   $(".angel_count").focus();
+		}else if(reg1.test(angel_count)==false){
+				$(".angel_count").val("");
+				$(".angel_count").attr("placeholder","数量只能输入整数");
+				$(".angel_count").focus();
+			}else if(angel_price==""){
+				$(".angel_price").attr("placeholder","单价不能为空");
+			}else if(reg.test(angel_price)==false){
+				$(".angel_price").val("");
+				$(".angel_price").attr("placeholder","单价只能输入数字");
+				$(".angel_price").focus();
+			}else 
+				if($('#payPassword').val()==""){
+					$('.mb_bg').fadeIn(500);
+					$('.py_dioalog03').fadeIn(500);
+					$("input[name='set_pwd']").focus();
+				}else{
+				$('.mb_bg').fadeIn(500);
+				$('.mb_dioalog02').fadeIn(500);
+				$("input[name='payment_pwd']").focus();
+				}
+	});
+});
+
+$(function(){
+	$(".buy_btn").click(function(e){
+		e.preventDefault();
+		var an_count=$(this).parent().prevAll().eq(1).html();
+		var an_price=$(this).parent().prevAll().eq(0).html();
+		if(window.confirm("确定以"+an_price+"的价格出售"+an_count)){
+		if($('#payPassword').val()==""){
+			$('.mb_bg').fadeIn(500);
+			$('.py_dioalog03').fadeIn(500);
+			$("input[name='set_pwd']").focus();
+		}else{
+		//$('.mb_bg').fadeIn(500);
+		$('.mb_dioalog02').fadeIn(500);
+		$("input[name='payment_pwd']").focus();
+		}
+		}
+	});
+	
+	$(".mb_okbtn03").click(function(){
+		var payVal=$("input[name='set_pwd']").val();
+		var pycomval=$("input[name='set_compwd']").val();
+		var pylen=payVal.length;
+		if(payVal==""){
+			alert("请设置支付密码");
+			return false;
+		}else if(pylen<6){
+			alert('密码长度不够');
+			return false;
+		}else if(pycomval==""){
+			alert('确认密码不能为空');
+			return false;
+		}else if(pycomval!=payVal){
+			alert('两次输入的密码不一致');
+			return false;
+		}else{
+			//加密
+			var shaObj = new amallEncryption($('.payment_pwds').val());
+			var str = shaObj.getHash();
+			$(".payment_pwds").val(str);
+			$("#set_paypsw").submit();
+		}
+	});
+	$(".mb_nobtn03").click(function(){
+		$('.mb_bg').fadeOut(500);
+		$('.py_dioalog03').fadeOut(500);
+	});
+    
+	$(".mb_okbtn02").click(function(){
+		 var values=$('.payment_pwd').val();
+		 var alen=values.length;
+		 if(values==""){
+			 alert('请输入支付密码');
+			 return false;
+		 }else if(alen<6){
+			 alert('请输入正确的支付密码');
+		 }else{
+			 //$("#payment_pwd").val(values);
+			//加密
+			 var bool = $("#bool").val();
+			 var username=$("#username").val();
+			 $("#usernames").val(username);
+			 var shaObj = new amallEncryption(values);
+			 var str = shaObj.getHash();
+			 $("#payment_pwd").val(str);
+			 $("#form_paypsw").submit(); 
+		 }
+	}); 
+	
+	$(".mb_nobtn02").click(function(){
+		$('.mb_bg').fadeOut(500);
+		$('.mb_dioalog02').fadeOut(500);
+		return false;
+	})  
+})
+
+</script>
+<script>
+$("#ok_fabu").click(function(){
+	$("#sale_fabu").submit();
+});
+</script>
+</body>
+</html>

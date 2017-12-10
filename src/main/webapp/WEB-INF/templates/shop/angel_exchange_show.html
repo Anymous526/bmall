@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>天使AMALL.COM—互通有无,各取所需—天使商城官方网站</title> 
+<meta name="baidu-site-verification" content="u7KaeCBGVW" />
+<meta name="keywords" content="天使Amall,amall商城,深圳市天使互助网络有限公司,Amall商城,免费开店,网上购物,网上商城,免费注册,商家联盟,海外精品,中国特产,厂家直供,店主直播" />
+<meta name="description" content="深圳市天使互助网络有限公司于2010年9月成立,坐落于繁华的华南城交易中心,公司主要从事网络平台建设与运营及软件开发等。天使Amallwww.Amall.com定位电商·精品汇。网站以精品正品购物为核心理念，以创造一个丰盛富足的电商世界为使命。让实体插上翅膀，让消费创造价值。" />
+<meta name="copyright" content="深圳市天使互助网络有限公司  版权所有" />
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/duigou.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc5.amallcdn.cn/assets/js/12vb.js"></script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/duigou_head.htm")
+
+
+
+<div style="width:100%; height:38px; background-color: #a90000">
+$!httpInclude.include("/duigou_nav.htm")
+</div>
+
+
+<div class="w1190">
+<div class="firstimg"><img src="$!webPath/assets/img/banner2.png" /></div>
+<div class="floors">
+  <div class="sdfx">晒单分享 
+  <span>(共有<label class="syw">$!objs.size()</label>位幸运者晒单)</span>
+  </div>
+</div>
+<div class="goods">
+  <ul>
+  #foreach($obj in $!objs)
+    <li>
+      <div class="gtu"> 
+      <a href="$!webPath/angel_ex_show_detail.htm?id=$!obj.cloudGoods.id">
+      <img src="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name" /></a></div>
+      <div class="duigou_jj"> <a href="javascript:void(0)" class="a_left">$obj.user.truename</a><a href="#" class="a_right"> 第<label calss="paiqi"> $obj.cloudGoods.id </label>期</a></div>
+      <div class="d"> 
+        <a href="javascript:void(0)"><p class="hxf" title="$obj.cloudGoods.goodsName">$!CommUtil.substring("$obj.cloudGoods.goodsName",16)</p>
+        <p class="mwdjiu" title="$obj.context">$!CommUtil.substring("$obj.context",20)</p></a></div>
+      <div class="time">$CommUtil.formatLongDate($obj.addtime)</div>
+    </li>
+  #end
+  </ul>
+
+</div>	
+  	<div class="bottom_page">
+	<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+	$!gotoPageHTML
+    </div>
+</div>
+
+
+
+        
+        
+        
+      
+
+
+
+
+
+$!httpInclude.include("/footer.htm")
+</body>
+
+
+
+
+</html>

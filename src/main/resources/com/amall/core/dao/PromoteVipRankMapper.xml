@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.PromoteVipRankMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.PromoteVipRank" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="year" property="year" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="rank" property="rank" jdbcType="INTEGER" />
+    <result column="user_level" property="userLevel" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="promote_fee" property="promoteFee" jdbcType="DECIMAL" />
+    <result column="promote_vip1_number" property="promoteVip1Number" jdbcType="INTEGER" />
+    <result column="promote_vip2_number" property="promoteVip2Number" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+  </resultMap>
+  <resultMap id="bigdecimal" type="java.math.BigDecimal" />
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, add_time, year, month, rank, user_level, user_name, promote_fee, promote_vip1_number, 
+    promote_vip2_number, user_id
+  </sql>
+  <select id="selectByExample" flushCache="true" resultMap="BaseResultMap" parameterType="com.amall.core.bean.PromoteVipRankExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_promote_vip_rank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleAndPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.PromoteVipRankExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_promote_vip_rank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select id="selectByPrimaryKey" flushCache="true" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_promote_vip_rank
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectTotalFee" flushCache="true" resultMap="bigdecimal" >
+    select SUM(promote_fee) from amall_promote_vip_rank
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_promote_vip_rank
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.PromoteVipRankExample" >
+    delete from amall_promote_vip_rank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.PromoteVipRank" >
+    insert into amall_promote_vip_rank (id, add_time, year, 
+      month, rank, user_level, 
+      user_name, promote_fee, promote_vip1_number, 
+      promote_vip2_number, user_id)
+    values (#{id,jdbcType=BIGINT}, #{addTime,jdbcType=TIMESTAMP}, #{year,jdbcType=INTEGER}, 
+      #{month,jdbcType=INTEGER}, #{rank,jdbcType=INTEGER}, #{userLevel,jdbcType=INTEGER}, 
+      #{userName,jdbcType=VARCHAR}, #{promoteFee,jdbcType=DECIMAL}, #{promoteVip1Number,jdbcType=INTEGER}, 
+      #{promoteVip2Number,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.PromoteVipRank" >
+    insert into amall_promote_vip_rank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="rank != null" >
+        rank,
+      </if>
+      <if test="userLevel != null" >
+        user_level,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="promoteFee != null" >
+        promote_fee,
+      </if>
+      <if test="promoteVip1Number != null" >
+        promote_vip1_number,
+      </if>
+      <if test="promoteVip2Number != null" >
+        promote_vip2_number,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="userLevel != null" >
+        #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="promoteFee != null" >
+        #{promoteFee,jdbcType=DECIMAL},
+      </if>
+      <if test="promoteVip1Number != null" >
+        #{promoteVip1Number,jdbcType=INTEGER},
+      </if>
+      <if test="promoteVip2Number != null" >
+        #{promoteVip2Number,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.PromoteVipRankExample" resultType="java.lang.Integer" >
+    select count(*) from amall_promote_vip_rank
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_promote_vip_rank
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.rank != null" >
+        rank = #{record.rank,jdbcType=INTEGER},
+      </if>
+      <if test="record.userLevel != null" >
+        user_level = #{record.userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.promoteFee != null" >
+        promote_fee = #{record.promoteFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promoteVip1Number != null" >
+        promote_vip1_number = #{record.promoteVip1Number,jdbcType=INTEGER},
+      </if>
+      <if test="record.promoteVip2Number != null" >
+        promote_vip2_number = #{record.promoteVip2Number,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_promote_vip_rank
+    set id = #{record.id,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      year = #{record.year,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      rank = #{record.rank,jdbcType=INTEGER},
+      user_level = #{record.userLevel,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      promote_fee = #{record.promoteFee,jdbcType=DECIMAL},
+      promote_vip1_number = #{record.promoteVip1Number,jdbcType=INTEGER},
+      promote_vip2_number = #{record.promoteVip2Number,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.PromoteVipRank" >
+    update amall_promote_vip_rank
+    <set >
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="rank != null" >
+        rank = #{rank,jdbcType=INTEGER},
+      </if>
+      <if test="userLevel != null" >
+        user_level = #{userLevel,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="promoteFee != null" >
+        promote_fee = #{promoteFee,jdbcType=DECIMAL},
+      </if>
+      <if test="promoteVip1Number != null" >
+        promote_vip1_number = #{promoteVip1Number,jdbcType=INTEGER},
+      </if>
+      <if test="promoteVip2Number != null" >
+        promote_vip2_number = #{promoteVip2Number,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.PromoteVipRank" >
+    update amall_promote_vip_rank
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      year = #{year,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      rank = #{rank,jdbcType=INTEGER},
+      user_level = #{userLevel,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      promote_fee = #{promoteFee,jdbcType=DECIMAL},
+      promote_vip1_number = #{promoteVip1Number,jdbcType=INTEGER},
+      promote_vip2_number = #{promoteVip2Number,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery('#beginTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  //
+});
+</script>
+</head>
+<body>
+
+<div class="cont">
+  <h1 class="seth1">梦想会员提现管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/dream_partner_cash_list.htm" class="this">所有退款</a></span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/dream_partner_cash_list.htm" method="post" id="queryForm" >
+  <div class="orders">
+    <ul>
+      <li> <span>退款状态</span><span class="ordersel">
+        <select name="cash_status" id="cash_status">
+          <option value="0">等待退款</option>
+          <option value="1">已退款</option>
+        </select>
+      </span>
+  	  <span>申请时间</span><span class="order_input size2">
+       		<input name="beginTime" type="text" id="beginTime"  readonly="readonly"/>
+       		</span><span>—</span><span class="order_input size2">
+       		<input name="endTime" type="text" id="endTime" readonly="readonly" />
+       </span>
+       <span>退款商家</span><span class="order_input size2">
+        	<input name="userName" type="text" id="userName" />
+        	</span> <span class="btn_search">
+        	<input name="" type="submit"  value="搜索" style="cursor:pointer;"/>
+       </span>
+      </li>
+      
+    </ul>
+  </div>
+  </form>
+  <form action="$!webPath/admin/dream_partner_cash_list.htm" method="post" id="ListForm" >
+    <div class="allshop_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="20%">申请人名称</td>
+        <td width="8%">手机号码</td>
+        <td width="15%">申请时间</td>
+        <td  width="10%">申请提现人数</td>
+        <td width="8%">提现状态</td>
+        <td align="center">操作</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td>$!obj.applyUser.truename</td>
+        <td>$!obj.applyUser.username</td>
+        <td>$!CommUtil.formatLongDate($!obj.addTime)</td>
+        <td>$!obj.applyFee.intValue()</td>
+        #if($!obj.approveStatus=="false")
+        <td>待审批</td>
+        #else
+        <td>已提现</td>
+        #end
+        <td align="center" class="blue xiahua" >
+        	#if($!obj.approveStatus=="false")
+        		<a href="$!webPath/admin/dream_partner_cash_edit.htm?id=$!obj.id">审批</a>
+        	#end
+        </td>
+      </tr>
+     #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="endTime" type="hidden" id="endTime" value="$!endTime" />
+    <input name="beginTime" type="hidden" id="beginTime" value="$!beginTime" />
+    <input name="userName" type="hidden" id="userName" value="$!userName" />
+    <input name="cash_status" type="hidden" id="cash_status" value="$!cash_status" />
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

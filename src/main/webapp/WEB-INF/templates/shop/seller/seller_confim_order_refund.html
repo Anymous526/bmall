@@ -1,0 +1,49 @@
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/window.css" type="text/css" rel="stylesheet" />
+<script>
+	function saveForm(obj){
+		if(!false){
+			jQuery("#theForm").attr("action","$!webPath/seller/no_order_refund.htm");
+		}
+		jQuery("#theForm").submit();
+	}
+</script>
+<form action="$!webPath/seller/order_refund_save.htm" method="post" id="theForm">
+  <table style="float:left;" width="100%" border="0" cellspacing="0" cellpadding="0" class="box_table">
+    <tr>
+      <td width="100" align="right" valign="top">订单金额：
+        <input name="id" type="hidden" id="id" value="$!obj.id" />
+      </td>
+      <td align="left">$!obj.totalprice</td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">申请退款金额：</td>
+      <td align="left"><input name="refund" type="text" id="refund" readonly="readonly" value="$!obj.refund" /></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">退款方式：</td>
+      <td align="left">
+      #if($!paymentTools.queryPayment("balance").get("install")==true)
+       <input name="refundType" type="radio" id="radio1" value="预存款" checked="checked" />
+预存款
+	#end
+      <input name="refundType" type="radio" id="radio4" value="线下支付"/>
+线下支付
+  <input type="radio" name="refundType" id="radio" value="支付宝" />
+        支付宝
+          <input type="radio" name="refundType" id="radio2" value="银联在线" />
+          银联在线
+          <input type="radio" name="refundType" id="radio3" value="快钱" />
+快钱
+<input type="radio" name="refundType" id="radio5" value="财付通" />
+财付通</td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">申请说明：</td>
+      <td align="left"><textarea name="refund_log" id="refund_log"  cols="35" rows="5">$!obj.returnContent</textarea></td>
+    </tr>
+   <tr>
+      <input type="button" onclick="saveForm('true');" style=" cursor:pointer" value="同意" />&nbsp;&nbsp;&nbsp;&nbsp;
+      <input type="button" onclick="saveForm('false');" style=" cursor:pointer" value="拒绝" />
+    </tr>
+  </table>
+</form>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>$!config.title</title>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico"
+	type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css" />
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css" />
+<link rel="stylesheet" type="text/css"	href="http://pc1.amallcdn.cn/assets/css/public.css" />
+<link rel="stylesheet" type="text/css"	href="http://pc3.amallcdn.cn/assets/css/specialty.css" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script>
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+</head>
+<body>
+	$!httpInclude.include("/top.htm")
+	$!httpInclude.include("/specialpricehead.htm")
+	<div class="shop_menu default_color">
+		<div class="shop_menu_nav" style="width: 1200px; margin: 0 auto">
+			<ul>
+          		<li><a href="$!webPath/specialty.htm">特产首页</a></li>
+          		#if($!floorList.size()>0)
+					#foreach($floor in $floorList)
+						<li><a href="$!webPath/specialty_area.htm?floorId=$!floor.id">$!floor.floorname</a></li>
+					#end
+				#end
+        </ul>
+		</div>
+	</div>
+
+	<div
+		style="width: 1200px; margin: 10px auto; display: block; overflow: hidden;">
+		<div class="province_list">
+			<ul>
+			#if($!floorList.size()>0)
+				#foreach($floor in $!floorList)
+				<li><label class="province_tit"><a href="$!webPath/specialty_area.htm?floorId=$!floor.id">$!floor.floorname</a></label>
+					#foreach($area in $!floor.areas)
+					<ol>
+						<a href="$!webPath/specialty_province.htm?areaId=$!area.id">$!area.areaname</a>
+					</ol>
+					#end
+				</li>
+				#end
+			#end	
+			</ul>
+		</div>
+		<form action="$!webPath/specialty_province.htm?areaId=$!areaId" method="get" id="ListForm">
+		<input type="hidden" name="areaId" value="$!areaId" id="areaId"/>
+	<div class="province-s_list">
+   <div class="brandsort_screen" id="search_bar"> 
+   <div class="brandsort_sort"> 
+    <a href="javascript:void(0);" class="sort_a this" orderby="" ordertype="asc">默认排序</a> 
+    <a href="javascript:void(0);" class="sort_a" orderby="goods_salenum" ordertype="desc"> <i class="sort_a1">销量</i></a> 
+    <a href="javascript:void(0);" class="sort_a" orderby="goods_collect" ordertype="desc"> <i class="sort_a1">人气</i></a> 
+    <a href="javascript:void(0);" class="sort_a kkp" orderby="goods_price" ordertype="asc"> <i class="sort_a1">价格</i></a> 
+    <div id="kkm" style="display:none;position:absolute;left:177px;background:#FFF;z-index:999999;"> 
+     <a href="javascript:void(0);" class="sort_a kkp1" orderby="goods_price" ordertype="asc"> <i class="sort_a1 bbc">价格从低到高</i></a> 
+     <a href="javascript:void(0);" class="sort_a kkp2" orderby="goods_price" ordertype="desc"> <i class="sort_a1">价格从高到低</i></a>  
+    </div> 
+    <input type="hidden" name="orderBy" value="orderBy" id="orderBy" /> 
+    <input type="hidden" name="orderType" value="orderType" id="orderType" /> 
+   </div> 
+   <div class="brandsort_fineprice"> 
+    <div class="brandsort_price_top"> 
+     <input placeholder="&yen;" name="store_price_begin" id="store_price_begin" value="$!store_price_begin" type="text" title="按照价格区间筛选 最低价" class="brandsort_price_input" /> 
+     <i>-</i> 
+     <input placeholder="&yen;" name="store_price_end" id="store_price_end" value="$!store_price_end" type="text" title="按照价格区间筛选 高价" class="brandsort_price_input" /> 
+    </div> 
+    <div class="brandsort_price_bottom" style="display: none"> 
+     <a href="javascript:void(0);" class="brandsort_btn_com">确定</a> 
+    </div> 
+   </div> 
+  </div>
+				<ul>
+					#if($!objs.size()>0)
+        				#foreach($obj in $objs)
+        			<li>
+        				#set($gmp = $!obj.goodsMainPhoto)
+          				#set($goods_url="$!webPath/goods_$!{obj.id}.htm")
+						<div class="prov_img">
+							<a href="$!goods_url"><img src="$!{config.imagewebserver}/$!{gmp.path}/$!{gmp.name}"
+								width="100%" title="$obj.goodsName" /></a>
+						</div>
+						<div class="info-cont">
+							<div class="pro_goods_name">
+								<a href="$!goods_url" title="$obj.goodsName">$!CommUtil.substring("$obj.goodsName",14)</a>
+							</div>
+							<div class="pro_pric">
+								<span class="x_jia">¥ <label>$!obj.goodsPrice</label></span>
+							</div>
+						</div>
+					</li>
+						#end
+          			#end
+				</ul>
+			</div>
+			<!--分页开始-->
+			<div class="bottom_page" style="width: 100%">
+				<input name="currentPage" type="hidden" id="currentPage"
+					value="$!currentPage" /> $!gotoPageFormHTML
+			</div>
+			<!--分页结束-->
+		</form>
+	</div>
+	$!httpInclude.include("/footer.htm")
+</body>
+<script src="$!webPath/resources/js/jquery.min.js"></script>
+<script type="text/javascript">
+	jQuery(function() {
+		var lis = jQuery(".province-s_list li");
+		var length = lis.size();
+		jQuery.each(lis, function(index, val) {
+			var t = (index + 1) % 4;
+			if (t == 0) {
+				jQuery(this).css("margin-right", "0px");
+			}
+		});		
+	});
+</script>
+<script type="text/javascript"> 
+$(document).ready(function(){function GetQueryString(name){var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");var r = window.location.search.substr(1).match(reg);if(r!=null)return  unescape(r[2]); return null;}
+var orderBy=GetQueryString("orderBy");var orderType=GetQueryString("orderType");
+if(orderBy=="addTime"){$(".brandsort_sort a").eq(0).addClass("this").siblings('a').removeClass('this');}
+if(orderBy=="goods_salenum"){$(".brandsort_sort a").eq(1).addClass("this").siblings('a').removeClass('this');}
+if(orderBy=="goods_collect"){$(".brandsort_sort a").eq(2).addClass("this").siblings('a').removeClass('this');}
+if(orderBy=="goods_price"){$(".brandsort_sort a").eq(3).addClass("this").siblings('a').removeClass('this');}
+if(orderBy=="goods_price" && orderType=="asc"){$(".kkp i").addClass("bbc");}
+if(orderBy=="goods_price" && orderType=="desc"){$(".kkp i").removeClass("bbc");}
+$(".brandsort_sort .kkp").hover( function(){
+     $("#kkm").show();
+},function(){
+	$("#kkm").hide();  
+});
+$("#kkm").hover(function(){
+	$("#kkm").show();
+},function(){
+	$("#kkm").hide();  
+});
+$(".brandsort_price_top").hover( function(event){
+     $(".brandsort_price_bottom").show();  
+},function(){
+	$(".brandsort_price_bottom").hide();  
+});
+$(".brandsort_price_bottom").hover( function(event){
+    $(".brandsort_price_bottom").show();  
+},function(){
+	$(".brandsort_price_bottom").hide(); 
+});
+ 
+}); 
+$('.brandsort_btn_com').click(function(){
+	var store_price_begin=$('#store_price_begin').val();
+	var store_price_end=$('#store_price_end').val();
+	var orderBy = jQuery('.kkp1').attr("orderBy");
+	var orderType = jQuery('.kkp1').attr("orderType");
+	console.log(orderType);
+	var gc_id=jQuery("#gc_id").val();
+	if(store_price_begin=="" && store_price_end==""){
+		/* $("#store_price_begin").css('border','1px solid #f00');
+		$("#store_price_end").css('border','1px solid #f00'); */
+		return false;
+	}else{
+		$("#store_price_begin").val(store_price_begin);
+		$("#store_price_end").val(store_price_end);
+		$("#orderBy").val(orderBy);
+		$("#orderType").val(orderType);
+		$("#gc_id").val(gc_id);
+		$("#ListForm").submit();
+	}
+});
+//排序
+jQuery(".brandsort_sort a").click(function(){
+	   var orderBy = jQuery(this).attr("orderBy");
+	   var orderType = jQuery(this).attr("orderType");
+	   var areaId=$("#areaId").val();
+	   var gc_id=jQuery("#gc_id").val();
+	   $("#gc_id").val(gc_id);
+	   $("#orderBy").val(orderBy);
+	   $("#orderType").val(orderType);
+	   $("#ListForm").submit();
+});
+</script>
+</html>

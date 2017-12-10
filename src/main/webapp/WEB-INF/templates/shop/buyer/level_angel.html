@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>VIP等级-$!{config.title}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com" />
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" type="text/javascript"/>
+<link rel="stylesheet" href="http://pc3.amallcdn.cn/assets/css/jquery.Jcrop.css" type="text/css" />
+<link rel="stylesheet" href="http://pc3.amallcdn.cn/assets/css/uploadify.css" type="text/css" />
+<link rel="stylesheet" href="http://pc2.amallcdn.cn/assets/css/mainJcrop.css" type="text/css" />
+<link rel="stylesheet" href="http://pc2.amallcdn.cn/assets/css/demosJcrop.css" type="text/css" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc5.amallcdn.cn/assets/js/jquery.Jcrop.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+<script type="text/javascript">
+jQuery(function($){
+	setValue();
+    
+    $("#vipSelect").change(function(){
+    		setValue();
+    	});
+ });
+
+function setValue()
+{
+	var value = $("#vipSelect").val();
+	var integral = value.split('|')[1];
+    $("#spanIntegral").text(integral);
+}
+
+function btnSubmit()
+{
+	var value = $("#vipSelect").val();
+	var arr = value.split('|');
+	$("#levelId").val(arr[0]);
+	$("#levelIntegral").val(arr[1]);
+	$("#theForm").submit();
+}
+
+</script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div style="width:1200px; margin: 0 auto;">
+
+<div class="main">
+$!httpInclude.include("/buyer/buyer_left.htm?op=account")
+  
+<div class="s_m">  
+	
+	
+        <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> ><a href="$!webPath/buyer/buyer_account.htm">账户设置</a> > <span>更换头像</span></div></div>
+        <div class="productmain">
+            <div class="container">
+            <ul class="section" style="padding: 0;">
+              	<li class=""><a href='$!webPath/buyer/buyer_account.htm' >基本信息</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_password.htm'>修改密码</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_email.htm'>修改电子邮件</a></li>
+				<li class=""><a href='$!webPath/buyer/buyer_account_mobile.htm'>修改手机号码</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_avatar.htm'>更换头像</a></li>
+                
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav">
+                <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                  <tr>
+                  	<td width="101" align="right" valign="top" class="modifysp"><b>当前等级：</b></td>
+                  	<td width="604" class="px10">您当前的会员等级为 <label style="color:#ff8c01">
+                  	#if(!$!nowUser.levelAngel)天使会员
+                  	#else
+                  		#foreach($!obj in $!levels)
+	                  		#if($!nowUser.levelAngel==$!obj.level)
+	                  			$!obj.alias
+	                  		#end
+                  		#end
+                  	#end
+                  	</label>  </td>
+                  </tr>
+                  <tr>
+                  	<td width="101" align="right" valign="top" class="modifysp"><b>剩余礼品金：</b></td>
+                  	<td width="604" class="px10">您目前有 <label style="color:#ff8c01">$!nowUser.gold</label>个礼品金  </td>
+                  </tr>
+                  
+                  <tr>
+                  	<td width="101" align="right" valign="top" class="modifysp"><b>选择等级：</b></td>
+                  	<td width="604" class="px10">
+                  		<select STYLE="width:200px; height:20px; line-height:20px;" id="vipSelect">
+                  		
+	                  		#if(!$!nowUser.levelAngel)
+	                  			#foreach($!obj in $!levels)
+	                  				<option value="$!obj.level|$!obj.integral">$!obj.alias</option>
+	                  			#end
+	                  		#else
+	                  			#foreach($!obj in $!levels)
+			                  		#if($!nowUser.levelAngel<$!obj.level)
+			                  			<option value="$!obj.level|$!obj.integral">$!obj.alias</option>
+			                  		#end
+		                 		#end
+	                  		#end
+                  		</select>
+                  		<span>需要消耗 <label style="color:#ff8c01" id="spanIntegral">0</label> 个礼品金</span>
+                  	</td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td class="px10"><span class="setsub">
+                    <form action="$webPath/buyer/buyer_level_angel_save.htm" method="post" id="theForm">
+                    <input type="hidden" id="levelId" name="levelId"/>
+                    <input type="hidden" id="levelIntegral" name="levelIntegral"/>
+                    </form>
+                      <input onclick="btnSubmit()" type="button"  value="VIP升级" style="cursor:pointer;"/>
+                      </span></td>
+                  </tr>
+                </table>
+                
+              </div>
+            </div>
+          </div>
+
+  </div>
+   
+</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

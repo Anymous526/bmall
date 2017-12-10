@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>充值</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/assets/css/my_asset.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+
+$(function(){
+	$("#appSubData").bind("click",function(){
+		
+		var webbankpay = $('input[name="webbankpay"]:checked').val();
+		
+		if(webbankpay=="" || webbankpay==null || webbankpay== undefined){
+			alert("您还没有选择支付方式");
+			return false;
+		}
+		
+		var payMent = $("#payMent").val();
+		if(payMent == "undefined"){
+			alert("您还没有输入充值的金额");
+			return false;
+		}
+		var decimalReg = /^([1-9][\d]{0,7}|0)$/; 
+		if (payMent != "" && decimalReg.test(payMent) && parseFloat(payMent) > 0) {
+			$("#theForm").submit();
+		} else {
+			alert("输入金额数字有误,并金额不能小于0!");
+			return false;
+		}
+	});
+});
+
+
+
+
+</script>
+<style>
+ .bank_list dl {
+    margin-bottom: 35px;
+    padding-bottom: 50px;
+    padding-left: 15px!important; 
+    margin-top: 35px;
+}
+.cz_inputbox{width: 30%;padding: 24px 10px;display: block;float: left;}
+.cz_input1{display: inline-block;margin-top: -3px;}
+.cz_input2{padding-left: 5px;}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>充值</span></div></div>
+<form action="$!webPath/buyer/recharge_pay.htm" method="post" id="theForm">
+    <div class="tabPanel"> 
+      <div class="panes" style="width:953px;margin-top:10px;"> 
+        <div class="pane" style="display: block;border:1px solid #adc7e4;">
+         <div style="display: block;background:#e3edf9;height:80px;line-height:80px;padding-left:20px;font-size:16px;font-weight:bold">平台公司：深圳市天使互助网络有限公司</div>
+          <div class="bank_list" style="padding-left:20px;">
+            <p style="font-size:12px;line-height:30px;">支持国内几乎所有银行的储蓄卡及信用卡进行支付（需开通网上银行）</p>
+            <dl>
+              <div style="line-height: 30px;">常用支付方式</div>
+              <dt> 
+              <label style="cursor: pointer;">
+	              <span><input type="radio" name="webbankpay" checked id="alipay" value="alipay"></span> 
+	              <img src="$!webPath/assets/img/bank-img13.png">  
+              </label>
+               </dt>
+                
+              <dt> 
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="Unionpay" value="Unionpay"></span> 
+              	<img src="$!webPath/assets/img/bank-img14.png">  
+              </label>
+              </dt>
+              <dt> 
+              
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="WXPay" value="WXPay"></span> 
+              	<img src="$!webPath/assets/img/bank4.png">  
+              </label>
+              </dt> 
+              
+            </dl>
+            <div style="line-height:30px;padding-left:15px;height:30px;margin-top:20px;margin-bottom:20px;font-size:14px;font-weight:bold;"><input type="text" name="payMent" id="payMent" placeholder="请输入充值金额" style="border:1px solid #ccc;width:200px;line-height:30px;height:30px;padding-left: 5px;" />  元</div><!-- onKeypress="return (/[\d]/.test(String.fromCharCode(event.keyCode)))" -->
+          </div>
+            
+        </div> 
+      </div>
+    
+    </div>
+    
+    </form>
+    <div class="mt25">
+      <input type="submit" value="立即充值" class="ui-button ui-button-XL" id="appSubData">
+    </div>
+	</div>
+</div>

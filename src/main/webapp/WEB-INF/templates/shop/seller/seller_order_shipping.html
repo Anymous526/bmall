@@ -1,0 +1,108 @@
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/window.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css">
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+function checkRegForm(){ 
+	var shipCode = $("input[name='kuaidiNum']").val();
+	var kuaidiPrice = $("input[name='kuaidiPrice']").val();
+	 if(shipCode == ""){
+		  alert("请输入快递单号"); 
+		  return false;
+	  }
+	  if(kuaidiPrice == ""){
+		  $("input[name='kuaidiPrice']").val(0);
+	  }
+	  
+	 $("#theForm").submit();
+}
+
+function cancel(){  
+	 document.getElementById("order_cancel").style.display='none'; 
+	 window.location.reload();
+ } 
+ 
+$(document).ready(function(){  
+	 $("#order_cancel .white_content").css({"min-width":"400px","max-height":"450px","overflow":"hidden","top":"-140px","position":"fixed","left":"40%"}); 	
+
+}); 
+</script>
+<body>
+#if($!op_title)
+$!op_title
+#else
+
+
+<form action="$!webPath/seller/send_out_goods.htm"  method="post" id="theForm" >
+ 	<input type="hidden" name="itemIds" id="itemIds" value="$!itemIds"/>
+<div class="ta_box" >
+	<p>
+		<span class="ta_left">订 单 号：</span>
+		<span class="ta_right">
+			<input type="text" readonly="readonly" value="$!obj.orderId" style="border:none; background-color: #fff; font-size:14px; margin-top: 10px;" />
+			<input type="hidden" name="orderId"  value="$!obj.id" style="width:0"  />
+		</span>
+	</p>
+	
+	<p>
+		<span class="ta_left">快递公司：</span>
+		<span class="ta_right">
+			<select name="kuaidiCompany" style="margin-top: 10px;">
+			#foreach($kuaidi in $expressCompanys)
+				<option value="$!kuaidi.id">$!kuaidi.companyName</option>
+			#end
+			</select>
+		</span>
+	</p>
+	
+	
+	<p>
+		<span class="ta_left">快递单号：</span>
+		<span class="ta_right"><input name="kuaidiNum" type="text" style="margin-top: 10px;" /></span>
+	</p>
+	
+	<p>
+		<span class="ta_left">快递运费：</span>
+		<span class="ta_right"><input type="text" name="kuaidiPrice" style="text-align: right;" /> 元</span>
+	</p>
+	
+</div>
+
+
+<!-- <table>	
+	<tr>
+		<td class="tdleft" align="right">订 单 号1：</td>
+		<td><input type="text"  readonly="readonly" value="$!obj.orderId" style="border:none; background-color: #fff" /><input type="hidden" name="orderId"  value="$!obj.id"  /></td>
+		
+	</tr>
+	<tr>
+		<td class="tdleft" align="right">快递公司：</td>
+		<td>
+			<select name="kuaidiCompany">
+			#foreach($kuaidi in $expressCompanys)
+				<option value="$!kuaidi.id">$!kuaidi.companyName</option>
+			#end
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td class="tdleft">快递单号：</td>
+		<td><input name="kuaidiNum" type="text" /></td>
+	</tr>
+	<tr>
+		<td class="tdleft">快递运费：</td>
+		<td><input type="number" name="kuaidiPrice" style="text-align: right" /> 元</td>
+	</tr>
+</table> -->
+
+
+
+
+
+<div>
+<input class="canle_btn" type="button" onclick="cancel()" value="取 消" />   
+<input class="ok_btn" type="button" value="确认发货" onclick="return checkRegForm();"/>
+</div>
+</form>
+#end
+</body>

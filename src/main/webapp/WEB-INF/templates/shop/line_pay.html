@@ -1,0 +1,107 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>正在支付 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link href="http://pc1.amallcdn.cn/assets/css/public.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+<div>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/head.htm")
+$!httpInclude.include("/nav2.htm") 
+  <div class="index">
+    <div class="index2" style="position: relative;margin-left:25%;">
+      <div class="paywaiting"> <span> <img src="$!webPath/assets/img/shehezhong.gif" width="43" height="50"  /></span>
+       <span style="margin-top:10px;">正在为您跳转支付页面，请等待......</span></div>
+    </div>
+  </div>
+<div id="footer_sereen_change">
+$!httpInclude.include("/footer.htm")	<!-- 底部页脚 -->
+</div> 
+
+<script>
+/* 当浏览器窗口大于700px时执行  */
+$(document).ready(function(){
+	var height = $(window).height();
+	if(height >700){
+	   $('#footer_sereen_change').addClass("change-position");
+	}
+	});
+
+</script>
+
+</body>
+</html>
+#if($!type=="goods")
+	#if($!{payType}=="alipay")
+			$!payTools.genericAlipay("$!url","$!alipayOrderId","$!type")
+	#end
+	#if($!{payType}=="Unionpay")
+		$!payTools.genericChinaBank("$!url","$!alipayOrderId","$!type")
+	#end
+#end
+
+#if($!type=="refund")
+	#if($!{payType}=="alipay")
+			$!payTools.genericRefundAlipay($!url,$!paymentId,$!refund,$!alipayOrder)
+	#end
+#end
+
+#if($!type=="cash_deposit")
+	#if($!{payType}=="alipay")
+			$!payTools.genericAlipay("$!url","$!alipayOrderId","$!type")
+	#end
+	
+	#if($!{payType}=="Unionpay")
+		$!payTools.genericChinaBank("$!url","$!alipayOrderId","$!type")
+	#end
+#end
+
+
+<!-- 会员充值 -->
+#if($!type=="Recharge")
+	#if($!{payType}=="alipay")
+			$!payTools.genericAlipay("$!url","$!alipayOrderId","$!type")
+	#end
+	
+	#if($!{payType}=="Unionpay")
+		$!payTools.genericChinaBank("$!url","$!alipayOrderId","$!type")
+	#end
+#end
+
+<!-- 会员升级为初级或联盟商家 -->
+#if($!type=="UpGradeVip")
+	#if($!{payType}=="alipay")
+		$!payTools.genericAlipay("$!url","$!alipayOrderId","$!type")
+	#end
+	
+	#if($!{payType}=="Unionpay")
+		$!payTools.genericChinaBank("$!url","$!alipayOrderId","$!type")
+	#end
+#end
+
+#if($!type=="service")
+	#if($!{payType}=="alipay")
+			$!payTools.genericAlipay("$!url","$!alipayOrderId","$!type")
+	#end
+	
+	#if($!{payType}=="Unionpay")
+		$!payTools.genericChinaBank("$!url","$!alipayOrderId","$!type")
+	#end
+#end
+
+
+
+
+
+

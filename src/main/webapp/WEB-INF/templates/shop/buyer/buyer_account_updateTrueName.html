@@ -1,0 +1,210 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>修改真实姓名-$!{config.title}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/cryptographic.js"></script>
+<script>
+function strSendSms()
+{
+	var phoneNum=$("#mobile").val();
+
+	if(!checkUsername(phoneNum))
+	{	alert("请输入正确的手机号码");
+		return false;
+	}
+	
+	var  trueName= $("#trueName").val();
+	var forgot;
+	if(typeof(trueName) == "undefined"){
+		forgot = "false";
+	}else{
+		forgot = "true";
+		$("#oldMobile").val(phoneNum);
+	}
+	
+	var messageArray = new Array();
+	messageArray[0] = "请输入手机号";
+	/* messageArray[1] = "手机号已注册"; */
+	messageArray[2] = "今天短信次数超限,请明天再次尝试";
+	messageArray[3] = "两次发送间隔太短，请稍候再试";
+	messageArray[4] = "短信发送失败，请再次尝试";
+	messageArray[5] = "短信发送成功，请查收";
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/send_sms.htm",
+		data : {"phoneNum":phoneNum,"forgot":forgot},
+		success : function(ret) {
+			alert(messageArray[ret]);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("短信验证码发送失败");
+			
+		}
+	});
+}
+	
+function verify()
+{
+	
+	var smscode = $("#smscode").val();
+	var trueName = $("#trueName").val();
+	
+	if(smscode == ""){
+		alert("验证码不能为空");
+		return false;
+	}
+	if(trueName == ""){
+		alert("请输入要修改的真实姓名");
+		return false;
+	}
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/verify_sms_code.htm",
+		data : {"smsCode":smscode},
+		success : function(ret) {
+			if(ret == "true")
+			{
+				
+				$("#theForm").submit();
+			}
+		  else
+			{
+				alert("验证码错误或验证码超时");
+			}
+				
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("验证码错误或验证码超时");
+		}
+});
+	
+}
+
+function checkUsername(phoneNum)
+{
+	var phoneReg = /^1\d{10}$/;
+	
+	if(!phoneReg.test(phoneNum))
+	{
+		$("#ch_user").text("请输入正确手机号码");			
+		$("#ch_user").css("color","red");		
+		$("#ch_user").show();
+		$("#userName").focus();
+		return false;
+	}
+	return true;
+}
+$(function(){
+	var update_val = $("#update_val").html();
+	console.log(update_val);
+	if(update_val == "true"){
+		$("#trueName").attr("readonly","readonly");
+		$("#mobile").attr("readonly","readonly");
+		$(".setinput a").attr("disabled","disabled");
+		$("#smscode").attr("readonly","readonly");
+		$(".input_submit").attr("readonly","readonly");
+	}
+});
+</script>
+<style>
+	.show_class{display: none;}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div style="width:1200px; margin: 0 auto;">
+
+
+
+
+<div class="main">
+$!httpInclude.include("/buyer/buyer_left.htm?op=account")
+  
+  
+  
+  
+<div class="s_m">  
+        <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> ><a href="$!webPath/buyer/buyer_account.htm">账户设置</a> > <span>修改手机号码</span></div></div>
+        <div class="productmain">
+            <div class="container" style="height:37px">
+            <ul class="section"  style="padding: 0;">
+                <li class=""><a href='$!webPath/buyer/buyer_account.htm' >基本信息</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_password.htm'>修改密码</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_email.htm'>修改电子邮件</a></li>
+				<li class=""><a href='$!webPath/buyer/buyer_account_mobile.htm'>修改账号</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_avatar.htm'>更换头像</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_verify.htm'>实名认证</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_updateNickName.htm'>修改昵称</a></li>
+                <li class="li_this"><a href='$!webPath/buyer/buyer_account_updateTrueName.htm'>修改真实姓名</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+			<script>
+			
+			</script>
+				<div class="addnav" id="verify">
+				<p style="margin-left:144px;color:red;">（温馨提示：真实姓名只能修改一次哦。）</p>
+				<span style="display:none;" id="update_val">$!op_title</span>
+				<form action="$!webPath/buyer/buyer_account_updateTrueName_save.htm" method="post" name="theForm" id="theForm">
+                <table width="705" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                  <tr>
+                    <td width="101" align="right" valign="top" class="modifysp"><span>原真实姓名：</span><span><strong class="red" style="font-size:14px;">*</strong></span></td>
+                    <td width="604"  class="px10"><span class="setinput">
+                      <input  type="text"  value="$!trueName" readonly="readonly" style="display: inline-block;margin-top: -3px;"/>
+                     </td>
+                  </tr>
+                  <tr>
+                    <td width="101" align="right" valign="top" class="modifysp"><span>更改真实姓名：</span><span><strong class="red" style="font-size:14px;">*</strong></span></td>
+                    <td  class="px10"><span class="setinput">
+                      <input name="trueName" type="text" id="trueName" />
+                      </span></td>
+                  </tr>
+                  <tr>
+                    <td width="101" align="right" valign="top" class="modifysp"><span>手机号码：</span><span><strong class="red" style="font-size:14px;">*</strong></span></td>
+                    <td width="604"  class="px10"><span class="setinput">
+                      <input name="mobile" type="text" id="mobile" value=""  style="display: inline-block;margin-top: -3px;"/>
+                      <a href="javascript:void(0);" onclick="strSendSms();" style="height: 22px;line-height:22px; border: 1px solid #a7a7a7;display: inline-block;padding-left: 4px;padding-right: 4px;background-color: #f1f1f1;">获取验证码</a><span id="time_out_generic"></span></span></td>
+                  </tr>
+                   <tr>
+                    <td width="101" align="right" valign="top" class="modifysp"><span>手机验证码：</span><span><strong class="red" style="font-size:14px;">*</strong></span></td>
+                    <td  class="px10"><span class="setinput">
+                      <input name="smsCode" type="text" id="smscode" />
+                      </span></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td class="px10">
+                    	<span class="setsub">
+                        	<input type="button" onclick="verify()" value="提交" class="input_submit"  style="cursor:pointer;height: 29px;border: 0;"/>
+                        </span>
+                    </td>
+                  </tr>
+                </table>
+                </form>
+              </div>
+              
+            </div>
+          </div>
+  </div>
+   
+</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

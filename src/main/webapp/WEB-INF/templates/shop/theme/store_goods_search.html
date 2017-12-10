@@ -1,0 +1,58 @@
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/store_head.htm")
+<html>
+<script type="text/javascript">
+
+
+</script>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/shop/$!{store.template}/css/default.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script><!-- 分页需要引入的js文件，里面有gotoPage()函数 -->
+<body>
+$!httpInclude.include("/store_nav.htm?id=$!store.id") 
+ <div class="main"> 
+  <div class="shop">
+    <div class="shop_index">
+  $!httpInclude.include("/store_left.htm?id=$!{store.id}")
+  
+  <form method="post" id="ListForm">
+      <div class="shopindex_right">
+        <div class="regoods">
+          <h1>包含“$!{keyword}”搜索结果</h1>
+          #if($!objs.size()>0)
+          <div class="smallgoods"> 
+          #foreach($goods in $objs)
+            #if($!goods.goodsMainPhoto)
+            #set($img="$!imageWebServer/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+            #else
+            #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+            #end
+            <ul>
+              <li class="goodsimgs"><a href="$!webPath/goods.htm?id=$!{goods.id}" target="_blank"><span class="goods_sp_span"><p><img src="$!img" original="$!img" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" width="28" height="28"/></p></span></a></li>
+              <li class="goodslook"><a href="$!webPath/goods.htm?id=$!{goods.id}" target="_blank" class="look">查看详情</a><strong>¥$!goods.goodsPrice</strong></li>
+              <li class="goodsnames"><a href="$!webPath/goods.htm?id=$!{goods.id}" target="_blank">$!CommUtil.substring("$!goods.goodsName",28)</a></li>
+              <li class="recentgoodsok">最近成交<strong>$!goods.goodsSalenum</strong>笔</li>
+            </ul>
+            #end 
+           </div>
+           #else
+           <div class="sigh"> <span><img src="$!imageWebServer/resources/style/shop/$!{store.template}/images/sigh.jpg" width="120" height="109" /></span> <b>对不起，没有对应商品信息！</b> </div>
+           #end
+          <div class="shop_page"><span>
+            <input name="store_id" type="hidden" id="store_id" value="$!{store.id}" />
+            <input name="keyword" type="hidden" id="keyword" value="$!keyword" />
+            <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+            <input name="priceStart" type="hidden" id="priceStart" value="$!priceStart"/>
+            <input name="priceEnd" type="hidden" id="priceEnd" value="$!priceEnd"/>
+            $!gotoPageFormHTML</span> </div>
+        </div>
+      </div>
+      </form>
+      </div>
+      </div>
+      $!httpInclude.include("/footer.htm")
+  </div>
+</body>
+</html>

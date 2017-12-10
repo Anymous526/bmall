@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.BuZhuMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.BuZhu" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="buzhu_fee" property="buzhuFee" jdbcType="DECIMAL" />
+    <result column="get_user_id" property="getUserId" jdbcType="BIGINT" />
+    <result column="give_user_id" property="giveUserId" jdbcType="BIGINT" />
+    <result column="get_user_name" property="getUserName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, add_time, buzhu_fee, get_user_id, give_user_id, get_user_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.BuZhuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_citybuzhu_benefit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_citybuzhu_benefit
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_citybuzhu_benefit
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.BuZhuExample" >
+    delete from amall_citybuzhu_benefit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.BuZhu" >
+    insert into amall_citybuzhu_benefit (id, add_time, buzhu_fee, 
+      get_user_id, give_user_id, get_user_name
+      )
+    values (#{id,jdbcType=BIGINT}, #{addTime,jdbcType=TIMESTAMP}, #{buzhuFee,jdbcType=DECIMAL}, 
+      #{getUserId,jdbcType=BIGINT}, #{giveUserId,jdbcType=BIGINT}, #{getUserName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.BuZhu" >
+    insert into amall_citybuzhu_benefit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="buzhuFee != null" >
+        buzhu_fee,
+      </if>
+      <if test="getUserId != null" >
+        get_user_id,
+      </if>
+      <if test="giveUserId != null" >
+        give_user_id,
+      </if>
+      <if test="getUserName != null" >
+        get_user_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buzhuFee != null" >
+        #{buzhuFee,jdbcType=DECIMAL},
+      </if>
+      <if test="getUserId != null" >
+        #{getUserId,jdbcType=BIGINT},
+      </if>
+      <if test="giveUserId != null" >
+        #{giveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="getUserName != null" >
+        #{getUserName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.BuZhuExample" resultType="java.lang.Integer" >
+    select count(*) from amall_citybuzhu_benefit
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_citybuzhu_benefit
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.buzhuFee != null" >
+        buzhu_fee = #{record.buzhuFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.getUserId != null" >
+        get_user_id = #{record.getUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.giveUserId != null" >
+        give_user_id = #{record.giveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.getUserName != null" >
+        get_user_name = #{record.getUserName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_citybuzhu_benefit
+    set id = #{record.id,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      buzhu_fee = #{record.buzhuFee,jdbcType=DECIMAL},
+      get_user_id = #{record.getUserId,jdbcType=BIGINT},
+      give_user_id = #{record.giveUserId,jdbcType=BIGINT},
+      get_user_name = #{record.getUserName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.BuZhu" >
+    update amall_citybuzhu_benefit
+    <set >
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buzhuFee != null" >
+        buzhu_fee = #{buzhuFee,jdbcType=DECIMAL},
+      </if>
+      <if test="getUserId != null" >
+        get_user_id = #{getUserId,jdbcType=BIGINT},
+      </if>
+      <if test="giveUserId != null" >
+        give_user_id = #{giveUserId,jdbcType=BIGINT},
+      </if>
+      <if test="getUserName != null" >
+        get_user_name = #{getUserName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.BuZhu" >
+    update amall_citybuzhu_benefit
+    set add_time = #{addTime,jdbcType=TIMESTAMP},
+      buzhu_fee = #{buzhuFee,jdbcType=DECIMAL},
+      get_user_id = #{getUserId,jdbcType=BIGINT},
+      give_user_id = #{giveUserId,jdbcType=BIGINT},
+      get_user_name = #{getUserName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+   <select id="selectBuZhu" parameterType="HashMap" resultType="com.amall.core.bean.BuZhu">
+  	 select   id, add_time, buzhu_fee, get_user_id, give_user_id
+    from amall_citybuzhu_benefit
+    where 1=1 and 
+    <if test="userId != null">
+    get_user_id = #{userId,jdbcType=BIGINT} 
+    </if>
+    limit #{pageCurr},#{pageSize}
+  </select>
+</mapper>

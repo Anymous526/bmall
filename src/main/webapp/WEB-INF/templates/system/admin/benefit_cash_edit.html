@@ -1,0 +1,81 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">预存款管理</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"><a href="$!webPath/admin/benefit_deposit_cash.htm">分红提现管理</a>|<a href="javascript:void(0);" class="this">提现审核</a></span> <span class="tab-two"></span></div>
+  <form action="$!webPath/admin/benefit_cash_save.htm" method="post" id="theForm">
+   <div class="setcont">
+     <ul class="set1">
+       <li>预存款编号</li>
+       <li><span class="webname">
+         $!obj.id
+       </span></li>
+     </ul>
+     <ul class="set1">
+       <li>会员名称</li>
+       <li>$!obj.user.username</li>
+     </ul>
+     <ul class="set1">
+       <li>提交时间</li>
+       <li>$!CommUtil.formatShortDate($!obj.addTime)</li>
+     </ul>
+     <ul class="set1">
+       <li>支付方式</li>
+        #if($!obj.cardType=="bank")
+          #set($cash_payment="网银")
+        #else
+          #set($cash_payment="其他")
+        #end
+       <li>$!cash_payment</li>
+     </ul>
+     <ul class="set1">
+       <li>提现金额</li>
+       <li>$!obj.fee</li>
+     </ul>
+     <ul class="set1">
+       <li>收款账号</li>
+       <li>$!obj.cardId</li>
+     </ul> 
+     <ul class="set1">
+       <li>收款人姓名</li>
+       <li>$!obj.cardName</li>
+     </ul>
+     <ul class="set1">
+       <li>收款银行</li>
+       <li>$!obj.address</li>
+     </ul>
+     <ul class="set1">
+       <li>提现状态</li>
+       <li>
+       <span class="webname">
+      <input style="border:none; height:16px; width:16px;" name="isWithdraw"  type="radio" value="0" #if($!obj.isWithdraw=="false") checked="checked" #end/>
+     	 等待提现
+      <input style="border:none; height:16px; width:16px;" name="isWithdraw" type="radio" value="1" #if($!obj.isWithdraw=="true") checked="checked" #end/>
+		  已提现
+	   <input style="border:none; height:16px; width:16px;" name="isWithdraw" type="radio" value="3" #if($!obj.refuseMessage) checked="checked" #end/>
+		  拒绝提现	  
+	   </span>
+       </li>
+       <ul class="set1">
+       <li>拒绝理由</li>
+       <li><textarea name="refuseMessage" rows="10" cols="40">$!obj.refuseMessage</textarea></li>
+     </ul>
+     </ul>
+   </div>
+  <div class="submit">
+    <input name="save" type="submit" value="完成审核" />
+    <input name="id" type="hidden" id="id" value="$!obj.id" />
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    <input name="list_url" type="hidden" id="list_url" value="$!webPath/admin/benefit_deposit_cash.htm?currentPage=$!currentPage" />
+  </div>
+  </form>
+</div>
+</body>
+</html>

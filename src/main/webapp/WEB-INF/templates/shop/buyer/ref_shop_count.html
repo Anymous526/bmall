@@ -1,0 +1,27 @@
+﻿ <link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+ <script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+ <script>
+ $(document).ready(function(){
+	 #if($!directShop)
+	 var wei21num=$!directShop+$!indirectShop;
+	 $(".wei21num").html(wei21num);
+	 #end
+ })
+ </script>
+ <div class="mydata" style="padding: 0 20px;">
+         <div class="mym1"><span>累计招商数量:<font class="wei21num"></font>人 </span><span>累计获得奖励:<font>#if($!benefit != 0) $!benefit #else 0.00 #end</font>元</span></div>
+         <div class="mym2">
+         <div class="class1"><span class="class1-1">直接</span><span class="class1-2">#if($!directShop) $!directShop #else 0 #end人</span><span class="class1-31">直接店铺</span><span class="class1-41">间接店铺</span></div>
+         <div class="class2  mym22"><span class="class2-1">间接</span><span class="class2-2">#if($!indirectShop) $!indirectShop #else 0 #end人</span><!--<span class="class2-31">三度空间</span>--></div>
+         <!-- <div class="class3  mym22"><span class="class3-1">3度</span><span class="class3-2">#if($!superShop) $!superShop #else 0 #end人</span></div> -->
+         </div> 
+ </div>
+       <!--  
+          <div class="mydata">
+          	<ul>
+          		<li><span><img src="$!webPath/assets/img/ss1.png" width="64" /></span><span class="fonte"><label class="f26 a90000">#if($!directShop) $!directShop #else 0 #end人</label><label>一度空间</label></span></li>
+          		<li><span><img src="$!webPath/assets/img/ss2.png" width="64" /></span><span class="fonte"><label class="f26 ff0">#if($!indirectShop) $!indirectShop #else 0 #end人</label><label>二度空间</label></span></li>
+          		<li><span><img src="$!webPath/assets/img/ss3.png" width="64" /></span><span class="fonte"><label class="f26 pink">#if($!superShop) $!superShop #else 0 #end人</label><label>三度空间</label></span></li>
+          	</ul>
+          </div>
+  --> 

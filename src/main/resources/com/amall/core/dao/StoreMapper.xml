@@ -1,0 +1,1391 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.StoreMapper" >
+ 
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Store" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="card_approve" property="cardApprove" jdbcType="BIT" />
+    <result column="realstore_approve" property="realstoreApprove" jdbcType="BIT" />
+    <result column="store_address" property="storeAddress" jdbcType="VARCHAR" />
+    <result column="store_credit" property="storeCredit" jdbcType="INTEGER" />
+    <result column="store_msn" property="storeMsn" jdbcType="VARCHAR" />
+    <result column="store_name" property="storeName" jdbcType="VARCHAR" />
+    <result column="store_ower" property="storeOwer" jdbcType="VARCHAR" />
+    <result column="store_ower_card" property="storeOwerCard" jdbcType="VARCHAR" />
+    <result column="store_qq" property="storeQq" jdbcType="VARCHAR" />
+    <result column="store_recommend" property="storeRecommend" jdbcType="BIT" />
+    <result column="store_recommend_time" property="storeRecommendTime" jdbcType="TIMESTAMP" />
+    <result column="store_status" property="storeStatus" jdbcType="INTEGER" />
+    <result column="store_telephone" property="storeTelephone" jdbcType="VARCHAR" />
+    <result column="store_zip" property="storeZip" jdbcType="VARCHAR" />
+    <result column="template" property="template" jdbcType="VARCHAR" />
+    <result column="validity" property="validity" jdbcType="TIMESTAMP" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="card_id" property="cardId" jdbcType="BIGINT" />
+    <result column="grade_id" property="gradeId" jdbcType="BIGINT" />
+    <result column="sc_id" property="scId" jdbcType="BIGINT" />
+    <result column="store_banner_id" property="storeBannerId" jdbcType="BIGINT" />
+    <result column="store_license_id" property="storeLicenseId" jdbcType="BIGINT" />
+    <result column="store_tax_id" property="taxId" jdbcType="BIGINT" />
+    <result column="store_organization_id" property="organizationId" jdbcType="BIGINT" />
+    <result column="store_bank_id" property="bankId" jdbcType="BIGINT" />
+    <result column="store_tradeMark_id" property="tradeMarkId" jdbcType="BIGINT" />
+    <result column="store_authorization_id" property="authorizationId" jdbcType="BIGINT" />
+    <result column="store_logo_id" property="storeLogoId" jdbcType="BIGINT" />
+    <result column="update_grade_id" property="updateGradeId" jdbcType="BIGINT" />
+    <result column="domain_modify_count" property="domainModifyCount" jdbcType="INTEGER" />
+    <result column="store_second_domain" property="storeSecondDomain" jdbcType="VARCHAR" />
+    <result column="favorite_count" property="favoriteCount" jdbcType="INTEGER" />
+    <result column="store_lat" property="storeLat" jdbcType="DECIMAL" />
+    <result column="store_lng" property="storeLng" jdbcType="DECIMAL" />
+    <result column="store_ww" property="storeWw" jdbcType="VARCHAR" />
+    <result column="map_type" property="mapType" jdbcType="VARCHAR" />
+	<result column="cash_amount" property="cashAmount" jdbcType="DECIMAL" />
+    <result column="delivery_begin_time" property="deliveryBeginTime" jdbcType="TIMESTAMP" />
+    <result column="delivery_end_time" property="deliveryEndTime" jdbcType="TIMESTAMP" />
+    <result column="combin_begin_time" property="combinBeginTime" jdbcType="TIMESTAMP" />
+    <result column="combin_end_time" property="combinEndTime" jdbcType="TIMESTAMP" />
+    <result column="weixin_begin_time" property="weixinBeginTime" jdbcType="DATE" />
+    <result column="weixin_end_time" property="weixinEndTime" jdbcType="DATE" />
+    <result column="weixin_status" property="weixinStatus" jdbcType="INTEGER" />
+    <result column="weixin_appId" property="weixinAppid" jdbcType="VARCHAR" />
+    <result column="weixin_appSecret" property="weixinAppsecret" jdbcType="VARCHAR" />
+    <result column="weixin_token" property="weixinToken" jdbcType="VARCHAR" />
+    <result column="weixin_qr_img_id" property="weixinQrImgId" jdbcType="BIGINT" />
+    <result column="weixin_account" property="weixinAccount" jdbcType="VARCHAR" />
+    <result column="store_weixin_logo_id" property="storeWeixinLogoId" jdbcType="BIGINT" />
+    <result column="weixin_store_name" property="weixinStoreName" jdbcType="VARCHAR" />
+    <result column="companyName" property="companyName" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="point_id" property="pointId" jdbcType="VARCHAR" />
+	<result column="payment_id" property="paymentId" jdbcType="BIGINT" />
+	<result column="partner_id" property="partnerId" jdbcType="BIGINT" />
+    <association property="area" column="area_id" javaType="com.amall.core.bean.Area" 
+    		select="com.amall.core.dao.AreaMapper.selectByPrimaryKey"/>
+	<association property="alipayOrder" column="payment_id" javaType="com.amall.core.bean.AlipayOrder" 
+    		select="com.amall.core.dao.AlipayOrderMapper.selectByPrimaryKey"/>
+    <association property="card" column="card_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="storeLicense" column="store_license_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="tax" column="store_tax_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="organization" column="store_organization_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="bank" column="store_bank_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="tradeMark" column="store_tradeMark_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="authorization" column="store_authorization_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>				
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User" 
+    		select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="sc" column="sc_id" javaType="com.amall.core.bean.StoreClass" 
+    		select="com.amall.core.dao.StoreClassMapper.selectByPrimaryKey"/>
+    <association property="grade" column="grade_id" javaType="com.amall.core.bean.StoreGrade"  
+    		select="com.amall.core.dao.StoreGradeMapper.selectByPrimaryKey"/>
+    <association property="storeLogo" column="store_logo_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="storeBanner" column="store_banner_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="updateGrade" column="update_grade_id" javaType="com.amall.core.bean.StoreGrade" 
+    		select="com.amall.core.dao.StoreGradeMapper.selectByPrimaryKey"/>
+    <association property="point" column="point_id" javaType="com.amall.core.bean.StorePoint" 
+    		select="com.amall.core.dao.StorePointMapper.selectByPrimaryKey"/>
+    <collection property="goodsList" ofType="com.amall.core.bean.GoodsWithBLOBs" column="goods_list_id" select="com.amall.core.dao.GoodsMapper.selectByExampleWithBLOBs"/>
+    <collection property="ofs" ofType="com.amall.core.bean.OrderFormWithBLOBs" column="orderform_id" select="com.amall.core.dao.OrderFormMapper.selectByExampleWithBLOBs"/>
+    <collection property="slides" ofType="com.amall.core.bean.StoreSlide" column="storeslide_id" select="com.amall.core.dao.StoreSlideMapper.selectByExample"/>
+    <collection property="deliveryLogs" ofType="com.amall.core.bean.DeliveryLog" column="deliverylog_id" select="com.amall.core.dao.DeliveryLogMapper.selectByExample"/>
+    <collection property="gcss" ofType="com.amall.core.bean.GoodsClassStaple" column="goodsclassstaple_id" select="com.amall.core.dao.GoodsClassStapleMapper.selectByExample"/>
+    <collection property="favs" ofType="com.amall.core.bean.Favorite" column="favorite_id" select="com.amall.core.dao.FavoriteMapper.selectByExample"/>
+    <collection property="combinLogs" ofType="com.amall.core.bean.CombinLog" column="combinlog_id" select="com.amall.core.dao.CombinLogMapper.selectByExample"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.StoreWithBLOBs" extends="BaseResultMap" >
+    <result column="store_info" property="storeInfo" jdbcType="LONGVARCHAR" />
+    <result column="store_seo_description" property="storeSeoDescription" jdbcType="LONGVARCHAR" />
+    <result column="store_seo_keywords" property="storeSeoKeywords" jdbcType="LONGVARCHAR" />
+    <result column="violation_reseaon" property="violationReseaon" jdbcType="LONGVARCHAR" />
+    <result column="refuse_reason" property="refuseReason" jdbcType="LONGVARCHAR" />
+    <result column="weixin_welecome_content" property="weixinWelecomeContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, card_approve, realstore_approve, store_address, store_credit, 
+    store_msn, store_name, store_ower, store_ower_card, store_qq, store_recommend, store_recommend_time, 
+    store_status, store_telephone, store_zip, template, validity, area_id, card_id, grade_id, partner_id,
+    sc_id, store_banner_id, store_license_id, store_tax_id, store_organization_id, store_bank_id, store_tradeMark_id,
+    store_authorization_id, store_logo_id, update_grade_id, domain_modify_count, 
+    store_second_domain, favorite_count, store_lat, store_lng, store_ww, map_type, delivery_begin_time, 
+    delivery_end_time, combin_begin_time, combin_end_time, weixin_begin_time, weixin_end_time, 
+    weixin_status, weixin_appId, weixin_appSecret, weixin_token, weixin_qr_img_id, weixin_account, 
+    store_weixin_logo_id, weixin_store_name,companyName,user_id,point_id, cash_amount, payment_id
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    store_info, store_seo_description, store_seo_keywords, violation_reseaon, refuse_reason, weixin_welecome_content
+  </sql>
+
+ 
+
+  
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.StoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.StoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.StoreExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_store
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_store
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.StoreExample" >
+    delete from amall_store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.StoreWithBLOBs" >
+    insert into amall_store (  id, addTime, deleteStatus, 
+      card_approve, realstore_approve, store_address, 
+      store_credit, store_msn, store_name, 
+      store_ower, store_ower_card, store_qq, 
+      store_recommend, store_recommend_time, store_status, 
+      store_telephone, store_zip, template, 
+      validity, area_id, card_id, cash_amount,
+      grade_id, sc_id, store_banner_id, partner_id,
+      store_license_id, store_tax_id, store_organization_id, store_bank_id, store_tradeMark_id,
+      store_authorization_id,store_logo_id, update_grade_id, 
+      domain_modify_count, store_second_domain, favorite_count, 
+      store_lat, store_lng, store_ww, payment_id,
+      map_type, delivery_begin_time, delivery_end_time, 
+      combin_begin_time, combin_end_time, weixin_begin_time, 
+      weixin_end_time, weixin_status, weixin_appId, 
+      weixin_appSecret, weixin_token, weixin_qr_img_id, 
+      weixin_account, store_weixin_logo_id, weixin_store_name,companyName, 
+      store_info, store_seo_description, 
+      store_seo_keywords, violation_reseaon, refuse_reason,
+      weixin_welecome_content)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{cardApprove,jdbcType=BIT}, #{realstoreApprove,jdbcType=BIT}, #{storeAddress,jdbcType=VARCHAR}, 
+      #{storeCredit,jdbcType=INTEGER}, #{storeMsn,jdbcType=VARCHAR}, #{storeName,jdbcType=VARCHAR}, 
+      #{storeOwer,jdbcType=VARCHAR}, #{storeOwerCard,jdbcType=VARCHAR}, #{storeQq,jdbcType=VARCHAR}, 
+      #{storeRecommend,jdbcType=BIT}, #{storeRecommendTime,jdbcType=TIMESTAMP}, #{storeStatus,jdbcType=INTEGER}, 
+      #{storeTelephone,jdbcType=VARCHAR}, #{storeZip,jdbcType=VARCHAR}, #{template,jdbcType=VARCHAR}, 
+      #{validity,jdbcType=TIMESTAMP}, #{areaId,jdbcType=BIGINT}, #{cardId,jdbcType=BIGINT},#{partnerId,jdbcType=BIGINT}, 
+      #{gradeId,jdbcType=BIGINT}, #{scId,jdbcType=BIGINT}, #{storeBannerId,jdbcType=BIGINT}, 
+      #{storeLicenseId,jdbcType=BIGINT}, #{taxId,jdbcType=BIGINT},#{organizationId,jdbcType=BIGINT},
+      #{bankId,jdbcType=BIGINT},#{tradeMarkId,jdbcType=BIGINT},#{authorizationId,jdbcType=BIGINT},
+      #{storeLogoId,jdbcType=BIGINT}, #{updateGradeId,jdbcType=BIGINT}, 
+      #{domainModifyCount,jdbcType=INTEGER}, #{storeSecondDomain,jdbcType=VARCHAR}, #{favoriteCount,jdbcType=INTEGER}, 
+      #{storeLat,jdbcType=DECIMAL}, #{storeLng,jdbcType=DECIMAL}, #{storeWw,jdbcType=VARCHAR}, 
+      #{mapType,jdbcType=VARCHAR}, #{deliveryBeginTime,jdbcType=TIMESTAMP}, #{deliveryEndTime,jdbcType=TIMESTAMP}, 
+      #{combinBeginTime,jdbcType=TIMESTAMP}, #{combinEndTime,jdbcType=TIMESTAMP}, #{weixinBeginTime,jdbcType=DATE}, 
+      #{weixinEndTime,jdbcType=DATE}, #{weixinStatus,jdbcType=INTEGER}, #{weixinAppid,jdbcType=VARCHAR}, 
+      #{weixinAppsecret,jdbcType=VARCHAR}, #{weixinToken,jdbcType=VARCHAR}, #{weixinQrImgId,jdbcType=BIGINT}, 
+      #{weixinAccount,jdbcType=VARCHAR}, #{storeWeixinLogoId,jdbcType=BIGINT}, #{weixinStoreName,jdbcType=VARCHAR}, 
+      #{storeInfo,jdbcType=LONGVARCHAR}, #{storeSeoDescription,jdbcType=LONGVARCHAR}, #{cashAmount,jdbcType=DECIMAL},
+      #{storeSeoKeywords,jdbcType=LONGVARCHAR}, #{violationReseaon,jdbcType=LONGVARCHAR}, #{refuseReason,jdbcType=LONGVARCHAR}, #{paymentId,jdbcType=BIGINT},
+      #{weixinWelecomeContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.StoreWithBLOBs" >
+    
+    insert into amall_store
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="cardApprove != null" >
+        card_approve,
+      </if>
+      <if test="realstoreApprove != null" >
+        realstore_approve,
+      </if>
+      <if test="storeAddress != null" >
+        store_address,
+      </if>
+	  <if test="cashAmount != null" >
+        cash_amount,
+      </if>
+      <if test="storeCredit != null" >
+        store_credit,
+      </if>
+      <if test="storeMsn != null" >
+        store_msn,
+      </if>
+      <if test="storeName != null" >
+        store_name,
+      </if>
+      <if test="storeOwer != null" >
+        store_ower,
+      </if>
+      <if test="storeOwerCard != null" >
+        store_ower_card,
+      </if>
+      <if test="storeQq != null" >
+        store_qq,
+      </if>
+      <if test="storeRecommend != null" >
+        store_recommend,
+      </if>
+      <if test="storeRecommendTime != null" >
+        store_recommend_time,
+      </if>
+      <if test="storeStatus != null" >
+        store_status,
+      </if>
+	  <if test="partnerId != null" >
+        partner_id,
+      </if>
+      <if test="storeTelephone != null" >
+        store_telephone,
+      </if>
+      <if test="storeZip != null" >
+        store_zip,
+      </if>
+	  <if test="paymentId != null" >
+        payment_id,
+      </if>
+      <if test="template != null" >
+        template,
+      </if>
+      <if test="validity != null" >
+        validity,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="cardId != null" >
+        card_id,
+      </if>
+      <if test="gradeId != null" >
+        grade_id,
+      </if>
+      <if test="scId != null" >
+        sc_id,
+      </if>
+      <if test="storeBannerId != null" >
+        store_banner_id,
+      </if>
+      <if test="storeLicenseId != null" >
+        store_license_id,
+      </if>
+      <if test="taxId != null" >
+        store_tax_id,
+      </if>
+      <if test="organizationId != null" >
+        store_organization_id,
+      </if>
+      <if test="bankId != null" >
+        store_bank_id,
+      </if>
+      <if test="tradeMarkId != null" >
+        store_tradeMark_id,
+      </if>
+      <if test="authorizationId != null" >
+        store_authorization_id,
+      </if>
+      <if test="storeLogoId != null" >
+        store_logo_id,
+      </if>
+      <if test="updateGradeId != null" >
+        update_grade_id,
+      </if>
+      <if test="domainModifyCount != null" >
+        domain_modify_count,
+      </if>
+      <if test="storeSecondDomain != null" >
+        store_second_domain,
+      </if>
+      <if test="favoriteCount != null" >
+        favorite_count,
+      </if>
+      <if test="storeLat != null" >
+        store_lat,
+      </if>
+      <if test="storeLng != null" >
+        store_lng,
+      </if>
+      <if test="storeWw != null" >
+        store_ww,
+      </if>
+      <if test="mapType != null" >
+        map_type,
+      </if>
+      <if test="deliveryBeginTime != null" >
+        delivery_begin_time,
+      </if>
+      <if test="deliveryEndTime != null" >
+        delivery_end_time,
+      </if>
+      <if test="combinBeginTime != null" >
+        combin_begin_time,
+      </if>
+      <if test="combinEndTime != null" >
+        combin_end_time,
+      </if>
+      <if test="weixinBeginTime != null" >
+        weixin_begin_time,
+      </if>
+      <if test="weixinEndTime != null" >
+        weixin_end_time,
+      </if>
+      <if test="weixinStatus != null" >
+        weixin_status,
+      </if>
+      <if test="weixinAppid != null" >
+        weixin_appId,
+      </if>
+      <if test="weixinAppsecret != null" >
+        weixin_appSecret,
+      </if>
+      <if test="weixinToken != null" >
+        weixin_token,
+      </if>
+      <if test="weixinQrImgId != null" >
+        weixin_qr_img_id,
+      </if>
+      <if test="weixinAccount != null" >
+        weixin_account,
+      </if>
+      <if test="storeWeixinLogoId != null" >
+        store_weixin_logo_id,
+      </if>
+      <if test="weixinStoreName != null" >
+        weixin_store_name,
+      </if>
+      <if test="companyName != null" >
+        companyName,
+      </if>
+      <if test="storeInfo != null" >
+        store_info,
+      </if>
+      <if test="storeSeoDescription != null" >
+        store_seo_description,
+      </if>
+      <if test="storeSeoKeywords != null" >
+        store_seo_keywords,
+      </if>
+      <if test="violationReseaon != null" >
+        violation_reseaon,
+      </if>
+      <if test="refuseReason != null" >
+      	refuse_reason,
+      </if>
+      <if test="weixinWelecomeContent != null" >
+        weixin_welecome_content,
+      </if>
+      <if test="userId != null">
+      	user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="cardApprove != null" >
+        #{cardApprove,jdbcType=BIT},
+      </if>
+      <if test="realstoreApprove != null" >
+        #{realstoreApprove,jdbcType=BIT},
+      </if>
+      <if test="storeAddress != null" >
+        #{storeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cashAmount != null" >
+        #{cashAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="storeCredit != null" >
+        #{storeCredit,jdbcType=INTEGER},
+      </if>
+      <if test="storeMsn != null" >
+        #{storeMsn,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeOwer != null" >
+        #{storeOwer,jdbcType=VARCHAR},
+      </if>
+      <if test="storeOwerCard != null" >
+        #{storeOwerCard,jdbcType=VARCHAR},
+      </if>
+      <if test="storeQq != null" >
+        #{storeQq,jdbcType=VARCHAR},
+      </if>
+      <if test="storeRecommend != null" >
+        #{storeRecommend,jdbcType=BIT},
+      </if>
+      <if test="storeRecommendTime != null" >
+        #{storeRecommendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeStatus != null" >
+        #{storeStatus,jdbcType=INTEGER},
+      </if>
+	  <if test="partnerId != null" >
+        #{partnerId,jdbcType=BIGINT},
+      </if>
+      <if test="storeTelephone != null" >
+        #{storeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="storeZip != null" >
+        #{storeZip,jdbcType=VARCHAR},
+      </if>
+	  <if test="paymentId != null" >
+        #{paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="template != null" >
+        #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="validity != null" >
+        #{validity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        #{cardId,jdbcType=BIGINT},
+      </if>
+      <if test="gradeId != null" >
+        #{gradeId,jdbcType=BIGINT},
+      </if>
+      <if test="scId != null" >
+        #{scId,jdbcType=BIGINT},
+      </if>
+      <if test="storeBannerId != null" >
+        #{storeBannerId,jdbcType=BIGINT},
+      </if>
+      <if test="storeLicenseId != null" >
+        #{storeLicenseId,jdbcType=BIGINT},
+      </if>
+      <if test="taxId != null" >
+        #{taxId,jdbcType=BIGINT},
+      </if>
+      <if test="organizationId != null" >
+        #{organizationId,jdbcType=BIGINT},
+      </if>
+      <if test="bankId != null" >
+        #{bankId,jdbcType=BIGINT},
+      </if>
+      <if test="tradeMarkId != null" >
+        #{tradeMarkId,jdbcType=BIGINT},
+      </if>
+      <if test="authorizationId != null" >
+        #{authorizationId,jdbcType=BIGINT},
+      </if>
+      <if test="storeLogoId != null" >
+        #{storeLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="updateGradeId != null" >
+        #{updateGradeId,jdbcType=BIGINT},
+      </if>
+      <if test="domainModifyCount != null" >
+        #{domainModifyCount,jdbcType=INTEGER},
+      </if>
+      <if test="storeSecondDomain != null" >
+        #{storeSecondDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="favoriteCount != null" >
+        #{favoriteCount,jdbcType=INTEGER},
+      </if>
+      <if test="storeLat != null" >
+        #{storeLat,jdbcType=DECIMAL},
+      </if>
+      <if test="storeLng != null" >
+        #{storeLng,jdbcType=DECIMAL},
+      </if>
+      <if test="storeWw != null" >
+        #{storeWw,jdbcType=VARCHAR},
+      </if>
+      <if test="mapType != null" >
+        #{mapType,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryBeginTime != null" >
+        #{deliveryBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryEndTime != null" >
+        #{deliveryEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="combinBeginTime != null" >
+        #{combinBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="combinEndTime != null" >
+        #{combinEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weixinBeginTime != null" >
+        #{weixinBeginTime,jdbcType=DATE},
+      </if>
+      <if test="weixinEndTime != null" >
+        #{weixinEndTime,jdbcType=DATE},
+      </if>
+      <if test="weixinStatus != null" >
+        #{weixinStatus,jdbcType=INTEGER},
+      </if>
+      <if test="weixinAppid != null" >
+        #{weixinAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAppsecret != null" >
+        #{weixinAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinToken != null" >
+        #{weixinToken,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinQrImgId != null" >
+        #{weixinQrImgId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinAccount != null" >
+        #{weixinAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="storeWeixinLogoId != null" >
+        #{storeWeixinLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinStoreName != null" >
+        #{weixinStoreName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeInfo != null" >
+        #{storeInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="storeSeoDescription != null" >
+        #{storeSeoDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="storeSeoKeywords != null" >
+        #{storeSeoKeywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="violationReseaon != null" >
+        #{violationReseaon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="refuseReason != null" >
+      	#{refuseReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weixinWelecomeContent != null" >
+        #{weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userId != null">
+      	#{userId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.StoreExample" resultType="java.lang.Integer" >
+    select count(*) from amall_store
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_store
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.cardApprove != null" >
+        card_approve = #{record.cardApprove,jdbcType=BIT},
+      </if>
+      <if test="record.realstoreApprove != null" >
+        realstore_approve = #{record.realstoreApprove,jdbcType=BIT},
+      </if>
+	  <if test="cashAmount != null" >
+        #{cashAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.storeAddress != null" >
+        store_address = #{record.storeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeCredit != null" >
+        store_credit = #{record.storeCredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeMsn != null" >
+        store_msn = #{record.storeMsn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeName != null" >
+        store_name = #{record.storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeOwer != null" >
+        store_ower = #{record.storeOwer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeOwerCard != null" >
+        store_ower_card = #{record.storeOwerCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeQq != null" >
+        store_qq = #{record.storeQq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeRecommend != null" >
+        store_recommend = #{record.storeRecommend,jdbcType=BIT},
+      </if>
+      <if test="record.storeRecommendTime != null" >
+        store_recommend_time = #{record.storeRecommendTime,jdbcType=TIMESTAMP},
+      </if>
+	  <if test="record.partnerId != null" >
+        partner_id = #{record.partnerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.storeStatus != null" >
+        store_status = #{record.storeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeTelephone != null" >
+        store_telephone = #{record.storeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeZip != null" >
+        store_zip = #{record.storeZip,jdbcType=VARCHAR},
+      </if>
+	  <if test="record.paymentId != null" >
+        payment_id = #{record.paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.template != null" >
+        template = #{record.template,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validity != null" >
+        validity = #{record.validity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cardId != null" >
+        card_id = #{record.cardId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gradeId != null" >
+        grade_id = #{record.gradeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.scId != null" >
+        sc_id = #{record.scId,jdbcType=BIGINT},
+      </if>
+      <if test="record.storeBannerId != null" >
+        store_banner_id = #{record.storeBannerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.storeLicenseId != null" >
+        store_license_id = #{record.storeLicenseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.taxId != null" >
+        store_tax_id = #{record.taxId,jdbcType=BIGINT},
+      </if>
+      <if test="record.organizationId != null" >
+        store_organization_id = #{record.organizationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bankId != null" >
+        store_bank_id = #{record.bankId,jdbcType=BIGINT},
+      </if>
+      <if test="record.tradeMarkId != null" >
+        store_tradeMark_id = #{record.tradeMarkId,jdbcType=BIGINT},
+      </if>
+      <if test="record.authorizationId != null" >
+        store_authorization_id = #{record.authorizationId,jdbcType=BIGINT},
+      </if>
+      <if test="record.storeLogoId != null" >
+        store_logo_id = #{record.storeLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.updateGradeId != null" >
+        update_grade_id = #{record.updateGradeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.domainModifyCount != null" >
+        domain_modify_count = #{record.domainModifyCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeSecondDomain != null" >
+        store_second_domain = #{record.storeSecondDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.favoriteCount != null" >
+        favorite_count = #{record.favoriteCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.storeLat != null" >
+        store_lat = #{record.storeLat,jdbcType=DECIMAL},
+      </if>
+      <if test="record.storeLng != null" >
+        store_lng = #{record.storeLng,jdbcType=DECIMAL},
+      </if>
+      <if test="record.storeWw != null" >
+        store_ww = #{record.storeWw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mapType != null" >
+        map_type = #{record.mapType,jdbcType=VARCHAR},
+      </if>
+	  <if test="record.cashAmount != null" >
+        cash_amount = #{record.cashAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.deliveryBeginTime != null" >
+        delivery_begin_time = #{record.deliveryBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deliveryEndTime != null" >
+        delivery_end_time = #{record.deliveryEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.combinBeginTime != null" >
+        combin_begin_time = #{record.combinBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.combinEndTime != null" >
+        combin_end_time = #{record.combinEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.weixinBeginTime != null" >
+        weixin_begin_time = #{record.weixinBeginTime,jdbcType=DATE},
+      </if>
+      <if test="record.weixinEndTime != null" >
+        weixin_end_time = #{record.weixinEndTime,jdbcType=DATE},
+      </if>
+      <if test="record.weixinStatus != null" >
+        weixin_status = #{record.weixinStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.weixinAppid != null" >
+        weixin_appId = #{record.weixinAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinAppsecret != null" >
+        weixin_appSecret = #{record.weixinAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinToken != null" >
+        weixin_token = #{record.weixinToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinQrImgId != null" >
+        weixin_qr_img_id = #{record.weixinQrImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weixinAccount != null" >
+        weixin_account = #{record.weixinAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeWeixinLogoId != null" >
+        store_weixin_logo_id = #{record.storeWeixinLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weixinStoreName != null" >
+        weixin_store_name = #{record.weixinStoreName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.companyName != null" >
+        companyName = #{record.companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeInfo != null" >
+        store_info = #{record.storeInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.storeSeoDescription != null" >
+        store_seo_description = #{record.storeSeoDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.storeSeoKeywords != null" >
+        store_seo_keywords = #{record.storeSeoKeywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.violationReseaon != null" >
+        violation_reseaon = #{record.violationReseaon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.refuseReason != null" >
+      	refuse_reason = #{record.refuseReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.weixinWelecomeContent != null" >
+        weixin_welecome_content = #{record.weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_store
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      card_approve = #{record.cardApprove,jdbcType=BIT},
+      realstore_approve = #{record.realstoreApprove,jdbcType=BIT},
+      store_address = #{record.storeAddress,jdbcType=VARCHAR},
+      store_credit = #{record.storeCredit,jdbcType=INTEGER},
+      store_msn = #{record.storeMsn,jdbcType=VARCHAR},
+      store_name = #{record.storeName,jdbcType=VARCHAR},
+      store_ower = #{record.storeOwer,jdbcType=VARCHAR},
+      store_ower_card = #{record.storeOwerCard,jdbcType=VARCHAR},
+      store_qq = #{record.storeQq,jdbcType=VARCHAR},
+      store_recommend = #{record.storeRecommend,jdbcType=BIT},
+      store_recommend_time = #{record.storeRecommendTime,jdbcType=TIMESTAMP},
+      store_status = #{record.storeStatus,jdbcType=INTEGER},
+      store_telephone = #{record.storeTelephone,jdbcType=VARCHAR},
+      store_zip = #{record.storeZip,jdbcType=VARCHAR},
+      template = #{record.template,jdbcType=VARCHAR},
+      validity = #{record.validity,jdbcType=TIMESTAMP},
+      area_id = #{record.areaId,jdbcType=BIGINT},
+      card_id = #{record.cardId,jdbcType=BIGINT},
+      grade_id = #{record.gradeId,jdbcType=BIGINT},
+      sc_id = #{record.scId,jdbcType=BIGINT},
+	  payment_id = #{record.paymentId,jdbcType=BIGINT},
+      store_banner_id = #{record.storeBannerId,jdbcType=BIGINT},
+      store_license_id = #{record.storeLicenseId,jdbcType=BIGINT},
+      store_tax_id = #{record.taxId,jdbcType=BIGINT},
+      store_organization_id = #{record.organizationId,jdbcType=BIGINT},
+      store_bank_id = #{record.bankId,jdbcType=BIGINT},
+      store_tradeMark_id = #{record.tradeMarkId,jdbcType=BIGINT},
+      store_authorization_id = #{record.authorizationId,jdbcType=BIGINT},
+      store_logo_id = #{record.storeLogoId,jdbcType=BIGINT},
+      update_grade_id = #{record.updateGradeId,jdbcType=BIGINT},
+      domain_modify_count = #{record.domainModifyCount,jdbcType=INTEGER},
+      store_second_domain = #{record.storeSecondDomain,jdbcType=VARCHAR},
+      favorite_count = #{record.favoriteCount,jdbcType=INTEGER},
+      store_lat = #{record.storeLat,jdbcType=DECIMAL},
+      store_lng = #{record.storeLng,jdbcType=DECIMAL},
+      store_ww = #{record.storeWw,jdbcType=VARCHAR},
+      map_type = #{record.mapType,jdbcType=VARCHAR},
+	  partner_id = #{record.partnerId,jdbcType=BIGINT},
+	  cash_amount = #{record.cashAmount,jdbcType=DECIMAL},
+      delivery_begin_time = #{record.deliveryBeginTime,jdbcType=TIMESTAMP},
+      delivery_end_time = #{record.deliveryEndTime,jdbcType=TIMESTAMP},
+      combin_begin_time = #{record.combinBeginTime,jdbcType=TIMESTAMP},
+      combin_end_time = #{record.combinEndTime,jdbcType=TIMESTAMP},
+      weixin_begin_time = #{record.weixinBeginTime,jdbcType=DATE},
+      weixin_end_time = #{record.weixinEndTime,jdbcType=DATE},
+      weixin_status = #{record.weixinStatus,jdbcType=INTEGER},
+      weixin_appId = #{record.weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{record.weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{record.weixinToken,jdbcType=VARCHAR},
+      weixin_qr_img_id = #{record.weixinQrImgId,jdbcType=BIGINT},
+      weixin_account = #{record.weixinAccount,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{record.storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_store_name = #{record.weixinStoreName,jdbcType=VARCHAR},
+      companyName = #{record.companyName,jdbcType=VARCHAR},
+      store_info = #{record.storeInfo,jdbcType=LONGVARCHAR},
+      store_seo_description = #{record.storeSeoDescription,jdbcType=LONGVARCHAR},
+      store_seo_keywords = #{record.storeSeoKeywords,jdbcType=LONGVARCHAR},
+      violation_reseaon = #{record.violationReseaon,jdbcType=LONGVARCHAR},
+      refuse_reason = #{record.refuseReason,jdbcType=LONGVARCHAR},
+      weixin_welecome_content = #{record.weixinWelecomeContent,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_store
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      card_approve = #{record.cardApprove,jdbcType=BIT},
+      realstore_approve = #{record.realstoreApprove,jdbcType=BIT},
+      store_address = #{record.storeAddress,jdbcType=VARCHAR},
+      store_credit = #{record.storeCredit,jdbcType=INTEGER},
+      store_msn = #{record.storeMsn,jdbcType=VARCHAR},
+      store_name = #{record.storeName,jdbcType=VARCHAR},
+      store_ower = #{record.storeOwer,jdbcType=VARCHAR},
+      store_ower_card = #{record.storeOwerCard,jdbcType=VARCHAR},
+      store_qq = #{record.storeQq,jdbcType=VARCHAR},
+      store_recommend = #{record.storeRecommend,jdbcType=BIT},
+      store_recommend_time = #{record.storeRecommendTime,jdbcType=TIMESTAMP},
+      store_status = #{record.storeStatus,jdbcType=INTEGER},
+	  partner_id = #{record.partnerId,jdbcType=BIGINT},
+      store_telephone = #{record.storeTelephone,jdbcType=VARCHAR},
+      store_zip = #{record.storeZip,jdbcType=VARCHAR},
+      template = #{record.template,jdbcType=VARCHAR},
+      validity = #{record.validity,jdbcType=TIMESTAMP},
+      area_id = #{record.areaId,jdbcType=BIGINT},
+      card_id = #{record.cardId,jdbcType=BIGINT},
+      grade_id = #{record.gradeId,jdbcType=BIGINT},
+      sc_id = #{record.scId,jdbcType=BIGINT},
+	  cash_amount = #{record.cashAmount,jdbcType=DECIMAL},
+      store_banner_id = #{record.storeBannerId,jdbcType=BIGINT},
+      store_license_id = #{record.storeLicenseId,jdbcType=BIGINT},
+      store_tax_id = #{record.taxId,jdbcType=BIGINT},
+      store_organization_id = #{record.organizationId,jdbcType=BIGINT},
+      store_bank_id = #{record.bankId,jdbcType=BIGINT},
+      store_tradeMark_id = #{record.tradeMarkId,jdbcType=BIGINT},
+      store_authorization_id = #{record.authorizationId,jdbcType=BIGINT},
+      store_logo_id = #{record.storeLogoId,jdbcType=BIGINT},
+      update_grade_id = #{record.updateGradeId,jdbcType=BIGINT},
+      domain_modify_count = #{record.domainModifyCount,jdbcType=INTEGER},
+      store_second_domain = #{record.storeSecondDomain,jdbcType=VARCHAR},
+      favorite_count = #{record.favoriteCount,jdbcType=INTEGER},
+      store_lat = #{record.storeLat,jdbcType=DECIMAL},
+      store_lng = #{record.storeLng,jdbcType=DECIMAL},
+      store_ww = #{record.storeWw,jdbcType=VARCHAR},
+      map_type = #{record.mapType,jdbcType=VARCHAR},
+      delivery_begin_time = #{record.deliveryBeginTime,jdbcType=TIMESTAMP},
+      delivery_end_time = #{record.deliveryEndTime,jdbcType=TIMESTAMP},
+      combin_begin_time = #{record.combinBeginTime,jdbcType=TIMESTAMP},
+      combin_end_time = #{record.combinEndTime,jdbcType=TIMESTAMP},
+      weixin_begin_time = #{record.weixinBeginTime,jdbcType=DATE},
+      weixin_end_time = #{record.weixinEndTime,jdbcType=DATE},
+      weixin_status = #{record.weixinStatus,jdbcType=INTEGER},
+      weixin_appId = #{record.weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{record.weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{record.weixinToken,jdbcType=VARCHAR},
+      weixin_qr_img_id = #{record.weixinQrImgId,jdbcType=BIGINT},
+      weixin_account = #{record.weixinAccount,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{record.storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_store_name = #{record.weixinStoreName,jdbcType=VARCHAR},
+      companyName = #{record.companyName,jdbcType=VARCHAR},
+	  payment_id = #{record.paymentId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.StoreWithBLOBs" >
+    update amall_store
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="cardApprove != null" >
+        card_approve = #{cardApprove,jdbcType=BIT},
+      </if>
+      <if test="realstoreApprove != null" >
+        realstore_approve = #{realstoreApprove,jdbcType=BIT},
+      </if>
+      <if test="storeAddress != null" >
+        store_address = #{storeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="storeCredit != null" >
+        store_credit = #{storeCredit,jdbcType=INTEGER},
+      </if>
+      <if test="storeMsn != null" >
+        store_msn = #{storeMsn,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null" >
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeOwer != null" >
+        store_ower = #{storeOwer,jdbcType=VARCHAR},
+      </if>
+      <if test="storeOwerCard != null" >
+        store_ower_card = #{storeOwerCard,jdbcType=VARCHAR},
+      </if>
+      <if test="storeQq != null" >
+        store_qq = #{storeQq,jdbcType=VARCHAR},
+      </if>
+      <if test="storeRecommend != null" >
+        store_recommend = #{storeRecommend,jdbcType=BIT},
+      </if>
+      <if test="storeRecommendTime != null" >
+        store_recommend_time = #{storeRecommendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeStatus != null" >
+        store_status = #{storeStatus,jdbcType=INTEGER},
+      </if>
+      <if test="storeTelephone != null" >
+        store_telephone = #{storeTelephone,jdbcType=VARCHAR},
+      </if>
+      <if test="storeZip != null" >
+        store_zip = #{storeZip,jdbcType=VARCHAR},
+      </if>
+	  <if test="paymentId != null" >
+        payment_id = #{paymentId,jdbcType=BIGINT},
+      </if>
+	  <if test="partnerId != null" >
+        partner_id = #{partnerId,jdbcType=BIGINT},
+      </if>
+      <if test="template != null" >
+        template = #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="validity != null" >
+        validity = #{validity,jdbcType=TIMESTAMP},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="pointId != null">
+      	point_id = #{pointId,jdbcType=BIGINT},
+      </if>
+      <if test="cardId != null" >
+        card_id = #{cardId,jdbcType=BIGINT},
+      </if>
+      <if test="gradeId != null" >
+        grade_id = #{gradeId,jdbcType=BIGINT},
+      </if>
+      <if test="scId != null" >
+        sc_id = #{scId,jdbcType=BIGINT},
+      </if>
+	  <if test="cashAmount != null" >
+        cash_amount = #{cashAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="storeBannerId != null" >
+        store_banner_id = #{storeBannerId,jdbcType=BIGINT},
+      </if>
+      <if test="storeLicenseId != null" >
+        store_license_id = #{storeLicenseId,jdbcType=BIGINT},
+      </if>
+      <if test="taxId != null">
+      	store_tax_id = #{taxId,jdbcType=BIGINT},
+      </if>
+      <if test="organizationId != null">
+      	store_organization_id = #{organizationId,jdbcType=BIGINT},
+      </if>
+      <if test="bankId != null">
+      	store_bank_id = #{bankId,jdbcType=BIGINT},
+      </if>
+      <if test="tradeMarkId != null">
+      	store_tradeMark_id = #{tradeMarkId,jdbcType=BIGINT},
+      </if>
+      <if test="authorizationId != null">
+      	store_authorization_id = #{authorizationId,jdbcType=BIGINT},
+      </if>
+      <if test="storeLogoId != null" >
+        store_logo_id = #{storeLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="updateGradeId != null" >
+        update_grade_id = #{updateGradeId,jdbcType=BIGINT},
+      </if>
+      <if test="domainModifyCount != null" >
+        domain_modify_count = #{domainModifyCount,jdbcType=INTEGER},
+      </if>
+      <if test="storeSecondDomain != null" >
+        store_second_domain = #{storeSecondDomain,jdbcType=VARCHAR},
+      </if>
+      <if test="favoriteCount != null" >
+        favorite_count = #{favoriteCount,jdbcType=INTEGER},
+      </if>
+      <if test="storeLat != null" >
+        store_lat = #{storeLat,jdbcType=DECIMAL},
+      </if>
+      <if test="storeLng != null" >
+        store_lng = #{storeLng,jdbcType=DECIMAL},
+      </if>
+      <if test="storeWw != null" >
+        store_ww = #{storeWw,jdbcType=VARCHAR},
+      </if>
+      <if test="mapType != null" >
+        map_type = #{mapType,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryBeginTime != null" >
+        delivery_begin_time = #{deliveryBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deliveryEndTime != null" >
+        delivery_end_time = #{deliveryEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="combinBeginTime != null" >
+        combin_begin_time = #{combinBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="combinEndTime != null" >
+        combin_end_time = #{combinEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="weixinBeginTime != null" >
+        weixin_begin_time = #{weixinBeginTime,jdbcType=DATE},
+      </if>
+      <if test="weixinEndTime != null" >
+        weixin_end_time = #{weixinEndTime,jdbcType=DATE},
+      </if>
+      <if test="weixinStatus != null" >
+        weixin_status = #{weixinStatus,jdbcType=INTEGER},
+      </if>
+      <if test="weixinAppid != null" >
+        weixin_appId = #{weixinAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAppsecret != null" >
+        weixin_appSecret = #{weixinAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinToken != null" >
+        weixin_token = #{weixinToken,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinQrImgId != null" >
+        weixin_qr_img_id = #{weixinQrImgId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinAccount != null" >
+        weixin_account = #{weixinAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="storeWeixinLogoId != null" >
+        store_weixin_logo_id = #{storeWeixinLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinStoreName != null" >
+        weixin_store_name = #{weixinStoreName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null" >
+        companyName = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeInfo != null" >
+        store_info = #{storeInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="storeSeoDescription != null" >
+        store_seo_description = #{storeSeoDescription,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="storeSeoKeywords != null" >
+        store_seo_keywords = #{storeSeoKeywords,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="violationReseaon != null" >
+        violation_reseaon = #{violationReseaon,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="refuseReason != null" >
+      	refuse_reason = #{refuseReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weixinWelecomeContent != null" >
+        weixin_welecome_content = #{weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.StoreWithBLOBs" >
+    update amall_store
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      card_approve = #{cardApprove,jdbcType=BIT},
+      realstore_approve = #{realstoreApprove,jdbcType=BIT},
+      store_address = #{storeAddress,jdbcType=VARCHAR},
+      store_credit = #{storeCredit,jdbcType=INTEGER},
+      store_msn = #{storeMsn,jdbcType=VARCHAR},
+	  partner_id = #{partnerId,jdbcType=BIGINT},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      store_ower = #{storeOwer,jdbcType=VARCHAR},
+      store_ower_card = #{storeOwerCard,jdbcType=VARCHAR},
+      store_qq = #{storeQq,jdbcType=VARCHAR},
+      store_recommend = #{storeRecommend,jdbcType=BIT},
+      store_recommend_time = #{storeRecommendTime,jdbcType=TIMESTAMP},
+      store_status = #{storeStatus,jdbcType=INTEGER},
+      store_telephone = #{storeTelephone,jdbcType=VARCHAR},
+      store_zip = #{storeZip,jdbcType=VARCHAR},
+      template = #{template,jdbcType=VARCHAR},
+      validity = #{validity,jdbcType=TIMESTAMP},
+      area_id = #{areaId,jdbcType=BIGINT},
+      card_id = #{cardId,jdbcType=BIGINT},
+      grade_id = #{gradeId,jdbcType=BIGINT},
+      sc_id = #{scId,jdbcType=BIGINT},
+	  payment_id = #{paymentId,jdbcType=BIGINT},
+      store_banner_id = #{storeBannerId,jdbcType=BIGINT},
+      store_license_id = #{storeLicenseId,jdbcType=BIGINT},
+      store_tax_id = #{taxId,jdbcType=BIGINT},
+      store_organization_id = #{organizationId,jdbcType=BIGINT},
+      store_bank_id = #{bankId,jdbcType=BIGINT},
+      store_tradeMark_id = #{tradeMarkId,jdbcType=BIGINT},
+      store_authorization_id = #{authorizationId,jdbcType=BIGINT},
+      store_logo_id = #{storeLogoId,jdbcType=BIGINT},
+      update_grade_id = #{updateGradeId,jdbcType=BIGINT},
+      domain_modify_count = #{domainModifyCount,jdbcType=INTEGER},
+      store_second_domain = #{storeSecondDomain,jdbcType=VARCHAR},
+      favorite_count = #{favoriteCount,jdbcType=INTEGER},
+      store_lat = #{storeLat,jdbcType=DECIMAL},
+      store_lng = #{storeLng,jdbcType=DECIMAL},
+      store_ww = #{storeWw,jdbcType=VARCHAR},
+      map_type = #{mapType,jdbcType=VARCHAR},
+	  cash_amount = #{cashAmount,jdbcType=DECIMAL},
+      delivery_begin_time = #{deliveryBeginTime,jdbcType=TIMESTAMP},
+      delivery_end_time = #{deliveryEndTime,jdbcType=TIMESTAMP},
+      combin_begin_time = #{combinBeginTime,jdbcType=TIMESTAMP},
+      combin_end_time = #{combinEndTime,jdbcType=TIMESTAMP},
+      weixin_begin_time = #{weixinBeginTime,jdbcType=DATE},
+      weixin_end_time = #{weixinEndTime,jdbcType=DATE},
+      weixin_status = #{weixinStatus,jdbcType=INTEGER},
+      weixin_appId = #{weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{weixinToken,jdbcType=VARCHAR},
+      weixin_qr_img_id = #{weixinQrImgId,jdbcType=BIGINT},
+      weixin_account = #{weixinAccount,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_store_name = #{weixinStoreName,jdbcType=VARCHAR},
+      companyName = #{companyName,jdbcType=VARCHAR},
+      store_info = #{storeInfo,jdbcType=LONGVARCHAR},
+      store_seo_description = #{storeSeoDescription,jdbcType=LONGVARCHAR},
+      store_seo_keywords = #{storeSeoKeywords,jdbcType=LONGVARCHAR},
+      violation_reseaon = #{violationReseaon,jdbcType=LONGVARCHAR},
+      refuse_reason = #{refuseReason,jdbcType=LONGVARCHAR},
+      weixin_welecome_content = #{weixinWelecomeContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Store" >
+    update amall_store
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      card_approve = #{cardApprove,jdbcType=BIT},
+      realstore_approve = #{realstoreApprove,jdbcType=BIT},
+      store_address = #{storeAddress,jdbcType=VARCHAR},
+      store_credit = #{storeCredit,jdbcType=INTEGER},
+      store_msn = #{storeMsn,jdbcType=VARCHAR},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      store_ower = #{storeOwer,jdbcType=VARCHAR},
+      store_ower_card = #{storeOwerCard,jdbcType=VARCHAR},
+      store_qq = #{storeQq,jdbcType=VARCHAR},
+	  partner_id = #{partnerId,jdbcType=BIGINT},
+      store_recommend = #{storeRecommend,jdbcType=BIT},
+      store_recommend_time = #{storeRecommendTime,jdbcType=TIMESTAMP},
+      store_status = #{storeStatus,jdbcType=INTEGER},
+      store_telephone = #{storeTelephone,jdbcType=VARCHAR},
+      store_zip = #{storeZip,jdbcType=VARCHAR},
+      template = #{template,jdbcType=VARCHAR},
+      validity = #{validity,jdbcType=TIMESTAMP},
+      area_id = #{areaId,jdbcType=BIGINT},
+      card_id = #{cardId,jdbcType=BIGINT},
+      grade_id = #{gradeId,jdbcType=BIGINT},
+      sc_id = #{scId,jdbcType=BIGINT},
+      store_banner_id = #{storeBannerId,jdbcType=BIGINT},
+      store_license_id = #{storeLicenseId,jdbcType=BIGINT},
+      store_tax_id = #{taxId,jdbcType=BIGINT},
+      store_organization_id = #{organizationId,jdbcType=BIGINT},
+      store_bank_id = #{bankId,jdbcType=BIGINT},
+      store_tradeMark_id = #{tradeMarkId,jdbcType=BIGINT},
+      store_authorization_id = #{authorizationId,jdbcType=BIGINT},
+      store_logo_id = #{storeLogoId,jdbcType=BIGINT},
+      update_grade_id = #{updateGradeId,jdbcType=BIGINT},
+      domain_modify_count = #{domainModifyCount,jdbcType=INTEGER},
+      store_second_domain = #{storeSecondDomain,jdbcType=VARCHAR},
+      favorite_count = #{favoriteCount,jdbcType=INTEGER},
+      store_lat = #{storeLat,jdbcType=DECIMAL},
+      store_lng = #{storeLng,jdbcType=DECIMAL},
+      store_ww = #{storeWw,jdbcType=VARCHAR},
+      map_type = #{mapType,jdbcType=VARCHAR},
+      delivery_begin_time = #{deliveryBeginTime,jdbcType=TIMESTAMP},
+      delivery_end_time = #{deliveryEndTime,jdbcType=TIMESTAMP},
+      combin_begin_time = #{combinBeginTime,jdbcType=TIMESTAMP},
+      combin_end_time = #{combinEndTime,jdbcType=TIMESTAMP},
+      weixin_begin_time = #{weixinBeginTime,jdbcType=DATE},
+      weixin_end_time = #{weixinEndTime,jdbcType=DATE},
+      weixin_status = #{weixinStatus,jdbcType=INTEGER},
+      weixin_appId = #{weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{weixinToken,jdbcType=VARCHAR},
+      weixin_qr_img_id = #{weixinQrImgId,jdbcType=BIGINT},
+      weixin_account = #{weixinAccount,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_store_name = #{weixinStoreName,jdbcType=VARCHAR},
+      companyName = #{companyName,jdbcType=VARCHAR},
+	  cash_amount = #{cashAmount,jdbcType=DECIMAL},
+	  payment_id = #{paymentId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+    <select   id="getStoreValidation" resultType="int" parameterType="java.util.Map">
+	  	select count(1) from amall_store
+	  	where 1 = 1
+	  	<if test="storeName != null and storeName != '' ">
+	  		and store_name = #{storeName,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="storeOwerCard != null and storeOwerCard != '' ">
+	  		and store_ower_card = #{storeOwerCard,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="telephone != null and telephone != ''">
+	  		and store_telephone = #{telephone,jdbcType=VARCHAR}
+	  	</if>
+  	</select>
+  	<select   id="getStoreValidation1" resultMap="ResultMapWithBLOBs" parameterType="java.util.Map">
+	  	select store_status from amall_store
+	  	where 1 = 1
+	  	<if test="storeName != null and storeName != '' ">
+	  		and store_name = #{storeName,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="storeOwerCard != null and storeOwerCard != '' ">
+	  		and store_ower_card = #{storeOwerCard,jdbcType=VARCHAR}
+	  	</if>
+	  	<if test="telephone != null and telephone != ''">
+	  		and store_telephone = #{telephone,jdbcType=VARCHAR}
+	  	</if>
+  	</select>
+ 
+ 	<select   id="getStoreNameValidation" resultType="int" parameterType="java.lang.String">
+ 		select count(1) from amall_store where store_name = #{storeName,jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<select   id="getStoreOwerCardValidation" resultType="int" parameterType="java.lang.String">
+ 		select count(1) from amall_store where store_ower_card = #{storeOwerCard,jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<select   id="getStoreTelephoneValidation" resultType="int" parameterType="java.lang.String">
+ 		select count(1) from amall_store where store_telephone = #{storeTelephone,jdbcType=VARCHAR}
+ 	</select>
+  
+</mapper>

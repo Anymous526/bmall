@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.CloudShowOrderMapper" >
+
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.CloudShowOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="cloud_Goods_id" property="cloudGoodsId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="photo_one" property="photoOne" jdbcType="BIGINT" />
+    <result column="photo_two" property="photoTwo" jdbcType="BIGINT" />
+    <result column="photo_three" property="photoThree" jdbcType="BIGINT" />
+    <result column="context" property="context" jdbcType="VARCHAR" />
+    
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User"
+    			select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+	<association property="cloudGoods" column="cloud_Goods_id" javaType="com.amall.core.bean.CloudGoods"
+    			select="com.amall.core.dao.CloudGoodsMapper.selectByPrimaryKey"/>
+    			
+ 	<association property="accessory_one" column="photo_one" javaType="com.amall.core.bean.Accessory"
+    			select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="accessory_two" column="photo_two" javaType="com.amall.core.bean.Accessory"
+    			select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="accessory_three" column="photo_three" javaType="com.amall.core.bean.Accessory"
+    			select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, cloud_Goods_id, user_id, photo_one, photo_two, photo_three, context
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CloudShowOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_cloud_show_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.CloudShowOrderExample">
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_cloud_show_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_cloud_show_order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_cloud_show_order
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.CloudShowOrderExample" >
+    delete from amall_cloud_show_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.CloudShowOrder" >
+    insert into amall_cloud_show_order (id, addTime, cloud_Goods_id, 
+      user_id, photo_one, photo_two, 
+      photo_three, context)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{cloudGoodsId,jdbcType=BIGINT}, 
+      #{userId,jdbcType=BIGINT}, #{photoOne,jdbcType=BIGINT}, #{photoTwo,jdbcType=BIGINT}, 
+      #{photoThree,jdbcType=BIGINT}, #{context,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.CloudShowOrder" >
+    insert into amall_cloud_show_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="cloudGoodsId != null" >
+        cloud_Goods_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="photoOne != null" >
+        photo_one,
+      </if>
+      <if test="photoTwo != null" >
+        photo_two,
+      </if>
+      <if test="photoThree != null" >
+        photo_three,
+      </if>
+      <if test="context != null" >
+        context,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cloudGoodsId != null" >
+        #{cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="photoOne != null" >
+        #{photoOne,jdbcType=BIGINT},
+      </if>
+      <if test="photoTwo != null" >
+        #{photoTwo,jdbcType=BIGINT},
+      </if>
+      <if test="photoThree != null" >
+        #{photoThree,jdbcType=BIGINT},
+      </if>
+      <if test="context != null" >
+        #{context,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.CloudShowOrderExample" resultType="java.lang.Integer" >
+    select count(*) from amall_cloud_show_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_cloud_show_order
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cloudGoodsId != null" >
+        cloud_Goods_id = #{record.cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.photoOne != null" >
+        photo_one = #{record.photoOne,jdbcType=BIGINT},
+      </if>
+      <if test="record.photoTwo != null" >
+        photo_two = #{record.photoTwo,jdbcType=BIGINT},
+      </if>
+      <if test="record.photoThree != null" >
+        photo_three = #{record.photoThree,jdbcType=BIGINT},
+      </if>
+      <if test="record.context != null" >
+        context = #{record.context,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_cloud_show_order
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      cloud_Goods_id = #{record.cloudGoodsId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      photo_one = #{record.photoOne,jdbcType=BIGINT},
+      photo_two = #{record.photoTwo,jdbcType=BIGINT},
+      photo_three = #{record.photoThree,jdbcType=BIGINT},
+      context = #{record.context,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.CloudShowOrder" >
+    update amall_cloud_show_order
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cloudGoodsId != null" >
+        cloud_Goods_id = #{cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="photoOne != null" >
+        photo_one = #{photoOne,jdbcType=BIGINT},
+      </if>
+      <if test="photoTwo != null" >
+        photo_two = #{photoTwo,jdbcType=BIGINT},
+      </if>
+      <if test="photoThree != null" >
+        photo_three = #{photoThree,jdbcType=BIGINT},
+      </if>
+      <if test="context != null" >
+        context = #{context,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.CloudShowOrder" >
+    update amall_cloud_show_order
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      cloud_Goods_id = #{cloudGoodsId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      photo_one = #{photoOne,jdbcType=BIGINT},
+      photo_two = #{photoTwo,jdbcType=BIGINT},
+      photo_three = #{photoThree,jdbcType=BIGINT},
+      context = #{context,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

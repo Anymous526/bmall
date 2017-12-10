@@ -1,0 +1,198 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>$!obj.igGoodsName</title>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/amall_member.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/tuangou.css" />
+<link href="$!webPath/assets/css/integral.css" type="text/css" rel="stylesheet"> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	
+	$(".buyNow").click(function(){
+		var count = $(".order_number").val();
+		#if($!user)
+			if($!obj.igGoodsCount<parseInt(count)){
+				alert("该兑换商品超过商品的库存数量！");
+				return false;
+			}else if($!obj.igLimitType && $!obj.igLimitCount<parseInt(count)){
+				alert("该商品限制每位会员最多只能够兑换"+$obj.igLimitCount+"件，谢谢合作！");
+				return false;
+			}else if(count<=0){
+				alert("商品购买数量不能为零!");
+				return false;
+			}else{
+				$("#buyForm").submit();
+			}
+		#else
+			window.location.href="$!webPath/exchange/exchange_login.htm?id="+$!obj.id;
+		#end
+	});
+	
+	$(".sub").click(function(){
+		var count = $("input[name='count']").val();
+		if(count <= 1) {
+			count = 1;
+		}else {
+			count --;
+		}
+		$("input[name='count']").val(count);
+	});
+	
+	$(".add").click(function(){
+		var count = $("input[name='count']").val();
+		if(count > $!obj.igGoodsCount) {
+			count = $!obj.igGoodsCount;
+		}else {
+			count ++;
+		}
+		$("input[name='count']").val(count);
+	});
+});
+
+function checkThis(object){
+	if(object.value=="" || object.value==null || object.value== undefined) {
+		object.value="1";
+	}
+}
+/*
+function getRemainTime(){
+	var endTime = new Date("$!obj.igEndTime");
+	var nowTime = new Date();
+	var t=endTime.getTime()-nowTime.getTime();
+	if(t<=0){
+		document.getElementById("remainTime").innerHTML = "已结束";
+	}else{
+		var d=Math.floor(t/1000/60/60/24); 
+		var h=Math.floor(t/1000/60/60%24); 
+		var m=Math.floor(t/1000/60%60); 
+		var s=Math.floor(t/1000%60); 
+		document.getElementById("remainTime").innerHTML = d+"天"+h+"时"+m+"分"+s+"秒";
+		document.getElementById("now").innerHTML = nowTime;
+		document.getElementById("end").innerHTML = endTime;
+	}
+}
+setInterval(getRemainTime,1000);
+*/
+</script>
+ 
+<style type="text/css">
+.numbtn{cursor: pointer; background-color: #fff; border:1px solid #a9a9a9; width:20px; height: 20px; box-sizing:border-box}
+.numinput{width:50px; height: 20px;text-align: center; border:1px solid #a9a9a9;box-sizing:border-box}
+</style>
+</head>
+<body style="overflow-x: hidden;">
+$!httpInclude.include("/top3.htm") 
+$!httpInclude.include("/exchange/exchange_search2.htm")  
+    <div class="shop_menu default_color"  style="margin-top:0px;">
+      <div class="shop_menu_nav" style="width:1100px; margin: 0 auto; ">
+        <ul class="f14 fb">
+           <li><a style="color:#ffffff" href="$!webPath/amall_member2.htm" >首页</a></li>
+           <li><a style="color:#ffffff" href="$!webPath/exchange/exchange_index.htm" >所有商品</a></li>
+         #foreach($navigation in $navigations)
+          	<li><a href="$!webPath/exchange/exchange_index.htm?navId=$!navigation.id">$!navigation.title</a></li>
+          #end
+        </ul>
+      </div>      
+    </div>
+     
+ <div class="w100" style="background-color: #FFF">  
+ <form id="buyForm" action="$!webPath/exchange/exchange_pay.htm?id=$!obj.id" method="post">   
+    <div class="mrkia" style="padding:30px;width:1040px">
+        #set($igGoodsImg=$!obj.igGoodsImg)
+	    <div class="tuan_img">
+	    	<a href="#"><img alt="" src="$!{config.imagewebserver}/$!{igGoodsImg.path}/$!{igGoodsImg.name}" width="350" height="350" /></a>
+	    </div>
+	    #set($igGoodsIntegral=$!obj.igGoodsIntegral/200)
+	    <div class="tuan_info">
+	        <span>$!obj.igGoodsName</span>
+	        <label>$!obj.igGoodsGoldNum 礼品金</label>
+	        <p>购买数量：$!obj.igExchangeCount 件已兑换</p>
+	       <!-- <p>剩余时间：<span id = "remainTime"></span></p> --> 
+	        
+        	#if($!obj.igTransfee > 0)
+        	<p>
+        		货到付款：
+        		￥ $!obj.igTransfee
+        	</p>
+        	#elseif($!obj.igTransfee < 0)
+        	<p>
+        		运费 : 货到付款
+        	</p>
+        	#else
+        	<p>
+        		运费 : ￥ $!obj.igTransfee
+        	</p>
+        	#end
+	        
+	        <p>
+	         <div> 
+	          	数量： 
+		            <input type="button" size="1" class="sub numbtn" value=" - " style="text-align: center;" />
+		            <input type="text" size="6" class="order_number numinput" value="1" maxlength="8" name="count" onblur="checkThis(this);"/>
+		            <input type="button" size="1" class="add numbtn" value=" + " style="text-align: center;" />
+	         </div>  	
+			</p>
+	        <a href="#" class="buyNow"><button>立即兑换</button></a>
+	    </div>
+	</div>
+ </form>  
+    <div class="mrkia2" style="width:1100px">
+        <div class="left" style="background-color:#fff;width:812px;margin-right: 18px;"> 
+		<div style="width:100%;">
+
+    <div class="tabPanel">
+		<ul>
+			<li class="hits">商品介绍</li> 
+			<li>包装清单</li>
+		</ul>
+		<div class="panes" style="border-left:1px solid #CCC;width:810px;border-bottom:1px solid #CCC;border-right:1px solid #CCC;">
+			<div class="pane" style="display:block;width:810px;padding:10px 0 0 0;">
+            	<div id="igDetail">
+            		$!obj.igContent
+            	</div>
+            </div>
+			
+            <div class="pane" style="display:none;">
+            	<div id="pack_list" style="word-break:break-all">
+            		$!obj.igPackList
+            	</div>
+            </div>
+            
+		</div>
+    </div>
+
+</div> 
+        </div>
+        <div class="right" style="background-color:#fff">
+        	<div class="right_tit"><span>精品推荐</span></div>
+            <ul class="tuijian">
+            #foreach($recommandGoods in $recommandGoodsList)
+            #set($igPhoto=$!{recommandGoods.igGoodsImg})	
+            	<li>
+                	<a href=""><img style="width:80px; height:80px;" src="$!{config.imagewebserver}/$!{igPhoto.path}/$!{igPhoto.name}" /></a>
+                    <div><p class="fb"><a href="">$!{recommandGoods.igGoodsName}</a></p><label><i>¥</i>$!{recommandGoods.igGoodsPrice}</label><p>$!{recommandGoods.igExchangeCount} 件已兑换</p></div>
+    
+                </li>
+			#end
+            </ul>
+        </div>
+    </div>
+
+</div>     
+<script type="text/javascript">
+	$(function(){	
+		$('.tabPanel ul li').click(function(){
+			$(this).addClass('hits').siblings().removeClass('hits');
+			$('.panes>div:eq('+$(this).index()+')').show().siblings().hide();	
+		})
+	})
+</script>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

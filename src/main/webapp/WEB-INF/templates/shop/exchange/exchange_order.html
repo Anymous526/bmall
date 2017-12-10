@@ -1,0 +1,170 @@
+﻿<!doctype html>
+<html>
+<head>
+<title>兑换完成 </title>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/><!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/tuangou.css" />
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css" />
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/briberymoney.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/cryptographic.js"></script>
+</head> 
+<script type="text/javascript">
+$(function(){
+	$(".exchangeFinish").bind("click",function(){
+		if($("#addressId").val() == ""){
+			alert("请选择一个收货地址");
+			return false;
+		}else{
+			if($('#payPassword').val()==""){
+				$('.mb_bg').fadeIn(500);
+				$('.py_dioalog03').fadeIn(500);
+				$("input[name='set_pwd']").focus();
+			}else{
+			$('.mb_bg').fadeIn(500);
+			$('.mb_dioalog02').fadeIn(500);
+			$("input[name='payment_pwd']").focus();
+			}
+		}
+	});
+}); 
+function btnSubmit(){
+	
+	if($("#addressId").val() == ""){
+		alert("请选择一个收货地址");
+		return;
+	}
+	window.location.href="$!webPath/exchange/exchange_order_view.htm";
+}
+
+function gotoExchangeMainInOrder(id){
+	window.location.href="$!webPath/exchange/exchange_index.htm?id="+id;
+}
+
+</script>
+
+<body>
+$!httpInclude.include("/top2.htm") 
+##$!httpInclude.include("/exchange/exchange_search2.htm")
+
+$!httpInclude.include("/cart/cart_pay_logo.htm")
+<!-- 
+<div class="shop_menu default_color">
+	<div class="shop_menu_nav" style="width:990px; margin: 0 auto; ">
+		<ul class="f14 fb">
+          <li><a style="color:#ffffff" href="$!webPath/exchange/exchange_index.htm" >首页</a></li>
+         #foreach($navigation in $navigations)
+          	<li><a href="$!webPath/exchange/exchange_index.htm?navId=$!navigation.id">$!navigation.title</a></li>
+          #end
+        </ul>
+	</div>      
+</div>
+ -->
+<div style="width:1000px; margin: 0 auto; background-color: #fff; padding-bottom: 30px;">
+$!httpInclude.include("/cart/cart_confirm_order_address.htm")
+<div style="width:990px; margin: 0 auto; ">
+ 	<form action="$!webPath/exchange/exchange_order_view.htm" method="post" id="theForm">		
+    	<h1><span class="trans_sp"><i class="transb"></i>我要留言</span></h1>
+        <div class="trans_text">
+          <textarea name="msg" cols="" rows="10" id="msg" ></textarea>
+        </div>
+        <div class="trans_integ">所需礼品金:<strong>$!totalPrice</strong>礼品金,运费：￥$!obj.igTransfee<strong>兑换商品均由买家自己承担运费</strong></div>
+        <div class="trans_integ">
+          <input style="padding:12px 34px 12px 34px; color:#fff;font-size:16px;cursor:pointer; background-color: #ff7928; border:none;" name="exchangeFinish" class="mt5 exchangeFinish" type="button" value="兑换完成" />
+          <input type="hidden" id="addressId" name="addressId"/>
+          <input name="count" type="hidden" id="count" value="$!exchangeCount" />
+          <input name="id" type="hidden" id="id" value="$!obj.id" />
+        </div>
+        <input type="hidden" value="$!{currentUser.payPassword}" id="payPassword">
+        <input type="hidden" value="" name="payment_pwd" id="payment_pwd"/>
+    </form>
+</div>  
+</div>
+<div class="mb_bg" style="opacity: 0.4;filter:alpha(opacity=40);"></div>
+<!-- 兑换密码start -->
+<div class="mb_dioalog02">
+	<div class="mb_tit02">请输入兑换密码</div>
+	<form action="" method="post" name="payPassword" id="form_paypsw">
+		<input type="password" value="" name="payment_pwd" class="payment_pwd" maxlength="6" placeholder="请输入兑换密码"/>
+		<a href="$!webPath/paymentpwd_forgot.htm" class="payment_a">忘记密码?</a>
+    </form>	
+	<div>
+		<span class="mb_nobtn02" style="cursor:pointer;margin-top:40px;">取消</span>
+		<span class="mb_okbtn02" style="cursor:pointer;margin-top:40px;">确定</span>
+	</div>
+</div>
+<!-- 兑换密码end  -->
+<!-- 设置兑换密码开始 --> 
+<div class="py_dioalog03">
+	<div class="mb_tit02">设置兑换密码</div>
+	<form action="$!webPath/modifypwd.htm" method="post" name="payPassword" id="set_paypsw">
+		<span class="py_txt01">设置密码：</span><input type="password" value="" name="set_pwd" class="payment_pwds" maxlength="6" placeholder="请设置6位数的兑换密码"/>
+		<span class="py_txt02">确认密码：</span><input type="password" value="" name="set_compwd" class="payment_pwds" maxlength="6" placeholder="请输入确认密码"/>
+    </form>	
+	<div>
+		<span class="mb_nobtn03" style="cursor:pointer;margin-top:40px;">取消</span>
+		<span class="mb_okbtn03" style="cursor:pointer;margin-top:40px;">确定</span>
+	</div>
+</div>
+<!-- 设置兑换密码结束 --> 
+$!httpInclude.include("/footer1.htm")
+<script>
+	$('.mb_okbtn02').click(function(){
+		/* var values=$('.payment_pwd').val().length; */
+		var values=$('.payment_pwd').val();
+		 var alen=values.length;
+		if(values==""){
+			alert("请输入兑换密码");
+			return false;
+		}else if(alen<6){
+			alert("输入的密码长度不够");
+		}else{
+			//var payment_pwd=$("#payment_pwd").val(values);
+			//加密
+			var shaObj = new amallEncryption(values);
+			 var str = shaObj.getHash();
+			 $("#payment_pwd").val(str);
+			$('#theForm').submit();
+		}
+	});
+	$('.mb_nobtn02').click(function(){
+		$('.mb_bg').fadeOut(500);
+		$('.mb_dioalog02').fadeOut(500);
+		return false;
+	});
+	
+	$(".mb_okbtn03").click(function(){
+		var payVal=$("input[name='set_pwd']").val();
+		var pycomval=$("input[name='set_compwd']").val();
+		var pylen=payVal.length;
+		if(payVal==""){
+			alert("请设置兑换密码");
+			return false;
+		}else if(pylen<6){
+			alert('密码长度不够');
+			return false;
+		}else if(pycomval==""){
+			alert('确认密码不能为空');
+			return false;
+		}else if(pycomval!=payVal){
+			alert('两次输入的密码不一致');
+			return false;
+		}else{
+			var shaObj = new amallEncryption($('.payment_pwds').val());
+			var str = shaObj.getHash();
+			$(".payment_pwds").val(str);
+			$("#set_paypsw").submit();
+		}
+	});
+	$(".mb_nobtn03").click(function(){
+		$('.mb_bg').fadeOut(500);
+		$('.py_dioalog03').fadeOut(500);
+	});
+</script>
+</body>
+</html>
+
+

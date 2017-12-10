@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>订单打印  </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/resources/style/system/front/default/css/seller.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+<div class="print_box">
+  <div class="print_left">
+    <h1>$!obj.store.storeName</h1>
+    <ul>
+      <li>收货人：$!obj.addr.truename</li>
+      <li>电话：$!obj.addr.telephone</li>
+      <li>所在地：$!{obj.addr.province} $!{obj.addr.city} $!{obj.addr.area}</li>
+      <li>地址：$!{obj.addr.areaInfo}</li>
+      <li>邮编：$!{obj.addr.zip}</li>
+      <li>订单号：$!obj.orderId</li>
+      <li>下单时间：$!CommUtil.formatLongDate($!obj.addtime)</li>
+      <li>发货单号：$!obj.shipcode</li>
+    </ul>
+    <div class="print_left_tb">
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="7%" align="center">序号</td>
+          <td width="55%">商品名称</td>
+          <td width="11%" align="center">规格</td>
+          <td width="10%" align="center">单价（元）</td>
+          <td width="7%" align="center">数量</td>
+          <td width="10%" align="center">小计（元）</td>
+        </tr>
+        #set($allCount = 0)
+        #foreach($gc in $obj.cart.cartDetailList)
+        #set($allCount = $!allCount + $!gc.goodsCount)
+        <tr>
+          <td height="38" align="center">$!velocityCount</td>
+          <td>$!{gc.goods.goodsName}#if($!gc.goods.groupBuy==2)<span style="color:#F00">(团购商品)</span>#end</td>
+          <td align="center">$!gc.specInfo</td>
+          <td align="center">￥#if($!gc.goods.groupBuy==2)$!{gc.goods.goodsCurrentPrice}#else $!{gc.goods.goodsPrice}#end</td>
+          <td align="center">$!gc.goodsCount</td>
+          #if($!gc.goods.groupBuy==2)
+          	#set($price = $!{gc.goods.goodsCurrentPrice}*$!{gc.goodsCount})
+          #else
+          	#set($price = $!{gc.goods.goodsPrice}*$!{gc.goodsCount})
+          #end
+          <td align="center"><strong style="color:#F90">¥$!price</strong></td>
+        </tr>
+        #end
+        <tr>
+          <td height="38" colspan="4" bgcolor="#eeeeee" style="padding-left:20px;">合计 </td>
+          <td align="center" bgcolor="#eeeeee">$!allCount</td>
+          <td align="center" bgcolor="#eeeeee">￥$!obj.totalprice</td>
+        </tr>
+        <tr>
+          <td colspan="6" height="60"><ul>
+              <li>总计:￥$!obj.goodsAmount</li>
+              <li>运费:￥$!{obj.shipPrice}</li>
+              <li>订单总额：￥$!{obj.totalprice}</li>
+              <li>店主名：$!obj.store.user.username</li>
+              <li>店铺：$!obj.store.storeName</li>
+              <li>电话：$!obj.store.storeTelephone</li>
+              <li>QQ：$!obj.store.storeQq</li>
+            </ul></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="print_right">
+    <h1><span><a href="javascript:void(0);" onclick="window.print()">打印</a></span></h1>
+    <p><img src="$!webPath/resources/style/system/front/default/images/usercenter/print_02.jpg" /><em>Size:210mmx297mm</em><b>当打印设置选择A4纸张、纵向打印、无边距时每张A4打印纸可输出1页订单。</b> </p>
+  </div>
+</div>
+</body>
+</html>

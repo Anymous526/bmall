@@ -1,0 +1,30 @@
+﻿	#if($!cds.size()>0)
+		#foreach($cd in $cds)
+			<div>
+			#set($photo = $!cd.goods.goodsMainPhoto)
+			#if($!photo)
+				#set($img = "$!{config.imagewebserver}/$!{photo.path}/$!{photo.name}")
+			#else
+				#set($img = "")
+			#end
+				<div style="float: left;width: 60px;height: 60px;border: solid thin black; margin:10px;" >
+					<a href="$!webPath/goods.htm?id=$!{cd.goods.id}" target="_blank"><img src="$!img"/></a>
+				</div>
+				<div style="width:160px;height: 80px;text-align: left;float: left;">
+					<a href="$!webPath/goods.htm?id=$!{cd.goods.id}" target="_blank">$!cd.goods.goodsName</a>
+					#foreach($pro in $cd.properties)
+						<font color="#ccc">$!pro.proValue</font>
+					#end
+				</div>
+				<div style="width:80px;height:80px;float: left;">$!cd.goods.goodsCurrentPrice</div>
+				<div style="float:left;height:80px;width:20px;line-height: 80px;">× $!cd.goodsCount</div>
+				<div style="height: 80px;line-height: 80px;"><a href="javascript:void(0);" onclick="deleteCart('$!cd.goodsCartId')">删除</a></div>
+				<div style="clear: both;"></div>
+			</div>
+		
+		#end
+		
+	#else
+		<div>暂时还没商品哦,先去逛逛吧</div>
+	#end	
+	

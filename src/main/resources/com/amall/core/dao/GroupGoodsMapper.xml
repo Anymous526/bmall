@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.GroupGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.GroupGoods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="gg_audit_time" property="ggAuditTime" jdbcType="TIMESTAMP" />
+    <result column="gg_count" property="ggCount" jdbcType="INTEGER" />
+    <result column="gg_def_count" property="ggDefCount" jdbcType="INTEGER" />
+    <result column="gg_group_count" property="ggGroupCount" jdbcType="INTEGER" />
+    <result column="gg_max_count" property="ggMaxCount" jdbcType="INTEGER" />
+    <result column="gg_min_count" property="ggMinCount" jdbcType="INTEGER" />
+    <result column="gg_name" property="ggName" jdbcType="VARCHAR" />
+    <result column="gg_price" property="ggPrice" jdbcType="DECIMAL" />
+    <result column="gg_rebate" property="ggRebate" jdbcType="DECIMAL" />
+    <result column="gg_recommend" property="ggRecommend" jdbcType="INTEGER" />
+    <result column="gg_recommend_time" property="ggRecommendTime" jdbcType="TIMESTAMP" />
+    <result column="gg_status" property="ggStatus" jdbcType="INTEGER" />
+    <result column="gg_vir_count" property="ggVirCount" jdbcType="INTEGER" />
+    <result column="gg_ga_id" property="ggGaId" jdbcType="BIGINT" />
+    <result column="gg_gc_id" property="ggGcId" jdbcType="BIGINT" />
+    <result column="gg_goods_id" property="ggGoodsId" jdbcType="BIGINT" />
+    <result column="gg_img_id" property="ggImgId" jdbcType="BIGINT" />
+    <result column="gg_img_id2" property="ggImgId2" jdbcType="BIGINT" />
+	<result column="gg_img_id3" property="ggImgId3" jdbcType="BIGINT" />
+    <result column="group_id" property="groupId" jdbcType="BIGINT" />
+    <result column="weixin_shop_recommend" property="weixinShopRecommend" jdbcType="BIT" />
+    <result column="weixin_shop_recommendTime" property="weixinShopRecommendtime" jdbcType="DATE" />
+    <association property="group" column="group_id" javaType="com.amall.core.bean.Group" select="com.amall.core.dao.GroupMapper.selectByPrimaryKey"/>
+    <association property="ggGc" column="gg_gc_id" javaType="com.amall.core.bean.GroupClass" select="com.amall.core.dao.GroupClassMapper.selectByPrimaryKey"/>
+    <association property="ggGa" column="gg_ga_id" javaType="com.amall.core.bean.GroupArea" select="com.amall.core.dao.GroupAreaMapper.selectByPrimaryKey"/>
+    <association property="ggGoods" column="gg_goods_id" javaType="com.amall.core.bean.GoodsWithBLOBs" select="com.amall.core.dao.GoodsMapper.selectByPrimaryKey"/>
+    <association property="ggImg" column="gg_img_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="ggImg2" column="gg_img_id2" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>   
+ <association property="ggImg3" column="gg_img_id3" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>      	
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.GroupGoods" extends="BaseResultMap" >
+    <result column="gg_content" property="ggContent" jdbcType="LONGVARCHAR" />
+    <result column="gg_pack_list" property="ggPackList" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, gg_audit_time, gg_count, gg_def_count, gg_group_count, 
+    gg_max_count, gg_min_count, gg_name, gg_price, gg_rebate, gg_recommend, gg_recommend_time,gg_img_id3, 
+    gg_status, gg_vir_count, gg_ga_id, gg_gc_id, gg_goods_id, gg_img_id,gg_img_id2, group_id, weixin_shop_recommend, 
+    weixin_shop_recommendTime
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    gg_content, gg_pack_list
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GroupGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_group_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GroupGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_group_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.GroupGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_group_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_group_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_group_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.GroupGoodsExample" >
+    delete from amall_group_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if> 
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.GroupGoods" >
+    insert into amall_group_goods (  id, addTime, deleteStatus, 
+      gg_audit_time, gg_count, gg_def_count, 
+      gg_group_count, gg_max_count, gg_min_count, 
+      gg_name, gg_price, gg_rebate, 
+      gg_recommend, gg_recommend_time, gg_status, 
+      gg_vir_count, gg_ga_id, gg_gc_id, gg_img_id3,
+      gg_goods_id, gg_img_id,gg_img_id2, group_id, 
+      weixin_shop_recommend, weixin_shop_recommendTime, 
+      gg_content,gg_pack_list)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{ggAuditTime,jdbcType=TIMESTAMP}, #{ggCount,jdbcType=INTEGER}, #{ggDefCount,jdbcType=INTEGER}, 
+      #{ggGroupCount,jdbcType=INTEGER}, #{ggMaxCount,jdbcType=INTEGER}, #{ggMinCount,jdbcType=INTEGER}, 
+      #{ggName,jdbcType=VARCHAR}, #{ggPrice,jdbcType=DECIMAL}, #{ggRebate,jdbcType=DECIMAL}, 
+      #{ggRecommend,jdbcType=INTEGER}, #{ggRecommendTime,jdbcType=TIMESTAMP}, #{ggStatus,jdbcType=INTEGER}, 
+      #{ggVirCount,jdbcType=INTEGER}, #{ggGaId,jdbcType=BIGINT}, #{ggGcId,jdbcType=BIGINT}, #{ggImgId3,jdbcType=BIGINT},
+      #{ggGoodsId,jdbcType=BIGINT}, #{ggImgId,jdbcType=BIGINT},#{ggImgId2,jdbcType=BIGINT}, #{groupId,jdbcType=BIGINT}, 
+      #{weixinShopRecommend,jdbcType=BIT}, #{weixinShopRecommendtime,jdbcType=DATE}, 
+      #{ggContent,jdbcType=LONGVARCHAR}, #{ggPackList,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.GroupGoods" >
+    
+    insert into amall_group_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="ggAuditTime != null" >
+        gg_audit_time,
+      </if>
+      <if test="ggCount != null" >
+        gg_count,
+      </if>
+      <if test="ggDefCount != null" >
+        gg_def_count,
+      </if>
+      <if test="ggGroupCount != null" >
+        gg_group_count,
+      </if>
+      <if test="ggMaxCount != null" >
+        gg_max_count,
+      </if>
+      <if test="ggMinCount != null" >
+        gg_min_count,
+      </if>
+      <if test="ggName != null" >
+        gg_name,
+      </if>
+      <if test="ggPrice != null" >
+        gg_price,
+      </if>
+      <if test="ggRebate != null" >
+        gg_rebate,
+      </if>
+      <if test="ggRecommend != null" >
+        gg_recommend,
+      </if>
+      <if test="ggRecommendTime != null" >
+        gg_recommend_time,
+      </if>
+      <if test="ggStatus != null" >
+        gg_status,
+      </if>
+      <if test="ggVirCount != null" >
+        gg_vir_count,
+      </if>
+      <if test="ggGaId != null" >
+        gg_ga_id,
+      </if>
+      <if test="ggGcId != null" >
+        gg_gc_id,
+      </if>
+      <if test="ggGoodsId != null" >
+        gg_goods_id,
+      </if>
+      <if test="ggImgId != null" >
+        gg_img_id,
+      </if>
+      <if test="ggImgId2 != null" >
+        gg_img_id2,
+      </if>
+	  <if test="ggImgId3 != null" >
+        gg_img_id3,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="weixinShopRecommend != null" >
+        weixin_shop_recommend,
+      </if>
+      <if test="weixinShopRecommendtime != null" >
+        weixin_shop_recommendTime,
+      </if>
+      <if test="ggContent != null" >
+        gg_content,
+      </if>
+      <if test="ggPackList != null" >
+        gg_pack_list,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="ggAuditTime != null" >
+        #{ggAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ggCount != null" >
+        #{ggCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggDefCount != null" >
+        #{ggDefCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggGroupCount != null" >
+        #{ggGroupCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggMaxCount != null" >
+        #{ggMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggMinCount != null" >
+        #{ggMinCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggName != null" >
+        #{ggName,jdbcType=VARCHAR},
+      </if>
+      <if test="ggPrice != null" >
+        #{ggPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ggRebate != null" >
+        #{ggRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="ggRecommend != null" >
+        #{ggRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="ggRecommendTime != null" >
+        #{ggRecommendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ggStatus != null" >
+        #{ggStatus,jdbcType=INTEGER},
+      </if>
+      <if test="ggVirCount != null" >
+        #{ggVirCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggGaId != null" >
+        #{ggGaId,jdbcType=BIGINT},
+      </if>
+      <if test="ggGcId != null" >
+        #{ggGcId,jdbcType=BIGINT},
+      </if>
+      <if test="ggGoodsId != null" >
+        #{ggGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="ggImgId != null" >
+        #{ggImgId,jdbcType=BIGINT},
+      </if>
+      <if test="ggImgId2 != null" >
+        #{ggImgId2,jdbcType=BIGINT},
+      </if>
+	  <if test="ggImgId3 != null" >
+        #{ggImgId3,jdbcType=BIGINT},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinShopRecommend != null" >
+        #{weixinShopRecommend,jdbcType=BIT},
+      </if>
+      <if test="weixinShopRecommendtime != null" >
+        #{weixinShopRecommendtime,jdbcType=DATE},
+      </if>
+      <if test="ggContent != null" >
+        #{ggContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ggPackList != null" >
+        #{ggPackList,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.GroupGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from amall_group_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_group_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.ggAuditTime != null" >
+        gg_audit_time = #{record.ggAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ggCount != null" >
+        gg_count = #{record.ggCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggDefCount != null" >
+        gg_def_count = #{record.ggDefCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggGroupCount != null" >
+        gg_group_count = #{record.ggGroupCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggMaxCount != null" >
+        gg_max_count = #{record.ggMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggMinCount != null" >
+        gg_min_count = #{record.ggMinCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggName != null" >
+        gg_name = #{record.ggName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ggPrice != null" >
+        gg_price = #{record.ggPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ggRebate != null" >
+        gg_rebate = #{record.ggRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ggRecommend != null" >
+        gg_recommend = #{record.ggRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggRecommendTime != null" >
+        gg_recommend_time = #{record.ggRecommendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ggStatus != null" >
+        gg_status = #{record.ggStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggVirCount != null" >
+        gg_vir_count = #{record.ggVirCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ggGaId != null" >
+        gg_ga_id = #{record.ggGaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ggGcId != null" >
+        gg_gc_id = #{record.ggGcId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ggGoodsId != null" >
+        gg_goods_id = #{record.ggGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ggImgId != null" >
+        gg_img_id = #{record.ggImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.ggImgId2 != null" >
+        gg_img_id2 = #{record.ggImgId2,jdbcType=BIGINT},
+      </if>
+	  <if test="record.ggImgId3 != null" >
+        gg_img_id3 = #{record.ggImgId3,jdbcType=BIGINT},
+      </if>
+      <if test="record.groupId != null" >
+        group_id = #{record.groupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weixinShopRecommend != null" >
+        weixin_shop_recommend = #{record.weixinShopRecommend,jdbcType=BIT},
+      </if>
+      <if test="record.weixinShopRecommendtime != null" >
+        weixin_shop_recommendTime = #{record.weixinShopRecommendtime,jdbcType=DATE},
+      </if>
+      <if test="record.ggContent != null" >
+        gg_content = #{record.ggContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.ggPackList != null" >
+        gg_pack_list = #{record.ggPackList,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_group_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      gg_audit_time = #{record.ggAuditTime,jdbcType=TIMESTAMP},
+      gg_count = #{record.ggCount,jdbcType=INTEGER},
+      gg_def_count = #{record.ggDefCount,jdbcType=INTEGER},
+      gg_group_count = #{record.ggGroupCount,jdbcType=INTEGER},
+      gg_max_count = #{record.ggMaxCount,jdbcType=INTEGER},
+      gg_min_count = #{record.ggMinCount,jdbcType=INTEGER},
+      gg_name = #{record.ggName,jdbcType=VARCHAR},
+      gg_price = #{record.ggPrice,jdbcType=DECIMAL},
+      gg_rebate = #{record.ggRebate,jdbcType=DECIMAL},
+      gg_recommend = #{record.ggRecommend,jdbcType=INTEGER},
+      gg_recommend_time = #{record.ggRecommendTime,jdbcType=TIMESTAMP},
+      gg_status = #{record.ggStatus,jdbcType=INTEGER},
+      gg_vir_count = #{record.ggVirCount,jdbcType=INTEGER},
+      gg_ga_id = #{record.ggGaId,jdbcType=BIGINT},
+      gg_gc_id = #{record.ggGcId,jdbcType=BIGINT},
+      gg_goods_id = #{record.ggGoodsId,jdbcType=BIGINT},
+      gg_img_id = #{record.ggImgId,jdbcType=BIGINT},
+      gg_img_id2 = #{record.ggImgId2,jdbcType=BIGINT},
+	  gg_img_id3 = #{record.ggImgId3,jdbcType=BIGINT},
+      group_id = #{record.groupId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{record.weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{record.weixinShopRecommendtime,jdbcType=DATE},
+      gg_content = #{record.ggContent,jdbcType=LONGVARCHAR},
+      gg_pack_list = #{record.ggPackList,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_group_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      gg_audit_time = #{record.ggAuditTime,jdbcType=TIMESTAMP},
+      gg_count = #{record.ggCount,jdbcType=INTEGER},
+      gg_def_count = #{record.ggDefCount,jdbcType=INTEGER},
+      gg_group_count = #{record.ggGroupCount,jdbcType=INTEGER},
+      gg_max_count = #{record.ggMaxCount,jdbcType=INTEGER},
+      gg_min_count = #{record.ggMinCount,jdbcType=INTEGER},
+      gg_name = #{record.ggName,jdbcType=VARCHAR},
+      gg_price = #{record.ggPrice,jdbcType=DECIMAL},
+      gg_rebate = #{record.ggRebate,jdbcType=DECIMAL},
+      gg_recommend = #{record.ggRecommend,jdbcType=INTEGER},
+      gg_recommend_time = #{record.ggRecommendTime,jdbcType=TIMESTAMP},
+      gg_status = #{record.ggStatus,jdbcType=INTEGER},
+      gg_vir_count = #{record.ggVirCount,jdbcType=INTEGER},
+      gg_ga_id = #{record.ggGaId,jdbcType=BIGINT},
+      gg_gc_id = #{record.ggGcId,jdbcType=BIGINT},
+      gg_goods_id = #{record.ggGoodsId,jdbcType=BIGINT},
+      gg_img_id = #{record.ggImgId,jdbcType=BIGINT},
+      gg_img_id2 = #{record.ggImgId2,jdbcType=BIGINT},
+	  gg_img_id3 = #{record.ggImgId3,jdbcType=BIGINT},
+      group_id = #{record.groupId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{record.weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{record.weixinShopRecommendtime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.GroupGoods" >
+    update amall_group_goods
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="ggAuditTime != null" >
+        gg_audit_time = #{ggAuditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ggCount != null" >
+        gg_count = #{ggCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggDefCount != null" >
+        gg_def_count = #{ggDefCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggGroupCount != null" >
+        gg_group_count = #{ggGroupCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggMaxCount != null" >
+        gg_max_count = #{ggMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggMinCount != null" >
+        gg_min_count = #{ggMinCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggName != null" >
+        gg_name = #{ggName,jdbcType=VARCHAR},
+      </if>
+      <if test="ggPrice != null" >
+        gg_price = #{ggPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="ggRebate != null" >
+        gg_rebate = #{ggRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="ggRecommend != null" >
+        gg_recommend = #{ggRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="ggRecommendTime != null" >
+        gg_recommend_time = #{ggRecommendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ggStatus != null" >
+        gg_status = #{ggStatus,jdbcType=INTEGER},
+      </if>
+      <if test="ggVirCount != null" >
+        gg_vir_count = #{ggVirCount,jdbcType=INTEGER},
+      </if>
+      <if test="ggGaId != null" >
+        gg_ga_id = #{ggGaId,jdbcType=BIGINT},
+      </if>
+      <if test="ggGcId != null" >
+        gg_gc_id = #{ggGcId,jdbcType=BIGINT},
+      </if>
+      <if test="ggGoodsId != null" >
+        gg_goods_id = #{ggGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="ggImgId != null" >
+        gg_img_id = #{ggImgId,jdbcType=BIGINT},
+      </if>
+      <if test="ggImgId2 != null" >
+        gg_img_id2 = #{ggImgId2,jdbcType=BIGINT},
+      </if>
+	  <if test="ggImgId3 != null" >
+        gg_img_id3 = #{ggImgId3,jdbcType=BIGINT},
+      </if>
+      <if test="groupId != null" >
+        group_id = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinShopRecommend != null" >
+        weixin_shop_recommend = #{weixinShopRecommend,jdbcType=BIT},
+      </if>
+      <if test="weixinShopRecommendtime != null" >
+        weixin_shop_recommendTime = #{weixinShopRecommendtime,jdbcType=DATE},
+      </if>
+      <if test="ggContent != null" >
+        gg_content = #{ggContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="ggPackList != null" >
+        gg_pack_list = #{ggPackList,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.GroupGoods" >
+    update amall_group_goods
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      gg_audit_time = #{ggAuditTime,jdbcType=TIMESTAMP},
+      gg_count = #{ggCount,jdbcType=INTEGER},
+      gg_def_count = #{ggDefCount,jdbcType=INTEGER},
+      gg_group_count = #{ggGroupCount,jdbcType=INTEGER},
+      gg_max_count = #{ggMaxCount,jdbcType=INTEGER},
+      gg_min_count = #{ggMinCount,jdbcType=INTEGER},
+      gg_name = #{ggName,jdbcType=VARCHAR},
+      gg_price = #{ggPrice,jdbcType=DECIMAL},
+      gg_rebate = #{ggRebate,jdbcType=DECIMAL},
+      gg_recommend = #{ggRecommend,jdbcType=INTEGER},
+      gg_recommend_time = #{ggRecommendTime,jdbcType=TIMESTAMP},
+      gg_status = #{ggStatus,jdbcType=INTEGER},
+      gg_vir_count = #{ggVirCount,jdbcType=INTEGER},
+      gg_ga_id = #{ggGaId,jdbcType=BIGINT},
+      gg_gc_id = #{ggGcId,jdbcType=BIGINT},
+      gg_goods_id = #{ggGoodsId,jdbcType=BIGINT},
+      gg_img_id = #{ggImgId,jdbcType=BIGINT},
+      gg_img_id2 = #{ggImgId2,jdbcType=BIGINT},
+	  gg_img_id3 = #{ggImgId3,jdbcType=BIGINT},
+      group_id = #{groupId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{weixinShopRecommendtime,jdbcType=DATE},
+      gg_content = #{ggContent,jdbcType=LONGVARCHAR},
+      gg_pack_list = #{ggPackList,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.GroupGoods" >
+    update amall_group_goods
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      gg_audit_time = #{ggAuditTime,jdbcType=TIMESTAMP},
+      gg_count = #{ggCount,jdbcType=INTEGER},
+      gg_def_count = #{ggDefCount,jdbcType=INTEGER},
+      gg_group_count = #{ggGroupCount,jdbcType=INTEGER},
+      gg_max_count = #{ggMaxCount,jdbcType=INTEGER},
+      gg_min_count = #{ggMinCount,jdbcType=INTEGER},
+      gg_name = #{ggName,jdbcType=VARCHAR},
+      gg_price = #{ggPrice,jdbcType=DECIMAL},
+      gg_rebate = #{ggRebate,jdbcType=DECIMAL},
+      gg_recommend = #{ggRecommend,jdbcType=INTEGER},
+      gg_recommend_time = #{ggRecommendTime,jdbcType=TIMESTAMP},
+      gg_status = #{ggStatus,jdbcType=INTEGER},
+      gg_vir_count = #{ggVirCount,jdbcType=INTEGER},
+      gg_ga_id = #{ggGaId,jdbcType=BIGINT},
+      gg_gc_id = #{ggGcId,jdbcType=BIGINT},
+      gg_goods_id = #{ggGoodsId,jdbcType=BIGINT},
+      gg_img_id = #{ggImgId,jdbcType=BIGINT},
+      gg_img_id2 = #{ggImgId2,jdbcType=BIGINT},
+	  gg_img_id3 = #{ggImgId3,jdbcType=BIGINT},
+      group_id = #{groupId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{weixinShopRecommendtime,jdbcType=DATE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

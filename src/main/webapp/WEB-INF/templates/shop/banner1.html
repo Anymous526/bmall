@@ -1,0 +1,35 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/amall_big_banner.css">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css" />
+</head>
+<body>
+
+<div id="amall_big_banner">
+  <div id="fwslider">
+    <div class="slider_container">
+      <ul>
+      	#if($obj)
+		  #set($i=0)
+		  #foreach($adv in $obj.advs)
+			<li class="slide slide_item1">
+				<a href='$!webPath/advert_redirect.htm?url=$!adv.adUrl&id=$!adv.id' target='_blank'><img src="$!{config.imagewebserver}/$!adv.adAcc.path/$!adv.adAcc.name" width="100%;" /></a>
+			</li>
+		  #set($i=$i+1)
+		  #end
+		  #end
+      </ul>
+    </div>
+    <div class="timers"></div>
+    <div class="slidePrev"><span class="pngFix"></span></div>
+    <div class="slideNext"><span class="pngFix"></span></div>
+  </div>
+</div>
+
+<script type="text/javascript" src="assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="assets/js/jquery-ui.js"></script> 
+<script type="text/javascript" src="assets/js/fwslider.js"></script>
+</body>
+</html>

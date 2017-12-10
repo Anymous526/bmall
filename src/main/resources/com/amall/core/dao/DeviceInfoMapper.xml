@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.DeviceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.DeviceInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="add_time" property="addTime" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="sercret" property="sercret" jdbcType="VARCHAR" />
+    <result column="device_info" property="deviceInfo" jdbcType="VARCHAR" />
+    <result column="device_type" property="deviceType" jdbcType="VARCHAR" />
+    <result column="device_system_version" property="deviceSystemVersion" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="app_version" property="appVersion" jdbcType="VARCHAR" />
+    <result column="device_uuid" property="deviceUuid" jdbcType="VARCHAR" />
+    <result column="device_brand" property="deviceBrand" jdbcType="VARCHAR" />
+    <result column="registration_ID" property="registrationId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, add_time, token, sercret, device_info, device_type, device_system_version, user_id, 
+    app_version, device_uuid, device_brand,registration_ID
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.DeviceInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_device_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_device_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_device_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.DeviceInfoExample" >
+    delete from amall_device_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.DeviceInfo" >
+    insert into amall_device_info (id, add_time, token, 
+      sercret, device_info, device_type, 
+      device_system_version, user_id, app_version, 
+      device_uuid, device_brand,registration_ID)
+    values (#{id,jdbcType=BIGINT}, #{addTime,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
+      #{sercret,jdbcType=VARCHAR}, #{deviceInfo,jdbcType=VARCHAR}, #{deviceType,jdbcType=VARCHAR}, 
+      #{deviceSystemVersion,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, #{appVersion,jdbcType=VARCHAR}, 
+      #{deviceUuid,jdbcType=VARCHAR}, #{deviceBrand,jdbcType=VARCHAR},#{registrationId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.DeviceInfo" >
+    insert into amall_device_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="sercret != null" >
+        sercret,
+      </if>
+      <if test="deviceInfo != null" >
+        device_info,
+      </if>
+      <if test="deviceType != null" >
+        device_type,
+      </if>
+      <if test="deviceSystemVersion != null" >
+        device_system_version,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="appVersion != null" >
+        app_version,
+      </if>
+      <if test="deviceUuid != null" >
+        device_uuid,
+      </if>
+      <if test="deviceBrand != null" >
+        device_brand,
+      </if>
+       <if test="registrationId != null" >
+        registration_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="sercret != null" >
+        #{sercret,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSystemVersion != null" >
+        #{deviceSystemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="appVersion != null" >
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceUuid != null" >
+        #{deviceUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceBrand != null" >
+        #{deviceBrand,jdbcType=VARCHAR},
+      </if>
+       <if test="registrationId != null" >
+        #{registrationId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.DeviceInfoExample" resultType="java.lang.Integer" >
+    select count(*) from amall_device_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_device_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.token != null" >
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sercret != null" >
+        sercret = #{record.sercret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceInfo != null" >
+        device_info = #{record.deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceType != null" >
+        device_type = #{record.deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceSystemVersion != null" >
+        device_system_version = #{record.deviceSystemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.appVersion != null" >
+        app_version = #{record.appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceUuid != null" >
+        device_uuid = #{record.deviceUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceBrand != null" >
+        device_brand = #{record.deviceBrand,jdbcType=VARCHAR},
+      </if>
+       <if test="record.registrationId != null" >
+        registration_ID = #{record.registrationId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_device_info
+    set id = #{record.id,jdbcType=BIGINT},
+      add_time = #{record.addTime,jdbcType=VARCHAR},
+      token = #{record.token,jdbcType=VARCHAR},
+      sercret = #{record.sercret,jdbcType=VARCHAR},
+      device_info = #{record.deviceInfo,jdbcType=VARCHAR},
+      device_type = #{record.deviceType,jdbcType=VARCHAR},
+      device_system_version = #{record.deviceSystemVersion,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      app_version = #{record.appVersion,jdbcType=VARCHAR},
+      device_uuid = #{record.deviceUuid,jdbcType=VARCHAR},
+      device_brand = #{record.deviceBrand,jdbcType=VARCHAR},
+       registration_ID = #{record.registrationId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.DeviceInfo" >
+    update amall_device_info
+    <set >
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=VARCHAR},
+      </if>
+      <if test="token != null" >
+        token = #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="sercret != null" >
+        sercret = #{sercret,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInfo != null" >
+        device_info = #{deviceInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceType != null" >
+        device_type = #{deviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceSystemVersion != null" >
+        device_system_version = #{deviceSystemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="appVersion != null" >
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceUuid != null" >
+        device_uuid = #{deviceUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceBrand != null" >
+        device_brand = #{deviceBrand,jdbcType=VARCHAR},
+      </if>
+       <if test="registrationId != null" >
+        registration_ID = #{registrationId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.DeviceInfo" >
+    update amall_device_info
+    set add_time = #{addTime,jdbcType=VARCHAR},
+      token = #{token,jdbcType=VARCHAR},
+      sercret = #{sercret,jdbcType=VARCHAR},
+      device_info = #{deviceInfo,jdbcType=VARCHAR},
+      device_type = #{deviceType,jdbcType=VARCHAR},
+      device_system_version = #{deviceSystemVersion,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      device_uuid = #{deviceUuid,jdbcType=VARCHAR},
+      device_brand = #{deviceBrand,jdbcType=VARCHAR},
+       registration_ID = #{registrationId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

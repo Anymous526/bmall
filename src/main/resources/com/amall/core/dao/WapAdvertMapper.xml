@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.WapAdvertMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.WapAdvert" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="ad_begin_time" property="adBeginTime" jdbcType="TIMESTAMP" />
+    <result column="ad_click_num" property="adClickNum" jdbcType="INTEGER" />
+    <result column="ad_end_time" property="adEndTime" jdbcType="TIMESTAMP" />
+    <result column="ad_gold" property="adGold" jdbcType="INTEGER" />
+    <result column="ad_slide_sequence" property="adSlideSequence" jdbcType="INTEGER" />
+    <result column="ad_status" property="adStatus" jdbcType="INTEGER" />
+    <result column="ad_text" property="adText" jdbcType="VARCHAR" />
+    <result column="ad_title" property="adTitle" jdbcType="VARCHAR" />
+    <result column="ad_url" property="adUrl" jdbcType="VARCHAR" />
+    <result column="ad_acc_id" property="adAccId" jdbcType="BIGINT" />
+    <result column="ad_ap_id" property="adApId" jdbcType="BIGINT" />
+    <result column="ad_user_id" property="adUserId" jdbcType="BIGINT" />
+    
+    <association property="adAcc" column="ad_acc_id" javaType="com.amall.core.bean.Accessory"
+    			select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="adUser" column="ad_user_id" javaType="com.amall.core.bean.User"
+    			select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="adAp" column="ad_ap_id" javaType="com.amall.core.bean.WapAdvertPositionWithBLOBs"
+    			select="com.amall.core.dao.WapAdvertPositionMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, deleteStatus, ad_begin_time, ad_click_num, ad_end_time, ad_gold, ad_slide_sequence, 
+    ad_status, ad_text, ad_title, ad_url, ad_acc_id, ad_ap_id, ad_user_id
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.WapAdvertExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_wap_advert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+   <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.WapAdvertExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_wap_advert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_wap_advert
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_wap_advert
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.WapAdvertExample" >
+    delete from amall_wap_advert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.WapAdvert" >
+    insert into amall_wap_advert (id, addTime, deleteStatus, 
+      ad_begin_time, ad_click_num, ad_end_time, 
+      ad_gold, ad_slide_sequence, ad_status, 
+      ad_text, ad_title, ad_url, 
+      ad_acc_id, ad_ap_id, ad_user_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{adBeginTime,jdbcType=TIMESTAMP}, #{adClickNum,jdbcType=INTEGER}, #{adEndTime,jdbcType=TIMESTAMP}, 
+      #{adGold,jdbcType=INTEGER}, #{adSlideSequence,jdbcType=INTEGER}, #{adStatus,jdbcType=INTEGER}, 
+      #{adText,jdbcType=VARCHAR}, #{adTitle,jdbcType=VARCHAR}, #{adUrl,jdbcType=VARCHAR}, 
+      #{adAccId,jdbcType=BIGINT}, #{adApId,jdbcType=BIGINT}, #{adUserId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.WapAdvert" >
+    insert into amall_wap_advert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="adBeginTime != null" >
+        ad_begin_time,
+      </if>
+      <if test="adClickNum != null" >
+        ad_click_num,
+      </if>
+      <if test="adEndTime != null" >
+        ad_end_time,
+      </if>
+      <if test="adGold != null" >
+        ad_gold,
+      </if>
+      <if test="adSlideSequence != null" >
+        ad_slide_sequence,
+      </if>
+      <if test="adStatus != null" >
+        ad_status,
+      </if>
+      <if test="adText != null" >
+        ad_text,
+      </if>
+      <if test="adTitle != null" >
+        ad_title,
+      </if>
+      <if test="adUrl != null" >
+        ad_url,
+      </if>
+      <if test="adAccId != null" >
+        ad_acc_id,
+      </if>
+      <if test="adApId != null" >
+        ad_ap_id,
+      </if>
+      <if test="adUserId != null" >
+        ad_user_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="adBeginTime != null" >
+        #{adBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adClickNum != null" >
+        #{adClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="adEndTime != null" >
+        #{adEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adGold != null" >
+        #{adGold,jdbcType=INTEGER},
+      </if>
+      <if test="adSlideSequence != null" >
+        #{adSlideSequence,jdbcType=INTEGER},
+      </if>
+      <if test="adStatus != null" >
+        #{adStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adText != null" >
+        #{adText,jdbcType=VARCHAR},
+      </if>
+      <if test="adTitle != null" >
+        #{adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adUrl != null" >
+        #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adAccId != null" >
+        #{adAccId,jdbcType=BIGINT},
+      </if>
+      <if test="adApId != null" >
+        #{adApId,jdbcType=BIGINT},
+      </if>
+      <if test="adUserId != null" >
+        #{adUserId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.WapAdvertExample" resultType="java.lang.Integer" >
+    select count(*) from amall_wap_advert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_wap_advert
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.adBeginTime != null" >
+        ad_begin_time = #{record.adBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adClickNum != null" >
+        ad_click_num = #{record.adClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.adEndTime != null" >
+        ad_end_time = #{record.adEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.adGold != null" >
+        ad_gold = #{record.adGold,jdbcType=INTEGER},
+      </if>
+      <if test="record.adSlideSequence != null" >
+        ad_slide_sequence = #{record.adSlideSequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.adStatus != null" >
+        ad_status = #{record.adStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.adText != null" >
+        ad_text = #{record.adText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adTitle != null" >
+        ad_title = #{record.adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adUrl != null" >
+        ad_url = #{record.adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.adAccId != null" >
+        ad_acc_id = #{record.adAccId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adApId != null" >
+        ad_ap_id = #{record.adApId,jdbcType=BIGINT},
+      </if>
+      <if test="record.adUserId != null" >
+        ad_user_id = #{record.adUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_wap_advert
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      ad_begin_time = #{record.adBeginTime,jdbcType=TIMESTAMP},
+      ad_click_num = #{record.adClickNum,jdbcType=INTEGER},
+      ad_end_time = #{record.adEndTime,jdbcType=TIMESTAMP},
+      ad_gold = #{record.adGold,jdbcType=INTEGER},
+      ad_slide_sequence = #{record.adSlideSequence,jdbcType=INTEGER},
+      ad_status = #{record.adStatus,jdbcType=INTEGER},
+      ad_text = #{record.adText,jdbcType=VARCHAR},
+      ad_title = #{record.adTitle,jdbcType=VARCHAR},
+      ad_url = #{record.adUrl,jdbcType=VARCHAR},
+      ad_acc_id = #{record.adAccId,jdbcType=BIGINT},
+      ad_ap_id = #{record.adApId,jdbcType=BIGINT},
+      ad_user_id = #{record.adUserId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.WapAdvert" >
+    update amall_wap_advert
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="adBeginTime != null" >
+        ad_begin_time = #{adBeginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adClickNum != null" >
+        ad_click_num = #{adClickNum,jdbcType=INTEGER},
+      </if>
+      <if test="adEndTime != null" >
+        ad_end_time = #{adEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="adGold != null" >
+        ad_gold = #{adGold,jdbcType=INTEGER},
+      </if>
+      <if test="adSlideSequence != null" >
+        ad_slide_sequence = #{adSlideSequence,jdbcType=INTEGER},
+      </if>
+      <if test="adStatus != null" >
+        ad_status = #{adStatus,jdbcType=INTEGER},
+      </if>
+      <if test="adText != null" >
+        ad_text = #{adText,jdbcType=VARCHAR},
+      </if>
+      <if test="adTitle != null" >
+        ad_title = #{adTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="adUrl != null" >
+        ad_url = #{adUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="adAccId != null" >
+        ad_acc_id = #{adAccId,jdbcType=BIGINT},
+      </if>
+      <if test="adApId != null" >
+        ad_ap_id = #{adApId,jdbcType=BIGINT},
+      </if>
+      <if test="adUserId != null" >
+        ad_user_id = #{adUserId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.WapAdvert" >
+    update amall_wap_advert
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      ad_begin_time = #{adBeginTime,jdbcType=TIMESTAMP},
+      ad_click_num = #{adClickNum,jdbcType=INTEGER},
+      ad_end_time = #{adEndTime,jdbcType=TIMESTAMP},
+      ad_gold = #{adGold,jdbcType=INTEGER},
+      ad_slide_sequence = #{adSlideSequence,jdbcType=INTEGER},
+      ad_status = #{adStatus,jdbcType=INTEGER},
+      ad_text = #{adText,jdbcType=VARCHAR},
+      ad_title = #{adTitle,jdbcType=VARCHAR},
+      ad_url = #{adUrl,jdbcType=VARCHAR},
+      ad_acc_id = #{adAccId,jdbcType=BIGINT},
+      ad_ap_id = #{adApId,jdbcType=BIGINT},
+      ad_user_id = #{adUserId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

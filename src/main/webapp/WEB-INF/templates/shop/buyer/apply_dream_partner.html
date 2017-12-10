@@ -1,0 +1,389 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>梦想会员申请</title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<!--  <link href="$!webPath/resources/style/system/front/default/css/goods1.css" type="text/css" rel="stylesheet" />-->
+
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" /><!-- 大方块样式 -->
+<!-- 买家中心模块 -->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css"/>
+<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<style type="text/css">
+tr,td{margin: 0px;list-style: none;}
+tr,td{}
+
+.create_guide_one{width: 830px;height: 40px;float:left;overflow: hidden; }
+.create_guide_one *{width: 172px;height: 30px;float: left;margin-left:10px;}
+.create_guide_one span{height: 30px;line-height: 30px; font-size: 14px;color: #fff;text-align: center;margin-top: 10px;}
+.create_guide_img_span_1{background-image:url($!webPath/assets/img/create_guide_1.png);}
+.create_guide_img_span_2{margin-left:-8px; background-image:url($!webPath/assets/img/create_guide_2.png);}
+.create_guide_img_span_2_1{margin-left:-8px; background-image:url($!webPath/assets/img/create_guide_2_1.png);}
+.create_second_cn_box{width: 830px;height:auto; float:left;margin-top:20px;border-style: none; }
+/*申请开店步骤2：填写信息*/
+.create_second_cn_title_box{width:120px; height: 30px; color: #323232;float:left; margin-left:50px;}
+.create_second_cn_title{line-height: 30px; font-size: 16px;font-weight:800;text-align:right;}
+.create_second_cn_table td{padding-top:5px; padding-bottom:5px;}
+.create_second_cn_table_left{padding-right:15px; text-align:right;color: #646464}
+.create_second_cn_table_text input{height:30px; padding-left:5px; line-height:30px; width:300px;}
+.create_second_cn_table_text select{height:26px; padding-left:5px; line-height:26px; width:309px;}
+.create_second_cn_table_text_ad select{height:30px; width:100px;}
+.create_second_cn_table_opensfile input{height:26px; width:180px; margin-right:5px;cursor: pointer;}
+.opensfile_tip{width: 280px;float:left;margin-left:-50px; line-height:22px;}
+.opensfile_tip2{width: 280px;float:left;margin-left:-50px; line-height:26px;}
+.create_store_add_img_box img{width:120px; height:120px;background-image:url($!webPath/assets/img/create_store_add_img.png);display:block;}
+.create_store_add_txt_box1 img{width:301px; height:120px;background-image:url($!webPath/assets/img/create_store_add_img1.png);display:block;}
+.create_store_add_txt_box2 img{width:301px; height:120px;background-image:url($!webPath/assets/img/create_store_add_img2.png);display:block;}
+
+.create_second_store_btn_box{height: 60px;margin-bottom:20px;}
+.create_second_store_back_box input{background-color:#ededed;border:1px solid #707070; float:left;margin-left:245px; width:100px;height:24px; font-size:12px;cursor:pointer;}
+.create_second_store_next_box input{float:left;margin-left:20px; width:180px;height:24px;color:#FFF;font-size:12px; cursor:pointer}
+.create_second_store_next_box input{background-color:#2d6ad6;border:1px solid #0f5db4;}
+.create_second_store_next_box input:hover{background-color:#3a75de;border:1px solid #1766bf;}
+
+
+</style>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+
+<!-- 原注册样式 -->
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="amall" />
+<meta name="author" content="www.amall.com"/>
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+
+<script src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+<script type="text/javascript">
+//原个人中心js
+$(document).ready(function(){
+	
+	var lis = jQuery(".tools ul li");
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+});
+
+$(function($){
+
+	$("#theForm").validate({
+	 	 errorPlacement: function(error, element) { 
+		    element.parent().parent().parent().find("td.last").html("");
+	        error.appendTo(element.parent().parent().parent().find("td.last"));  
+	     },
+		ignore: "",
+	    rules:{
+	    	cardFront:{
+		    accept:"$!config.imagesuffix"
+		  },
+		  cardFrontId:{
+			    required:true
+			  },
+		  cardBackId:{
+			    required:true
+			  },
+		  cardBack:{
+		    accept:"$!config.imagesuffix"
+		  },
+		  username:{required :true}
+		 },
+		messages:{
+			cardFrontId:{required:"请上传身份证正面照"},
+			cardBackId:{required:"请上传身份证反面照"},
+		  cardFront:{accept:"身份证格式不对,只能为$!config.imagesuffix"},
+		  cardBack:{accept:"身份证格式不对,只能为$!config.imagesuffix"},
+		  username:{required:"请输入商家手机号码"}
+		}
+	  });
+	  
+	 
+	 $('#cardFront').uploadify({
+	   　　 'method': 'get',
+	      'auto ': true,
+	      'swf': '$!webPath/resources/uploadify/uploadify.swf',
+	      'uploader' : '$!webPath/store/seller_upload.htm',
+	      'buttonText': '图片上传',
+	      'fileTypeExts': '*.png;*.jpg;;*.gif',
+	      'width': 80,
+	      'height': 20,
+	      'formData':{"width":380,"height":258,"isCheckWithHeight":0},
+	      'fileObjName' : 'Filedata',
+	      'multi': false,
+	      'queueSizeLimit': 1,
+	      'fileSizeLimit': '5MB',
+	      'onUploadStart': function (file) {
+	         
+	      },
+	      'onUploadSuccess': function (file, data, response) {
+			if(response){
+				data = eval( '('+ data +')');
+				if(data.pass == 'yes'){
+					$("#cardFrontImg").attr("src",data.imagePath);
+					$("#cardFrontId").val(data.imgId);
+					$("#appUploadMsg2").empty();
+					$("#appUploadMsg2").text("上传成功");
+				}else{
+					$("#appUploadMsg2").empty();
+					$("#appUploadMsg2").text("上传的图片宽高不匹配,请重新上传");	
+				}
+			}else{
+				$("#appUploadMsg2").empty();
+				$("#appUploadMsg2").text("上传失败");
+			}
+			
+	      }
+	　});
+	 
+	 
+	 $('#cardBack').uploadify({
+	   　　 'method': 'get',
+	      'auto ': true,
+	      'swf': '$!webPath/resources/uploadify/uploadify.swf',
+	      'uploader' : '$!webPath/store/seller_upload.htm',
+	      'buttonText': '图片上传',
+	      'fileTypeExts': '*.png;*.jpg;;*.gif',
+	      'width': 80,
+	      'height': 20,
+	      'formData':{"width":380,"height":258,"isCheckWithHeight":0},
+	      'fileObjName' : 'Filedata',
+	      'multi': false,
+	      'queueSizeLimit': 1,
+	      'fileSizeLimit': '5MB',
+	      'onUploadStart': function (file) {
+	         
+	      },
+	      'onUploadSuccess': function (file, data, response) {
+			if(response){
+				data = eval( '('+ data +')');
+				if(data.pass == 'yes'){
+					$("#cardBackImg").attr("src",data.imagePath);
+					$("#cardBackId").val(data.imgId);
+					$("#appUploadMsg3").empty();
+					$("#appUploadMsg3").text("上传成功");
+				}else{
+					$("#appUploadMsg3").empty();
+					$("#appUploadMsg3").text("上传的图片宽高不匹配,请重新上传");	
+				}
+			}else{
+				$("#appUploadMsg3").empty();
+				$("#appUploadMsg3").text("上传失败");
+			}
+			
+	      }
+	　});
+});
+
+
+
+$(document).ready(function(){
+	$("#dblue").click(function(){   
+		document.getElementById('light').style.display='block';
+		document.getElementById('fade').style.display='block';
+		return false;//这样就能保证点击事件不在后面继续响应，而影响后面的点击事件	 
+	});
+	});
+ function c(){
+		document.getElementById('light').style.display='none';
+		document.getElementById('fade').style.display='none';
+	} 
+$().ready(function(){ 
+	    var width=$(window).width();
+		var height=$(window).height(); 
+		// $("#light").css({"width":width+"px","height":height+"px"})
+
+
+		var smallWidth=$("#agree22").width();
+		var smallHeight=$("#agree22").height(); 
+		var lefts=(width-smallWidth)/2;  
+		var tops=(height-smallHeight)/2;
+		$("#agree22").css({"position":"absolute","left":lefts+"px","z-index":1008}) 
+		
+	})
+ 
+</script>
+<script type="text/javascript">
+$(function(){
+	$(document).bind("click",function(e){
+		var target  = $(e.target);
+		if(target.closest("#agree21").length == 0){
+			 $("#light").hide(); 
+			 $("#fade").hide();
+		}
+	});
+})
+
+
+</script>
+<style type="text/css">
+.black_overlay{ 
+     display: none;  
+     top: 0%; 
+     left: 0%; 
+     width:100%; 
+     height:100%;
+     position:fixed; 
+     background-color:#000; 
+     z-index:1001; 
+     -moz-opacity: 0.6; 
+     opacity:.60; 
+     filter: alpha(opacity=60); 
+} 
+
+.white_content { 
+     display: none; 
+     position:fixed; 
+     top: 0%; 
+     left: 0%; 
+     width:100%; 
+     height:100%;
+      z-index:1002;      
+  } 
+#agree22{
+background:#FFF;
+width:990px;  
+font-size:14px; 
+padding:40px;
+ top:80px;
+ bottom:50px; 
+z-index:9999;  
+color:#444;
+position:fixed;
+overflow:auto;  
+font-fmaily:'宋体';
+}
+#title1{
+height:80px;
+line-height:80px;
+text-align:center;
+font-size:28px;
+width:100%;
+color:#000;
+}
+#title2{
+height:50px;
+line-height:50px; 
+font-size:18px;
+margin-top:10px;
+width:100%;
+color:#000;
+}
+#title3{
+font-size:16px;
+line-height:50px; 
+height:50px;  
+margin-bottom:30px;
+width:100%;
+text-align:center; 
+} 
+.gbe{ 
+font-size:13px;
+text-decoration:underline;
+color:#ec6d51;
+}
+.gbe:hover{  
+text-decoration:underline; 
+}
+p{
+font-size:14px; 
+line-height:28px;
+}
+u{
+font-size:14px; 
+line-height:28px;
+}
+</style>
+</head>
+
+<body style="background-color:#fff">
+
+<!--买家中心模块  -->
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div id="rightBody">
+			<div class="seller_shop" style="margin-left: 10px;">
+				<h3>申请梦想会员</h3>
+				
+					<div class="create_guide_one">
+						<span class="create_guide_img_span_1">申请梦想会员</span>
+						<span class="create_guide_img_span_2"  style="color: #646464">填写资料</span>
+					</div>
+					
+					<div class="create_second_cn_box">
+					
+						<!-- start -->
+
+		  <form action="$!webPath/buyer/apply_dream_partner_finish.htm" method="post" enctype="multipart/form-data" name="theForm" id="theForm">
+		   <input type="hidden" name="cardFrontId" id="cardFrontId"/>
+           <input type="hidden" name="cardBackId" id="cardBackId"/>
+            <table width="100%" border="0" style="margin-top:100px;" cellspacing="0" cellpadding="0" class="create_second_cn_table">
+              
+              <tr style="vertical-align:top;">
+                <td class="create_second_cn_table_left" style="width:500px;text-align:center;height:300px;">上传身份证正面：
+                <br/> <br/>
+                <div class="create_store_add_img_box" style="background-image:url($!webPath/assets/img/create_store_add_img.png) no-repeat;padding-left:184px"><img src="" alt="" id="cardFrontImg"/></div>
+                <br/>
+                <div class="create_second_cn_table_opensfile" style="padding-left:202px">
+                	<input type="file" name="cardFront" id="cardFront" /> 
+                </div>
+                	<span id="appUploadMsg2" style="color:red;"></span>
+                </td>
+                
+                <td class="create_second_cn_table_left" style="width:300px;height:300px;text-align:left;">　上传身份证反面： 
+               <br/> <br/>
+                 <span class="create_store_add_img_box" style="background-image:url($!webPath/assets/img/create_store_add_img.png) no-repeat;"><img src="" alt="" id="cardBackImg"/></span>
+                 <br/> 
+                <div class="create_second_cn_table_opensfile" style="margin-left:17px">
+                	<input type="file" name="cardBack" id="cardBack" /> 
+                </div>
+                	<span id="appUploadMsg3" style="color:red;"></span>
+                </td> 
+                </tr>
+                <tr>
+                <td class="create_second_cn_table_left" colspan="2" style="text-align:center;margin:0 auto"><span class="">*&nbsp;</span>推荐人手机号： <span class="create_second_cn_table_text">
+                  <input name="username" type="text" id="username" maxlength="11"/>
+                </span></td>
+              </tr> 
+               <tr><td class="last" colspan="2"  style="text-align:center;margin:0 auto"></td></tr> 
+              <tr class="create_second_store_btn_box">
+               <td colspan="2" style="padding-left:300px">
+                  <div class="create_second_store_next_box" style="text-align:center;margin:0 auto"><input id="appSave" type="submit" value="提交审核,等待审核结果"/></div>
+                 <input name="grade_id" type="hidden" id="grade_id" value="$!grade_id" />
+                <input name="store_create_session" type="hidden" id="store_create_session" value="$!store_create_session" />
+            </td>
+           
+               </tr>
+              </table> 
+		     <br/><br/>  
+			</form> 
+			 <!-- end -->
+			 </div> 
+		 </div>
+	</div>
+	</div> 
+  <div id="fade" class="black_overlay"></div> 	
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

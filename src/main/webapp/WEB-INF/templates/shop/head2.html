@@ -1,0 +1,131 @@
+﻿﻿<!DOCTYPE  html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script> 
+<script type="text/javascript">
+	$(document).ready(function(){
+		var searchType = $("#appType").val();
+		if(searchType == "store"){
+			$("#appShop").addClass("a_cur");
+		}else{
+			$("#appGoods").addClass("a_cur");	
+		}
+		$("#keyword").focus();
+		$("#appShop").bind("click",function(){
+			$(this).addClass("a_cur").siblings().removeClass("a_cur");
+			$("#appType").val("store"); 
+			$("#keyword").focus(); 
+		});
+		$("#appGoods").bind("click",function(){
+			$(this).addClass("a_cur").siblings().removeClass("a_cur");
+			$("#appType").val("goods"); 
+			$("#keyword").focus(); 
+		});
+		
+		
+		#if($!config.websiteLogo)
+			$("#yg_logo_tab .logo").css("background","none");
+		#end	
+		$("div[name='mycart_btn']").mouseover(function(){
+			
+			$("#shoppingcartContainer").find("div[name='abs']").show().mouseover(function(){
+				$(this).show();				
+			}).mouseout(function(){
+				$(this).hide();
+			});
+			
+			jQuery.ajax({
+				type:'POST',
+				data:"",
+				url:"$!webPath/cart_view.htm",
+				success:function(data){
+					$("#cartBox").html(data);
+				},
+				error:function(){
+					alert("检查内部错误");
+				}
+			});
+			
+		}).mouseout(function(){
+			$("#shoppingcartContainer").find("div[name='abs']").hide();
+		});
+		
+		
+		
+		$(".search_btn").bind("click",function(){
+			jQuery("#J_TopSearchForm").submit();
+		});
+	});
+	
+	function deleteCart(id){
+		jQuery.ajax({
+			type:'POST',
+			data:{"delGoodsCartId":id},
+			url:"$!webPath/cart_view.htm",
+			success:function(data){
+				$("#cartBox").html(data);
+			},
+			error:function() {
+				alert("请检查内部错误");
+			}
+		});
+	}
+	
+	function search_form(keywords,type){
+		$("#keyword").val(keywords);
+		$("#J_TopSearchForm").submit();
+	} 
+</script> 
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".pullDownList li:odd").css("background","#850000");
+	$(".pullDownList li:even").css("background","#950202");
+	$(".pullDownList li:last-child").css("border-bottom","2px solid #7c0202");
+	$(".pullDownList li:hover").css("background","#fff");
+})
+</script>
+</head>
+<body>
+ 
+<div class="yg_header" id="yg_header">
+  <div id="yg_logo_tab" class="clearfix ygwrap">
+  <a href="$!webPath/index.htm">
+   <div class="member_logo" style="height:120px;"><img src="$webPath/assets/img/logo.png" /></div> 
+  </a> 
+  
+    <form action="$!webPath/search.htm" name="" id="J_TopSearchForm" method="post" class="search_box clearfix fl" style="margin-top:35px;margin-left:28px;">
+      <div class="zs_left fl"></div>
+      <div class="input_box fl">
+        
+        <input type="text" id="keyword" placeholder="请输入商品名称" name="keyword" value="$!keyword" maxlength="80" class="search flc" autocomplete="off" style="background:none;"/>
+   
+      </div>
+      <div class="zs_right fl"></div>
+      <div class="search_btn fl"></div>
+       <div class="search_hot">
+	    #foreach($info in $!CommUtil.splitByChar("$!config.hotsearch",","))
+	    	 <a href="javascript:void(0);" onclick="search_form('$!info','goods')">$!info</a>  
+	   	#end
+    </div>
+    </form>
+    <div class="company_name" style="position: absolute;top:25px;">
+    	<span id="company_name_a" style="width: 130px;">
+    	    <p>下载天使Amall-App</p>
+    		<img  src="$!webPath/assets/img/app.png" style="width: 110px;height: 110px;" />
+    	</span>
+    </div>
+    
+     <div  style="position: absolute;top:80px;right:150px;">
+    	<a href="$!webPath/seller/seller_index.htm" >
+    		<img src="$!webPath/assets/img/xwco1.gif" style="cursor: pointer;width:120px;">
+    	</a>
+    </div>  
+  </div>
+  <div class="yg_sites_tabtn"></div>
+  
+  
+</div>
+</body>
+</html>

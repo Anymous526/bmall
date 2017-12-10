@@ -1,0 +1,183 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>商品举报 </title>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css" />
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css" />
+<link rel="stylesheet" type="text/css"	href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css"	href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css"	href="http://pc3.amallcdn.cn/resources/style/common/css/window.css">
+<link rel="stylesheet" type="text/css"	href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script type="text/javascript"	src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+
+$(function($){
+
+	$("#type_id").change(function(){
+	     var type_id=jQuery(this).val();
+		 jQuery.post("$!webPath/buyer/report_subject_load.htm",{"type_id":type_id},function(data){
+			 jQuery("#subjectId option:gt(0)").remove();
+		     jQuery.each(data, function(index,item){
+				 jQuery("#subjectId").append("<option value='"+item.id+"'>"+item.title+"</option>");
+			 });
+		  },"json");
+	  });
+	
+	$("#ListForm").validate({
+	     rules: {
+			    type_id:{
+				     required:true
+				    },
+				subjectId:{
+				     required:true
+				    },
+				 content:{
+				    required:true
+				 }
+				},
+	     messages: {
+			   type_id:{
+				     required:"举报类型不能为空"
+				    },
+				subjectId:{
+				    required: "举报主题不能为空"	   
+				  },
+				content:{
+				    required:"举报内容不能为空"
+					}
+			  }
+	  }); 
+	
+});
+
+</script>
+
+</head>
+<body style="background-color: #fff">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm")
+		<form action="$!webPath/buyer/report_save.htm" method="post" id="ListForm" enctype="multipart/form-data">
+			<div class="u_m" id="oBox">
+				<div class="order-top">
+					<div class="topname">我的订单</div>
+
+					<div class="sch">
+						<input class="inputtxt" type="text" value="$!choices" name="choices" placeholder="$!choices" /> 
+						<input class="inputbtn" type="submit" value="搜索" />
+					</div>
+
+				</div>
+				
+				<div class="report">
+				<div id="BottomBox" align="center">请客观地向Amall商城反映您所遇到的真实情况，以共同维护一个诚信和公平的购物环境。</div>
+				<div class="report_i">
+					<h3>举报提示1</h3>
+					<p>1.  请提供充分的证据以确保举报成功，请珍惜您的会员权利，帮助店小二更好地管理网站；</p>
+					<p>2.  举报仅针对商品或账户本身，如需处理交易中产生的纠纷，请申请维权（如何申请维权）；</p>
+					<p>3.  同一件商品如果您已经举报，系统会提示您不必重复举报；</p>
+					<p>4.  您每天对同一店铺最多只能举报4件商品，请放心店小二会检查该店铺更多商品；为了您的投诉能够尽快核实并处理，您可以提交商品鉴定报告和旺旺聊天记录等材料；</p>
+					<p>5.  * 号为必填项。</p>
+				</div>
+				
+				<div class="repor_con" style="">
+					<h1 style="margin-left: 26px; padding-top:20px; margin-bottom: 10px; font-size:14px">举报主标题</h1>
+					<table class="report_table" width="100%" border="0" cellspacing="0" cellpadding="0">
+					  <tr>
+					    <td align="right">被举报人：</td>
+					    <td><a href="" target="_blank">$!goods.goodsStore.user.username</a>
+					    	<input name="userId" type="hidden" id="userId" value="$!goods.goodsStore.user.id"/>
+					    </td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td align="right">举报商品：</td>
+					    <td><a href="$!webPath/goods.htm?id=$!goods.id" target="_blank">$!goods.goodsName</a>
+					    	<input name="goods_id" type="hidden" id="goods_id" value="$!goods.id" />
+					    </td>
+					    <td>&nbsp;</td>
+					  </tr>
+					 <tr>
+                        <td width="100" align="right" valign="top"><span style="color:#F00">*</span>举报类型：</td>
+                        <td class="px10 message">
+	                        <select name="type_id" id="type_id">
+	                            <option value="">请选择举报类型</option>
+	                      		#foreach($type in $types)
+	                      		<option value="$!type.id">$!type.name</option>
+	                      		#end
+	                        </select>
+                        </td>
+                      </tr>
+						
+					  <tr>
+                        <td align="right" valign="top"><span style="color:#F00">*</span>举报主题：</td>
+                        <td class="px10">
+                        	<select name="subjectId" id="subjectId">
+                            	<option value="">请选择举报主题</option>
+                          	</select>
+                        </td>
+                      </tr>
+						
+					  <tr>
+					    <td align="right">描述：</td>
+					    <td><textarea name="content" id="content" rows="10" cols=""></textarea></td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  
+					  
+					  <tr>
+					    <td align="right">上传凭证：</td>
+					    <td><input type="file" name="img1" id="img1" /></td>
+					  </tr>
+					  <tr>
+					    <td align="right">上传凭证：</td>
+					    <td><input type="file" name="img2" id="img2" /></td>
+					  </tr>
+					  <tr>
+					    <td align="right">上传凭证：</td>
+					    <td><input type="file" name="img3" id="img3" /></td>
+					  </tr>
+					  
+					  <tr>
+					    <td align="right"></td>
+					    <td><input class="report_btn" name="提交" type="submit" value="提交举报" ></td>
+					    <td></td>
+					  </tr>
+					  
+					</table>
+				</div>
+				
+				
+				
+				
+				
+				
+				
+				</div>
+				
+				
+			</div>
+
+
+
+		</form>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

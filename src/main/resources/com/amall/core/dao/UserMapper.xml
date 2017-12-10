@@ -1,0 +1,1133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.User" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="MSN" property="msn" jdbcType="VARCHAR" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="WW" property="ww" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="availableBalance" property="availablebalance" jdbcType="DECIMAL" />
+    <result column="birthday" property="birthday" jdbcType="TIMESTAMP" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="freezeBlance" property="freezeblance" jdbcType="DECIMAL" />
+    <result column="gold" property="gold" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="INTEGER" />
+    <result column="lastLoginDate" property="lastlogindate" jdbcType="TIMESTAMP" />
+    <result column="lastLoginIp" property="lastloginip" jdbcType="VARCHAR" />
+    <result column="loginCount" property="logincount" jdbcType="INTEGER" />
+    <result column="loginDate" property="logindate" jdbcType="TIMESTAMP" />
+    <result column="loginIp" property="loginip" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="qq_openid" property="qqOpenid" jdbcType="VARCHAR" />
+    <result column="report" property="report" jdbcType="INTEGER" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="sina_openid" property="sinaOpenid" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="trueName" property="truename" jdbcType="VARCHAR" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="nickName" property="nickname" jdbcType="VARCHAR" />
+    <result column="userRole" property="userrole" jdbcType="VARCHAR" />
+    <result column="user_credit" property="userCredit" jdbcType="INTEGER" />
+    <result column="years" property="years" jdbcType="INTEGER" />
+    <result column="area_id" property="areaId" jdbcType="BIGINT" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="photo_id" property="photoId" jdbcType="BIGINT" />
+    <result column="store_id" property="storeId" jdbcType="BIGINT" />
+    <result column="level_angel" property="levelAngel" jdbcType="INTEGER" />
+    <result column="dream_partner_id" property="dreamPartnerId" jdbcType="BIGINT" />
+    <result column="verify_id" property="verifyId" jdbcType="BIGINT" />
+    <result column="direct_refer" property="directRefer" jdbcType="BIGINT" />
+    <result column="current_fee" property="currentFee" jdbcType="DECIMAL" />
+    <result column="history_fee" property="historyFee" jdbcType="DECIMAL" />
+    <result column="wx_openid" property="wxOpenid" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="city_role" property="cityRole" jdbcType="BIGINT" />
+    <result column="pay_password" property="payPassword" jdbcType="VARCHAR" />
+    <result column="dou" property="dou" jdbcType="INTEGER" />
+    <result column="can_carry" property="canCarry" jdbcType="DECIMAL" />
+    <result column="manage_money" property="manageMoney" jdbcType="DECIMAL" />
+    <result column="chg_truename_times" property="chgTruenameTimes" jdbcType="BIT" />
+    <!-- 
+    <association property="parent" column="parent_id" javaType="com.amall.core.bean.User" select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+     -->
+     <association property="parent" column="parent_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="store" column="store_id" javaType="com.amall.core.bean.StoreWithBLOBs" select="com.amall.core.dao.StoreMapper.selectByPrimaryKey"/>
+    <association property="photo" column="photo_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <collection property="files" ofType="com.amall.core.bean.Accessory" column="acc_id" select="com.amall.core.dao.AccessoryMapper.selectByExample"/>
+    <collection property="roles" ofType="com.amall.core.bean.Role" column="role_id" select="com.amall.core.dao.RoleMapper.selectByExample"/>
+  	<collection property="chattingLogs" ofType="com.amall.core.bean.ChattingLog" column="chattingLogs_id" 
+  				select="com.amall.core.dao.ChattingLogMapper.selectByExampleWithBLOBs"/>
+  	<collection property="chattingFriends" column="chattingFriends_id" ofType="com.amall.core.bean.ChattingFriend" 
+  				select="com.amall.core.dao.ChattingFriendMapper.selectByExample"/>
+  	<collection property="chattings" column="chattings_id" ofType="com.amall.core.bean.Chatting"
+  				select="com.amall.core.dao.ChattingMapper.selectByExample"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.User" extends="BaseResultMap" >
+    <result column="store_quick_menu" property="storeQuickMenu" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, deleteStatus, MSN, QQ, WW, address, availableBalance, birthday, email, 
+    freezeBlance, gold, integral, lastLoginDate, lastLoginIp, loginCount, loginDate, 
+    loginIp, mobile, password, qq_openid, report, sex, sina_openid, status, telephone, 
+    trueName, userName, nickName, userRole, user_credit, years, area_id, parent_id, photo_id, 
+    store_id, level_angel, dream_partner_id, verify_id, direct_refer, current_fee, history_fee, 
+    wx_openid, city_id, city_role, pay_password, dou, can_carry, manage_money, chg_truename_times
+  </sql>
+  <sql id="Blob_Column_List" >
+    store_quick_menu
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.UserExample" >
+	select
+	<if test="distinct" >
+	  distinct
+	</if>
+	<include refid="Base_Column_List" />
+	from amall_user
+	<if test="_parameter != null" >
+	  <include refid="Example_Where_Clause" />
+	</if>
+	<if test="orderByClause != null" >
+	  order by ${orderByClause}
+	</if>
+	<if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select> 
+  
+  <select  id="selectRoleByUserId" parameterType="java.util.HashMap"
+  resultType="com.amall.core.bean.Role">
+  select T3.* from amall_user T1 left join
+  amall_user_role T2 on T1.id=T2.user_id
+  left join amall_role T3 on T2.role_id=T3.id
+  where T1.id=#{id}
+  </select> 
+  
+  <insert id="insertUserRole" parameterType="java.util.HashMap">
+  insert into amall_user_role(user_id,role_id) values(#{userId},#{roleId})
+  </insert> 
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.UserExample" >
+    delete from amall_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.User" >
+    insert into amall_user (id, addTime, deleteStatus, 
+      MSN, QQ, WW, address, 
+      availableBalance, birthday, email, 
+      freezeBlance, gold, integral, 
+      lastLoginDate, lastLoginIp, loginCount, 
+      loginDate, loginIp, mobile, 
+      password, qq_openid, report, 
+      sex, sina_openid, status, 
+      telephone, trueName, userName, 
+      nickName, userRole, user_credit, 
+      years, area_id, parent_id, 
+      photo_id, store_id, level_angel, 
+      dream_partner_id, verify_id, direct_refer, 
+      current_fee, history_fee, wx_openid, 
+      city_id, city_role, pay_password, 
+      dou, can_carry, manage_money, 
+      chg_truename_times, store_quick_menu)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{msn,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{ww,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{availablebalance,jdbcType=DECIMAL}, #{birthday,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
+      #{freezeblance,jdbcType=DECIMAL}, #{gold,jdbcType=INTEGER}, #{integral,jdbcType=INTEGER}, 
+      #{lastlogindate,jdbcType=TIMESTAMP}, #{lastloginip,jdbcType=VARCHAR}, #{logincount,jdbcType=INTEGER}, 
+      #{logindate,jdbcType=TIMESTAMP}, #{loginip,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{qqOpenid,jdbcType=VARCHAR}, #{report,jdbcType=INTEGER}, 
+      #{sex,jdbcType=INTEGER}, #{sinaOpenid,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{telephone,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{userrole,jdbcType=VARCHAR}, #{userCredit,jdbcType=INTEGER}, 
+      #{years,jdbcType=INTEGER}, #{areaId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, 
+      #{photoId,jdbcType=BIGINT}, #{storeId,jdbcType=BIGINT}, #{levelAngel,jdbcType=INTEGER}, 
+      #{dreamPartnerId,jdbcType=BIGINT}, #{verifyId,jdbcType=BIGINT}, #{directRefer,jdbcType=BIGINT}, 
+      #{currentFee,jdbcType=DECIMAL}, #{historyFee,jdbcType=DECIMAL}, #{wxOpenid,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=BIGINT}, #{cityRole,jdbcType=BIGINT}, #{payPassword,jdbcType=VARCHAR}, 
+      #{dou,jdbcType=INTEGER}, #{canCarry,jdbcType=DECIMAL}, #{manageMoney,jdbcType=DECIMAL}, 
+      #{chgTruenameTimes,jdbcType=BIT}, #{storeQuickMenu,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.User" >
+    insert into amall_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="msn != null" >
+        MSN,
+      </if>
+      <if test="qq != null" >
+        QQ,
+      </if>
+      <if test="ww != null" >
+        WW,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="availablebalance != null" >
+        availableBalance,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="freezeblance != null" >
+        freezeBlance,
+      </if>
+      <if test="gold != null" >
+        gold,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="lastlogindate != null" >
+        lastLoginDate,
+      </if>
+      <if test="lastloginip != null" >
+        lastLoginIp,
+      </if>
+      <if test="logincount != null" >
+        loginCount,
+      </if>
+      <if test="logindate != null" >
+        loginDate,
+      </if>
+      <if test="loginip != null" >
+        loginIp,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="qqOpenid != null" >
+        qq_openid,
+      </if>
+      <if test="report != null" >
+        report,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="sinaOpenid != null" >
+        sina_openid,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="truename != null" >
+        trueName,
+      </if>
+      <if test="username != null" >
+        userName,
+      </if>
+      <if test="nickname != null" >
+        nickName,
+      </if>
+      <if test="userrole != null" >
+        userRole,
+      </if>
+      <if test="userCredit != null" >
+        user_credit,
+      </if>
+      <if test="years != null" >
+        years,
+      </if>
+      <if test="areaId != null" >
+        area_id,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="photoId != null" >
+        photo_id,
+      </if>
+      <if test="storeId != null" >
+        store_id,
+      </if>
+      <if test="levelAngel != null" >
+        level_angel,
+      </if>
+      <if test="dreamPartnerId != null" >
+        dream_partner_id,
+      </if>
+      <if test="verifyId != null" >
+        verify_id,
+      </if>
+      <if test="directRefer != null" >
+        direct_refer,
+      </if>
+      <if test="currentFee != null" >
+        current_fee,
+      </if>
+      <if test="historyFee != null" >
+        history_fee,
+      </if>
+      <if test="wxOpenid != null" >
+        wx_openid,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="cityRole != null" >
+        city_role,
+      </if>
+      <if test="payPassword != null" >
+        pay_password,
+      </if>
+      <if test="dou != null" >
+        dou,
+      </if>
+      <if test="canCarry != null" >
+        can_carry,
+      </if>
+      <if test="manageMoney != null" >
+        manage_money,
+      </if>
+      <if test="chgTruenameTimes != null" >
+        chg_truename_times,
+      </if>
+      <if test="storeQuickMenu != null" >
+        store_quick_menu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="msn != null" >
+        #{msn,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="ww != null" >
+        #{ww,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="availablebalance != null" >
+        #{availablebalance,jdbcType=DECIMAL},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="freezeblance != null" >
+        #{freezeblance,jdbcType=DECIMAL},
+      </if>
+      <if test="gold != null" >
+        #{gold,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogindate != null" >
+        #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginip != null" >
+        #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount != null" >
+        #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="logindate != null" >
+        #{logindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginip != null" >
+        #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenid != null" >
+        #{qqOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="report != null" >
+        #{report,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="sinaOpenid != null" >
+        #{sinaOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userrole != null" >
+        #{userrole,jdbcType=VARCHAR},
+      </if>
+      <if test="userCredit != null" >
+        #{userCredit,jdbcType=INTEGER},
+      </if>
+      <if test="years != null" >
+        #{years,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="photoId != null" >
+        #{photoId,jdbcType=BIGINT},
+      </if>
+      <if test="storeId != null" >
+        #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="levelAngel != null" >
+        #{levelAngel,jdbcType=INTEGER},
+      </if>
+      <if test="dreamPartnerId != null" >
+        #{dreamPartnerId,jdbcType=BIGINT},
+      </if>
+      <if test="verifyId != null" >
+        #{verifyId,jdbcType=BIGINT},
+      </if>
+      <if test="directRefer != null" >
+        #{directRefer,jdbcType=BIGINT},
+      </if>
+      <if test="currentFee != null" >
+        #{currentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="historyFee != null" >
+        #{historyFee,jdbcType=DECIMAL},
+      </if>
+      <if test="wxOpenid != null" >
+        #{wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityRole != null" >
+        #{cityRole,jdbcType=BIGINT},
+      </if>
+      <if test="payPassword != null" >
+        #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="dou != null" >
+        #{dou,jdbcType=INTEGER},
+      </if>
+      <if test="canCarry != null" >
+        #{canCarry,jdbcType=DECIMAL},
+      </if>
+      <if test="manageMoney != null" >
+        #{manageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="chgTruenameTimes != null" >
+        #{chgTruenameTimes,jdbcType=BIT},
+      </if>
+      <if test="storeQuickMenu != null" >
+        #{storeQuickMenu,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.UserExample" resultType="java.lang.Integer" >
+    select count(*) from amall_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.msn != null" >
+        MSN = #{record.msn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        QQ = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ww != null" >
+        WW = #{record.ww,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.availablebalance != null" >
+        availableBalance = #{record.availablebalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.birthday != null" >
+        birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.freezeblance != null" >
+        freezeBlance = #{record.freezeblance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.gold != null" >
+        gold = #{record.gold,jdbcType=INTEGER},
+      </if>
+      <if test="record.integral != null" >
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastlogindate != null" >
+        lastLoginDate = #{record.lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastloginip != null" >
+        lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logincount != null" >
+        loginCount = #{record.logincount,jdbcType=INTEGER},
+      </if>
+      <if test="record.logindate != null" >
+        loginDate = #{record.logindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loginip != null" >
+        loginIp = #{record.loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqOpenid != null" >
+        qq_openid = #{record.qqOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.report != null" >
+        report = #{record.report,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.sinaOpenid != null" >
+        sina_openid = #{record.sinaOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.truename != null" >
+        trueName = #{record.truename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.username != null" >
+        userName = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null" >
+        nickName = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userrole != null" >
+        userRole = #{record.userrole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCredit != null" >
+        user_credit = #{record.userCredit,jdbcType=INTEGER},
+      </if>
+      <if test="record.years != null" >
+        years = #{record.years,jdbcType=INTEGER},
+      </if>
+      <if test="record.areaId != null" >
+        area_id = #{record.areaId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.photoId != null" >
+        photo_id = #{record.photoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.storeId != null" >
+        store_id = #{record.storeId,jdbcType=BIGINT},
+      </if>
+      <if test="record.levelAngel != null" >
+        level_angel = #{record.levelAngel,jdbcType=INTEGER},
+      </if>
+      <if test="record.dreamPartnerId != null" >
+        dream_partner_id = #{record.dreamPartnerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.verifyId != null" >
+        verify_id = #{record.verifyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.directRefer != null" >
+        direct_refer = #{record.directRefer,jdbcType=BIGINT},
+      </if>
+      <if test="record.currentFee != null" >
+        current_fee = #{record.currentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.historyFee != null" >
+        history_fee = #{record.historyFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.wxOpenid != null" >
+        wx_openid = #{record.wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityId != null" >
+        city_id = #{record.cityId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cityRole != null" >
+        city_role = #{record.cityRole,jdbcType=BIGINT},
+      </if>
+      <if test="record.payPassword != null" >
+        pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dou != null" >
+        dou = #{record.dou,jdbcType=INTEGER},
+      </if>
+      <if test="record.canCarry != null" >
+        can_carry = #{record.canCarry,jdbcType=DECIMAL},
+      </if>
+      <if test="record.manageMoney != null" >
+        manage_money = #{record.manageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.chgTruenameTimes != null" >
+        chg_truename_times = #{record.chgTruenameTimes,jdbcType=BIT},
+      </if>
+      <if test="record.storeQuickMenu != null" >
+        store_quick_menu = #{record.storeQuickMenu,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_user
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      MSN = #{record.msn,jdbcType=VARCHAR},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      WW = #{record.ww,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      availableBalance = #{record.availablebalance,jdbcType=DECIMAL},
+      birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      email = #{record.email,jdbcType=VARCHAR},
+      freezeBlance = #{record.freezeblance,jdbcType=DECIMAL},
+      gold = #{record.gold,jdbcType=INTEGER},
+      integral = #{record.integral,jdbcType=INTEGER},
+      lastLoginDate = #{record.lastlogindate,jdbcType=TIMESTAMP},
+      lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR},
+      loginCount = #{record.logincount,jdbcType=INTEGER},
+      loginDate = #{record.logindate,jdbcType=TIMESTAMP},
+      loginIp = #{record.loginip,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      qq_openid = #{record.qqOpenid,jdbcType=VARCHAR},
+      report = #{record.report,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=INTEGER},
+      sina_openid = #{record.sinaOpenid,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      trueName = #{record.truename,jdbcType=VARCHAR},
+      userName = #{record.username,jdbcType=VARCHAR},
+      nickName = #{record.nickname,jdbcType=VARCHAR},
+      userRole = #{record.userrole,jdbcType=VARCHAR},
+      user_credit = #{record.userCredit,jdbcType=INTEGER},
+      years = #{record.years,jdbcType=INTEGER},
+      area_id = #{record.areaId,jdbcType=BIGINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      photo_id = #{record.photoId,jdbcType=BIGINT},
+      store_id = #{record.storeId,jdbcType=BIGINT},
+      level_angel = #{record.levelAngel,jdbcType=INTEGER},
+      dream_partner_id = #{record.dreamPartnerId,jdbcType=BIGINT},
+      verify_id = #{record.verifyId,jdbcType=BIGINT},
+      direct_refer = #{record.directRefer,jdbcType=BIGINT},
+      current_fee = #{record.currentFee,jdbcType=DECIMAL},
+      history_fee = #{record.historyFee,jdbcType=DECIMAL},
+      wx_openid = #{record.wxOpenid,jdbcType=VARCHAR},
+      city_id = #{record.cityId,jdbcType=BIGINT},
+      city_role = #{record.cityRole,jdbcType=BIGINT},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      dou = #{record.dou,jdbcType=INTEGER},
+      can_carry = #{record.canCarry,jdbcType=DECIMAL},
+      manage_money = #{record.manageMoney,jdbcType=DECIMAL},
+      chg_truename_times = #{record.chgTruenameTimes,jdbcType=BIT},
+      store_quick_menu = #{record.storeQuickMenu,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_user
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      MSN = #{record.msn,jdbcType=VARCHAR},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      WW = #{record.ww,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      availableBalance = #{record.availablebalance,jdbcType=DECIMAL},
+      birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      email = #{record.email,jdbcType=VARCHAR},
+      freezeBlance = #{record.freezeblance,jdbcType=DECIMAL},
+      gold = #{record.gold,jdbcType=INTEGER},
+      integral = #{record.integral,jdbcType=INTEGER},
+      lastLoginDate = #{record.lastlogindate,jdbcType=TIMESTAMP},
+      lastLoginIp = #{record.lastloginip,jdbcType=VARCHAR},
+      loginCount = #{record.logincount,jdbcType=INTEGER},
+      loginDate = #{record.logindate,jdbcType=TIMESTAMP},
+      loginIp = #{record.loginip,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      qq_openid = #{record.qqOpenid,jdbcType=VARCHAR},
+      report = #{record.report,jdbcType=INTEGER},
+      sex = #{record.sex,jdbcType=INTEGER},
+      sina_openid = #{record.sinaOpenid,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      trueName = #{record.truename,jdbcType=VARCHAR},
+      userName = #{record.username,jdbcType=VARCHAR},
+      nickName = #{record.nickname,jdbcType=VARCHAR},
+      userRole = #{record.userrole,jdbcType=VARCHAR},
+      user_credit = #{record.userCredit,jdbcType=INTEGER},
+      years = #{record.years,jdbcType=INTEGER},
+      area_id = #{record.areaId,jdbcType=BIGINT},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      photo_id = #{record.photoId,jdbcType=BIGINT},
+      store_id = #{record.storeId,jdbcType=BIGINT},
+      level_angel = #{record.levelAngel,jdbcType=INTEGER},
+      dream_partner_id = #{record.dreamPartnerId,jdbcType=BIGINT},
+      verify_id = #{record.verifyId,jdbcType=BIGINT},
+      direct_refer = #{record.directRefer,jdbcType=BIGINT},
+      current_fee = #{record.currentFee,jdbcType=DECIMAL},
+      history_fee = #{record.historyFee,jdbcType=DECIMAL},
+      wx_openid = #{record.wxOpenid,jdbcType=VARCHAR},
+      city_id = #{record.cityId,jdbcType=BIGINT},
+      city_role = #{record.cityRole,jdbcType=BIGINT},
+      pay_password = #{record.payPassword,jdbcType=VARCHAR},
+      dou = #{record.dou,jdbcType=INTEGER},
+      can_carry = #{record.canCarry,jdbcType=DECIMAL},
+      manage_money = #{record.manageMoney,jdbcType=DECIMAL},
+      chg_truename_times = #{record.chgTruenameTimes,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.User" >
+    update amall_user
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="msn != null" >
+        MSN = #{msn,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="ww != null" >
+        WW = #{ww,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="availablebalance != null" >
+        availableBalance = #{availablebalance,jdbcType=DECIMAL},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="freezeblance != null" >
+        freezeBlance = #{freezeblance,jdbcType=DECIMAL},
+      </if>
+      <if test="gold != null" >
+        gold = #{gold,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogindate != null" >
+        lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginip != null" >
+        lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount != null" >
+        loginCount = #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="logindate != null" >
+        loginDate = #{logindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginip != null" >
+        loginIp = #{loginip,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="qqOpenid != null" >
+        qq_openid = #{qqOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="report != null" >
+        report = #{report,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="sinaOpenid != null" >
+        sina_openid = #{sinaOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        trueName = #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        userName = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        nickName = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="userrole != null" >
+        userRole = #{userrole,jdbcType=VARCHAR},
+      </if>
+      <if test="userCredit != null" >
+        user_credit = #{userCredit,jdbcType=INTEGER},
+      </if>
+      <if test="years != null" >
+        years = #{years,jdbcType=INTEGER},
+      </if>
+      <if test="areaId != null" >
+        area_id = #{areaId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="photoId != null" >
+        photo_id = #{photoId,jdbcType=BIGINT},
+      </if>
+      <if test="storeId != null" >
+        store_id = #{storeId,jdbcType=BIGINT},
+      </if>
+      <if test="levelAngel != null" >
+        level_angel = #{levelAngel,jdbcType=INTEGER},
+      </if>
+      <if test="dreamPartnerId != null" >
+        dream_partner_id = #{dreamPartnerId,jdbcType=BIGINT},
+      </if>
+      <if test="verifyId != null" >
+        verify_id = #{verifyId,jdbcType=BIGINT},
+      </if>
+      <if test="directRefer != null" >
+        direct_refer = #{directRefer,jdbcType=BIGINT},
+      </if>
+      <if test="currentFee != null" >
+        current_fee = #{currentFee,jdbcType=DECIMAL},
+      </if>
+      <if test="historyFee != null" >
+        history_fee = #{historyFee,jdbcType=DECIMAL},
+      </if>
+      <if test="wxOpenid != null" >
+        wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="cityRole != null" >
+        city_role = #{cityRole,jdbcType=BIGINT},
+      </if>
+      <if test="payPassword != null" >
+        pay_password = #{payPassword,jdbcType=VARCHAR},
+      </if>
+      <if test="dou != null" >
+        dou = #{dou,jdbcType=INTEGER},
+      </if>
+      <if test="canCarry != null" >
+        can_carry = #{canCarry,jdbcType=DECIMAL},
+      </if>
+      <if test="manageMoney != null" >
+        manage_money = #{manageMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="chgTruenameTimes != null" >
+        chg_truename_times = #{chgTruenameTimes,jdbcType=BIT},
+      </if>
+      <if test="storeQuickMenu != null" >
+        store_quick_menu = #{storeQuickMenu,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.User" >
+    update amall_user
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      MSN = #{msn,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      WW = #{ww,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      availableBalance = #{availablebalance,jdbcType=DECIMAL},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      freezeBlance = #{freezeblance,jdbcType=DECIMAL},
+      gold = #{gold,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+      lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      loginCount = #{logincount,jdbcType=INTEGER},
+      loginDate = #{logindate,jdbcType=TIMESTAMP},
+      loginIp = #{loginip,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      qq_openid = #{qqOpenid,jdbcType=VARCHAR},
+      report = #{report,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      sina_openid = #{sinaOpenid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      trueName = #{truename,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      nickName = #{nickname,jdbcType=VARCHAR},
+      userRole = #{userrole,jdbcType=VARCHAR},
+      user_credit = #{userCredit,jdbcType=INTEGER},
+      years = #{years,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      photo_id = #{photoId,jdbcType=BIGINT},
+      store_id = #{storeId,jdbcType=BIGINT},
+      level_angel = #{levelAngel,jdbcType=INTEGER},
+      dream_partner_id = #{dreamPartnerId,jdbcType=BIGINT},
+      verify_id = #{verifyId,jdbcType=BIGINT},
+      direct_refer = #{directRefer,jdbcType=BIGINT},
+      current_fee = #{currentFee,jdbcType=DECIMAL},
+      history_fee = #{historyFee,jdbcType=DECIMAL},
+      wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city_role = #{cityRole,jdbcType=BIGINT},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      dou = #{dou,jdbcType=INTEGER},
+      can_carry = #{canCarry,jdbcType=DECIMAL},
+      manage_money = #{manageMoney,jdbcType=DECIMAL},
+      chg_truename_times = #{chgTruenameTimes,jdbcType=BIT},
+      store_quick_menu = #{storeQuickMenu,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.User" >
+    update amall_user
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      MSN = #{msn,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      WW = #{ww,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      availableBalance = #{availablebalance,jdbcType=DECIMAL},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      email = #{email,jdbcType=VARCHAR},
+      freezeBlance = #{freezeblance,jdbcType=DECIMAL},
+      gold = #{gold,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=INTEGER},
+      lastLoginDate = #{lastlogindate,jdbcType=TIMESTAMP},
+      lastLoginIp = #{lastloginip,jdbcType=VARCHAR},
+      loginCount = #{logincount,jdbcType=INTEGER},
+      loginDate = #{logindate,jdbcType=TIMESTAMP},
+      loginIp = #{loginip,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      qq_openid = #{qqOpenid,jdbcType=VARCHAR},
+      report = #{report,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      sina_openid = #{sinaOpenid,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      trueName = #{truename,jdbcType=VARCHAR},
+      userName = #{username,jdbcType=VARCHAR},
+      nickName = #{nickname,jdbcType=VARCHAR},
+      userRole = #{userrole,jdbcType=VARCHAR},
+      user_credit = #{userCredit,jdbcType=INTEGER},
+      years = #{years,jdbcType=INTEGER},
+      area_id = #{areaId,jdbcType=BIGINT},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      photo_id = #{photoId,jdbcType=BIGINT},
+      store_id = #{storeId,jdbcType=BIGINT},
+      level_angel = #{levelAngel,jdbcType=INTEGER},
+      dream_partner_id = #{dreamPartnerId,jdbcType=BIGINT},
+      verify_id = #{verifyId,jdbcType=BIGINT},
+      direct_refer = #{directRefer,jdbcType=BIGINT},
+      current_fee = #{currentFee,jdbcType=DECIMAL},
+      history_fee = #{historyFee,jdbcType=DECIMAL},
+      wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=BIGINT},
+      city_role = #{cityRole,jdbcType=BIGINT},
+      pay_password = #{payPassword,jdbcType=VARCHAR},
+      dou = #{dou,jdbcType=INTEGER},
+      can_carry = #{canCarry,jdbcType=DECIMAL},
+      manage_money = #{manageMoney,jdbcType=DECIMAL},
+      chg_truename_times = #{chgTruenameTimes,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

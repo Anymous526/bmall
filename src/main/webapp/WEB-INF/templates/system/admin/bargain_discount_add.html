@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({
+    rules:{
+	 //rebate:{required:true,max:9.9},
+	 maximum:{required:true,digits:true},	
+	 bargainTime:{required:true},
+	 bargainEndTime:{required:true}
+	 },
+    messages:{
+	 //rebate:{required:"特价折扣不能为空",max:"请输入小于10的数"},
+	 maximum:{required:"商品最大数不能为空",digits:"只能输入数字"},		
+	 bargainTime:{required:"特价开始时间不能为空"},
+	 bargainEndTime:{required:"特价结束时间不能为空"}
+	}
+  });
+ 	//改变系统提示的样式
+  jQuery("span .w").mousemove(function(){
+	var id=jQuery(this.parentNode).attr("id");
+	if(id="nothis"){
+	   jQuery(this.parentNode).attr("id","this")
+	}
+  }).mouseout(function(){
+     var id=jQuery(this.parentNode).attr("id");
+	 if(id="this"){
+	   jQuery(this.parentNode).attr("id","nothis")
+	 }
+  });
+  //
+  jQuery('#bargain_time').attr("readonly","readonly").datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#bargain_end_time').attr("readonly","readonly").datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+//
+  jQuery("#logoShow").mouseover(function(){
+	    jQuery("#logoImg").css('display','block');
+   }).mouseout(function(){
+		jQuery("#logoImg").css('display','none');
+	});
+//
+  jQuery("#banner").change(function(){
+	 jQuery("#textfield1").val(jQuery("#banner").val());
+   })
+});
+
+function saveForm(){
+	var bargainTime=$("#bargain_time").val();
+	var bargainEndTime=$("#bargain_end_time").val();
+	if(bargainTime>bargainEndTime){
+		alert("开始时间不能大于结束时间!");
+		$("#bargain_time").val("");
+		$("#bargain_end_time").val("");
+		return false;
+	}
+	$("#bargain_time").val(bargainTime+" 00:00:00");
+	$("#bargain_end_time").val(bargainEndTime+" 23:59:59");
+	jQuery("#theForm").submit();
+}
+//向前count天 向后count天
+function before_set(count,date){
+   jQuery.post("$!webPath/admin/date_query_set.htm",{"count":count,"date":date},function(data){
+	 jQuery("#the_day").html(data);
+   });
+}
+</script>
+</head>
+<body>
+<form action="$!webPath/admin/bargain_discount_save.htm" method="post" enctype="multipart/form-data" name="theForm" id="theForm">
+ <input name="id" type="hidden" id="id" value="$!obj.id" />
+  <div class="cont">
+    <h1 class="seth1">折扣特价</h1>
+    <div class="settab"><span class="tab-one"></span> 
+	<span class="tabs"> 
+	<a href="$!webPath/admin/bargain_discount_add.htm" class="this">特价设置</a> |
+	<a href="$!webPath/admin/bargain_discount_list.htm?mark=2">设置列表</a>
+	</span>
+	<!-- <span id="the_day" class="tabs">
+	#foreach($bargain in $bargains)
+	<a href="$!webPath/admin/bargain_discount_goods_list.htm?bargain_time=$!CommUtil.formatShortDate($!bargain.bargainTime)
+		&bargain_end_time=$!CommUtil.formatShortDate($!bargain.bargainEndTime)&mark=2">
+			$!CommUtil.formatShortDate($!bargain.bargainTime)--$!CommUtil.formatShortDate($!bargain.bargainEndTime)</a>|
+	#end
+	</span> -->	
+	   <span class="tab-two"></span></div>
+    <div class="setcont" id="base">
+    <ul class="set1">
+        <li><strong class="orange fontsize20">*</strong>特价页标题</li>
+        <li><span class="webname">
+          <input name="bargainTitle" type="text" id="bargain_title" value="$!obj.bargainTitle" />
+        </span></li>
+     </ul>
+	<ul class="set1">
+        <li><strong class="orange fontsize20">*</strong>特价开始时间</li>
+        <li> <span class="webname">
+          <input name="bargainTime" type="text" id="bargain_time" value="$!obj.bargainTime" />
+        </span><span id="nothis"><strong class="q"></strong><strong class="w">输入格式 例：2015-08-01</strong><strong class="c"></strong></span></li>
+      </ul>
+	<ul class="set1">
+        <li><strong class="orange fontsize20">*</strong>特价结束时间</li>
+        <li> <span class="webname">
+          <input name="bargainEndTime" type="text" id="bargain_end_time" value="$!obj.bargainEndTime" />
+        </span><span id="nothis"><strong class="q"></strong><strong class="w">输入格式 例：2015-08-01</strong><strong class="c"></strong></span></li>
+      </ul>
+      
+	  <!-- <ul class="set1">
+        <li><strong class="orange fontsize20">*</strong>特价折扣</li>
+        <li><span class="webname">
+          <input name="rebate" type="text" id="rebate" value="$!obj.rebate" />
+        </span><span id="nothis"><strong class="q"></strong><strong class="w">输入格式 例：八折输入8</strong><strong class="c"></strong></span></li>
+      </ul> -->
+      
+      <ul class="set1">
+        <li><strong class="orange fontsize20">*</strong>特价最多商品数</li>
+        <li><span class="webname">
+          <input name="maximum" type="text" id="maximum" value="$!obj.maximum" />
+        </span></li>
+      </ul>
+	  <ul class="set1">
+        <li>特价说明</li>
+        <li><span class="webtj">
+          <textarea name="state" cols="4" rows="6" id="state">$!obj.state</textarea>
+        </span></li>
+      </ul>
+    </div>
+  </div>
+  <div class="submit">
+  	<input type="hidden" name="bargainStatus" id="bargain_status" value="1"/>
+    <input name="" type="button" value="保存" style="cursor:pointer;" onclick="saveForm();"/>
+  </div>
+</form>
+</body>
+</html>

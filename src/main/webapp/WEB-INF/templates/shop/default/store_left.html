@@ -1,0 +1,93 @@
+﻿<div class="box_le">
+	#if($!{store.storeInfo}&&$!{store.storeInfo}!="")
+      <div class="le_box">
+        <div class="le_box_t">店铺介绍</div>
+        <div class="lxdj_wei2"><div style="text-indent:2rem;padding:6px;font-size:12px;">$!store.storeInfo</div></div>
+      </div>
+     #end
+     <div id="lxdjw1">
+      <div class="lxdj_wei1">客服咨询</div>
+      <input type="hidden" value="$!store.storeQq" class="qq_value">
+      <div class="lxdj_wei2">
+          <div style="margin:5px 0 10px 0;"><span  style="margin:10px 10px 0 20px;"><img src="$!webPath/assets/images/callf1.png" width="20"/>客服一 </span> <a  href="javascript:void(0);" class="qq_1"><img border="0" src="http://wpa.qq.com/pa?p=2:974612428:51" alt="点击这里给客服一发消息" title="点击这里给客服一发消息"/></a></div>
+           
+          <div style="margin:10px 0 10px 0;"><span  style="margin:10px 10px 0 20px;"><img src="$!webPath/assets/images/callf1.png" width="20"/>客服二 </span> <a target="_blank" href="#" class="qq_1"><img border="0" src="http://wpa.qq.com/pa?p=2:974612428:51" alt="点击这里给客服二发消息" title="点击这里给客服二发消息"/></a></div>
+           
+          <div style="margin:10px 0 20px 0;"><span  style="margin:10px 10px 0 20px;"><img src="$!webPath/assets/images/callf1.png" width="20"/>客服三 </span> <a target="_blank" href="#" class="qq_1"><img border="0" src="http://wpa.qq.com/pa?p=2:974612428:51" alt="点击这里给客服三发消息" title="点击这里给客服三发消息"/></a></div>
+      </div>
+     </div>
+     <script>
+	$(function(){
+		var qqVulue = $(".qq_value").val();
+		console.log(qqVulue);
+		$(".qq_1").click(function(e){
+			
+			if(qqVulue != ""){
+				window.location.href = "http://wpa.qq.com/msgrd?v=3&uin="+qqVulue+"&site=qq&menu=yes";
+			}else{
+				alert("很抱歉哦，店主很懒，还没有设置QQ，暂时无法联系。");
+			}
+			e.stopPropagation();
+			return false;
+		});
+		
+	});
+    </script>
+     <!--  
+      <div class="le_box">
+        <div class="le_box_t">站内搜索</div>
+        <div class="le_box_b">
+        <form action="$!webPath/store_goods_search.htm" method="post" id="store_search_form">
+          <p><span>关键字</span>
+            <input type="search" style="width:118px;" name="keyword" id="keyword" />
+          </p>
+          <p><span>价格</span>
+            <input type="search" style="width:50px;" name="priceStart" id="priceStart" />
+            -
+            <input type="search" style="width:50px;" name="priceEnd" id="priceEnd" />
+          </p>
+          <p><span>&nbsp;
+          <input name="store_id" type="hidden" id="store_id" value="$!store.id" />
+          </span>
+            <input type="submit" value="搜索" style="padding-left:10px; padding-right:10px;" />
+          </p>
+        </form>
+        </div>
+      </div>
+      -->
+      <div class="le_box">
+        <div class="le_box_t">销售排行</div>
+        <div class="le_box_b">
+          <div class="paihang_list">
+            <ul>
+            #set($i=0)
+            #foreach($goods in $goodsSaleList)
+            #if($i<5)
+             #if($!goods.goodsMainPhoto )
+             	#set($img="$!imageWebServer/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+             #else
+             	#set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+             #end
+             #set($goods_url="$!webPath/goods.htm?id=$!{goods.id}")
+             #if($!config.secondDomainOpen)
+                 #set($goods_url="http://$!{goods.goodsStore.storeSecondDomain}.$!{domainPath}/goods.htm?id=$!{goods.id}")
+             #end 
+            
+              <li>
+                <div class="ph_img"><a href="$!goods_url" target="_blank"><img src="$!img" width="44" height="44"/></a></div>
+                <div class="ph_txt">
+                  <p class="c3" style="margin-top: 2px;"><a href="$!goods_url" title='$!CommUtil.substring("$!{goods.goodsName}",50)' target="_blank">$!CommUtil.substring("$!{goods.goodsName}",8)</a></p>
+                  <p class="cred">￥$!{goods.goodsPrice}</p>
+                  <p style="font-size:10px; color:#999">已售出$!{goods.goodsSalenum}件</p>
+                </div>
+              </li>
+              #end 
+              #set($i = $i+1)
+           #end  
+            <p style="width:100%; text-align:center"><a href="$!webPath/store_all_goods.htm?id=$!{store.id}&order=sele">查看更多</a>
+            </p>
+            
+          </div>
+        </div>
+      </div>
+    </div>

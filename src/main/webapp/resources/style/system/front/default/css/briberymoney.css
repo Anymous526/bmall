@@ -1,0 +1,480 @@
+@charset "utf-8";
+
+/* 我的钱包-红包按钮 */
+.mgc_btn01{
+	border:0; 
+	width: 80px;
+	padding:10px 20px 10px 20px; 
+	display:inline-block; 
+	background-color:#d33651;
+	color: #fff;
+	border-radius:5px; 
+	text-align:center;
+}
+.mgc_btn01:HOVER{background-color:#cb2f4a; }
+/* 红包  */
+.briberymoney_okbtn{
+	padding: 4px 14px;
+    color: #FFF;
+    font-size: 14px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f1474a;
+}
+.briberymoney_nobtn{
+	padding: 4px 14px;
+    color: #FFF;
+    font-size: 14px;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #eee;
+    color: #666;
+}
+
+.ordercon table tr td{line-height: 24px!important;padding: 8px 0!important;}
+.th_tr td{font-size:15px;font-weight:bold;}
+
+/* 收到的红包-领取、婉拒 */
+.mb_bg,.mb_bg03{
+	position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color:#000;
+    z-index: 9999999;
+    display: block;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.mb_dioalog01{
+    background: #FFF;
+    top: 50%;
+    left: 50%;
+    margin-top:-104px;
+    margin-left: -290px;
+    width: 500px;
+    position: absolute;
+    z-index: 99999999;
+    padding: 20px 40px 22px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: none;
+}
+.mb_tit01{
+	width: 100%;
+	text-align: center;
+	font-size: 16px;
+	padding-bottom: 10px;
+	color: #333;
+}
+.mb_dioalog_text{
+	line-height: 24px;
+	height: 60px;
+}
+.mb_nobtn01{
+    width: 40%;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+    background-color: #fff;
+    border:1px solid #ccc;
+    color: #666;
+    font-size: 14px;
+    border-radius: 5px;
+    float: left;
+    margin-top: 20px;
+}
+.mb_okbtn01{
+    width: 40%;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+    background-color: #ea5052;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    float: right;
+    margin-top: 20px;
+}
+.mb_dioalog02,.mb_dioalog03{
+	background: #FFF;
+    top: 50%;
+    left: 50%;
+    margin-top:-104px;
+    margin-left: -290px;
+    width: 500px;
+    position: absolute;
+    z-index: 99999999;
+    padding: 20px 40px 22px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: none;
+}
+
+
+.mb_tit02{
+	width: 100%;
+	text-align: center;
+	font-size: 16px;
+	padding-bottom: 2px;
+	color: #333;
+	line-height:34px;
+	border-bottom:1px solid #ddd;
+}
+.tss_box{
+	text-align:center;
+	font-size:14px;
+	border-bottom: 1px solid #ddd;
+}
+.ts_txt{
+	font-size:14px;
+	color:#333;
+}
+.ts_number{
+	font-size:16px;
+	color:#000;
+	padding:8px 0;
+}
+.pay_word{
+	margin-top:15px;
+	padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    position:relative;
+}
+.pay_word input{
+	width:76px;
+	outline:none;
+	height:40px;
+	text-align:center;
+	font-size:32px;
+}
+.pay_word span{
+	position: absolute;
+    display: block;
+    left: 0px;
+    top: 0px;
+    height: 42px;
+    border: 1px solid rgba(82, 168, 236, .8);
+    border: 1px solid #00ffff\9;
+    border-radius: 2px;
+    visibility: hidden;
+    -webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.75), 0 0 8px rgba(82, 168, 236, 0.6);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+}
+.pay_word .active {
+        background: url('../img/password-blink.gif') no-repeat center center;        
+    }
+    
+/*支付密码*/
+.pincode-input-container {
+	display:inline-block;
+	margin-top:20px;
+}
+.pincode-input-container input.first {
+	border-top-right-radius:0px;
+	border-bottom-right-radius:0px;
+}
+.pincode-input-container input.last {
+	border-top-left-radius:0px;
+	border-bottom-left-radius:0px;
+	border-left-width:0px;
+}
+.pincode-input-container input.mid {
+	border-radius:0px;
+	border-left-width:0px;
+}
+.pincode-input-text, .form-control.pincode-input-text {
+	width:58px;
+	float:left;
+	text-align:center;
+}
+.pincode-input-error{
+	clear:both;
+}
+.form-control{
+	display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+/*支付密码2*/
+.clearfix:after {
+    clear: both;
+}
+.clearfix:before, .clearfix:after {
+    content: " ";
+    display: table;
+}
+ .alieditContainer{
+    position: relative;
+    margin-top:20px;
+    } 
+    
+.sixDigitPassword {
+    position: absolute;
+    left: -122px;
+    top: 0;   
+    width: 1000px;
+    height: 26px;  
+    color: #fff;
+    font-size: 12px;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-user-select: initial;
+    outline: 'none';
+    z-index: 999;
+    opacity:0;
+    filter:alpha(opacity=0);
+  }
+
+  .sixDigitPassword-box {
+        cursor:text;
+        background: #fff;
+        outline: none;
+        position: relative;
+        padding: 12px 0;
+        height: 15px;
+        border: 1px solid #cccccc;
+        border-radius:2px;
+        margin-left:5px;
+  }
+  .sixDigitPassword-box i {
+        float: left;
+        display: block;
+        padding: 4px 0;
+        height: 12px;
+        border-left: 1px solid #cccccc;
+        width:81px;
+    }
+
+  .sixDigitPassword-box span {
+        position: absolute;
+        display: block;
+        left: 0px;
+        top: 0px;
+        height: 36px;
+        border: 1px solid rgba(82, 168, 236, .8);
+        border: 1px solid #00ffff\9;
+        border-radius: 2px;
+        visibility: hidden;
+        -webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.75), 0 0 8px rgba(82, 168, 236, 0.6);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
+    }
+    .ui-securitycore  .ui-form-item .ui-form-explain{
+		margin-top: 8px; 
+	}
+  .i-block{
+	display:inline-block;
+  }
+ .six-password{
+    position: relative;
+    height:33px;
+    vertical-align: middle;  
+}
+/*支付密码2结束*/
+
+.mb_nobtn02{
+	width: 40%;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+    background-color: #fff;
+    border:1px solid #ccc;
+    color: #666;
+    font-size: 14px;
+    border-radius: 5px;
+    float: left;
+    margin-top: 20px;
+}
+.mb_okbtn02{
+    width: 40%;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+    background-color: #ea5052;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    float: right;
+    margin-top: 20px;
+}
+/*忘记密码*/
+.my_forgot_pwd{
+	margin-top:20px;
+	text-align:right;
+}
+.my_forgot_pwd a{
+	font-size:14px;
+	color:#1E90FF;
+	text-decoration:underline;
+}
+.my_forgot_pwd a:hover{
+	text-decoration:underline;
+}
+/* 我要发红包 */
+.mbs_list01{
+	width: 100%;
+	padding: 15px 0;
+}
+.mbs_text01{
+	width: 60px;
+	display: inline-block;
+}
+.mbs_text02{
+	display: inline-block;
+	margin-bottom: 10px;
+}
+.mbs_input01{
+	width:238px;
+	border: 0;
+	padding: 5px;
+	border: 1px solid #ccc;
+	
+}
+
+.mbs_textarea01{
+	display:block;
+	width: 300px;
+	height: 80px;
+	padding: 5px;
+	line-height: 24px;
+}
+
+.mbs_input02{
+	height: 50px;
+    line-height: 48px;
+    padding: 0;
+    font-size: 18px;
+    width: 314px;
+    font-family: "Microsoft Yahei";
+    font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,.3);
+    display: inline-block;
+    color: #fff;
+    border: 1px solid #f96765;
+    background-color: #ff7573;
+    background-repeat: repeat-x;
+    background-image: -webkit-linear-gradient(top,#ff7573,#f96765);
+    border-radius: 2px;
+    vertical-align: middle;
+    cursor: pointer;
+    text-align: center;
+    box-shadow: 0 1px 0 0 #fe8c8a inset;
+    box-sizing: border-box;
+}
+.mbs_input02:HOVER {
+	border:1px solid #f46d6b;
+}
+
+.mbs_tit01{
+    display: block;
+    background: #e3edf9;
+    height: 80px;
+    line-height: 80px;
+    padding-left: 20px;
+    font-size: 16px;
+    font-weight: bold;
+}    
+.xu_an_btnbox{
+	position:relative;
+}
+.xu_an_btnbox input{
+	height: 46px;
+    width: 25%;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+    background-color: #ea5052;
+    color: #fff;
+    font-size: 14px;
+    border-radius: 5px;
+    border:none;
+    cursor:pointer;
+    } 
+.buy_btn{
+	margin-left:49px;
+}
+.sale_btn{
+	margin-right:34px;
+}
+.xu_an_btnbox input:hover,.xu_an_okbtn:hover{
+	background-color:#a90000;
+} 
+.xu_an_btnbox input:nth-child(2){float:right;}
+.ul_wrap{
+	margin-top:30px;
+}
+.ul_wrap:after{display:block;content:"";clear:both;}
+.ul_wrap li{
+	float:left;
+}
+.ul_wrap li input{
+	height:40px;
+	text-align:center;
+	width:132px;
+	font-size:16px;
+}
+.ul_wrap li span{
+	font-size:16px;
+}
+.ul_wrap li:nth-child(2){
+	float:right;
+}
+.xu_an_okbtn{
+	width: 50%;
+    padding: 10px 0;
+    display: inline-block;
+    text-align: center;
+    background-color: #ea5052;
+    color: #fff;
+    font-size: 22px;
+    border-radius: 5px;
+    height:26px;
+    line-height:26px;
+    letter-spacing:11px;
+    padding-left:10px;
+}
+.xu_an_okwrap{
+	text-align:center;
+}
+.xu_an_close{
+	position:absolute;
+	right:0;
+	top:-10px;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .3;
+    filter: alpha(opacity=30);
+    background: transparent;
+    border:none;
+}
+.xu_an_close:hover{
+	color: #000;
+	opacity:.5;
+	filter:alpha(opacity=50);
+}
+.xu_trend_wrap{
+	margin-top:20px;
+	border:1px solid #ddd;
+	padding-top:45px;
+}

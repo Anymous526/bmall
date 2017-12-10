@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>实名认证-$!{config.title}</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com" />
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved" />
+
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<!--  <link href="$!webPath/resources/style/system/front/default/css/goods1.css" type="text/css" rel="stylesheet" />-->
+
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" /><!-- 大方块样式 -->
+<!-- 买家中心模块 -->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css"/>
+<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+<style type="text/css">
+tr,td{margin: 0px;list-style: none;}
+tr,td{}
+
+.create_guide_one{width: 830px;height: 40px;float:left;overflow: hidden; }
+.create_guide_one *{width: 172px;height: 30px;float: left;margin-left:10px;}
+.create_guide_one span{height: 30px;line-height: 30px; font-size: 14px;color: #fff;text-align: center;margin-top: 10px;}
+.create_guide_img_span_1{background-image:url($!webPath/assets/img/create_guide_1.png);}
+.create_guide_img_span_2{margin-left:-8px; background-image:url($!webPath/assets/img/create_guide_2.png);}
+.create_guide_img_span_2_1{margin-left:-8px; background-image:url($!webPath/assets/img/create_guide_2_1.png);}
+.create_second_cn_box{width: 830px;height:auto; float:left;margin-top:20px;border-style: none; }
+/*申请开店步骤2：填写信息*/
+.create_second_cn_title_box{width:120px; height: 30px; color: #323232;float:left; margin-left:50px;}
+.create_second_cn_title{line-height: 30px; font-size: 16px;font-weight:800;text-align:right;}
+.create_second_cn_table td{padding-top:5px; padding-bottom:5px;}
+.create_second_cn_table_left{padding-right:15px; text-align:right;color: #646464}
+.create_second_cn_table_text input{height:30px; padding-left:5px; line-height:30px; width:300px;}
+.create_second_cn_table_text select{height:26px; padding-left:5px; line-height:26px; width:309px;}
+.create_second_cn_table_text_ad select{height:30px; width:100px;}
+.create_second_cn_table_opensfile input{height:26px; width:180px; margin-right:5px;cursor: pointer;}
+.opensfile_tip{width: 280px;float:left;margin-left:-50px; line-height:22px;}
+.opensfile_tip2{width: 280px;float:left;margin-left:-50px; line-height:26px;}
+.create_store_add_img_box img{width:120px; height:120px;background-image:url($!webPath/assets/img/create_store_add_img.png);display:block;}
+.create_store_add_txt_box1 img{width:301px; height:120px;background-image:url($!webPath/assets/img/create_store_add_img1.png);display:block;}
+.create_store_add_txt_box2 img{width:301px; height:120px;background-image:url($!webPath/assets/img/create_store_add_img2.png);display:block;}
+
+.create_second_store_btn_box{height: 60px;margin-bottom:20px;}
+.create_second_store_back_box input{background-color:#ededed;border:1px solid #707070; float:left;margin-left:245px; width:100px;height:24px; font-size:12px;cursor:pointer;}
+.create_second_store_next_box input{float:left;margin-left:20px; width:180px;height:24px;color:#FFF;font-size:12px; cursor:pointer}
+.create_second_store_next_box input{background-color:#2d6ad6;border:1px solid #0f5db4;}
+.create_second_store_next_box input:hover{background-color:#3a75de;border:1px solid #1766bf;}
+
+
+</style>
+
+<style type="text/css">
+.black_overlay{ 
+     display: none;  
+     top: 0%; 
+     left: 0%; 
+     width:100%; 
+     height:100%;
+     position:fixed; 
+     background-color:#000; 
+     z-index:1001; 
+     -moz-opacity: 0.6; 
+     opacity:.60; 
+     filter: alpha(opacity=60); 
+} 
+
+.white_content { 
+     display: none; 
+     position:fixed; 
+     top: 0%; 
+     left: 0%; 
+     width:100%; 
+     height:100%;
+      z-index:1002;      
+  } 
+#agree22{
+background:#FFF;
+width:990px;  
+font-size:14px; 
+padding:40px;
+ top:80px;
+ bottom:50px; 
+z-index:9999;  
+color:#444;
+position:fixed;
+overflow:auto;  
+font-fmaily:'宋体';
+}
+#title1{
+height:80px;
+line-height:80px;
+text-align:center;
+font-size:28px;
+width:100%;
+color:#000;
+}
+#title2{
+height:50px;
+line-height:50px; 
+font-size:18px;
+margin-top:10px;
+width:100%;
+color:#000;
+}
+#title3{
+font-size:16px;
+line-height:50px; 
+height:50px;  
+margin-bottom:30px;
+width:100%;
+text-align:center; 
+} 
+.gbe{ 
+font-size:13px;
+text-decoration:underline;
+color:#ec6d51;
+}
+.gbe:hover{  
+text-decoration:underline; 
+}
+p{
+font-size:14px; 
+line-height:28px;
+}
+u{
+font-size:14px; 
+line-height:28px;
+}
+</style>
+
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" type="text/javascript"/>
+<link rel="stylesheet" href="http://pc3.amallcdn.cn/assets/css/jquery.Jcrop.css" type="text/css" />
+<link rel="stylesheet" href="http://pc3.amallcdn.cn/assets/css/uploadify.css" type="text/css" />
+<link rel="stylesheet" href="http://pc2.amallcdn.cn/assets/css/mainJcrop.css" type="text/css" />
+<link rel="stylesheet" href="http://pc2.amallcdn.cn/assets/css/demosJcrop.css" type="text/css" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/amall.common.js"></script>
+<script type="text/javascript">
+jQuery(function($){
+ 
+});
+
+</script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div style="width:1200px; margin: 0 auto;"> 
+<div class="main">
+$!httpInclude.include("/buyer/buyer_left.htm?op=account") 
+<div class="s_m">  
+	
+	
+        <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> ><a href="$!webPath/buyer/buyer_account.htm">账户设置</a> > <span>更换头像</span></div></div>
+        <div class="productmain">
+            <div class="container">
+            <ul class="section"  style="padding: 0;">
+                <li class=""><a href='$!webPath/buyer/buyer_account.htm' >基本信息</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_password.htm'>修改密码</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_email.htm'>修改电子邮件</a></li>
+				<li class=""><a href='$!webPath/buyer/buyer_account_mobile.htm'>修改手机号码</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_avatar.htm'>更换头像</a></li>
+                <li class="li_this"><a href='$!webPath/buyer/buyer_account_verify.htm'>实名认证</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_updateNickName.htm'>修改昵称</a></li>
+                <li class=""><a href='$!webPath/buyer/buyer_account_updateTrueName.htm'>修改真实姓名</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav">
+               
+					<div class="create_second_cn_box">
+					
+						<div style="width: 100%;text-align: center;margin:60px 0 80px 0;">
+							$!msg
+						</div>	
+						
+					
+					
+						
+					</div>
+			
+
+              </div>
+            </div>
+          </div>
+
+  </div>
+   
+</div>
+</div>
+
+<script language="javascript">  
+   if($!exchangeid==""){
+	   
+   }else{
+	   setTimeout("location.href='$!webPath/exchange/exchange_pay.htm?id=$!exchangeid';", 1000); 
+   }
+</script>
+$!httpInclude.include("/footer.htm")
+</body>
+
+</html>

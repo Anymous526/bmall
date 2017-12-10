@@ -1,0 +1,57 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/user_main.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+
+<!-- <script type="text/javascript">
+	$(document).ready(function(){
+		$("#gotoSeller").click(function(){
+			var storeId = $("#storeId").val();
+			if(storeId != null && storeId != "") {
+				window.location.href="$!webPath/seller/seller_index.htm";
+			}else{
+				if(confirm("对不起,您尚未开通店铺,是否开通店铺?")){
+					window.location.href="";  //TODO 开通店铺的地址
+				}
+			}
+		});
+	});
+</script> -->
+
+
+
+</head>
+<body style="background-color:#fff">
+<div class="top_div">
+	<div class="w1200">
+    	<div class="user_logo">
+        	<a href="$!webPath/index.htm"><img src="$!webPath/assets/img/logow.png" /></a>
+            <a href="$!webPath/buyer/buyer_index.htm" class="fore2">个人中心</a>
+            <input type="hidden" value="$!user.storeId" id="storeId"/>
+        </div>
+        <div class="user_menu">
+        	<span><a href="$!webPath/index.htm">首页</a></span>
+            <span id="gotoSeller"><a href="$!webPath/seller/seller_index.htm" target="_blank">我是卖家</a></span>
+            <span><a href="$!webPath/buyer/buyer_account.htm">账户设置</a></span>
+            
+        </div>
+       <a href="$!webPath/cart/cart_index.htm"> <div class="cart_div">
+        	<i class="ci-left"></i>
+            <i class="ci-right">&gt;</i>
+            <i class="ci-count" id="pordCount">$!countTools.getCartCount($!cookies)</i>
+        	我的购物车
+        </div>  
+      </a>
+    </div>
+</div>
+
+</body>
+</html>

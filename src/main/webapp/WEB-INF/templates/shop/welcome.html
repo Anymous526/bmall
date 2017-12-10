@@ -1,0 +1,71 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>恭喜你，注册成功！ </title> 
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/welcome.css"/>
+ 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>  
+<script type="text/javascript" src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+#if(!$!{user.username})
+<script type="text/javascript">
+	var cookieName = getCookie('amall_username');
+	if(cookieName != null && cookieName != "")
+	{	
+		window.location.href = '$!webPath/amall_login.htm?username=' +  cookieName;  	
+	}
+	function getCookie(c_name)
+	{
+		if (document.cookie.length>0)
+		{
+		    c_start=document.cookie.indexOf(c_name + "=")
+		    if (c_start!=-1)
+		    { 
+			    c_start=c_start + c_name.length+1 
+			    c_end=document.cookie.indexOf(";",c_start)
+			    if (c_end==-1) c_end=document.cookie.length
+			    return unescape(document.cookie.substring(c_start,c_end))
+		    } 
+		 }
+		return ""
+	}
+</script>
+#end 
+
+</head>
+<body>
+ 
+$!httpInclude.include("/top2.htm")
+<div id="">
+ 
+<div id="wel" style="margin:80px auto"> 
+<div id="wei_1632"><img src="$!webPath/assets/images/wei_112.gif"/></div>
+<div id="wei_1633">
+<p class="wei_1634">欢迎来到Amall商城</p>
+<p class="wei_1644">亲爱的<span class="wei_1704">$!user.truename</span>，您已注册成功，恭喜您成为天使会员!</p>
+<p class="wei_1644">Amall商城（Amall.com）会员等级规则如下：</p>
+<p class="wei_1644"><img src="$!webPath/assets/img/tupwd.png" width="420px"/></p>
+ <ul> 
+         <li class="wei_1715"><a href="$!webPath/buyer/jihuo.htm">马上升级</a></li> 
+         <li class="wei_1716"><a href="$!webPath/buyer/buyer_account.htm">完善资料</a></li>
+         <li class="wei_1717"><a href="$!webPath/index.htm">马上购物</a></li>
+        </ul> 
+</div> 
+</div>  
+
+</div>  
+</body>
+</html>
+

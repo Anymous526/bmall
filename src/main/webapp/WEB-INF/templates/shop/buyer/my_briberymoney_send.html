@@ -1,0 +1,218 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的礼品金</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/system/front/default/css/briberymoney.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+$(function(){
+	$("#send").click(function(){
+		var telephone = jQuery.trim($("#telephone").val());
+		var password = jQuery.trim($("#Inpassword").val());
+		var angelGold = jQuery.trim($("#angelGold").val());
+		
+		if (telephone == '') {
+            $("#telephone").attr("placeholder","请输入手机号码");
+			$("#telephone").css("border","1px solid #ea5052");
+			
+            return false;
+        }else{
+        	$("#telephone").css("border-bottom","1px solid #eee");
+        }
+		
+		
+		var phoneReg = /^1\d{10}$/;
+		if(!phoneReg.test(telephone))
+		{
+			$("#telephone").attr("placeholder","请输入正确手机号码");
+			$("#telephone").css("border","1px solid #ea5052");
+			$("#telephone").val("");
+			$("#Inpassword").val("");
+			
+			return false;
+		}else{
+			$("#telephone").css("border-bottom","1px solid #eee");
+		}
+		
+
+		var phoneReg = /^1\d{10}$/;
+		if(!phoneReg.test(telephone))
+		{
+			$("#telephone").attr("placeholder","请输入正确手机号码");
+			$("#telephone").css("border","1px solid #ea5052");
+			$("#telephone").val("");
+			$("#Inpassword").val("");
+			
+			return false;
+		}else{
+			$("#telephone").css("border-bottom","1px solid #eee");
+		}
+		
+		var angelGoldReg = /^[1-9]\d{0,4}$/;
+		if(!angelGoldReg.test(angelGold))
+		{
+			$("#angelGold").attr("placeholder","请正确输入，不能超过99999");
+			$("#angelGold").css("border","1px solid #ea5052");
+			$("#angelGold").val("");
+			return false;
+		}else{
+			$("#telephone").css("border-bottom","1px solid #eee");
+		} 
+		$(".mb_bg").show();
+		$(".mb_dioalog02").show();
+	}); 
+
+ $(".mb_okbtn02").click(function(){
+		 var values=$('.sixDigitPassword').val();
+		 var alen=values.length;
+		 console.log(alen);
+		 if(values==""){
+			 alert('请输入支付密码');
+			 return false;
+		 }else if(alen<6){
+			 alert('请输入正确的支付密码');
+			 //$('.sixDigitPassword').val('');
+			 //$('.sixDigitPassword-box b').css('visibility','hidden');
+			 //$('#cardwrap').css('left','0');
+		 }else{
+			 $("#theForm").submit(); 
+		 }
+	}); 
+	
+	$(".mb_nobtn02").click(function(){
+		$(".mb_bg").hide();
+		$(".mb_dioalog02").hide();
+		return false;
+	})  
+}); 
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+		<div class="s_m">  
+		  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <!-- <a href="$!webPath/buyer/my_gold_consume.htm"><span>我的礼品金</span></a>  > <a href="$!webPath/buyer/my_briberymoney.htm"><span>红包</span></a>  > --><a href="$!webPath/buyer/my_briberymoney.htm"><span>老板送礼</span></a> > <span>我要送礼币</span></div></div>
+		  <form action="$!webPath/send_briberymoney.htm" method="post" id="theForm">
+		  <div class="productmain"> 
+				<div class="mbs_tit01">快送礼币给您的好友吧！</div>
+				<div style="padding: 20px 30px 30px 30px;">
+					<div style="width:100%; height: 0.1rem;display: block;"></div>
+			        <div class="mbs_list01">
+			        <span class="mbs_text01">手机号码</span>
+			        <input class="mbs_input01" type="text" name="telephone" id="telephone"  placeholder="输入对方的手机号码" >
+			        </div>
+			        <div class="mbs_list01">
+			        <span class="mbs_text01">礼品金</span>
+			        <input class="mbs_input01" type="text" name="angelGold" id="angelGold"  placeholder="输入礼品金个数">
+			        </div>
+			        <div class="mbs_text02">赠送朋友礼品金！升级人脉，升级圈子！</div>
+			        <textarea class="mbs_textarea01" placeholder="恭喜发财!大吉大利!" name="giveContent" id="giveContent"></textarea>
+			        <input class="mbs_input02" type="button" value="发 出" id="send" style="margin-top: 10px;">
+		        </div>
+          </div>
+          </form>
+          </div>
+</div>
+<div class="mb_bg" style="opacity: 0.4; "></div>
+<div class="mb_dioalog02">
+	<div class="mb_tit02">请输入支付密码</div>
+	<div class="tss_box">
+		<p class="ts_txt">支付数额</p>
+		<p class="ts_number">20个礼品金</p>
+	</div>
+	<form action="" method="post" name="payPassword" id="form_paypsw">
+<div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+	<div class="i-block" data-error="i_error">
+		<div class="i-block six-password">
+			<input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required" value="" name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
+			<div tabindex="0" class="sixDigitPassword-box">
+				<i style="border-color: transparent;" class=""><b style="visibility: hidden;"></b></i>
+				<i><b style="visibility: hidden;"></b></i>
+				<i><b style="visibility: hidden;"></b></i>
+				<i><b style="visibility: hidden;"></b></i>
+				<i><b style="visibility: hidden;"></b></i>
+				<i><b style="visibility: hidden;"></b></i>
+				<span style="width: 81px; left: 0px; visibility: hidden;" id="cardwrap" data-role="cardwrap"></span>
+			</div>
+		</div>
+	</div>
+</div>
+</form>	
+    <p class="my_forgot_pwd"><a href="$!webPath/paymentpwd_forgot.htm">忘记密码?</a></p>
+	<div>
+		<span class="mb_nobtn02" style="cursor:pointer">取消</span>
+		<span class="mb_okbtn02" style="cursor:pointer">确定</span>
+	</div>
+</div>
+$!httpInclude.include("/footer.htm")
+<script>
+/*支付密码*/
+var payPassword = $("#payPassword_container"),
+_this = payPassword.find('i'),	
+k=0,j=0,
+password = '' ,
+_cardwrap = $('#cardwrap');
+//点击隐藏的input密码框,在6个显示的密码框的第一个框显示光标
+payPassword.on('focus',"input[name='payPassword_rsainput']",function(){
+	var _this = payPassword.find('i');
+	if(payPassword.attr('data-busy') === '0'){ 
+	//在第一个密码框中添加光标样式
+	   _this.eq(k).addClass("active");
+	   _cardwrap.css('visibility','visible');
+	   payPassword.attr('data-busy','1');
+	}	
+});	
+//change时去除输入框的高亮，用户再次输入密码时需再次点击
+payPassword.on('change',"input[name='payPassword_rsainput']",function(){
+	_cardwrap.css('visibility','hidden');
+	_this.eq(k).removeClass("active");
+	payPassword.attr('data-busy','0');
+}).on('blur',"input[name='payPassword_rsainput']",function(){	
+	_cardwrap.css('visibility','hidden');
+	_this.eq(k).removeClass("active");					
+	payPassword.attr('data-busy','0');	
+});
+//使用keyup事件，绑定键盘上的数字按键和backspace按键
+payPassword.on('keyup',"input[name='payPassword_rsainput']",function(e){
+var  e = (e) ? e : window.event;
+//键盘上的数字键按下才可以输入
+if(e.keyCode == 8 || (e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)){
+		k = this.value.length;//输入框里面的密码长度
+		l = _this.size();//6		
+		for(;l--;){		
+		//输入到第几个密码框，第几个密码框就显示高亮和光标（在输入框内有2个数字密码，第三个密码框要显示高亮和光标，之前的显示黑点后面的显示空白，输入和删除都一样）
+			if(l === k){
+				_this.eq(l).addClass("active");
+				_this.eq(l).find('b').css('visibility','hidden');
+				
+			}else{
+				_this.eq(l).removeClass("active");
+				_this.eq(l).find('b').css('visibility', l < k ? 'visible' : 'hidden');				
+			}						
+		if(k === 6){
+			j = 5;
+		}else{
+			j = k;
+		}
+		$('#cardwrap').css('left',j*82+'px');
+	
+		}
+	}else{
+	//输入其他字符，直接清空
+		var _val = this.value;
+		this.value = _val.replace(/\D/g,'');
+	}
+});	
+</script>
+</body>
+</html>

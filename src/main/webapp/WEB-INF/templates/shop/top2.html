@@ -1,0 +1,391 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>$!{config.title}！</title>
+<meta charset="UTF-8"/>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/wei11.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/font-awesome.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script><!-- 必须是这个版本，坑爹 -->
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.reveal.js"></script>
+<style>
+.xu_contents span,.xu_contents p,.xu_contents p span,.xu_contents{
+	font-family: SimSun !important;
+	font-size:18px !important;
+	line-height:30px;
+}
+.xu_contents .p_tie{text-align:center;font-size:20px !important;margin-bottom:20px;}
+</style>
+<script> 
+(function(){ 
+    var bp = document.createElement('script'); 
+    bp.src = '//push.zhanzhang.baidu.com/push.js'; 
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(bp, s); 
+})(); 
+</script>
+<script type="text/javascript">
+jQuery.ajax({
+	 type:'POST',
+	 url:"$webPath/article_list_query.htm",
+	 success :　function(data) {
+		 addPublicTile(data);
+	 }
+	});
+	
+function addPublicTile(str)
+{
+	var box = $("#jq_hidebox");//把上面的弹出框暂时隐藏
+	
+	box.empty();
+	
+	var json = JSON.parse(str);
+	
+	for(var i = 0; i < json.length; i++)
+	{
+		for(var key in json[i])
+		{
+			box.prepend("<a data-reveal-id='myModal' href='javascript:void(0)' id='prepare' name='$!webPath/article_query_id.htm?id=" + key +"'>" + json[i][key] + "</a>");
+		}
+		
+	}
+	
+	
+}
+</script>
+<script type="text/javascript">
+/*鼠标进入时显示大图 */
+$(document).ready(function(){
+	$(".codeimg01").mouseenter(function(){
+		$(".bigcodeimg01").show();
+	  });
+	$(".codeimg01").mouseleave(function(){
+		$(".bigcodeimg01").hide();
+	  });
+	$(".codeimg02").mouseenter(function(){
+		$(".bigcodeimg02").show();
+	  });
+	$(".codeimg02").mouseleave(function(){
+		$(".bigcodeimg02").hide();
+	  });
+	$(".codeimg03").mouseenter(function(){
+		$(".bigcodeimg03").show();
+	  });
+	$(".codeimg03").mouseleave(function(){
+		$(".bigcodeimg03").hide();
+	  });
+});
+</script>
+<style type="text/css">
+.codeimg01{
+	position: absolute;
+	top: 40px;left: 88px;
+	width: 48px;height: 48px;
+	display: block;
+	cursor: pointer;
+}
+.codeimg02{
+	position: absolute;
+	top: 40px;left: 144px;
+	width: 48px;height: 48px;
+	display: block;
+	cursor: pointer;
+}
+.bigcodeimg01{
+	width: 300px;height: 300px;
+	position: absolute;top:25px;left:250px; 
+	display:none;
+	background-color: #fff;border: 1px solid #ddd;
+	padding:10px;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+.bigcodeimg02{
+	width: 300px;height: 300px;
+	position: absolute;top:25px;left:250px; 
+	display:none;
+	background-color: #fff;border: 1px solid #ddd;
+	padding:10px;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+.bigcodeimg03{
+	width: 300px;height: 300px;
+	position: absolute;top:126px;left:250px; 
+	display:none;
+	background-color: #fff;border: 1px solid #ddd;
+	padding:10px;
+    background-size: contain;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+#wcat span{
+    background: url($!webPath/assets/img/p_07_new.png) no-repeat -1px 0;
+    display: inline-block;
+    margin: 5px 4px 0 0;
+    float: left;
+    width: 13px;
+    height: 12px;
+    height: 12px;
+    vertical-align: text-bottom;
+}
+</style>
+</head>
+<body>
+<div class="am_top">
+  <div class="am_type w990">
+    <div class="siderNavleft">
+      <ul class="topmenu">
+        <li class="hover"><strong><a href="$!webPath/index.htm">精品商城</a></strong></li>
+          <li class="webnav"> <strong class="icon_arr" style="background: none;"><i class="phones"></i><span style="padding-left:15px;">手机Amall商城</span> </strong>
+          <div class="jq_hidebox" style="width:225px;left:0px; background-color: #fff; text-align: left">
+          	<!--<div style="height:92px;position:relative; background-image: url('$!webPath/assets/img/APP_WAP_CODE01.png');"><span class="codeimg01"></span><span class="codeimg02"></span></div>-->
+          	<div class="codeimg03" style="height:92px; background-image: url('$!webPath/assets/img/APP_WAP_CODE02.png');" ></div>
+          </div>
+        <!--
+         <div class="bigcodeimg01" style="background-image: url('$!webPath/assets/img/bigcodeimg02.png');"></div>
+          <div class="bigcodeimg02" style="background-image: url('$!webPath/assets/img/bigcodeimg01.png');"></div>
+        -->  
+         <div class="bigcodeimg03" style="margin-top:-100px;background-image: url('$!webPath/assets/img/public/code.png');"></div>
+        </li>
+        <li class="webnav"> <strong class="icon_arr" style="padding: 0 20px 0 6px;"><i class="fa fa-weixin" style="font-size: 10px;width:14px;color: #ff4e00;padding-top: 5px;"></i><span style="margin-left:9px;">关注公众号</span> </strong>
+          <div class="jq_hidebox" style="width:150px;left:0px;">
+          	<img src="$!webPath/assets/img/public/weixincode.png" alt="二维码2" style="width:150px;"/>
+          </div>
+        </li>
+        <!-- <li class="webnav"> <strong class="icon_arr" style="background: none;padding: 0 20px 0 6px;"><i class="fa fa-download" style="font-size: 10px;width:14px;color:#af3d3d;padding-top: 5px;"></i><span style="margin-left:9px;">下载天使AmallApp</span> </strong>
+          <div class="jq_hidebox" style="width:320px;left:0px;">
+          	<img src="$!webPath/assets/img/public/amallapp.png" alt="下载天使AmallAPP" style="float:left;width:150px"/>
+          	<img src="$!webPath/assets/img/public/amallseller.png" alt="下载天使掌柜APP" width=150;/>
+          </div>
+        </li> -->
+      </ul>
+    </div>
+    <div class="siderNav">
+      <ul class="topmenu" style="height: 30px;">
+      	      	
+      		<li class="webnav" id="jinru" style="background:none;line-height: 18px;height:18px;padding-top:2px;">
+      		#if($!user)<span class="user_name">$!{user.username}</span>&nbsp;&nbsp;在线 
+      		<a href="$!webPath/amall_logout.htm" class="lightblue">[退出]&nbsp;&nbsp;</a> 
+      	</li>
+         #else
+        <li class="weibo"> <strong> <a href="$!webPath/user/login.htm">登录</a> </strong> </li>
+        <li class="weixin"> <strong> <a href="$!webPath/register.htm">注册</a> </strong> </li>
+        #end
+
+        <li class="webnav" style="background:none"><strong><a  href="$!webPath/buyer/buyer_index.htm"> 个人中心</a></strong></li> 
+        <li class="webnav" style="background:none"> <strong><a target="_blank" href="$!webPath/cart/cart_index.htm" style="cursor: pointer; color:#333" id="wcat"><span></span>购物车（<font style="color:#f00;font-weight:500" class="weico21">$!countTools.getCartCount($!cookies)</font>） </a></strong></li>
+        <li class="webnav" style="background:none"><strong><a href="$!webPath/seller/seller_index.htm" rel="nofollow">卖家中心</a></strong></li>
+        <li class="webnav" style="background:none"> <strong><a target="_blank" href="http://help.amall.com/help/help_index.html" style="cursor: pointer; color:#333"> 帮助中心 </a></strong></li>
+        <li class="webnav" style="background:none"> <strong class="icon_arr"> 公告 </strong>
+          <div class="jq_hidebox" id="jq_hidebox" style="width:380px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">
+          </div>
+        </li>
+        <li class="webnav" style="background:none"> <strong class="icon_arr"> 更多 </strong>
+          <div class="jq_hidebox" style="width: 100px; left: 0; text-align: left">
+          	<a href="javascript:void(0)" onclick="AddFavorite(location.href, document.title)">收藏Amall商城</a>
+            <a href="">购物帮助</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="yg_header mt25" id="yg_header">
+  <div class="mod_top_banner none" id="cb_head_info">
+    <div class="main_area">
+      <div class="sale_tip" id="cb_headshow"></div>
+       #if($!user)<div class="login_status"> <span class="login_span">您好，<span id="cb_showmsg"></span></span> <a class="my_caibei" id="jifen_url" href="#">我的礼品金</a> </div>#end
+    </div>
+  </div>
+ </div>
+
+<div id="myModal" class="reveal-modal">
+</div>
+ <div id="light" class="white_content" style="z-index:99999;margin-top:0;" >  
+	<div id="agree21">
+	     <div class="xu_contents" style="width:600px;margin:0 auto;"></div>
+		<div  id="title3"><a href="javascript:void(0)" onclick = "b()" class="gbt">关闭公告 </a></div> 
+	</div>  
+</div>  
+  <div id="fade" class="black_overlay"></div>
+    
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script>
+<script src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js" type="text/javascript"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+
+<script type="text/javascript">
+	$(function(){		
+		var lis = $(".hotbrand ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){
+			var t = (index+1)%4;
+			if(t == 0){
+				$(this).css("margin-right","0px");
+			}
+		});
+
+	});
+</script>
+
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+   $(".index_nav li a").click(function(event) { 
+      var index=this.name
+      var id='#'+'index_'+index
+     $("html,body").animate({scrollTop: $(id).offset().top}, 1000);
+   });
+   $(".taoba").click(function(event) { 
+      var index=this.name
+      var id='#'+'index_'+index
+     $("html,body").animate({scrollTop: $(id).offset().top}, 1000);
+   });
+   function a(x,y){
+	   if($('#main').offset()){
+		   l = $('#main').offset().left;
+		    w = $('#main').width();
+		    $('#tbox').css('left',(l  + x) + 'px');
+		    $('#tbox').css('top',y + 'px');
+	   }
+   
+}//获取#tbox的div距浏览器底部和页面内容区域右侧的距离函数#main为页面的可视宽度
+$(function() {  
+    $(window).scroll(function(){
+    t = $(document).scrollTop();
+    if(t>500){
+      $('#tbox').show();
+    }else{
+      $('#tbox').hide();
+    }
+    if(t > 50){
+        $('#gotop').fadeIn('slow');
+    }else{
+        $('#gotop').fadeOut('slow');
+    }       
+})   
+    a(-30,100);//#tbox的div距浏览器底部和页面内容区域右侧的距离
+    $('#gotop').click(function(){ 
+        $('body,html').animate({
+            scrollTop: 0
+        },
+        800);//点击回到顶部按钮，缓懂回到顶部,数字越小越快
+        return false;  
+    })
+});
+  });
+</script> <!--楼层循环-->
+
+
+<script>
+function AddFavorite(sURL, sTitle) {
+	 
+    sURL = encodeURI(sURL); 
+try{   
+
+    window.external.addFavorite(sURL, sTitle);   
+
+}catch(e) {   
+
+    try{   
+
+        window.sidebar.addPanel(sTitle, sURL, "");   
+
+    }catch (e) {   
+
+        alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
+
+    }   
+
+}
+
+}
+</script>
+<script type="text/javascript">
+
+jQuery.ajax({
+	 type:'POST',
+	 url:"$webPath/article_list_query.htm",
+	 success :　function(data) {
+		 addPublicTile(data);
+	 }
+	});
+	
+function addPublicTile(str)
+{
+    var box = $("#jq_hidebox");
+	box.empty();
+    
+	var json = JSON.parse(str);
+	
+	for(var i = 0; i < json.length; i++)
+	{
+		for(var key in json[i])
+		{
+			//console.info(json[i]);
+			//name='$!webPath/article_query_id.htm?id=" + key +"'
+			box.prepend("<a data-reveal-id='myModal' href='javascript:void(0)' id='prepare' data_a="+key+" class='cblue' >" + json[i][key] + "</a>");
+		}
+		
+	} 
+	 
+}
+</script>
+<script>
+$(document).ready(function(){
+	   $(".cblue").click(function(){   
+		var rr =$(this).attr("data_a");
+		var abc = $("#title3").html();
+		var pp =$(this).find(".wetop1").html();
+		var xu_titles ="<p class='p_tie'>"+pp+"</p>"
+		jQuery.ajax({
+			 type:'GET',
+			 url:"$!webPath/article_query_id.htm?id="+rr,
+			 success :　function(data) {
+				 $(".xu_contents").html("");
+				 $(".xu_contents").append(xu_titles+data);
+			 }
+			});
+		document.getElementById('light').style.display='block';
+		document.getElementById('fade').style.display='block';
+		return false;//这样就能保证点击事件不在后面继续响应，而影响后面的点击事件
+	   });   
+	});
+	function b(){
+		document.getElementById('light').style.display='none';
+		document.getElementById('fade').style.display='none';
+	} 
+	$().ready(function(){
+		 
+	    var width=$(window).width();
+		var height=$(window).height(); 
+	 
+		var smallWidth=$("#agree21").width();
+		var smallHeight=$("#agree21").height(); 
+		var lefts=(width-smallWidth)/2; 
+		var tops=(height-smallHeight)/2;
+		$("#agree21").css({"position":"absolute","left":lefts+"px","z-index":1008}) 
+
+	});
+	$(function(){
+		$(document).bind("click",function(e){
+			var target  = $(e.target);
+			if(target.closest("#agree21").length == 0){
+				 $("#light").hide(); 
+				 $("#fade").hide();
+			}
+		})	
+	})
+</script>
+
+  

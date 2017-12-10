@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.GoodsBrandMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.GoodsBrand" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="audit" property="audit" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="recommend" property="recommend" jdbcType="BIT" />
+    <result column="sequence" property="sequence" jdbcType="INTEGER" />
+    <result column="brandLogo_id" property="brandlogoId" jdbcType="BIGINT" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="userStatus" property="userstatus" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="weixin_shop_recommend" property="weixinShopRecommend" jdbcType="BIT" />
+    <result column="weixin_shop_recommendTime" property="weixinShopRecommendtime" jdbcType="DATE" />
+    <result column="first_word" property="firstWord" jdbcType="VARCHAR" />
+    <association property="brandLogo" column="brandLogo_id" javaType="com.amall.core.bean.Accessory"
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User"
+    		select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="category" column="category_id" javaType="com.amall.core.bean.GoodsBrandCategory"
+    		select="com.amall.core.dao.GoodsBrandCategoryMapper.selectByPrimaryKey"/>
+    <collection property="goodsList" column="goodsList_id" ofType="com.amall.core.bean.GoodsWithBLOBs"
+    		select="com.amall.core.dao.GoodsMapper.selectByExampleWithBLOBs"/>	
+    <collection property="types" column="types_id" ofType="com.amall.core.bean.GoodsType"
+    		select="com.amall.core.dao.GoodsTypeMapper.selectByExample"/>
+    
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.GoodsBrand" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, audit, name, recommend, sequence, brandLogo_id, category_id, 
+    userStatus, user_id, weixin_shop_recommend, weixin_shop_recommendTime, first_word
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  
+  <select   id="getGoodsById" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+  	select 
+  	<include refid="Base_Column_List" />
+  	from amall_goodsbrand
+  	where id = #{id,jdbcType=BIGINT} and audit = 1
+  </select>
+  
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GoodsBrandExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goodsbrand
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GoodsBrandExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goodsbrand
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.GoodsBrandExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_goodsbrand
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goodsbrand
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_goodsbrand
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.GoodsBrandExample" >
+    delete from amall_goodsbrand
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.GoodsBrand" >
+    insert into amall_goodsbrand (  id, addTime, deleteStatus, 
+      audit, name, recommend, sequence, 
+      brandLogo_id, category_id, userStatus, 
+      user_id, weixin_shop_recommend, weixin_shop_recommendTime, 
+      first_word, remark)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{audit,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{recommend,jdbcType=BIT}, #{sequence,jdbcType=INTEGER}, 
+      #{brandlogoId,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{userstatus,jdbcType=INTEGER}, 
+      #{userId,jdbcType=BIGINT}, #{weixinShopRecommend,jdbcType=BIT}, #{weixinShopRecommendtime,jdbcType=DATE}, 
+      #{firstWord,jdbcType=VARCHAR}, #{remark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.GoodsBrand" >
+  	
+  	
+    insert into amall_goodsbrand
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="audit != null" >
+        audit,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="recommend != null" >
+        recommend,
+      </if>
+      <if test="sequence != null" >
+        sequence,
+      </if>
+      <if test="brandlogoId != null" >
+        brandLogo_id,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="userstatus != null" >
+        userStatus,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="weixinShopRecommend != null" >
+        weixin_shop_recommend,
+      </if>
+      <if test="weixinShopRecommendtime != null" >
+        weixin_shop_recommendTime,
+      </if>
+      <if test="firstWord != null" >
+        first_word,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="audit != null" >
+        #{audit,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        #{recommend,jdbcType=BIT},
+      </if>
+      <if test="sequence != null" >
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="brandlogoId != null" >
+        #{brandlogoId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="userstatus != null" >
+        #{userstatus,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinShopRecommend != null" >
+        #{weixinShopRecommend,jdbcType=BIT},
+      </if>
+      <if test="weixinShopRecommendtime != null" >
+        #{weixinShopRecommendtime,jdbcType=DATE},
+      </if>
+      <if test="firstWord != null" >
+        #{firstWord,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.GoodsBrandExample" resultType="java.lang.Integer" >
+    select count(*) from amall_goodsbrand
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_goodsbrand
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.audit != null" >
+        audit = #{record.audit,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.recommend != null" >
+        recommend = #{record.recommend,jdbcType=BIT},
+      </if>
+      <if test="record.sequence != null" >
+        sequence = #{record.sequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.brandlogoId != null" >
+        brandLogo_id = #{record.brandlogoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.categoryId != null" >
+        category_id = #{record.categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userstatus != null" >
+        userStatus = #{record.userstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weixinShopRecommend != null" >
+        weixin_shop_recommend = #{record.weixinShopRecommend,jdbcType=BIT},
+      </if>
+      <if test="record.weixinShopRecommendtime != null" >
+        weixin_shop_recommendTime = #{record.weixinShopRecommendtime,jdbcType=DATE},
+      </if>
+      <if test="record.firstWord != null" >
+        first_word = #{record.firstWord,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_goodsbrand
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      audit = #{record.audit,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      recommend = #{record.recommend,jdbcType=BIT},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      brandLogo_id = #{record.brandlogoId,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      userStatus = #{record.userstatus,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{record.weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{record.weixinShopRecommendtime,jdbcType=DATE},
+      first_word = #{record.firstWord,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_goodsbrand
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      audit = #{record.audit,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      recommend = #{record.recommend,jdbcType=BIT},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      brandLogo_id = #{record.brandlogoId,jdbcType=BIGINT},
+      category_id = #{record.categoryId,jdbcType=BIGINT},
+      userStatus = #{record.userstatus,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{record.weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{record.weixinShopRecommendtime,jdbcType=DATE},
+      first_word = #{record.firstWord,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.GoodsBrand" >
+    update amall_goodsbrand
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="audit != null" >
+        audit = #{audit,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="recommend != null" >
+        recommend = #{recommend,jdbcType=BIT},
+      </if>
+      <if test="sequence != null" >
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="brandlogoId != null" >
+        brandLogo_id = #{brandlogoId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="userstatus != null" >
+        userStatus = #{userstatus,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinShopRecommend != null" >
+        weixin_shop_recommend = #{weixinShopRecommend,jdbcType=BIT},
+      </if>
+      <if test="weixinShopRecommendtime != null" >
+        weixin_shop_recommendTime = #{weixinShopRecommendtime,jdbcType=DATE},
+      </if>
+      <if test="firstWord != null" >
+        first_word = #{firstWord,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.GoodsBrand" >
+    update amall_goodsbrand
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      audit = #{audit,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=BIT},
+      sequence = #{sequence,jdbcType=INTEGER},
+      brandLogo_id = #{brandlogoId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      userStatus = #{userstatus,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{weixinShopRecommendtime,jdbcType=DATE},
+      first_word = #{firstWord,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.GoodsBrand" >
+    update amall_goodsbrand
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      audit = #{audit,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      recommend = #{recommend,jdbcType=BIT},
+      sequence = #{sequence,jdbcType=INTEGER},
+      brandLogo_id = #{brandlogoId,jdbcType=BIGINT},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      userStatus = #{userstatus,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      weixin_shop_recommend = #{weixinShopRecommend,jdbcType=BIT},
+      weixin_shop_recommendTime = #{weixinShopRecommendtime,jdbcType=DATE},
+      first_word = #{firstWord,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select   id="selectGoodsBrand" parameterType="java.util.HashMap"
+  flushCache="true"  resultMap="ResultMapWithBLOBs">
+  select T3.* from amall_goodstype T1
+  left join amall_goodstype_brand T2 on T1.id=T2.type_id
+  left join amall_goodsbrand T3 on T2.brand_id=T3.id
+  where T1.id=#{typeId}
+  </select>
+</mapper>

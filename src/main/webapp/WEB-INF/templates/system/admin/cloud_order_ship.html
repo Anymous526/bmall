@@ -1,0 +1,114 @@
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/window.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script>
+jQuery(document).ready(function(){ 
+	jQuery("#ecId").val("$!obj.ecId");
+    jQuery("#theForm").validate({
+	   rules:{
+		   igoShipCode:{required:true},
+		   igoShipTime:{required:true},
+		   ecId:{required:true}
+		   },
+	   messages:{
+	       igoShipCode:{required:"物流单号不能为空"},
+		   igoShipTime:{required:"发货时间不能为空"},
+	       ecId:{required:"快递公司不能为空"}
+	   }
+	}); 
+ jQuery('#igo_ship_time').attr("readonly","readonly").datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+ 
+ 
+});
+function bw(){ 
+	if($("#ecId option:selected").val() == "")
+	{ 
+		$("#ecId").focus(); 
+		return;
+	}
+	if($("#igo_ship_code").val() == "")
+	{ 
+		$("#igo_ship_code").focus(); 
+		return;
+	} 
+	if($("#igo_ship_code").val() == "")
+	{ 
+		$("#igo_ship_code").focus(); 
+		return;
+	}
+	if($("#igo_ship_price").val() == "")
+	{ 
+		$("#igo_ship_price").val(0); 
+	}
+	var url = "$!webPath/admin/cloud_order_code_select.htm";
+	var shipCode = $("#igo_ship_code").val();
+	jQuery.post(url,{shipCode:shipCode},function(data){
+		if(data == "true"){
+			if(confirm("您输入的订单号已经存在，是否继续？")){
+				var sendUrl = "$!webPath/admin/cloud_order_merge_ship.htm";
+				var id = "$!obj.id";
+				var igoShipContent = $("#igo_ship_content").val();
+				var igoShipPrice = $("#igo_ship_price").val();
+				jQuery.post(sendUrl,{shipCode:shipCode,id:id,igoShipContent:igoShipContent,igoShipPrice:igoShipPrice},function(data){
+					if(data == "true"){
+						alert("发货成功");
+						window.location = "$!webPath/admin/cloud_order.htm?currentPage=$!currentPage";
+					}
+				},"text");
+			}else{
+				return;
+			}
+		}else{
+			$("#theForm").submit();
+		}
+	},"text");	
+}
+</script>
+<form action="$!webPath/admin/cloud_order_ship_save.htm" method="post" id="theForm">
+  <table style="float:left;" width="390" border="0" cellspacing="0" cellpadding="0" class="box_table">
+    <tr>
+      <td align="right" valign="top">兑换用户：</td>
+      <td align="left">$!obj.user.username</td>
+    </tr>
+    <tr>
+      <td width="100" align="right" valign="top">兑换单号：
+      </td>
+      <td align="left">$!obj.orderId</td>
+    </tr>
+    <tr>
+      <td width="100" align="right" valign="top">快递公司：
+      </td>
+      <td align="left">
+      	<select name="ecId" id="ecId">
+	      	<option value="">请选择...</option>
+	      		#foreach($ec in $ecs)
+	      			<option id="xxw" value="$!ec.id">$!ec.companyName</option>
+	      		#end
+      	</select>
+      </td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">物流单号：</td>
+      <td align="left"><input name="igoShipCode" type="text" id="igo_ship_code" value="$!obj.shipCode" /></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">运费：</td>
+      <td align="left"><input name="igoShipPrice" type="text" id="igo_ship_price" value="$!obj.shipCode" /></td>
+    </tr>
+    <tr>
+      <td align="right" valign="top">发货说明：</td>
+      <td align="left"><textarea name="igoShipContent" id="igo_ship_content" cols="40" rows="6">$!obj.shipContent</textarea></td>
+    </tr>
+    
+    <tr>
+      <td colspan="2" align="center"><span class="inputbtn">
+        <input name="" type="button" value="提交" onclick="bw()" style="cursor:pointer;"/>
+        <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+        <input name="id" type="hidden" id="id" value="$!obj.id" />
+      </span></td>
+    </tr>
+  </table>
+</form>

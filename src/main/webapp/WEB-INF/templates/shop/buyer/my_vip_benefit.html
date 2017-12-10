@@ -1,0 +1,43 @@
+$!httpInclude.include("/buyer/my_benefit_head.htm")
+
+<form action="$!webPath/buyer/my_vip_benefit.htm" method="post" id="ListForm">
+	<div class="productmain"> 
+		<div class="container" 	style="background-color: #fdfdfd; height: 37px;">
+			<ul class="section" style="padding: 0;">
+				<li class="li_this"><a href="$!webPath/buyer/my_vip_benefit.htm">招商奖</a></li>
+				<li class=""><a href="$!webPath/buyer/my_benefit_fee.htm">分红奖</a></li>
+				<li class=""><a href="$!webPath/buyer/my_benefit_recharge.htm">充值奖</a></li>
+				<li class=""><a href="$!webPath/buyer/my_special_currency.htm">消费历史</a></li>
+			</ul>
+		</div>
+		<div class="ordercon">
+			<table border="0" cellpadding="0" cellspacing="0" style="text-align: center; line-height: 24px; font-size: 24px; width: 100%; height: auto; border: none;">
+				<tr>
+					<td width="20%">用户名</td>
+					<td width="30%">金额</td>
+					<td width="30%">时间</td>
+				</tr>
+				#foreach($obj in $objs)
+				<tr style="border-top: 1px solid #ddd;">
+					<td>$!obj.giveUser.truename</td>
+					<td>$!obj.mutualFee</td>
+					<td>$CommUtil.formatLongDate($!obj.addTime)</td>
+				</tr>
+				#end 
+			</table>
+		</div>
+		<div class="bottom_page" style="margin-top: 25px;">
+			<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" /> 
+			$!gotoPageFormHTML
+		</div>
+	</div>
+  </form>  
+  </div>
+</div>	
+<script>
+	function gotoPage(n) {
+		jQuery("#currentPage").val(n);
+		jQuery("#ListForm").submit();
+	}
+</script> 
+$!httpInclude.include("/footer1.htm")

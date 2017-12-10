@@ -1,0 +1,105 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>系统消息</title>
+<link rel="stylesheet" type="text/css"
+	href="http://pc1.amallcdn.cn/assets/css/base.css" />
+<!--基本样式-->
+<link rel="stylesheet" type="text/css"
+	href="http://pc1.amallcdn.cn/assets/css/index.css" />
+<!--基本样式-->
+<link rel="stylesheet" type="text/css"
+	href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css"
+	href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css"
+	type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css"
+	href="http://pc3.amallcdn.cn/assets/css/address.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript"
+	src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+	function gotoPage(n) {
+		jQuery("#currentPage").val(n);
+		jQuery("#ListForm").submit();
+	}
+</script>
+</head>
+<body style="background-color: #fff">
+	$!httpInclude.include("/top.htm")
+	$!httpInclude.include("/buyer/buyer_header.htm")
+	<div class="user_main w1200">
+		$!httpInclude.include("/buyer/buyer_left.htm")
+		<div class="s_m"
+			style="float: left; margin-left: 10px; margin-top: 20px;">
+			<div class="buyer_position">
+				<div class="buyer_p_box">
+					<a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>信息</span>
+				</div>
+			</div>
+			<div class="productmain">
+				<span style="padding-left: 10px;font-size: 14px;color: #000;height: 40px;line-height: 40px;">系统信息</span>
+
+				<div class="operation" style="margin-bottom: 0px;">
+					<table width="100%" border="0" cellspacing="0" cellpadding="0">
+						<tr
+							style="background-color: #f7f7f7; border-bottom: 1px solid #d8d8d8;">
+							<td width="25px"></td>
+							<td width="80px">发件人</td>
+							<td width="350px">标题</td>
+							<td width="180px">时间</td>
+							<td width="100px">状态</td>
+							<td width="100px">删除</td>
+						</tr>
+						<!-- 消息列表 -->
+						#if($objs) #foreach($obj in $objs)
+						<tr
+							style="border-bottom: 1px solid #ddd; height: 50px; padding-top: 10px;">
+							<td width="25"><img
+								src="$!webPath/resources/style/system/front/default/images/usercenter/order_04.gif"
+								width="15" height="11" style="margin-left: 5px;" /></td>
+							<td
+								style="width: 80px; display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">系统</td>
+							<td><a
+								href="$!webPath/news/message_content_1.htm?id=$!obj.id"
+								style="width: 350px; display: block; height: 30px; line-height: 30px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; cursor: pointer;">
+									$!obj.msg.title </a>
+							<td style="width: 180px;">$CommUtil.formatLongDate($obj.addTime)</td>
+							<td width="100">#if($!obj.readStatus=='true') <span>已读</span>
+								#else <span>未读</span> #end
+							</td>
+							<td width="100">
+								<button
+									onclick="javascript:window.location.href='$webPath/news/message_del.htm?id=$!obj.id'"
+									style="padding: 0 10px; cursor: pointer; height: 28px; line-height: 28px; line-height: 24px\9; border: 1px solid #a5a5a5; corsor: pointer; background-color: #f1f1f1; display: inline-block;">删除</button>
+							</td>
+						</tr>
+						#end #else
+
+						<!-- 删除掉所有信息后显示-->
+						<tr class="">
+							<td colspan="5"
+								style="height: 250px; text-align: center; line-height: 250px;">暂时没有信息哦~</td>
+						</tr>
+						#end
+					</table>
+					<div class="bottom_page"
+						style="float: right; margin-top: 20px; margin-right: 20px; margin-bottom: 0px; padding-bottom: 0px;">
+						<form action="$!webPath/news/message_list.htm" method="post"
+							id="ListForm">
+							<input name="currentPage" type="hidden" id="currentPage"
+								value="$!currentPage" /> $!gotoPageFormHTML
+						</form>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	$!httpInclude.include("/footer.htm")
+
+</body>
+</html>

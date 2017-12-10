@@ -1,0 +1,64 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的礼品金</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+  
+    <form action="$!webPath/buyer/new_shop_share.htm" method="post" id="ListForm">
+
+          <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的分红</span></div></div>
+          <div class="productmain">
+           <div class="ordernav container">
+            <ul class="orderul section">
+              <li class="this"><a href="$!webPath/buyer/user_share_coin.htm">分红礼品金详情</a></li>
+              
+           	#if($!total)总计:$!total#end
+            </ul>
+          </div>
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+            	<tr>
+            		<td width="20%">分红时间</td>
+            		<td width="30%">店名</td>
+            		<td width="30%">分红数量</td>
+            		<td width="20%">分红类型</td>
+            	</tr>
+            #foreach($obj in $objs)
+            	<tr>
+            		<td>$!obj.dividendDate</td>
+            		<td>$!obj.shopName</td>
+            		<td>$!obj.dividendGold</td>
+            		<td>$!obj.dividendType</td>
+            	</tr>
+            #end
+            </table> 
+            </div> 
+          </div> 
+    </form>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

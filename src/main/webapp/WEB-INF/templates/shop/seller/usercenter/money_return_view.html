@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>退款管理 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/window.css" type="text/css" rel="stylesheet" />
+<script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({
+	   rules:{
+		   shipCode:{required:true}
+		   },
+	   messages:{
+	       shipCode:{required:"不能为空"}
+	   }
+	});
+});
+</script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm")
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=buyer_cash")
+
+<div class="s_m"> 
+	<div class="buyer_position">
+        <div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>退款管理</span></div></div>
+         <div class="productmain">
+            <div class="container" style="height:37px">
+             <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href='$!webPath/seller/seller_cash.htm' >退款管理</a></li>
+              </ul>
+            </div> 
+            <div class="ordercon">
+              <div class="addnav">
+                <form action="$!webPath/seller/seller_cash_save.htm" method="post" name="theForm" id="theForm">
+                  <table style="float:left;" width="943px" border="0" cellspacing="0" cellpadding="0" class="box_table">
+				    <tr>
+				      <td width="100" align="right" valign="top">退款编号：
+				        <input name="id" type="hidden" id="id" value="$!obj.id" />
+				      </td>
+				      <td align="left">$!obj.of.refundId</td>
+				    </tr>
+				    <tr>
+				      <td align="right" valign="top">退款时间：</td>
+				      <td align="left">$!CommUtil.formatLongDate($!obj.addtime)</td>
+				    </tr>
+				    <tr>
+				      <td align="right" valign="top">买家会员名：</td>
+				      <td align="left">$!obj.of.user.username</td>
+				    </tr>
+				    #set($count=0)
+                    #foreach($item in $obj.of.items)
+                      #set($count=$count+$item.goodsCount)
+                    #end
+				    <tr>
+				      <td align="right" valign="top">商品数量：</td>
+				      <td align="left">$!count</td>
+				    </tr>
+				    <tr>
+				      <td align="right" valign="top">备注信息：</td>
+				      <td align="left">$!obj.refundLog</td>
+				    </tr>
+				    
+				  </table>
+				  <table style="float:left;" width="943px" border="0" cellspacing="0" cellpadding="0" class="table_tuih">
+				    <tr valign="middle" style="background:#f1f1f1">
+				      <td align="center" valign="top" width="200">商品名称</td>
+				      <td align="center" width="100">商品数量</td>
+				    </tr>
+				    #foreach($item in $obj.of.items)
+				    <tr valign="middle">
+				      <td width="100" align="left"><span style="color:#999; font-weight:normal;">$!item.goods.goodsName</span></td>
+				      <td align="center">$!item.goodsCount</td>
+				    </tr>
+				    #end
+				  </table>
+                </form>
+              </div>
+            </div>
+          </div>
+  </div>
+  </div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

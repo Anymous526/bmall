@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.BargainMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.Bargain" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="bargain_time" property="bargainTime" jdbcType="TIMESTAMP" />
+    <result column="maximum" property="maximum" jdbcType="INTEGER" />
+    <result column="rebate" property="rebate" jdbcType="DECIMAL" />
+    <result column="bargain_endtime" property="bargainEndTime" jdbcType="TIMESTAMP" />
+    <result column="mark" property="mark" jdbcType="INTEGER" />
+    <result column="bargain_title" property="bargainTitle" jdbcType="LONGVARCHAR"/>
+    <result column="bargain_status" property="bargainStatus" jdbcType="LONGVARCHAR"/>
+    <result column="close_time" property="closeTime" jdbcType="TIMESTAMP"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.Bargain" extends="BaseResultMap" >
+    <result column="state" property="state" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, bargain_time, maximum, rebate, bargain_endtime, mark,bargain_title,bargain_status,close_time
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    state
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.BargainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_bargain
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.BargainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_bargain
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.BargainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_bargain
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.BargainExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_bargain
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_bargain
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_bargain
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.BargainExample" >
+    delete from amall_bargain
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.Bargain" >
+    insert into amall_bargain (  id, addTime, deleteStatus, 
+      bargain_time, maximum, rebate, 
+      state, bargain_endtime, mark,bargain_title,bargain_status,close_time)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{bargainTime,jdbcType=TIMESTAMP}, #{maximum,jdbcType=INTEGER}, #{rebate,jdbcType=DECIMAL}, 
+      #{state,jdbcType=LONGVARCHAR}, #{bargainEndTime,jdbcType=TIMESTAMP}, #{mark,jdbcType=INTEGER},
+      #{bargain_title,jdbcType=LONGVARCHAR},#{bargainStatus,jdbcType=LONGVARCHAR},#{closeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.Bargain" >
+    
+    insert into amall_bargain
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="bargainTime != null" >
+        bargain_time,
+      </if>
+      <if test="maximum != null" >
+        maximum,
+      </if>
+      <if test="rebate != null" >
+        rebate,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="bargainEndTime != null" >
+        bargain_endtime,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+      <if test="bargainTitle != null" >
+        bargain_title,
+      </if>
+      <if test="bargainStatus != null" >
+        bargain_status,
+      </if>
+      <if test="closeTime != null" >
+        close_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="bargainTime != null" >
+        #{bargainTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maximum != null" >
+        #{maximum,jdbcType=INTEGER},
+      </if>
+      <if test="rebate != null" >
+        #{rebate,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bargainEndTime != null" >
+        #{bargainEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="bargainTitle != null" >
+        #{bargainTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bargainStatus != null" >
+        #{bargainStatus,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.BargainExample" resultType="java.lang.Integer" >
+    select count(*) from amall_bargain
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_bargain
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.bargainTime != null" >
+        bargain_time = #{record.bargainTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.maximum != null" >
+        maximum = #{record.maximum,jdbcType=INTEGER},
+      </if>
+      <if test="record.rebate != null" >
+        rebate = #{record.rebate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.bargainEndTime != null" >
+        bargain_endtime = #{record.bargainEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mark != null" >
+        mark = #{record.mark,jdbcType=INTEGER},
+      </if>
+      <if test="record.bargainTitle != null" >
+        bargain_title = #{record.bargainTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.bargainStatus != null" >
+        bargain_status = #{record.bargainStatus,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.closeTime != null" >
+        close_time = #{record.closeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_bargain
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      bargain_time = #{record.bargainTime,jdbcType=TIMESTAMP},
+      maximum = #{record.maximum,jdbcType=INTEGER},
+      rebate = #{record.rebate,jdbcType=DECIMAL},
+      state = #{record.state,jdbcType=LONGVARCHAR},
+      bargain_endtime = #{record.bargainEndTime,jdbcType=TIMESTAMP},
+      mark = #{record.mark,jdbcType=INTEGER},
+      bargain_title = #{record.bargainTitle,jdbcType=LONGVARCHAR},
+      bargain_status = #{record.bargainStatus,jdbcType=LONGVARCHAR},
+      close_time = #{record.closeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_bargain
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      bargain_time = #{record.bargainTime,jdbcType=TIMESTAMP},
+      maximum = #{record.maximum,jdbcType=INTEGER},
+      rebate = #{record.rebate,jdbcType=DECIMAL},
+      bargain_endtime = #{record.bargainEndTime,jdbcType=TIMESTAMP},
+      mark = #{record.mark,jdbcType=INTEGER},
+      bargain_title = #{record.bargainTitle,jdbcType=LONGVARCHAR},
+      bargain_status = #{record.bargainStatus,jdbcType=LONGVARCHAR},
+      close_time = #{record.closeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.Bargain" >
+    update amall_bargain
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="bargainTime != null" >
+        bargain_time = #{bargainTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="maximum != null" >
+        maximum = #{maximum,jdbcType=INTEGER},
+      </if>
+      <if test="rebate != null" >
+        rebate = #{rebate,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bargainEndTime != null" >
+        bargain_endtime = #{bargainEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="bargainTitle != null" >
+        bargain_title = #{bargainTitle,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bargainStatus != null" >
+        bargain_status = #{bargainStatus,jdbcType=LONGVARCHAR},
+      </if>
+      
+        close_time = #{closeTime,jdbcType=TIMESTAMP},
+      
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.Bargain" >
+    update amall_bargain
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      bargain_time = #{bargainTime,jdbcType=TIMESTAMP},
+      maximum = #{maximum,jdbcType=INTEGER},
+      rebate = #{rebate,jdbcType=DECIMAL},
+      state = #{state,jdbcType=LONGVARCHAR},
+      bargain_endtime = #{bargainEndTime,jdbcType=TIMESTAMP},
+      mark = #{mark,jdbcType=INTEGER},
+      bargain_title = #{bargainTitle,jdbcType=LONGVARCHAR},
+      bargain_status = #{bargainStatus,jdbcType=LONGVARCHAR},
+      close_time = #{closeTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.Bargain" >
+    update amall_bargain
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      bargain_time = #{bargainTime,jdbcType=TIMESTAMP},
+      maximum = #{maximum,jdbcType=INTEGER},
+      rebate = #{rebate,jdbcType=DECIMAL},
+      bargain_endtime = #{bargainEndTime,jdbcType=TIMESTAMP},
+      mark = #{mark,jdbcType=INTEGER},
+      bargain_title = #{bargainTitle,jdbcType=LONGVARCHAR},
+      bargain_status = #{bargainStatus,jdbcType=LONGVARCHAR},
+      close_time = #{closeTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

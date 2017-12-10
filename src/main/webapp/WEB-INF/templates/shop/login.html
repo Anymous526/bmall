@@ -1,0 +1,599 @@
+﻿<!DOCTYPE  html>
+<html>
+
+<head>
+<meta charset="UTF-8" />
+<title>天使会员登录</title>
+<link rel="stylesheet" href="$!webPath/assets/login/css/style.css" type="text/css"/>
+<link rel="stylesheet" href="http://pc1.amallcdn.cn/assets/css/index.css" type="text/css" />
+<link rel="stylesheet" href="http://pc1.amallcdn.cn/assets/css/base.css" type="text/css" />
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/login/js/jquery.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/jquery.validate.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/cryptographic.js"></script> 
+<script>  
+function btnSubmit()
+{
+	if($("#username").val() == "")
+	{
+		$(".login_error_sp").css("display","block");
+		$(".login_error_sp").html("　 手机号码不能为空"); 
+		$("#username").focus(); 
+		return;
+	} 
+	var phoneReg = /^1\d{10}$/;
+	if(!phoneReg.test($("#username").val()))
+	{ 
+		$(".login_error_sp").css("display","block");
+		$(".login_error_sp").html("　 请输入正确的手机号码"); 
+		$("#username").focus(); 
+		return;
+	}
+	if($("#username").val() != "")
+	{
+		$(".login_error_sp").css("display","none"); 
+	}  
+	if($("#Inpassword").val() == "")
+	{
+		$(".login_error_sp1").css("display","block");
+		$(".login_error_sp1").html("　 密码不能为空"); 
+		$("#Inpassword").focus(); 
+		return;
+	} 
+	if($("#Inpassword").val() != "")
+	{
+		$(".login_error_sp1").css("display","none");  
+	} 
+	if($("#code").val() == "")
+	{
+		$(".login_error_sp2").css("display","block");
+		$(".login_error_sp2").html("　 验证码不能为空");  
+		$("#code").focus(); 
+		return;
+	} 
+	/* if(!(/^\d{1}$/.test)($("#code").val()))
+	{
+		$(".login_error_sp2").css("display","block");
+		$(".login_error_sp2").html("　 验证码错误");  
+		$("#code").focus(); 
+		return;
+	}  */
+	if($("#remember").attr("checked"))
+	{
+		$("#autologin").val("true");
+	}
+	else
+	{
+		$("#autologin").val("false");
+	}
+
+	//加密
+	var shaObj = new amallEncryption($("#Inpassword").val());
+	var str = shaObj.getHash();
+	$("#password").val(str); 
+	var imgcode = $("#code").val().toUpperCase();
+	jQuery.ajax({
+		type : "POST",
+		url : "$!webPath/checkexist.htm",
+		dataType : "json",
+		cache : false,
+		async : false,
+		data : {
+			"uname" : $("#username").val(),
+			"upwd" : str,
+			"code" :  imgcode
+		},
+		success : function (data) {
+			if (data.pass == '1') {
+				jQuery("#theForm").submit();	
+				
+				//直播同步登录，还需改好多ajax_login，懒得弄了
+				//zhibo start
+				jQuery.ajax( {  
+					url:'http://zhibo.amall.com/index.php/Passport/dologin?r='+Math.random(),// 跳转到 action  
+					data:{
+						fromzhibo: '1',
+						username : $("#username").val(),
+						password : str
+					},  
+					type:'post',  
+					 //dataType: 'jsonp',
+					cache:false,  
+					xhrFields: {
+								withCredentials: true
+								},
+					crossDomain: true,
+					success:function(data) { 
+						 //alert(data);
+					}
+				 });
+				//zhibo end
+				
+			}
+			if (data.pass == '0') {
+				alert(data.msg);
+				$("#password").val("");
+				refreshCode();
+				$("#code").val("");
+			}
+		},
+		error : function (data) {}
+	}); 
+}
+var EnterSubmit = function(evt){
+evt = window.event || evt;
+ if (evt.keyCode == 13)
+ { 
+	 btnSubmit();
+ }
+}
+window.document.onkeydown=EnterSubmit;
+jQuery(document).ready(function(){
+     if(top.location!=this.location)top.location=this.location;//跳出框架在主窗口登录
+	jQuery('#username').focus();	
+});
+
+</script> 
+<style type="text/css">
+input::-ms-clear{display:none;} 
+input::-ms-reveal{display:none;} 
+.login_footer{width:1200px; margin:15px auto; text-align: center; }
+.login_footer a{margin-left:5px; margin-right: 5px; font-size:13px;}
+
+input:-webkit-autofill{
+-webkit-box-shadow: 0 0 0px 50px white inset;
+}
+</style>
+</head>
+<body class="home blog et_frontend_customizer gecko et_includes_sidebar">
+
+<div class="top">
+	<div class="toplogo">
+    	<a href="$!webPath/index.htm"><img src="$!webPath/assets/img/loginlogo.png" /></a>
+    </div>
+</div> 
+<div id="et-slider-wrapper" class="et_slider_auto et_slider_speed_7000">
+  <div id="et-slides">
+    <!-- <div class="et-slide" style="background: url($!webPath/assets/login/images/bg-43.jpg) 50% 0 no-repeat;"> </div> -->
+    <div class="et-slide" style="background: url($!webPath/assets/login/images/bg-4-2.jpg) 50% 0 no-repeat;"> </div>
+    <!-- <div class="et-slide" style="background: url($!webPath/assets/login/images/bg-11.jpg) 50% 0 no-repeat;"> </div>  -->
+  </div>
+</div> 
+<div class="login_from" style="">
+	<div class="mt">
+    	<h1>天使会员</h1>
+        <div class="extra-r">
+			<div class="regist-link"><a href="$!webPath/register.htm" ><b style="padding-bottom: 3px;"></b>立即注册</a></div>
+		</div>
+    </div> 
+    <div class="msg-wrap">
+		<div class="msg-warn"><b></b>公共场所不建议自动登录，以防账号丢失</div>
+		<div class="msg-error hide" style="display: none;"><b></b></div>
+	</div>
+    <form  method="post" name="theForm" id="theForm"  action="$!webPath/amall_login.htm">
+    <input type="hidden" name="password" id="password" /> 
+    <div class="item item-fore2">
+    	<label for="loginname" class="login-label name-label"></label>
+        <input type="text" style="background:none;" name="username" placeholder="请输入手机号码" id="username" class="itxt" tabindex="1" autocomplete="off" 	>
+        <span class="login_error_sp"></span>
+    </div>
+    
+    <div class="item item-fore2" >
+    	<label for="loginname" class="login-pwd name-label" style="background-position: -48px 0;  "></label>
+        <input type="password" style="background:none;" name="Inpassword" placeholder="请输入密码" id="Inpassword" class="itxt" tabindex="1" autocomplete="off" >
+        <span class="login_error_sp1"></span>
+    </div>
+     <script>
+        function refreshCode(){
+	        jQuery("#code_img").attr("src","$!webPath/verify.htm?d"+new Date().getTime());
+        }
+    </script>
+    <div class="item item-fore2 yzm" style="position: relative;" >
+    	<label for="loginname" class="login-pwd name-label" style=" background: url('$!webPath/assets/img/6.png')" ></label>
+        <input type="text" name="code" placeholder="请输入验证码" id="code" style="background:none;width:150px;" class="itxt" tabindex="1" autocomplete="off" maxlength="4" >   
+        
+        <img class="login_yzm" src="$!webPath/verify.htm" id="code_img" onclick="refreshCode();" /> 
+         <span class="login_error_sp2"></span>
+    </div> 
+    <div class="item item-fore3">
+		<div class="safe">
+			<span>
+            	<input name="chkRememberMe" id="remember" type="checkbox" class="jdcheckbox" tabindex="3" clstag="pageclick|keycount|20150112ABD|6" style="display: inline-block;margin-top: -3px;"/>
+           	    <label for="">自动登录</label>
+            </span>
+          
+            <span class="forget-pw-safe">
+                <a href="$!webPath/password_forgot.htm">忘记密码?</a>
+            </span>
+         </div>
+         <div class="updata" style="display:none;">安全控件升级了!<a class="up-two">立即更新</a> <a class="up-one"></a></div>
+	</div>
+                         
+     <input type="hidden" name="autologin" id="autologin"/>         
+                               
+                                
+	<div class="item item-fore5">
+			<div class="login-btn">
+				<input type="button" style="line-height:24px;" class="btn-sub" onclick="btnSubmit()" value='登&nbsp;&nbsp;&nbsp;&nbsp;录' >
+       		</div>
+	</div>                   
+        </form>   
+     <div><span>使用微信扫码登录</span><span id="triangle-bottomright"></span></div>                 
+</div>
+
+<div id="wechat_code" style="display:none"> 
+<div id="login_container">
+</div>
+<div class="we_right"></div>
+</div>
+
+<div class="login_footer">
+        <p>
+        	<a target="_blank" href="#">关于我们</a>
+        	<a target="_blank" href="http://help.amall.com/help/help_saler.html">商家入驻</a>
+            <a target="_blank" href="http://help.amall.com/help/help_index.html">联系我们</a>
+            <a target="_blank" href="http://help.amall.com/help/help_index.html">帮助中心</a>
+        </p>
+        <p class="c9">网站备案/许可证号：粤ICP备11078564号-2 © 2003-2017 AMALL.COM 版权所有</p>    
+</div>
+
+<div id="register21" #if(!$!nickname) style="display:none;" #end>
+<div class="rg_1">完善资料</div>
+<form action="$!webPath/wx_register.htm" method="post" name="theForm1" id="theForm1">
+		<input type="hidden" name="openid" value="$!openid"> 
+        <div class="item21">
+        	<span class="label21"><b class="ftx04">*</b>手机号码：</span>
+            <div id="item-info22"><input type="text" class="reg_input"  name="userName1" id="userName1"></div>
+       		<div id="ch_user1" class="item-text">请填写手机号码，不能包含特殊字符</div>
+        </div> 
+        <div class="item21" id="szmm_wx">
+        	<span class="label21"><b class="ftx04">*</b>设置密码：</span>
+            <div id="item-info22"><input maxlength="20" type="password" class="reg_input" name="password1" id="password1"></div>
+            <div id="ch_pwd1" class="item-text">密码为6位以上20位以下字母或数字</div>
+        </div> 
+        <div class="item21" id="yhxm_wx">
+        	<span class="label21"><b class="ftx04">*</b>用户姓名：</span>
+            <div id="item-info22"><input type="text" class="reg_input" value="$!nickname" name="trueName1" id="trueName1"></div>
+       		<div id="ch_u1" class="item-text">请填写真实姓名，提高分享信任度</div>
+        </div>  
+        <div class="item21" id="smsDiv">
+        <input type="hidden" id="smsFlag" name="smsFlag">
+        	<span class="label21"><b class="ftx04">*</b>短信验证码：</span>
+            <div id="item-info22"><input type="text" class="reg_input text-1" name="smscode" id="smscode" style="width:140px"></div>
+            <a class="btn21" href="javascript:strSendSms();" style="min-width:100px;padding:0 5px 0 5px;height:34px;height:36px\9; text-align: center;float: left;text-decoration:none;margin-left:12px;margin-left:8px\9; display: block;"><span id="getSmsYzm21">获取短信验证码</span></a>
+            <span id="remainTime"></span>
+        </div>
+        
+        <div class="item21" style="margin-bottom:100px;"> 
+        	 <div class="item-ifo21" id="wx_wei21"><input type="button" onclick="reg();" class="btn-img btn-regist" value="提交资料"></div>
+        </div>
+        
+        </form>
+             
+     <form id="wxBind" method="post" action="$!webPath/wx_user_bind.htm">
+     	<input type="hidden" name="username" id="wxbindname" />
+     	<input type="hidden" name="openid" value="$!openid">
+     </form>  
+     
+        <div id="closebg21"></div>
+</div>
+<div id="bg_register" #if(!$!nickname) style="display:none;" #end></div>
+
+<script type="text/javascript" src="$!webPath/assets/login/js/superfish.js"></script> 
+<script type="text/javascript" src="$!webPath/assets/login/js/jquery.fitvids.js"></script> 
+<script type="text/javascript" src="$!webPath/assets/login/js/custom.js"></script> 
+<script type="text/javascript" src="$!webPath/assets/login/js/modernizr.js"></script>
+<script src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
+<script>
+//微信登陆
+var obj = new WxLogin({
+    id:"login_container", 
+    appid: "wx08306f46e810acff",
+    scope: "snsapi_login",
+    redirect_uri: encodeURI("http://www.amall.com/wx_login.htm"),
+    state: "AWmsas121ASADWadA",
+    style: "black",
+    href: ""
+  });
+</script> 
+</body>
+</html>
+<script>
+$(document).ready(function(){
+	$("#triangle-bottomright").click(function(){ 
+		$(".login_from").hide();
+		$("#wechat_code").show();
+	})
+	$(".we_right").click(function(){ 
+		$(".login_from").show();
+		$("#wechat_code").hide();
+	})
+})
+</script> 
+<script type="text/javascript"> 
+var number = $!config.smsSendInterval;
+var exceedTime = $!config.smsExceedTime;
+var time = number;
+var time_id = ""; 
+function  reg(){   
+    if($("#userName1").val().trim() == "")
+	{ 
+		$("#ch_user1").html("手机号码不能为空"); 
+		$("#ch_user1").css("color","red");
+		$("#userName1").focus(); 
+		return;
+	}  
+	var phoneReg1 = /^1\d{10}$/;
+	if(!phoneReg1.test($("#userName1").val()))
+	{  
+		$("#ch_user1").html("请输入正确的手机号码"); 
+		$("#ch_user1").css("color","red");
+		$("#userName1").focus(); 
+		return;
+	}
+	if(phoneReg1.test($("#userName1").val()))
+	{  
+		$("#ch_user1").html("手机号码输入正确"); 
+		$("#ch_user1").css("color","#888"); 
+	}  
+	if($("#password1").val().trim() == "")
+	{ 
+		$("#ch_pwd1").html("密码不能为空"); 
+		$("#ch_pwd1").css("color","red");
+		$("#password1").focus(); 
+		return;
+	}  
+	if($("#trueName1").val().trim()== ""){
+		$("#ch_u1").html("用户姓名不能为空"); 
+		$("#ch_u1").css("color","red");
+		$("#trueName1").focus(); 
+		return;
+	}  
+	if($("#password1").val().trim().length<6||$("#password1").val().trim().length>20){
+		$("#ch_pwd1").html("密码为6位以上20位以下字母或数字");
+		$("#ch_pwd1").css("color","red");
+		$("#password1").focus(); 
+		return;
+	}
+	if($("#password1").val().trim().length >=6 && $("#password1").val().trim().length <=20){
+		$("#ch_pwd1").html("密码输入正确");
+		$("#ch_pwd1").css("color","#888"); 
+	}  
+	var smscode = jQuery("#smscode").val();
+	if(smscode == "")
+	{
+		$("#getSmsYzm21").text("请输入短信验证码");
+		$("#smscode").focus();
+		return false;
+	}
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/verify_sms_code.htm",
+		data : {"smscode":smscode},
+		success : function(ret) {
+			//正确才能注册
+			if(ret == "true")
+			{
+				//加密
+				var shaObj = new amallEncryption($("#password1").val());
+				var str = shaObj.getHash();
+				$("#password1").val(str); 
+				$("#theForm1").submit();
+			}
+			else
+			{
+				alert("验证码错误或验证码超时");
+				
+			}
+				
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("验证码错误或验证码超时");
+			
+		}
+	});
+}	  
+ 
+
+
+$("#closebg21").click(function(){
+	 $("#bg_register").hide();$("#register21").hide();
+})
+
+$("#userName1").blur(function(){
+	
+	var phoneNum1=jQuery("#userName1").val(); 
+	var phoneReg21=/^1\d{10}$/;
+	if(!phoneReg21.test(phoneNum1))
+	{
+		$("#ch_user1").text("请输入正确手机号码");			
+		$("#ch_user1").css("color","red");		 
+		return false;
+	}
+	var messageArray = new Array();
+	messageArray[0] = "请输入手机号";
+	messageArray[1] = "手机号已注册";
+	messageArray[2] = "今天短信次数超限,请明天再次尝试";
+	messageArray[3] = "两次发送间隔太短，请稍候再试";
+	messageArray[4] = "短信发送失败，请再次尝试";
+	messageArray[5] = "短信发送成功，请查收";
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/wx_user_check.htm",
+		data : {"username":phoneNum1}, 
+		success : function(ret) { 
+				if(ret==1)
+				{
+					//绑定	
+					$("#szmm_wx").hide();$("#yhxm_wx").hide();$("#register21").css("height","300px");$("#ch_user1").css("color","#028637");$("#ch_user1").html("该手机号已注册，只需完成微信绑定");
+					$("#wx_wei21").html("<input type='button' onclick='bindWxUser()' class='btn-img btn-regist' value='绑定微信'>");$(".btn-regist").css("background","#028637");$(".btn21").attr("href","javascript:SendSms();");
+				}  
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("数据错误！");	
+		}
+	});
+});
+
+function bindWxUser()
+{ 
+    if($("#userName1").val().trim() == "")
+	{ 
+		$("#ch_user1").html("手机号码不能为空"); 
+		$("#ch_user1").css("color","red");
+		$("#userName1").focus(); 
+		return;
+	}  
+	var phoneReg1 = /^1\d{10}$/;
+	if(!phoneReg1.test($("#userName1").val()))
+	{  
+		$("#ch_user1").html("请输入正确的手机号码"); 
+		$("#ch_user1").css("color","red");
+		$("#userName1").focus(); 
+		return;
+	}
+	if(phoneReg1.test($("#userName1").val()))
+	{  
+		$("#ch_user1").html("手机号码输入正确"); 
+		$("#ch_user1").css("color","#888"); 
+	}  
+	 
+	var smscode = jQuery("#smscode").val();
+	if(smscode == "")
+	{
+		$("#getSmsYzm21").text("请输入短信验证码");
+		$("#smscode").focus();
+		return false;
+	} 
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/verify_sms_code.htm",
+		data : {"smscode":smscode},
+		success : function(ret) {
+			//正确才能注册
+			if(ret == "true")
+			{
+				$("#wxbindname").val($("#userName1").val());
+				$("#wxBind").submit();
+			}
+			else
+			{
+				alert("验证码错误或验证码超时");
+				
+			}
+				
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			alert("验证码错误或验证码超时");
+			
+		}
+	});
+}
+
+function strSendSms()
+	{
+		
+		var phoneNum1=jQuery("#userName1").val(); 
+		var phoneReg21=/^1\d{10}$/;
+		if(!phoneReg21.test(phoneNum1))
+		{
+			$("#ch_user1").text("请输入正确手机号码");			
+			$("#ch_user1").css("color","red");		 
+			return false;
+		} 
+		var messageArray = new Array();
+		messageArray[0] = "请输入手机号";
+		messageArray[1] = "手机号已注册";
+		messageArray[2] = "今天短信次数超限,请明天再次尝试";
+		messageArray[3] = "两次发送间隔太短，请稍候再试";
+		messageArray[4] = "短信发送失败，请再次尝试";
+		messageArray[5] = "短信发送成功，请查收";
+		
+		
+		jQuery.ajax({
+			type : 'POST',
+			url : "$!webPath/send_sms.htm",
+			data : {"phoneNum":phoneNum1},
+			success : function(ret) { 
+					sendRemainTime(messageArray[ret]);
+					if(ret==5){
+					time_id = setInterval(countDown, 1000);
+					}
+					if(ret==1){
+						//绑定	
+						$("#szmm_wx").hide();$("#yhxm_wx").hide();$("#register21").css("height","300px");$("#ch_user1").css("color","#028637");$("#ch_user1").html("该手机号已注册，只需完成微信绑定");$("#getSmsYzm21").html("获取短信验证码");
+						$("#wx_wei21").html("<input type='button' onclick='bindWxUser()' class='btn-img btn-regist' value='绑定微信'>");$(".btn-regist").css("background","#028637");$(".btn21").attr("href","javascript:SendSms();");
+					}
+			},
+			error : function(jqXHR, textStatus, errorThrown) {
+				jQuery("#getSmsYzm21").html("短信验证码发送失败");
+				time_id = setInterval(countDown, 1000);
+			}
+		});
+		
+}
+
+function SendSms()
+{
+	
+	var phoneNum1=jQuery("#userName1").val(); 
+	var phoneReg21=/^1\d{10}$/;
+	if(!phoneReg21.test(phoneNum1))
+	{
+		$("#ch_user1").text("请输入正确手机号码");			
+		$("#ch_user1").css("color","red");		 
+		return false;
+	} 
+	var messageArray = new Array();
+	messageArray[0] = "请输入手机号";
+	messageArray[1] = "手机号已注册";
+	messageArray[2] = "今天短信次数超限,请明天再次尝试";
+	messageArray[3] = "两次发送间隔太短，请稍候再试";
+	messageArray[4] = "短信发送失败，请再次尝试";
+	messageArray[5] = "短信发送成功，请查收";
+	
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/send_sms.htm",
+		data : {"phoneNum":phoneNum1,"forgot":"true"},
+		success : function(ret) { 
+				sendRemainTime(messageArray[ret]);
+				if(ret==5){
+				time_id = setInterval(countDown, 1000);
+				}
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			jQuery("#getSmsYzm21").html("短信验证码发送失败");
+			time_id = setInterval(countDown, 1000);
+		}
+	});
+	
+}
+
+function sendRemainTime(str){ 
+	$("#getSmsYzm21").text(str);
+}  
+
+function countDown(){
+	 --time;
+	 if(time == 0){
+	     clearInterval(time_id);
+		 $("#remainTime").css("display", "none")
+	     $(".btn21").removeAttr("style");
+	     $(".btn21").css("padding-left", "10px");
+	     $(".btn21").css("padding-right", "10px");
+	     $(".btn21").css("margin-left", "-3px");
+	     $("#getSmsYzm21").text("发送短信");
+	     time=number;
+	     return false;
+	 }
+	 
+	 $(".btn21").css("display","none");
+ 	 $("#remainTime").text("");
+ 	 $("#remainTime").css("display","block");
+	 $("#remainTime").text(time + "秒后可重新获取,验证码有效期" + exceedTime + "分钟"); 
+}	 
+</script> 

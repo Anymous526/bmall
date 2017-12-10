@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的现金 - 代充</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/assets/css/my_asset.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m">  
+		<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的现金</span></div></div>
+		<div class="new_news">
+			<div class="new_left">最新公告：</div>
+			<div class="new_tit"><a href="#">Amall商城年度财务报表明细</a></div>
+		</div>
+		
+		<div class="cash_tit">
+			<div class="cash_person">
+				<span><label>张三丰</label><img src="$!webPath/assets/img/vip2.png" /></span>
+				<span>余额：<strong style="font-size:28px; color:#666">¥2000</strong></span>
+			</div>
+			
+			<div class="cash_tool">
+				<input class="tool1" type="button" value="充值" />
+				<input class="tool2" type="button" value="提现" onclick="javascript:location.href='$!webPath/buyer/tixian.htm'" />
+				<input class="tool3" type="button" value="代充" onclick="javascript:location.href='$!webPath/buyer/duicho.htm'" />
+			</div>
+			
+			<div class="asset_0">
+				<div style="margin-bottom: 30px; height: 30px; display: block;">
+					<div style="float:left; ">
+						<span>可提现金额：</span>
+						<span>可对冲金额：</span>
+					</div>
+					<div style="float:right; overflow: hidden; padding-right:70px; margin-top: -30px; font-size:16px ">
+						¥1000
+					</div>
+				</div>
+				<div><label style="float:left">可消费金额：</label><label style="float:left;margin-left:12px; margin-top:-3px; font-size:16px">¥1000</label></div>
+			</div>
+			
+			
+			<div class="asset_1">
+				<p>分红奖</p>
+				<i style="font-size:28px; color:#666">¥1000</i>
+			</div>
+			
+			<div class="asset_2">
+				<p>招商奖</p>
+				<i style="font-size:28px; color:#666">¥1000</i>
+			</div>	
+		</div>
+		
+		
+		
+		<div class="productmain" style="border:1px solid #acc7e2">
+			<div class="tixian_tit"><b style="font-size:14px">平台公司：深圳市天使互助网络有限公司</b></div>
+			
+			
+			<div class="my_assets_success">
+				<div class="success_img"><img src="$!webPath/assets/img/checkt.png" /></div>
+				<div class="success_txt">
+					<p class="canc">恭喜您，为他人代充成功。</p>
+					<p style="font-weight: 900; color:#333; font-size:14px;">你为账号：13800138000代充金额将在2小时内到账，你留意短信提示。</p>
+					<p style="margin-top: 15px;">代充账号：13800138000</p>
+					<p>代充金额：3000元</p>
+				</div>
+			</div>
+			
+			<div class="tixiantxt">
+				<p><strong>Amall商城全面保障您的资金安全</strong></p>
+				<p style="text-indent:2em">Amall商城为你量身定制的账户系统与支付服务系统。一方面，为Amall商城平台开发定制账户系统，提供系统外包运营服务；另一方面，为Amall商城平台提供支付和结算服务，帮助平台和用户实现充值、取现、资金划拨等服务；投资人资金划入虚拟账户后，平台无法触碰资金，避免了资金池模式。但是，我们对投资风险（包括但不限于平台或其他借款人违约）不承担任何责任，投资需谨慎。</p>
+			</div>
+			
+        </div>
+	</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+	$(function(){
+		$("#time option[value='$!time']").attr("selected","selected");
+	});
+</script>
+<style type="">
+.recharge_cg{color:#2dd700;font-size: 14px;}
+.recharge_cr{color:red;}
+</style>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">平台收支</h1>
+  <div class="settab"><span class="tab-one"></span> 
+  					<span class="tabs"> 
+	  					<a href="$!webPath/admin/platform_earning.htm"  class="this">平台收支列表</a>  
+  					</span> 
+  					<span class="tab-two"></span>
+  </div>
+  <form method="post" id="queryForm">
+  <div class="allpro_search">
+    <ul>
+      <li><span>
+        <select name="time" id="time">
+          <option value="1">最近一周</option>
+          <option value="2">最近一个月</option>
+          <option value="3">最近一年</option>
+          <option value="">所有</option>
+        </select>
+        </span> <span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+        </span> </li>
+    </ul>
+  </div>
+  </form>
+  <form method="post" id="ListForm" name="ListForm">
+  <div class="allpro_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="15%" align="center">充值时间</td>
+        <td width="15%" align="center">收支金额</td>
+        <td width="15%" align="center">分红类型</td>
+        <td width="12%" align="center">消费者号码</td>
+        <td width="12%" align="center">消费者姓名</td>
+        <td width="18%" align="center">消费金额</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td align="center">$!CommUtil.formatLongDate($!obj.addTime)</td>
+        <td align="center" class="recharge_cg">$!{obj.earningFee}</td>
+        <td align="center">
+        	#if($!{obj.type} == 1)
+        		招商奖
+        	#elseif($!{obj.type} == 2)
+        		分红奖
+        	#elseif($!{obj.type} == 3)
+        		充值奖
+        	#end
+        </td>
+        <td align="center">$!{obj.giveUser.username}</td>
+        <td align="center">$!{obj.giveUser.truename}</td>
+        <td align="center">$!{obj.originalFee}</td>
+      </tr>
+      #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="time" type="hidden" id="" value="$!time" />
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

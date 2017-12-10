@@ -1,0 +1,155 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>兑换订单确认 </title>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+jQuery(function(){
+	jQuery('.tabPanel ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panes>div:eq('+$(this).index()+')').show().siblings().hide();	
+	});
+})
+</script>
+<style>
+	.buttonred{width:220px; border:none; height:55px; display:block; overflow:hidden; background-color: red; color:#fff; border-radius:3px; text-align: center; font-size:18px;font-weight: 700; font-family: "微软雅黑"}
+	.buttongray{width:220px; border:none; height:55px; display:block; overflow:hidden; background-color:#ccc; color:#fff; border-radius:3px; text-align: center; font-size:18px; font-weight: 700; font-family: "微软雅黑"}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/cart/cart_pay_logo1.htm")
+
+
+<div class="w990 paydiv">
+  <div style="width:100%;margin:40px auto;">
+  <form action="$!webPath/exchange/exchange_order.htm" method="post"  id="theForm">
+  <input type="hidden" name="alipayorderId" value="$!alipayTools.getApilayOrderId($!orderList)"/>
+  <input type="hidden" name="exchangeCount" value="$!exchangeCount"/>
+  <input type="hidden" name="igGoodsPrice" value="$!igGoods.igGoodsPrice"/>
+  <input type="hidden" name="igGoodsGoldNum" value="$!igGoods.igGoodsGoldNum"/>
+  <input type="hidden" name="id" value="$!igGoods.id"/>
+    <div class="tabPanel">
+      <ul>
+        <li class="hit">礼品金兑换</li>
+      </ul>
+  
+        <div class="pane" style="display:block;">
+          <div class="duihtsb">
+				
+				<div class="duihtsbr">
+					<div style="margin:10px 0 0 30px">
+						<div style="width:40px;float:left; "><img src="$!webPath/assets/img/wriii.png" width="40" /></div>
+						<div class="tsbzt" style="">
+						
+							<p class="w100 f16">商品状态： 可以兑换</p>
+							<p class="w100 f16">单件商品原价：$!igGoods.igGoodsPrice 元</p>
+							<p class="w100 f16">单件商品所需礼品金： $!igGoods.igGoodsGoldNum 币</p>
+							<p class="w100 f16">商品兑换数量： $!exchangeCount 件</p>
+							#set($totalGold=$!{exchangeCount}*$!{igGoods.igGoodsGoldNum})
+							<p class="w100 f16">商品兑换共需礼品金： $!totalGold 币</p>
+							<p class="w100 f16">商品兑换所承担邮费：￥ $!igGoods.igTransfee</p>
+							<p class="w100 f16">
+								<span class="f16">账号可用礼品金： $!coin 币</span>
+								<!-- <span class="f16">礼品金不够？立即<a class="cred f16" href="$!webPath/buyer/goldIntegralExchange.htm" id="Exchange"> 兑换礼品金</a></span> -->
+							</p> 
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div style="width:100%; border-bottom: 1px solid #ddd">
+				<table class="order_list" width="100%" border="0" cellspacing="0" cellpadding="0" >
+			      <thead>
+			        <tr>
+			          <th width="60%" class="tab_th1"><img src="$!webPath/assets/img/ss.png" style="margin-left: 3px" />Amall商城自营</th>
+			          <th width="15%" class="tab_th2">单价(礼品金)</th>
+			          <th width="15%" class="tab_th2">数量</th>
+			          <th width="15%" class="tab_th2">小计(礼品金)</th>
+			        </tr>
+			      </thead>
+			      <tbody width="100%" border="0" cellspacing="5" cellpadding="3">
+			      	#set($igImg=$!{igGoods.igGoodsImg})
+			        <tr>
+			          <td style="padding-left:3px">
+			          	<a class="order_img1" href="$!webPath/exchange/exchange_view.htm?id=$!igGoods.id" target="_blank"><img src="$!{config.imagewebserver}/$!{igImg.path}/$!{igImg.name}" width="50"  /></a>
+			          	<span><a href="$!webPath/exchange/exchange_view.htm?id=$!igGoods.id" target="_blank">$!{igGoods.igGoodsName}</a></span>
+			            <span><img src="$!webPath/assets/img/16-161.png" /> <img src="$!webPath/assets/img/xcard.png" /> <img src="$!webPath/assets/img/post.png" /></span>
+			          </td>
+			          <td align="center">$!igGoods.igGoodsGoldNum</td>
+			          <td align="center">$!exchangeCount </td>
+			          <td align="center">$!totalGold</td>
+			        </tr>
+			      </tbody>
+			      <tfoot>
+			      	<tr style="border-top:1px solid #b4d0ff; width:100%; background:#f2f6ff">
+			        	<td><div class="memo">备注说明：<input type="text" style="width:240px; height:20px;" /></div></td>
+			            <!-- <td colspan="3">发票抬头：<input type="text" style="width:240px; height:20px;" /></td> -->
+			            <td colspan="3" width="240"></td>
+			        </tr>
+			      </tfoot>
+			    </table>
+			</div>
+			
+			
+        </div>
+
+    </div>
+    <div class="jine" style="border-bottom: 0;" id="realname"></div>
+    <div class="mt25">
+     <input type="button" value="兑换商品" id="payBtn" class="buttongred"/>
+    </div>
+    </form>
+    <form action="$!webPath/cart/cart_pay_index.htm" method="post" id="cartForm"> 
+		<input type="hidden" id="addressId" name="addressId"/>
+		<input type="hidden" id="goodsId" name="goodsIds"/>
+		<input type="hidden" id="msg" name="msgs"/>
+		<input type="hidden" id="invoice" name="invoices"/>
+	</form>
+  </div>
+</div>
+</div>
+$!httpInclude.include("/footer.htm")
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>
+<script type="text/javascript" language="javascript">
+	$(function(){	
+		var lis = $(".address ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%4;
+			if(t == 0){
+				$(this).css("margin-right","0px");
+			}
+		});
+		
+		$("#payBtn").addClass("buttonred");
+		/* if($!myVerify!=1){
+			if($!myVerify==0)
+				$("#realname").html("你的实名认证审核失败，请重新<a style='color:red' href='$!webPath/buyer/buyer_account_verify.htm?exchangeid=$!igGoods.id'>实名认证</a>！");
+			else if($!myVerify==-2)
+				$("#realname").html("你没有实名认证，请<a style='color:red' href='$!webPath/buyer/buyer_account_verify.htm?exchangeid=$!igGoods.id'>实名认证</a>！");
+			else
+				$("#realname").html("你的实名认证审核中，请耐心等候实名认证！");
+			$("#payBtn").removeClass("buttonred");
+			$("#payBtn").addClass("buttongray");
+			$("#payBtn").attr("disabled","true");
+		} */
+		
+		jQuery('#payBtn').click(function(){
+			if($!coin<$!totalGold){
+				alert("您的礼品金不足，无法兑换商品！");
+			}else{
+				jQuery('#theForm').submit();
+			}
+		});
+		
+		jQuery('#Exchange').click(function(){
+			
+		});
+	});
+</script>
+</body>
+</html>

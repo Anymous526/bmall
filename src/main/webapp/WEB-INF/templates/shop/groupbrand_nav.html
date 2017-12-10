@@ -1,0 +1,51 @@
+<div class="border3px"></div>
+<div class="yHeader" style="margin-top: 15px;"> 
+  <!-- 导航   start  -->
+  <div class="yNavIndex">
+    <div class="pullDown" style="margin: 0 auto; width:1200px">
+      <h2 class="pullDownTitle" id="pullDownTitle" style="width:190px;" onclick="javascript:location.href='$!webPath/goods_class.htm'">所有商品分类</h2>
+      <ul class="pullDownList" style="display:none" id="pullDownListOtherBanner">
+        #foreach($gc in $objs)
+        	#if($!gc.iconAcc)
+        	#set($img = "$!{config.imagewebserver}/$!{gc.iconAcc.path}/$!{gc.iconAcc.name}")
+        	#else
+        	#set($img = "")
+        	#end <!--  -->
+	        <li name="gc_li">
+	          <img src="$!img">
+		      <b style="margin: 0;padding: 0;">
+		      	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank">$!gc.classname</a>
+	          </b>
+	          <!-- 下拉详细列表具体分类 -->
+		      <div class="yMenuListCon" name="yMenuListCon">
+		        <div class="yMenuListConin" name="classdiv">
+		        #foreach($c_g in $gc.childs)
+		          <div class="yMenuLCinList" style="display:block;margin-top:-8px;">
+		            <h3>
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_g.id" target="_blank" class="yListName" style="display:block">$!c_g.classname</a>
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!gc.id" target="_blank"  class="yListMore">更多 ></a></h3>
+		            <p style="line-height:24px;"> 
+		            	#foreach($c_cg in $c_g.childs)
+		            	<a href="$!webPath/store_goods_list.htm?gc_id=$!c_cg.id"  target="_blank" class="ecolor610" style="display:block">$!c_cg.classname</a>
+		            	#end
+		            </p>
+		          </div>
+		      
+		        #end
+		        </div>
+		   	 </div>
+	        </li>
+        #end
+     </ul>  
+    </div>
+    
+    <ul class="yMenuIndex" style="margin-left:200px">
+      <li><a href="$!webPath/index.htm" class="yMenua">首页</a></li>
+      <li><a href="$!webPath/angel_exchange.htm">互助兑<span></span></a></li>
+      <li><a href="$!webPath/amall_xqt.htm">新奇特</a></li>
+      <li><a href="$!webPath/specialty.htm">土特产</a></li>
+      <li><a href="$!webPath/over_shopping.htm">海外购</a></li>
+    </ul>
+  </div>
+  <!-- 导航   end  --> 
+</div>

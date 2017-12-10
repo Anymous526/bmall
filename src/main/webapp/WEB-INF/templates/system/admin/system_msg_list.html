@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+</head>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<body>
+<div class="cont">
+  <h1 class="seth1">系统消息</h1>
+  <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/system_msg_list.htm"  class="this">管理</a> | <a href="$!webPath/admin/system_msg_add.htm">新增</a> </span> <span class="tab-two"></span></div>
+  <form name="ListForm" id="ListForm"  action="$!webPath/admin/system_msg_list.htm" method="post">
+  <div class="leveltable">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="level_table">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="10">序号</td>
+        <td width="40">消息标题</td>
+        <td width="20">添加时间</td>
+        <td width="10">是否启用</td>
+        <td width="20">操作</td>
+      </tr>
+	  #foreach($obj in $objs)
+      <tr>
+      	<td>$!obj.sequence</td>
+        <td><a href="$!webPath/admin/system_msg_content.htm?id=$!obj.id">$!obj.title</a></td>
+        <td>$!CommUtil.formatLongDate($!obj.addtime)</td>
+        <td>#if($!obj.display=='true') 启用 #else 不启用 #end</td>
+        <td class="ac9"><a href="$!webPath/admin/system_msg_edit.htm?id=$!obj.id&currentPage=$!currentPage">编辑</a>|
+       <!--  <a href="$!webPath/admin/system_msg_del.htm?mulitId=$!obj.id&currentPage=$!currentPage">删除</a> --></td>
+      </tr>
+      #end
+    </table>
+  </div>
+  <div class="fenye"><input type="hidden" name="currentPage" id="currentPage" value="$!currentPage" />
+	  <input name="mulitId" type="hidden" id="mulitId" />$!gotoPageFormHTML</div>
+ </form>
+</div>
+</body>
+</html>

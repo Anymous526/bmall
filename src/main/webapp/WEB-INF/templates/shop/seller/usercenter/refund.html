@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>退款管理 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery('#beginTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+  jQuery('#endTime').datepicker({
+	  dateFormat:"yy-mm-dd",
+	  changeMonth: true,
+	  changeYear: true
+  });
+});
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">   
+         <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>退款记录</span></div></div>
+        <div class="productmain">
+           <div class="ordernav container">
+            <ul class="orderul section">
+                <li class="this">退款记录</li>
+              </ul>
+            </div>
+            <div class="ordercon">
+            <form action="$!webPath/seller/refund.htm" method="post" id="queryForm">
+              <div class="ordersear" style="margin-top: 0;margin-bottom: 10px;"> <span class="ordersel">
+                <select name="data_type" id="data_type">
+                  <option value="order_id">订单编号</option>
+                  <option value="buyer_name">买家会员名</option>
+                </select>
+                </span> <span class="ordersp1 size7">
+                <input name="data" type="text" id="data" />
+                </span> <span class="px10">退款时间：</span> <span class="ordersp1 size6 sporder">
+                <input name="beginTime" type="text" id="beginTime" readonly="readonly" />
+                </span><span>——</span><span class="ordersp1 size6 sporder">
+                <input name="endTime" type="text" id="endTime" readonly="readonly"/>
+                </span><span class="orderbtn">
+                <input name="" type="submit" value="搜索" style="cursor:pointer;" />
+              </span> </div>
+              </form>
+                <form action="$!webPath/seller/refund.htm" method="post" id="ListForm">
+              <div class="operation">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                  <tr id="opertitle">
+                    <td width="150">退款编号</td>
+                    <td width="150">订单编号</td>
+                    <td width="100">买家会员名</td>
+                    <td width="100">退款金额</td>
+                    <td width="150">退款时间</td>
+                    <td>操作</td>
+                  </tr>
+       #if($objs.size()>0)                   
+                  #foreach($obj in $objs)
+                  <tr>
+                    <td style="color:#0DA6EB">$!obj.refund_id</td>
+                    <td style="color:#068642"><a href="$!webPath/seller/order_view.htm?id=$!obj.of.id" target="_blank">$!obj.of.orderId</a></td>
+                    <td  >$!obj.of.user.username</td>
+                    <td >$!obj.refund</td>
+                    <td  >$!CommUtil.formatLongDate($!obj.addtime)</td>
+                    <td ><span class="refundsee"><a  href="javascript:void(0);" dialog_uri="$!webPath/seller/refund_view.htm?id=$!obj.id" dialog_title="退款记录" dialog_width="400" dialog_height="100" dialog_id="refund_view">查看</a></span></td>
+                  </tr>
+                  #end
+                  
+                    #else 
+                  	<tr class="opertr">
+	                <td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">退款记录</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end    
+                </table>
+              </div>
+              <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+              </form>
+            </div>
+          </div></td>
+      </tr>
+    </table>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

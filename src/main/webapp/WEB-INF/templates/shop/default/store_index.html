@@ -1,0 +1,227 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!store.storeName</title>
+<meta name="keywords" content="$!store.storeSeoKeywords" />
+<meta name="description" content="$!store.storeSeoDescription" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<style>
+.store_wrap:nth-child(2n){
+	margin-right:0;
+}
+.store_wrap img:hover{
+	opacity:0.8;
+	filter:alpha(opacity=80);	
+}
+.fl_le img:hover{
+	opacity:0.8;
+	filter:alpha(opacity=80);
+}
+</style>
+<script type="text/javascript">
+	$(function(){		
+		var lis = $(".list3 ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%3;
+			if(t == 0){
+				$(this).css("margin-right","0px");
+			}
+		});
+	});
+</script>
+
+<script type="text/javascript">
+jQuery.noConflict();
+
+jQuery(document).ready(function(){
+	
+  $("#shop-info").hover(function(){
+	  jQuery(".wuliu").css("display","block");
+  },function(){
+	  jQuery(".wuliu").css("display","none");
+  });
+  
+  $(".wuliu").on("mouseover",function(){
+	  jQuery(this).css("display","block");
+  });
+  
+  $(".wuliu").on("mouseout",function(){
+	  jQuery(this).css("display","none");
+  });
+  
+});
+
+function ajaxPage(url,currentPage,obj) {
+	var totalPages =$("#totalPages").val();
+	if(currentPage < 1) {
+		currentPage = 1;
+	}else if(currentPage > totalPages) {
+		currentPage = totalPages;
+	}
+	var storeId=$("#store_id").val();
+	var storeNavId=$("#store_nav_id").val();
+	jQuery.ajax({
+				 type:'POST',
+				 url:url,
+				 data:{"currentPage":currentPage,"id":storeId,"storeNavId":storeNavId},
+				 success :　function(data) {
+					 $("#paging").html(data);
+				 },
+				 /* error : function(){
+					 alert("已到第一页");
+				 } */
+				});
+}
+</script>
+
+
+</head>
+
+
+<body style="overflow-x: hidden;">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/store_head.htm?id=$!store.id")
+$!httpInclude.include("/store_nav.htm?id=$!store.id") 
+$!httpInclude.include("/store_banner.htm?id=$!{store.id}")
+</div>
+
+<div style="width:1200px; margin: 0 auto; display: block; overflow: hidden;">
+$!httpInclude.include("/store_left.htm?id=$!{store.id}")
+<div class="floor1 block">
+      <div class="floor1">
+        <div class="floor1_top"><span></span>
+          <label class="f18">精品推荐</label>
+        </div>
+        <div class="floor1_box">
+          <div class="fl_le">
+          #if($!goods_recommend1)
+	          #if($!goods_recommend1.goodsMainPhoto)
+	            #set($img1="$!imageWebServer/$!{goods_recommend1.goodsMainPhoto.path}/$!{goods_recommend1.goodsMainPhoto.name}")
+	          #else
+	            #set($img1="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+	          #end
+               #set($goods_url1="$!webPath/goods_$!{goods_recommend1.id}.htm")
+               #if($!config.second_domain_open)
+                 #set($goods_url="http://$!{goods_recommend1.goodsStore.storeSecondDomain}.$!{domainPath}/goods_$!{goods_recommend1.id}.htm")
+               #end 
+          
+          
+          	<a href="$!goods_url1" target="_blank"><img width="380" height="380" src="$!img1" original="$!img1" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" /></a>
+         	<span class="dedexf"><a href="$!goods_url1" target="_blank" title="$!goods_recommend1.goodsName">$!CommUtil.substring("$!{goods_recommend1.goodsName}",32)</a></span>
+            <span style="height:55px; display:block">
+            	<label class="f24 cred fb">¥：$!goods_recommend1.goodsPrice</label>
+                <span class="fr" style="margin-right:20px;"><input class="jiligoumai" type="button" onclick="window.location.href='$goods_url1'" value="立即抢购"  style="cursor: pointer"/></span>
+            </span>
+            #end
+          </div>
+          <div class="fl_ri">
+            <ul>
+        #set($i=0)
+       	  #foreach($goods in $goods_recommend)
+            #if($!goods.goodsMainPhoto)
+            #set($img="$!imageWebServer/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+            #else
+            #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+            #end
+               #set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+               #if($!config.second_domain_open)
+                 #set($goods_url="http://$!{goods.goodsStore.storeSecond_domain}.$!{domainPath}/goods_$!{goods.id}.htm")
+               #end 
+      	  #if($i >0 && $i<5)
+           
+		              <li class="store_wrap">
+		                <div><a href="$!goods_url" target="_blank"><img src="$!img" width="220" height="220" original="$!img" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" /></a></div>
+		                <p><span class="fl"><a href="$!goods_url" target="_blank" title='$!CommUtil.substring("$!goods.goodsName",50)'>$!CommUtil.substring("$!goods.goodsName",10)</a></span><span class="pri_n">¥$!goods.goodsPrice</span></p>
+		              </li>
+          #end
+         #set($i=$i+1)
+         #end
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="floor1">
+        <div class="floor1_top"><span></span>
+          <label class="f18">新品上市</label>
+        </div>
+        <div class="floor1_box">
+        		#if($!goods_new1)
+		            #if($!goods_new1.goodsMainPhoto)
+		           	 #set($img1="$!imageWebServer/$!{goods_new1.goodsMainPhoto.path}/$!{goods_new1.goodsMainPhoto.name}")
+		            #else
+		           	 #set($img1="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+		            #end
+		           	 #set($goods_url1="$!webPath/goods_$!{goods_new1.id}.htm")
+		            #if($!config.secondDomainOpen)
+		              #set($goods_url1="http://$!{goods_new1.goodsStore.storeSecondDomain}.$!{domainPath}/goods_$!{goods_new1.id}.htm")
+		            #end 
+		          <div class="fl_le">
+		          <a href="$!goods_url1" target="_blank">
+		          <img width="380" height="380" src="$!img1" original="$!img1" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" />
+		          </a>
+		          <span class="dedexf"><a href="$!goods_url1" target="_blank" title="$!goods_new1.goodsName">$!CommUtil.substring("$!{goods_new1.goodsName}",32)</a></span>
+		            <span style="height:55px; display:block">
+		            	<label class="f24 cred fb">¥：$!goods_new1.goodsPrice</label>
+		                <span class="fr" style="margin-right:20px;"><input class="jiligoumai" type="button" value="立即抢购" onclick="window.location.href='$!goods_url1'"  style="cursor: pointer"/></span>
+		            </span>
+		          </div>
+		         #end
+	          <div class="fl_ri">
+	            <ul>
+	
+	            #set($i=0)
+        	 #foreach($goods in $goods_new)
+	            #if($!goods.goodsMainPhoto)
+	              #set($img="$!imageWebServer/$!{goods.goodsMainPhoto.path}/$!{goods.goodsMainPhoto.name}")
+	            #else
+	              #set($img="$!imageWebServer/$!{config.goodsImage.path}/$!{config.goodsImage.name}")
+	            #end
+	              #set($goods_url="$!webPath/goods_$!{goods.id}.htm")
+	            #if($!config.second_domain_open)
+	              #set($goods_url="http://$!{goods.goodsStore.storeSecondDomain}.$!{domainPath}/goods_$!{goods.id}.htm")
+	            #end 
+	               #if($!i>0 && $!i<5) 
+	              <li class="store_wrap">
+	                <div>
+	                	<a href="$!goods_url" target="_blank">
+	                		<img src="$!img" width="220" height="220" original="$!img" onerror="this.src='$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}';" />
+	                	</a>
+	                </div>
+	                <p><span class="fl"><a href="$!goods_url" target="_blank" title='$!CommUtil.substring("$!goods.goodsName",50)'>$!CommUtil.substring("$!goods.goodsName",10)</a></span><span class="pri_n">¥$!goods.goodsPrice</span></p>
+	              </li>
+	          	  #end
+	          #set($i=$i+1)
+             #end
+	            </ul>
+	          </div>
+        </div>
+      </div>
+    </div>  
+</div>
+
+$!httpInclude.include("/footer.htm")
+
+
+<script type="text/javascript">
+	$(function(){
+		var lis = $(".fl_ri li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%2;
+			if(t == 0){
+				$(this).css("margin-right","0px");
+			}
+		});
+
+	});
+</script>
+
+</body>
+</html>

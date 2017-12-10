@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Amall商城·全民合伙玩电商!</title> 
+<meta name="baidu-site-verification" content="u7KaeCBGVW" />
+<meta name="keywords" content="天使Amall,amall商城,深圳市天使互助网络有限公司,Amall商城,免费开店,网上购物,网上商城,免费注册,商家联盟,海外精品,中国特产,厂家直供,店主直播" />
+<meta name="description" content="深圳市天使互助网络有限公司于2010年9月成立,坐落于繁华的华南城交易中心,公司主要从事网络平台建设与运营及软件开发等。天使Amallwww.Amall.com定位电商·精品汇。网站以精品正品购物为核心理念，以创造一个丰盛富足的电商世界为使命。让实体插上翅膀，让消费创造价值。" />
+<meta name="copyright" content="深圳市天使互助网络有限公司  版权所有" />
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/duigou.css"> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc5.amallcdn.cn/assets/js/12vb.js"></script> 
+<script type="text/javascript">
+$(function(){
+	$(".floortu li").mouseenter(function(){  
+		$(this).find(".anniu").addClass("anniuhover");
+		$(this).find("a").css("color","#db0101");
+	});
+	$(".floortu li").mouseleave(function(){
+		$(this).find(".anniu").removeClass("anniuhover");
+		$(this).find("a").css("color","#666");
+	});
+});
+
+function ajaxPage(url,currentPage,obj) {
+	var totalPages =jQuery("#totalPages1").val();
+	if(currentPage < 1) {
+		currentPage = 1;
+	}else if(currentPage > totalPages) {
+		currentPage = totalPages;
+	}
+	jQuery.ajax({
+				 type:'POST',
+				 url:url,
+				 data:{"currentPage":currentPage},
+				 success :　function(data) {
+					 $("#zhekou").html(data);
+				 }, 
+				});
+};  
+</script>
+
+<script type="text/javascript">
+$(function(){
+var imgWid = 0 ;
+var imgHei = 0 ; //变量初始化
+var big = 1.2;//放大倍数
+
+$(".floortu li").hover(function(){
+	
+     $(this).find("img").stop(true,true);
+ 
+     imgWid=200;imgHei=200;
+     
+	imgWid2 = imgWid * big;//放大后的宽度
+	imgHei2 = imgHei * big;
+  
+    $(this).find("img").css({"z-index":2});
+
+    $(this).find("img").animate({"width":220,"height":220,"margin-left":-10,"margin-top":-10},300);
+
+ },function(){$(this).find("img").stop().animate({"width":200,"height":200,"margin-left":0,"margin-top":0,"z-index":1});});
+})
+</script>
+<script type="text/javascript">
+$(function(){
+	$(".yjiex li").mouseenter(function(){ 
+		$(this).addClass("hover");
+	}) 
+	$(".yjiex li").mouseleave(function(){
+		$(this).removeClass("hover");
+	}) 
+	var weit = $(".floortu li"); 
+	jQuery.each(weit,function(index,val){//index为遍历的索引值，val为该索引的对象值			
+		var t1 = (index+1)%4;//能被4整除 
+		if(t1 == 0){
+			$(this).css({"border-right":"1px solid #e4e4e4"});
+		}
+	}) 
+}) 
+</script> 
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#wei_21 a").click(function(){
+		var wobj=$(this).attr("id"); 
+		$(".wq").hide();
+		$("."+wobj+"_co").show();
+	})
+})
+</script>
+<style type="text/css">#wei_21{width:1190px;margin:0 auto;height:45px;border:none;background:#ea5113;}#wei_21 a{height:45px;line-height:45px;width:120px;color:#FFF;font-size:18px;text-align:center;float:left}#wei_21 span{float:right;line-height:45px;height:45px;font-size:18px;padding-right:20px;color:#FFF}</style>
+</head>
+<body>
+<div id="zhekou" name="zhekou"> 
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/duigou_head.htm")
+<div style="width:100%; height:38px; background-color: #a90000"> 
+$!httpInclude.include("/duigou_nav.htm")
+</div> 
+
+<div class="yiyqy">
+  <div class="lefttu">
+  	<div class="slider">
+		<div><a href="#"><img src="$!webPath/assets/img/angel_exchange_banner01.png" alt=""></a></div>
+		<div><a href="#"><img src="$!webPath/assets/img/duigou01.jpg" alt=""></a></div>
+		<div><a href="#"><img src="$!webPath/assets/img/duigou02.jpg" alt=""></a></div>
+	</div>
+  
+  </div>
+  <div class="banner_right">
+    <div class="on">最新参与记录</div>
+    
+     <!--  滚动图    end-->
+    <div class="s">
+      <div id=demo style="overflow:hidden;height:333px;width:228px;color:#ffffff; border-left:1px solid #ccc; border-right:1px solid #ccc; border-bottom:1px solid #ccc;">
+        <div id="demo1">
+          <div class="scroll">
+            <ul>
+            #foreach($poll in $!pollList)
+              <li onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$!poll.cloudGoods.id'">
+                <div class="scrolltu"> <img src="$!{config.imagewebserver}/$!poll.cloudGoods.accessory.path/$!poll.cloudGoods.accessory.name" /></div>
+                <div class="scrollzi">
+                  <p>
+                    <label class="color6">
+                    #if($poll.user.truename.length()>0)
+                    $poll.user.truename 
+                    #else
+                                                            无名
+                    #end
+                    </label>
+                    <label class="color7">兑换了</label>
+                  </p>
+                  <p>
+                    <label class="color7">$poll.cloudCodesCount份</label>
+                    </p>
+                  <p>$!poll.cloudGoods.goodsName</p>
+                </div>
+                </li>
+               #end
+            </ul>
+          </div>
+        </div>
+        <div id=demo2></div>
+      </div>
+ 
+<script type="text/javascript">
+   var speed=50
+   demo2.innerHTML=demo1.innerHTML
+   function Marquee(){
+   if(demo2.offsetTop-demo.scrollTop<=0)
+   demo.scrollTop-=demo1.offsetHeight
+   else{
+   demo.scrollTop++
+   }
+   }
+   var MyMar=setInterval(Marquee,speed)
+   demo.onmouseover=function() {clearInterval(MyMar)}
+   demo.onmouseout=function() {MyMar=setInterval(Marquee,speed)}
+   </script> 
+    </div>
+  </div>
+</div>
+ <!--  橙色底图部分   end-->
+
+<div class="yjiex">
+  <ul>
+   #foreach($open in $!openList)
+    <li onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$open.id'">
+    <div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+      <div class="zi">幸运夺宝码 <span style="color:#ff4900;font-size:14px">$open.openWinnerCode</span></div>
+      <div class="msg">
+        <p style="font-size:14px;width:187px;height:28px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">(序号:$open.id)$open.goodsName</p>
+        <p>幸运星：<span style="color:#ff4900">
+                    #if($open.user.truename.length()>0)
+                    $open.user.truename 
+                    #else
+                                                            无名
+                    #end 
+        </span></p>
+        <p style="color:#666;">揭晓时间：$CommUtil.formatLongDate($!open.openWinnerTime)</p>
+      </div>
+      <div class="tupian"> <img src="$!{config.imagewebserver}/$!open.accessory.path/$!open.accessory.name"></div>
+    </li>
+   #end
+  </ul>
+</div>
+
+
+
+<!--*即将揭晓 1*-->
+<!-- <div id="wei_21"><a href="javascript:void(0)" id="weikt1">1元区</a><a href="javascript:void(0)" id="weikt2">10元区</a><span>当前共计 <i style="color:yellow;font-size:18px">$!goodsNum</i> 款商品</span></div> -->
+
+<div id="zhekou1" name="zhekou1" class="wq weikt1_co">
+#if($!objs.size() > 0)
+<div class="floor">
+  <div class="juxing"></div>
+  <div class="jij">互助兑</div>
+</div>
+<!--*一楼*-->
+<div class="floortu">
+
+  <ul> 
+    #foreach($obj in $!objs)
+    <li onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$obj.id'">
+    <div class="border_top"></div><div class="border_right"></div><div class="border_bottom"></div><div class="border_left"></div>
+      <div class="tu"><span id="weihzg"><img src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name"/></span></div>
+      <div class="wenzi"> 
+      	<a href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="$obj.goodsName" target="_blank">(序号:$obj.id)$!CommUtil.substring("$obj.goodsName",30)
+        	
+        </a>
+      </div>
+      
+      <div class="duigou_load">
+		<span class="now_load" id="$obj.id"></span>	
+	  </div>
+      <div id="we721">
+	      <p  class="settime21" endtime="$CommUtil.formatLongDate($obj.endTime)">00.00:00:00</p>
+	      <p class="cur9"  id="212"></p>  
+      </div>                
+      <div class="leftshuzi">$obj.buyerCodeCount</div>
+      <div class="rightshuzi">#set($count=$obj.goodsCount - $obj.buyerCodeCount)$!count</div>
+      <div class="yicyu">已参与</div>
+      <div class="shengyu">剩余</div>
+      <div class="tshibi">
+        <div class="wu">$obj.goodsNumber</div>
+        <div class="tsb">礼品金</div>
+      </div>
+      <a class="anniu" href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="立刻参与" target="_blank">立刻参与</a>
+    </li>
+    #end 
+     
+  </ul>
+  <!--分页开始-->
+<div class="bottom_page" style="clear:both">
+	<input name="totalPages" type="hidden" id="totalPages1" value="$!totalPage"/>
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+	$!gotoPageAjaxHTML
+</div>
+<!--分页结束--> 
+#end 
+</div>
+ 
+</div>   
+<!--*50元兑换*-->
+<!--  
+#if($!objs5.size() > 0)
+<div class="floor">
+  <div class="juxing"></div>
+  <div class="jij">50元礼品区</div>
+</div> 
+<div class="floortu">
+  <ul> 
+    #foreach($obj in $!objs5)
+    <li onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$obj.id'">
+      <div class="tu"><span id="weihzg"><img src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name"/></span></div>
+      <div class="wenzi"> 
+      	<a href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="$obj.goodsName" target="_blank">(序号：$obj.id)$!CommUtil.substring("$obj.goodsName",21)
+        	
+        </a>
+      </div>
+      <div class="duigou_load">
+		<span class="now_load" id="$obj.id"></span>	
+	  </div>
+      <div id="we721">
+	      <p  class="settime21" endtime="$CommUtil.formatLongDate($obj.endTime)">00.00:00:00</p>
+	      <p class="cur9"  id="212"></p>  
+      </div>                
+      <div class="leftshuzi">$obj.buyerCodeCount</div>
+      <div class="rightshuzi">#set($count=$obj.goodsCount - $obj.buyerCodeCount)$!count</div>
+      <div class="yicyu">已参与</div>
+      <div class="shengyu">剩余</div>
+      <div class="tshibi">
+        <div class="wu">$obj.goodsNumber</div>
+        <div class="tsb">礼品金</div>
+      </div>
+      <a class="anniu" href="$!webPath/angel_exchange_detail.htm?id=$obj.id" title="立刻参与" target="_blank">立刻参与</a>
+    </li>
+    #end 
+  </ul>
+</div>
+#end   
+-->
+$!httpInclude.include("/footer.htm")
+</div>
+</body> 
+<!-- 轮播 -->
+<script type="text/javascript"> 
+$(function(){
+updateEndTime();
+});
+ 
+//倒计时函数 
+var time=$!nowDate;//系统部署在哪里，就获取哪里的时间 
+function updateEndTime()
+{ 
+  time=time+1000; //每次加1秒  
+$(".settime21").each(function(i){
+var endDate =this.getAttribute("endTime"); //结束时间字符串
+//转换为时间日期类型
+var endDate1 = eval('new Date(' + endDate.replace(/\d+(?=-[^-]+$)/, function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) +')');
+var endTime = endDate1.getTime(); //结束时间毫秒数
+var lag = (endTime - time) / 1000; //当前时间和结束时间之间的秒数
+if(lag > 0)
+{
+var second = Math.floor(lag % 60); 
+var minite = Math.floor((lag / 60) % 60);
+var hour = Math.floor((lag / 3600) % 24);
+var day = Math.floor((lag / 3600) / 24);
+ 
+ if(day<10){ 	
+   day="0"+day;
+ }
+ if(hour<10){
+   hour="0"+hour;
+ }
+  if(minite<10){
+   minite="0"+minite;
+  }
+  if(second<10){
+   second="0"+second;
+  }
+$(this).html("<div>剩余时间：<span id='gtbg21'>"+day+"</span>天<span id='gtbg21'>"+hour+"</span>时<span id='gtbg21'>"+minite+"</span>分<span id='gtbg21'>"+second+"</span>秒</div>");
+}
+else{
+$(this).removeClass("settime21"); 
+$(this).html("活动已结束！");
+ 
+}
+});
+setTimeout("updateEndTime()",1000);
+} 
+</script> 
+<script type="text/javascript">  
+$(document).ready(function(){
+	#set($i=1);
+	#foreach($obj in $!objs) 
+	 var we21_$i=Math.round(($obj.buyerCodeCount/$obj.goodsCount)*100);   
+     $('#$obj.id').css("width",we21_$i+"%");
+     #set($i=$i+1)
+     #end
+})  
+</script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/jquery.slider.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function ($) {
+	$(".slider").slideshow({
+		width: 945,
+		height: 368,
+		transition: ['bar', 'Rain', 'square', 'squareRandom', 'explode']
+	});
+});
+</script> 
+<script type="text/javascript">
+	jQuery(function(){
+		var lis = jQuery(".yjiex li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%4;
+			if(t == 0){
+				jQuery(this).css("margin-right","0px");
+			}
+		});
+	});
+</script>   
+</html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>投诉图片查看 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods")
+<div class="s_m"> 
+  	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/seller_index.htm">卖家中心</a> > <span>投诉管理</span></div></div>
+  	<div class="productmain">
+
+   <div class="container">
+      <ul class="section" style="padding: 0;">
+		<li class=""><a href="$!webPath/buyer/complaint.htm">我的投诉</a></li>
+		<li class=""><a href="$!webPath/buyer/complaint_seller.htm">被投诉</a></li>
+		<li class="li_this"><a href="#">投诉详情</a></li>
+	</ul>
+</div>
+<div class="ordercon">
+<div class="complaint_one">
+                <h1 class="complaint_h">图片列表</h1>
+                <div class="comp_goodetails">
+                  <ul class="comp_tousul">
+                #if($!type=="buyer")  
+                  #if($!obj.fromAcc1)
+                    <li><span><div style="width:100%; height:400px;overflow:scroll;"><img src="$!{config.imagewebserver}/$!obj.fromAcc1.path/$!obj.fromAcc1.name" height="$!obj.fromAcc1.height" width="$!obj.fromAcc1.width" /></div><i class="comp_delall">图片一</i></span></li>
+                  #end
+                  #if($!obj.fromAcc2)
+                    <li><span><div style="width:100%; height:400px;overflow:scroll;"><img src="$!{config.imagewebserver}/$!obj.fromAcc2.path/$!obj.fromAcc2.name" height="$!obj.fromAcc2.height" width="$!obj.fromAcc2.width" /></div><i class="comp_delall">图片二</i></span></li>
+                  #end
+                  #if($!obj.fromAcc3)
+                    <li><span><div style="width:100%; height:400px;overflow:scroll;"><img src="$!{config.imagewebserver}/$!obj.fromAcc3.path/$!obj.fromAcc3.name" height="$!obj.fromAcc3.height" width="$!obj.fromAcc3.width" /></div><i class="comp_delall">图片三</i></span></li>
+                  #end
+                #end
+                #if($!type=="seller")  
+                  #if($!obj.toAcc1)
+                    <li><span><div style="width:100%; height:400px;overflow:scroll;"><img src="$!{config.imagewebserver}/$!obj.toAcc1.path/$!obj.toAcc1.name" height="$!obj.toAcc1.height" width="$!obj.toAcc1.width" /></div><i class="comp_delall">图片一</i></span></li>
+                  #end
+                  #if($!obj.toAcc2)
+                    <li><span><div style="width:100%; height:400px;overflow:scroll;"><img src="$!{config.imagewebserver}/$!obj.toAcc2.path/$!obj.toAcc2.name" height="$!obj.toAcc2.height" width="$!obj.toAcc2.width" /></div><i class="comp_delall">图片二</i></span></li>
+                  #end
+                  #if($!obj.toAcc3)
+                    <li><span><div style="width:100%; height:400px;overflow:scroll;"><img src="$!{config.imagewebserver}/$!obj.toAcc3.path/$!obj.toAcc3.name" height="$!obj.toAcc3.height" width="$!obj.toAcc3.width" /></div><i class="comp_delall">图片三</i></span></li>
+                  #end
+                #end
+                  </ul>
+                </div>
+              </div>              
+            </div>
+          </div>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

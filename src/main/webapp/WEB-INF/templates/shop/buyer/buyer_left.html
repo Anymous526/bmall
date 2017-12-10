@@ -1,0 +1,163 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/user_main.css"> 
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/csshake.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+	//console.info("isPartner -> "+isPartner);
+	$("#myIntegral").mouseover(function(){
+		$("#ingeralBox").css("display","block");
+	}).mouseout(function(){
+		$("#ingeralBox").css("display","none");
+	});
+	
+	$(".share_close").bind("click",function(){
+		$("#share_ar").hide();
+	});
+	
+	var lis = $(".share_icon ul li");
+	var length = lis.size();
+	jQuery.each(lis,function(index,val){
+		var t = (index+1)%7;
+		if(t == 0){
+			/* console.info($(this)); */
+			$(this).css("margin-right","0px");
+		}
+	});  
+});
+function  bwei(){
+	window.open("$!partnerurl_pre/pt/info.do?$!params"); 
+}
+
+function  dapply(){
+	window.location.href="$webPath/buyer/apply_dream_partner.htm"; 
+}
+/* function w21ht(){
+	alert("亲，普通会员没有推广功能哦，快去升级吧~");
+	window.location.href="$webPath/buyer/jihuo.htm";
+} */
+function w21ht(){
+	var i=window.confirm("亲，天使会员没有推广功能哦，快去升级吧~");
+	if(i!=0){
+		window.location.href="$webPath/buyer/jihuo.htm";
+	}  	
+}
+function sj(){
+	var sj=window.confirm("亲，只有联盟商家才能查看该功能哦，快去升级吧~");
+	if(sj==true){
+		window.location.href="$webPath/buyer/jihuo.htm";
+	}
+}	
+</script>  
+
+<!-- 消息闪烁 -->
+<!-- <script type="text/javascript">
+setInterval(function(){ $("#news_message").fadeOut(100).fadeIn(100); },900);
+</script>  --> 
+<style type="text/css">.u_l i{margin-right:5px;font-size:15px}</style>
+</head>
+<body style="background-color:#fff">
+	<div class="u_l" style="height:auto; padding-bottom:70px;margin-top:20px;">
+       
+        	
+        <div class="list_tit"><span>全部功能</span></div>  
+         <dl>		
+        	<dt><i class="fa fa-envelope-o" aria-hidden="true" style="font-size:14px;margin-left:0;"></i>我的信息</dt>
+			<dd><a href="$!webPath/news/message_list.htm">系统信息</a></dd>
+			<dd><a href="$!webPath/news/message_evaluate.htm">评价管理</a></dd>
+        </dl> 
+    	<dl>		
+        	<dt><i class="fa fa-jpy" aria-hidden="true"></i>我的财富</dt>
+        	#if($!user.levelAngel == 0)
+        	<dd><a href="javascript:sj();">我的奖金</a></dd>
+        	#else
+        	<dd><a href="$!webPath/buyer/my_vip_benefit.htm" >我的奖金</a></dd>
+        	#end
+        	<dd><a href="$!webPath/buyer/myAssets_consumption.htm" >我的礼品金</a></dd>
+        	<!-- <dd><a href="$!webPath/buyer/my_briberymoney.htm" >老板送礼</a></dd> -->
+        	<dd><a href="$!webPath/buyer/new_user_share.htm">我的人气</a></dd>
+			<dd><a href="$!webPath/buyer/new_shop_share.htm" >我的店铺</a></dd>
+			<!-- <dd><a href="$!webPath/buyer/my_integral.htm" >我的积分</a></dd> -->
+			<form action="$!webPath/city_partner_total.htm" id="thee" method="post">
+			<input type="hidden" name="identity" value="2"/>
+			<input type="hidden" name="page" value="0"/>
+			<dd><a href="$!webPath/city_partner_total.htm"style="padding-left:0;"><button type="submit" id="city_party" class="city_part">城市代理商</button></a></dd>
+			<!-- <!-- $!user.cityRole 
+			#if($!user.cityRole != "")
+			<dd><a href="$!webPath/city_partner_total.htm"style="padding-left:0;"><button type="submit" id="city_party" class="city_part">城市代理商</button></a></dd>
+			#else
+			<dd><a href="#" id="city_partys">城市代理商</a></dd>
+			#end -->
+		</form>
+            <dd><a href="$!webPath/buyer/angel_bean_sale.htm" >感恩豆交易</a></dd>
+        </dl>
+        <dl>		
+        	<dt><i class="fa fa-share" aria-hidden="true"></i>推广赚钱</dt> 
+        	<!-- #if($!user.levelAngel == 0)
+        	<dd><a href="javascript:w21ht()"  id="share_d">马上推广</a></dd>
+        	#else
+        	<dd><a href="$!webPath/buyer/lets_extension.htm" id="share_d">马上推广</a></dd>
+        	#end -->
+        	<dd><a href="$!webPath/buyer/lets_extension.htm" id="share_d">马上推广</a></dd> 
+        	<dd><a href="$!webPath/buyer/extension_obtain.htm" >推广介绍</a></dd>
+        	<dd><a href="$!webPath/buyer/poster.htm?id=$!userid">推广码海报</a></dd>
+        </dl>
+        
+        <!-- 
+        <dl>		
+        	<dt>互助兑</dt>
+        	<dd op="order_integral"><a href="$!webPath/my_angel_exchang_list_ing.htm">互助兑记录</a></dd>
+        	<dd op="order_integral"><a href="$!webPath/my_angel_exchang_winning.htm">中奖记录</a></dd>
+        	<dd op="order_integral"><a href="$!webPath/buyer/b_add_tsb_list.htm">充值记录</a></dd>	
+        	<dd op="order_integral"><a href="$!webPath/my_angel_exchang_share.htm">我的晒单</a></dd>		
+        </dl>
+         -->
+        
+    	<dl>		
+        	<dt><i class="fa fa-files-o" aria-hidden="true"></i>订单中心</dt>
+        	<dd op="order_integral"><a href="$!webPath/buyer/integral_order.htm">兑换订单</a></dd> 
+            <dd op="order"><a href="$!webPath/buyer/buyer_order.htm">我的订单</a></dd>	
+           <!--<dd op="order"><a href="$!webPath/buyer/finish_buyer_order.htm">已完成订单</a></dd> 	
+            <dd op="order_group"><a href="$!webPath/buyer/group_order.htm">团购订单</a></dd>	-->
+            <dd><a href="$!webPath/buyer/order_cancel_record.htm">取消订单记录</a></dd>	
+            <dd><a href="$!webPath/buyer/buyer_favorite_goods.htm">我关注的商品</a></dd>	
+        </dl>
+        
+        <dl>		
+        	<dt><i class="fa fa-cog" aria-hidden="true"></i>设置</dt>
+            <dd><a href="$!webPath/buyer/buyer_addressList.htm">收货地址</a></dd>
+    	    <dd><a href="$!webPath/buyer/buyer_account.htm">账户设置</a></dd>
+            <!--<dd><a href="$!webPath/buyer/buyer_recharge.htm">话费充值</a></dd>  -->	
+            	
+        </dl>
+        
+        <dl>
+        	<dt><i class="fa fa-bullhorn" aria-hidden="true"></i>举报管理</dt>
+        	<dd><a href="$!webPath/buyer/report.htm">我举报的商品</a></dd>
+        	<dd><a href="$!webPath/buyer/reportStore.htm">我举报的店铺</a></dd>
+        	<dd><a href="$!webPath/buyer/complaint.htm">我的投诉</a></dd>
+        </dl>
+        
+    </div>
+</body>
+<script>
+$("#city_party").click(function(){
+	$("#thee").submit();
+});
+$("#city_partys").click(function(){
+	alert("亲，您还不是城市代理商哦,详情请联系客服吧!");
+	return false;
+});
+</script>
+</html>

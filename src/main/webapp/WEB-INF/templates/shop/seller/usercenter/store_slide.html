@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>店铺设置  </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">   
+         <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>店铺幻灯</span></div></div>
+        <div class="productmain">
+	      <div class="container" style="height:37px">
+           <ul class="section" style="padding: 0;">
+                <li class=""><a href="$!webPath/seller/store_set.htm">店铺设置</a></li>
+                <li class="li_this""><a href="$!webPath/seller/store_slide.htm">店铺幻灯</a></li>
+                <li class=""><a href="$!webPath/seller/store_approve.htm">店铺认证</a></li>
+              
+              </ul>
+            </div>
+            <form action="$!webPath/seller/store_slide_save.htm" method="post" enctype="multipart/form-data" id="theForm">
+            <div class="ordercon">
+              <div class="setshop">
+                <table width="705" border="0" cellspacing="0" cellpadding="0" class="setshoptable">
+                  <tr>
+                    <td width="98" align="right" valign="top">幻灯1：</td>
+                    <td width="607" style="padding-left:30px;"><ul class="setlogo">
+                        #if($!store.slides.size()>=1)
+                          #set($slide1=$!store.slides.get(0))
+                        #end
+                        #if($!slide1)
+                        <li class="shoplogo"><img src="$!{config.imagewebserver}/$!slide1.acc.path/$!slide1.acc.name?r=$!random" width="210" height="104" /></li>
+                        #end
+                        <li>图片：
+                          <input name="acc1" type="file" id="acc1" size="30" />
+                        </li>
+                        <li>
+                          URL：
+                            <input name="acc_url1" type="text" id="acc_url1" value="$!slide1.url" size="40" style="height: 22px;padding: 0px;border: 1px solid #ddd;padding-left: 5px;"/>
+                        </li>
+                        <li class="setinfo">此处为店铺首页幻灯，上传大小不能超过<strong>2M</strong>,建议尺寸<strong>1600*400</strong>像素</li>
+                      </ul></td>
+                  </tr>
+                 <tr>
+                    <td width="98" align="right" valign="top">幻灯2：</td>
+                    <td width="607" style="padding-left:30px;">
+                    	<ul class="setlogo">
+                        #if($!store.slides.size()>=2)
+                          #set($slide2=$!store.slides.get(1))
+                        #end
+                        #if($!slide2)
+                        <li class="shoplogo"><img src="$!{config.imagewebserver}/$!slide2.acc.path/$!slide2.acc.name?r=$!random" width="210" height="104" /></li>
+                        #end
+                        <li>图片：
+                          <input name="acc2" type="file" id="acc2" size="30" />
+                        </li>
+                        <li>
+                          URL：
+                            <input name="acc_url2" type="text" id="acc_url2" value="$!slide2.url" size="40" style="height: 22px;padding: 0px;border: 1px solid #ddd;padding-left: 5px;"/>
+                        </li>
+                        <li class="setinfo">此处为店铺首页幻灯，上传大小不能超过<strong>2M</strong>,建议尺寸<strong>1600*400</strong>像素，需保证<strong>上传图片尺寸规格与上面一致</strong></li>
+                      </ul></td>
+                  </tr>
+                  <tr>
+                    <td width="98" align="right" valign="top">幻灯3：</td>
+                    <td width="607" style="padding-left:30px;">
+                    	<ul class="setlogo">
+                        #if($!store.slides.size()>=3)
+                          #set($slide3=$!store.slides.get(2))
+                        #end
+                        #if($!slide3)
+                        <li class="shoplogo"><img src="$!{config.imagewebserver}/$!slide3.acc.path/$!slide3.acc.name?r=$!random" width="210" height="104" /></li>
+                        #end
+                        <li>图片：
+                          <input name="acc3" type="file" id="acc3" size="30" />
+                        </li>
+                        <li>
+                          URL：
+                            <input name="acc_url3" type="text" id="acc_url3" value="$!slide3.url" size="40" style="height: 22px;padding: 0px;border: 1px solid #ddd;padding-left: 5px;"/>
+                        </li>
+                        <li class="setinfo">此处为店铺首页幻灯，上传大小不能超过<strong>2M</strong>,建议尺寸<strong>1600*400</strong>像素，需保证<strong>上传图片尺寸规格与上面一致</strong></li>
+                      </ul></td>
+                  </tr>
+                  <tr>
+                    <td width="98" align="right">&nbsp;</td>
+                    <td style="padding-left:30px;"><span class="setsub">
+                      <input name="" type="submit"  value="提交" class="input_submit" style="cursor:pointer;"/>
+                      <input name="store_id" type="hidden" id="store_id" value="$!store.id" />
+                    </span></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            </form>
+          </div>
+  </div>
+
+</div>
+$!httpInclude.include("/footer.htm")
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+   jQuery("#theForm").validate({
+       rules: {
+		       acc1:{accept:"$!config.imagesuffix"},
+			   acc2:{accept:"$!config.imagesuffix"},
+			   acc3:{accept:"$!config.imagesuffix"},
+	          },
+		messages: {
+			   acc1:{accept:"幻灯格式不正确"},
+			   acc2:{accept:"幻灯格式不正确"},
+			   acc3:{accept:"幻灯格式不正确"},
+			 }
+  });
+   
+});
+</script>
+</body>
+</html>

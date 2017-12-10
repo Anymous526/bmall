@@ -1,0 +1,47 @@
+﻿﻿ <link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+ <script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+ <script>
+ $(document).ready(function(){
+	 #if($!directUser) 
+	 var wei21num=$!directUser+$!indirectUser; //+$!superUser
+	 $(".wei21num").html(wei21num);
+	 #end
+ })
+ </script>
+ <div class="mydata" style="padding: 0 20px;">
+         <div class="mym1"><span>累计会员人数:<font class="wei21num"></font>人 </span><span>累计获得奖励:<font>#if($!totalBenefit != 0) $!totalBenefit #else 0.00 #end</font>元</span></div>
+         <div class="mym2">
+         <div class="class1"><span class="class1-1">直接</span><span class="class1-2">#if($!directUser) $!directUser #else 0 #end人</span><span class="class1-3">直接</span><span class="class1-4">间接</span></div>
+         <div class="class2"><span class="class2-1">间接</span><span class="class2-2">#if($!indirectUser) $!indirectUser #else 0 #end人</span><!-- <span class="class2-3">三度</span> --></div>
+         <!-- <div class="class3"><span class="class3-1">三度</span><span class="class3-2">#if($!superUser) $!superUser #else 0 #end人</span></div> -->
+         </div>
+         <div class="mym3">
+         <div class="classr-1">
+           <p><span class="classrt-3">招商奖</span><span class="classrt-3">充值奖</span><span class="classrt-3">分红奖</span></p>
+           <p><span class="classrt-3"><font>#if($!firstMutualBenefit != 0) $!firstMutualBenefit #else 0.00 #end</font>元</span>
+           	  <span class="classrt-3"><font>#if($!firstRechargeBenefit != 0) $!firstRechargeBenefit #else 0.00 #end</font>元</span>
+           	  <span class="classrt-3"><font>#if($!firstShopBenefit != 0) $!firstShopBenefit #else 0.00 #end</font>元</span>
+         </div>
+         <div class="classr-2" style="padding-top:5px">
+           <p><span class="classrt-3">招商奖</span><span class="classrt-3">充值奖</span><span class="classrt-3">分红奖</span></p>
+           <p><span class="classrt-3"><font>#if($!secondMutualBenefit != 0) $!secondMutualBenefit #else 0.00 #end</font>元</span>
+           	  <span class="classrt-3"><font>#if($!secondRechargeBenefit != 0) $!secondRechargeBenefit #else 0.00 #end</font>元</span>
+           	  <span class="classrt-3"><font>#if($!secondShopBenefit != 0) $!secondShopBenefit #else 0.00 #end</font>元</span>
+         </div>
+         <!--<div class="classr-3">
+           <p><span class="classrt-3">招商奖</span><span class="classrt-3">充值奖</span><span class="classrt-3">分红奖</span></p>
+           <p><span class="classrt-3"><font>#if($!thirdMutualBenefit != 0) $!thirdMutualBenefit #else 0.00 #end</font>元</span>
+           	  <span class="classrt-3"><font>#if($!thirdRechargeBenefit != 0) $!thirdRechargeBenefit #else 0.00 #end</font>元</span>
+           	  <span class="classrt-3"><font>#if($!thirdShopBenefit != 0) $!thirdShopBenefit #else 0.00 #end</font>元</span>
+         </div>
+         -->
+         </div>
+ </div>
+       <!--  <div class="mydata">
+          	<ul>
+          		<li><span><img src="$!webPath/assets/img/dd1.png" width="64" /></span><span class="fonte"><label class="f26 a90000">#if($!directUser) $!directUser #else 0 #end人</label><label>一度空间</label></span></li>
+          		<li><span><img src="$!webPath/assets/img/dd2.png" width="64" /></span><span class="fonte"><label class="f26 ff0">#if($!indirectUser) $!indirectUser #else 0 #end人</label><label>二度空间</label></span></li>
+          		<li><span><img src="$!webPath/assets/img/dd3.png" width="64" /></span><span class="fonte"><label class="f26 pink">#if($!superUser) $!superUser #else 0 #end人</label><label>三度空间</label></span></li>
+          	</ul>
+          </div>
+  --> 

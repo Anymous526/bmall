@@ -1,0 +1,286 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/amall/assets/css/cart.css"/>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/amall/assets/css/user.css"/>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/amall/assets/css/seller.css"/>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+ 	//改变系统提示的样式
+  jQuery("span .w").mousemove(function(){
+	var id=jQuery(this.parentNode).attr("id");
+	if(id="nothis"){
+	   jQuery(this.parentNode).attr("id","this")
+	}
+  }).mouseout(function(){
+     var id=jQuery(this.parentNode).attr("id");
+	 if(id="this"){
+	   jQuery(this.parentNode).attr("id","nothis")
+	 }
+  });
+//设置推荐的默认装态
+var rec = jQuery("#recommend").val();
+	if(rec=="true"){
+		jQuery("#stateOn").show();
+		jQuery("#stateOff").hide();
+	}else{
+		jQuery("#stateOn").hide();
+		jQuery("#stateOff").show();
+	}
+//标志图片鼠标经过显示
+jQuery("#brandImgShow").mouseover(function(){
+	jQuery("#brandImg").show();
+})
+jQuery("#brandImgShow").mouseout(function(){
+	jQuery("#brandImg").hide();
+})
+jQuery("#brandLogo").change(function(){
+	jQuery("#textfield1").val(jQuery("#brandLogo").val());
+})
+//
+jQuery("#theForm").validate({
+    rules:{
+	  #if(!$!obj.brandLogo)
+	  brandLogo:{
+	   required :true,
+	    accept:"$!config.imagesuffix"
+	  }#end
+	 },
+	messages:{
+	#if(!$!obj.brandLogo)
+	  brandLogo:{required :"品牌图片不能为空",accept:"系统不允许的文件类型"}#end
+	}
+  });
+//编辑
+jQuery("#cid").val('$!obj.categoryId');
+//结束
+});
+//修改推荐状态
+function recommendState(){
+	var state = jQuery("#recommend").val();
+	if(state=="true"){
+		jQuery("#recommend").val("false");
+		jQuery("#stateOff").show();
+		jQuery("#stateOn").hide();
+	}else{
+		jQuery("#recommend").val("true");
+		jQuery("#stateOff").hide();
+		jQuery("#stateOn").show();
+	}
+}
+//品牌保存
+function saveBrand(method){
+	jQuery("#cmd").val(method);
+	if(jQuery("#goodsClassId").val() == ""){
+		alert("请选择品牌分类");
+		return;
+	}
+	var ret = false;
+	//使用ajax进行异步判定
+	var mark = $("#brand_mark").val();
+	var brandName = $("#name").val();
+	var id = $("#id").val();
+	jQuery.ajax({
+		type:"POST",
+		url:"$!webPath/admin/goods_brand_verify.htm",
+		data:{"name":brandName,"mark":mark,"id":id},
+		success:function(data){
+			if(data=="true"){
+				ret = true;
+				jQuery("#theForm").submit();
+			}else if(data=="false"){
+				$("#name_span").html("名称已经存在").css("color","red");
+			}else if(data=="nameNull"){
+				$("#name_span").html("名称不能为空").css("color","red");
+			}
+			
+		},
+		error:function(){
+			alert("请检查内部错误");
+		}
+	});
+}
+</script>
+
+<script>
+  //  加载分类
+jQuery(document).ready(function(){
+	jQuery("#rootClass").change(function(){
+		var url='$!webPath/admin/load_goods_class.htm';
+		jQuery.post(url,{"pid":this.value},function(dataJson){
+			var data = JSON.parse(dataJson);
+			var options="<option value='0' >--请选择--</option>";
+			for(var i=0; i<data.length;i++){
+				options+="<option value="+data[i].id+">"+data[i].classname+"</option>";
+			}
+			jQuery("#twoClass").html(options);
+			jQuery("#twoClass").css("visibility","visible");
+		});
+	});
+	
+	jQuery("#twoClass").change(function(){
+		var url='$!webPath/admin/load_goods_class.htm';
+		jQuery.post(url,{"pid":this.value},function(dataJson){
+			var data = JSON.parse(dataJson);
+			var options="<option value='0' >--请选择--</option>";
+			for(var i=0; i<data.length;i++){
+				options+="<option value="+data[i].id+">"+data[i].classname+"</option>";
+			}
+			jQuery("#threeClass").html(options);
+			jQuery("#threeClass").css("visibility","visible");
+		});
+	});
+	
+});
+  
+  function showSelect(){
+	  jQuery("#rootClass").css("visibility","visible");
+  }
+  
+  function banding(){
+	  var type = jQuery("#threeClass").find("option:selected").text();
+	  var typeValue = jQuery("#showClass").val();
+	  var classIds = jQuery("#threeClass").val();
+	  if(typeValue == ""){
+		  jQuery("#showClass").val(type);
+		  jQuery("#goodsClassId").val(classIds);
+	  }else{
+		  jQuery("#showClass").val(jQuery("#showClass").val()+"|"+type);
+		  jQuery("#goodsClassId").val(jQuery("#goodsClassId").val()+"|"+classIds);
+	  }
+  }
+  
+  function rest(){
+	  jQuery("#showClass").val("");
+	  jQuery("#goodsClassId").val("");
+  }
+</script>
+</head>
+<body>
+<form action="$!webPath/admin/goods_band_save.htm" method="post" enctype="multipart/form-data" name="theForm" id="theForm">
+  <input name="id" id="id" type="hidden" value="$!obj.id"/>
+  <input name="cmd" id="cmd" type="hidden"/>
+  <input name="list_url" type="hidden" id="list_url" value="$!webPath/admin/goods_brand_list.htm" />
+  <input name="add_url" type="hidden" id="add_url" value="$!webPath/admin/goods_brand_add.htm" />
+  <!-- 当前存在对象,即是编辑状态  -->
+  #if($!obj)
+  	<input type="hidden" name="brand_mark" id="brand_mark" value="brank_mark"/>
+  #end
+  
+  <div class="cont">
+    <h1 class="seth1">品牌管理</h1>
+    <div class="settab"> 
+	<span class="tab-one"></span> <span class="tabs">
+     #if($!edit) 
+	<a href="$!webPath/admin/goods_brand_list.htm">管理</a> | 
+	<a href="$!webPath/admin/goods_brand_add.htm">新增</a> |
+    <a href="$!webPath/admin/goods_brand_audit.htm">申请列表</a> |
+	<a href="javascript:void(0);" class="this">编辑</a>
+     #else
+    <a href="$!webPath/admin/goods_brand_list.htm">管理</a> | 
+	<a class="this" href="$!webPath/admin/goods_brand_add.htm">新增</a> |
+    <a href="$!webPath/admin/goods_brand_audit.htm">申请列表</a> 
+	  #end
+	</span> 
+	<span class="tab-two"></span>	</div>
+    <div class="setcont" id="base">
+      <!--鼠标经过样式-->
+      <ul class="set1">
+        <li><strong class="orange fontsize20">*</strong>品牌名称</li>
+        <li><span class="webname">
+          		<input name="name" type="text" id="name" value="$!obj.name" />
+        	</span>
+        	<span id="name_span" style="color:red"></span>
+        </li>
+      </ul>
+      
+       <ul class="set1">
+        <li><strong class="orange fontsize20"></strong>首字母</li>
+        <li><span class="webname">
+          <input name="firstWord" type="text" id="first_word" value="$!obj.firstWord" />
+        </span><span id="nothis"><strong class="q"></strong><strong class="w">输入品牌首字母，在品牌列表页通过首字母查询</strong><strong class="c"></strong></span></li>
+      </ul>
+      <!--鼠标未经过样式-->
+      <ul class="set1">
+      <li>类别</li>
+      <li>
+      	<span class="webname" style="margin-right:10px">
+      		<input type="text" id="showClass" readonly="readonly" value="$!classNames"/>
+      		#if($!edit)<input value="编辑" type="button" onclick="showSelect()"/>#end
+      	</span>
+      	<div style="dispaly:block; ">
+      	#if($!edit)
+      	<select id="rootClass" class="selectClass" style="visibility:hidden">
+      	#else
+      	<select id="rootClass" class="selectClass" >
+      	#end
+      	<option value="0" >--请选择--</option>
+      		#foreach($class in $gcs)
+      		<option value="$class.id" >$!class.classname</option>
+      		#end
+      	</select>
+      	<select id="twoClass" class="selectClass" style="visibility:hidden;marign-left:10px;">
+      	
+      	</select>
+      	<select id="threeClass" class="selectClass" style="visibility:hidden;marign-left:10px;">
+      	
+      	</select>
+      	</div>
+      	<input value="绑定" type="button" onclick="banding()"/>
+      	<input value="重置" type="button" onclick="rest()"/>
+	  <input name="goodsClassId" type="hidden" id="goodsClassId" value="$!classIds" />
+      <span id="nothis"></span>
+	  </li>
+	  
+    </ul>
+      
+      <ul class="set1">
+        <li>品牌图片</li>
+      <li>
+      <span class="size13" ><input name="textfield" type="text" id="textfield1" />
+      </span>
+	  <span class="filebtn"><input name="button" type="button" id="button1" value=""/>
+	  </span>
+	  <span style="float:left;" class="file" >
+	  <input name="brandLogo" type="file" id="brandLogo" size="30"/>
+	  </span>
+	  <span class="preview">
+	  #if($!obj.brandLogo)
+	  <img src="$!webPath/resources/style/system/manage/blue/images/preview.jpg" width="25" height="25" id="brandImgShow"/>
+	  #end
+	  </span>
+	  <span id="nothis"><strong class="q"></strong><strong class="w">最佳尺寸93*33，支持格式gif,jpg,jpeg,png</strong><strong class="c"></strong></span>
+	  <div class="bigimgpre" id="brandImg" style="display:none;"><img src="$!webPath/$!obj.brandLogo.path/$!obj.brandLogo.name"/>
+	  </div>
+	  </li>
+      </ul>
+    
+      <ul class="set1">
+        <li>是否推荐</li>
+        <li> <span class="webSwitch">
+          <input name="recommend" id="recommend" type="hidden" value="$!obj.recommend" />
+          <img src="$!webPath/resources/style/system/manage/$!{config.websitecss}/images/on.jpg" width="61" height="23" id="stateOn" onclick="recommendState();" style="cursor:pointer"/> <img src="$!webPath/resources/style/system/manage/$!{config.websitecss}/images/off.jpg" width="61" height="23" id="stateOff" onclick="recommendState();" style="cursor:pointer"/>
+          </span><span id="nothis"><strong class="q"></strong><strong class="w">推荐品牌将在首页轮换显示</strong><strong class="c"></strong></span></li> 
+      </ul>
+      <ul class="set1">
+        <li>排序</li>
+        <li><span class="webname">
+          <input name="sequence" type="text" id="sequence" value="$!obj.sequence"/>
+        </span><span id="nothis"><strong class="q"></strong><strong class="w">序号越小显示越靠前</strong><strong class="c"></strong></span></li>
+		 
+      </ul>
+    </div>
+  </div>
+  <div class="submit">
+    <input name="" type="button" value="提交" onclick="saveBrand('save');"/>
+  </div>
+</form>
+</body>
+</html>

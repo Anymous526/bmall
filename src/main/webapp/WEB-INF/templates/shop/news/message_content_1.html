@@ -1,0 +1,69 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<title>系统消息</title>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript"> 
+</script>  
+<style>
+</style>  
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m">  
+		  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <a href="$!webPath/news/message_list.htm">系统消息</a> ><span>消息</span></div></div>
+          
+          <div class="productmain" style="padding-bottom: 0px;">
+            #if($!currentMsg)
+            <div class="message_title_box">
+            	<ul>
+            		<li><span style="color: #999;">发件人：</span><span>系统</span></li>
+            		<li style="color: #999;"><span>时间：</span><span>$CommUtil.formatLongDate($currentMsg.addTime)</span></li>
+            	</ul>
+             </div>
+			<!-- 内容框架 -->
+            <div class="" style="width: 86%;margin: 20px auto;">
+              <h1></h1>	
+              <div id="weo" >$!currentMsg.msg.content</div>
+             <!-- #if($!currentMsg.msg.url!="")<a href="$!currentMsg.msg.url" style="color:#a90000">点击这里</a>  #end -->
+            </div>
+           
+           #if($!nextMsg)
+            <!-- 下一封 -->
+			<div class="nextmsg">
+            	<ul>
+            		<li class="message_next">
+            			<span style="display: inline-block;float: left;">下一封：<img alt="" src="$!webPath/resources/style/system/front/default/images/usercenter/order_04.gif" width="15" height="11" style="margin-top: -3px;"></span> 
+            			<a href="$!webPath/news/message_content_1.htm?id=$!nextMsg.id" class="nextmsg_content">$!nextMsg.msg.content</a>
+            		</li>
+            		<li style="padding: 5px 0 10px 0px;">
+            			<button onclick="javascript:window.location.href='$webPath/news/message_list.htm'" style="padding:0 2px 0 2px;">返回</button>
+            			<button onclick="javascript:window.location.href='$webPath/news/message_del.htm?id=$!currentMsg.id'" style="padding:0 2px 0 2px;margin-left: 10px;">删除</button>
+            		</li>
+            	</ul>
+       		</div>
+            #end
+            #end
+          </div>
+
+            
+    
+    </div>
+</div>
+
+$!httpInclude.include("/footer.htm")
+
+</body>
+</html>

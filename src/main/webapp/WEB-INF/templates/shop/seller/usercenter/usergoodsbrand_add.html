@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>卖家品牌申请  </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+$(function($){
+
+	$("#first_word").bind("keyup",function(){
+		var word_val = $(this).val();
+		var re = /^[a-zA-Z]*$/;
+        if(re.test(word_val)){			
+			return true;
+		} 
+		else {
+			alert("请输入名称首字母");
+		    return false;
+		}
+	});
+	
+  $("#theForm").validate({
+       rules: {
+			name:{required:true},
+			firstWord:{required:true,verify:true,maxlength:1},
+			brandLogo:{#if(!$!obj)required:true,#end accept:"jpg,gif,png,jpeg"}
+		  },
+	   messages: {
+		    name:{required:"品牌名称不能为空"},
+			firstWord:{required:"名称首字母不能为空",maxlength:"输入长度不正确"},
+			brandLogo:{#if(!$!obj)required:"品牌标志不能为空",#end accept:"格式不对，只能为jpg|gif|png|jpeg"}
+	     }
+  });
+  
+  
+  $("#rootClass").bind("change",function(){
+		var url='$!webPath/seller/seller_load_goods_class.htm';
+		jQuery.post(url,{"pid":this.value},function(dataJson){
+			var data = JSON.parse(dataJson);
+			var options="<option value='0' >--请选择--</option>";
+			for(var i=0; i<data.length;i++){
+				options+="<option value="+data[i].id+">"+data[i].classname+"</option>";
+			}
+			$("#twoClass").html(options);
+			$("#twoClass").css("visibility","visible");
+		});
+	});
+	
+	$("#twoClass").change(function(){
+		var url='$!webPath/seller/seller_load_goods_class.htm';
+		jQuery.post(url,{"pid":this.value},function(dataJson){
+			var data = JSON.parse(dataJson);
+			var options="<option value='0' >--请选择--</option>";
+			for(var i=0; i<data.length;i++){
+				options+="<option value="+data[i].id+">"+data[i].classname+"</option>";
+			}
+			jQuery("#threeClass").html(options);
+			jQuery("#threeClass").css("visibility","visible");
+		});
+	});
+});
+
+
+
+
+function showSelect(){
+	  jQuery("#rootClass").css("visibility","visible");
+}
+
+function banding(){
+	  var type = jQuery("#threeClass").find("option:selected").text();
+	  var typeValue = jQuery("#showClass").val();
+	  var classIds = jQuery("#threeClass").val();
+	  if(classIds != 0){
+		  if(typeValue == ""){
+			  jQuery("#showClass").val(type);
+			  jQuery("#goodsClassId").val(classIds);
+		  }else{
+			  var value = typeValue.split("|");
+			  for(var i=0;i<value.length;i++){
+				  if(type==value[i]){
+					  alert("该分类已经存在");
+					  return false;
+				  }
+			  }
+			  jQuery("#showClass").val(jQuery("#showClass").val()+"|"+type);
+			  jQuery("#goodsClassId").val(jQuery("#goodsClassId").val()+"|"+classIds);
+		  }
+	  }	 
+}
+
+function rest(){
+	  jQuery("#showClass").val("");
+	  jQuery("#goodsClassId").val("");
+}
+function submits(){
+	var showClass=$("#showClass").val();
+	var brandname=$('#name').val();
+	var brandLogo=$('#brandLogo').val();
+	var labelbrand=$("label").attr("for");
+	console.log(labelbrand);
+	if(showClass==null || showClass==''){
+		alert("类别不能为空!");
+		return false;
+	}
+	if(brandname=="" || brandname==null){
+		alert("品牌名称不能为空");
+		return false;
+	}
+	
+	if( brandLogo==""||brandLogo==null){
+		alert("品牌标志不能为空");
+		return false;
+	}else if(labelbrand=="格式不对，只能为jpg|gif|png|jpeg"){
+		return false;
+	}
+	jQuery("#theForm").submit();
+}
+</script>
+
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=usergoodsbrand") 
+<div class="s_m">   
+<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>卖家品牌</span></div></div>
+	
+		
+		<div class="productmain">
+           	<div class="container" style="height:37px;">
+            <ul class="section" style="padding: 0;">
+               #if($!edit)
+               <li ><a href='$!webPath/seller/usergoodsbrand_list.htm' >品牌列表</a></li>
+               <li><a href='$!webPath/seller/usergoodsbrand_add.htm' >申请品牌</a></li>
+               <li class="li_this"><a href='javascript:void(0);' >编辑品牌</a></li>
+               #else
+               <li ><a href='$!webPath/seller/usergoodsbrand_list.htm' >品牌列表</a></li>
+               <li class="li_this"><a href='$!webPath/seller/usergoodsbrand_add.htm' >申请品牌</a></li>
+               #end
+              </ul>
+            </div>
+            <div class="ordercon">
+              <div class="addnav">
+                <form action="$!webPath/seller/usergoodsbrand_save.htm" method="post" id="theForm" enctype="multipart/form-data">
+                 <input name="id" type="hidden" id="id"  value="$!obj.id"/>
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" class="addnavtable">
+                    <tr>
+                      <td align="right" valign="top" class="modifysp" width="155"><span>品牌名称：</span><span><strong 
+
+class="red" style="font-size:14px;">*</strong></span></td>
+                     <td  class="px10"><span class="setinput">
+                        <input name="name" type="text" id="name"  value="$!obj.name"/>
+                      </span></td>
+                    </tr>
+                     <tr>
+                      <td align="right" valign="top" class="modifysp" width="155"><span>首字母：</span><span><strong 
+
+class="red" style="font-size:14px;">*</strong></span></td>
+                     <td  class="px10"><span class="setinput">
+                        <input name="firstWord" type="text" id="first_word"  value="$!obj.firstWord" maxlength="1"/>
+                      </span></td>
+                    </tr>
+                     <tr>
+                      <td align="right" valign="top" class="modifysp" width="155"><span>品牌所属分类：</span><span><strong 
+
+class="red" style="font-size:14px;">*</strong></span></td>
+                     <td  class="px10">
+                     	<span class="setinput">
+      					<input type="text" id="showClass" readonly="readonly" value="$!classNames"/>
+      					#if($!edit)<input value="编辑" type="button" onclick="showSelect()"/>#end
+      					</span>
+				      	<div style="dispaly:block; ">
+				      	#if($!edit)
+				      	<select id="rootClass" class="selectClass" style="visibility:hidden">
+				      	#else
+				      	<select id="rootClass" class="selectClass" >
+				      	#end
+				      	<option value="0" >--请选择--</option>
+				      		#foreach($class in $gcs)
+				      		<option value="$class.id" >$!class.classname</option>
+				      		#end
+				      	</select>
+				      	<select id="twoClass" class="selectClass" style="visibility:hidden;marign-left:10px;">
+				      	
+				      	</select>
+				      	<select id="threeClass" class="selectClass" style="visibility:hidden;marign-left:10px;">
+				      	
+				      	</select>
+				      	</div>
+				      	<input value="绑定" type="button" onclick="banding()"/>
+				      	<input value="重置" type="button" onclick="rest()"/>
+					  <input name="categoryId" type="hidden" id="goodsClassId" value="$!classIds" />
+      				   <span id="nothis"></span>
+                      </td>
+                    </tr>
+                    
+                    #if($!obj.brandLogo)
+                     <tr>
+                      <td align="right" valign="top" class="modifysp" width="155"><span>品牌预览：</span></td>
+                      <td  class="px10">
+                        <a href="$!webPath/$!obj.brandLogo.path/$!obj.brandLogo.name" target="_blank"><img src="$!webPath/
+
+$!obj.brandLogo.path/$!obj.brandLogo.name" height="44px" width="88px" title="点击查看大图"/></a>
+                    </td>
+                    </tr>
+                    #end
+                    <tr>
+                      <td align="right" valign="top" class="modifysp"><span>品牌标志：</span><span><strong class="red" 
+
+style="font-size:14px;">*</strong></span></td>
+                      <td  class="px10">
+                        <input name="brandLogo" type="file" id="brandLogo" />
+                    </td>
+                    </tr>
+                    
+                    <tr>
+                      <td align="right" valign="top" class="modifysp"><span>申请备注：</span></td>
+                      <td  class="px10"><span class="setinput">
+                        <textarea name="remark" cols="40" rows="6" id="remark">$!obj.remark</textarea>
+                     </span></td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td class="px10"><span class="setsub">
+                        <input name="" type="button" onclick="submits();" value="提交"  class="input_submit" style="cursor:pointer;"/>
+                      </span></td>
+                    </tr>
+                  </table>
+                </form>
+              </div>
+            </div>
+          </div></td>
+		
+		
+
+</div>
+</div>
+  	
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

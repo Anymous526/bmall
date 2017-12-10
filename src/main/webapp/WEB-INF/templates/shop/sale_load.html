@@ -1,0 +1,24 @@
+﻿  <ul class="prolist new_prdlist">
+   #foreach($goods in $goodsList)
+    <li>
+      <div class="img"> 
+      	<a href=""> 
+        	<sup class="mark_small_99996626 salepic">
+            	<em class="saleActiveRemark xsq">限时抢<strong>¥ $!{goods.goodsCurrentPrice}</strong></em>
+            </sup> 
+            <img src="http://i1.ygimg.cn/pics/nike/2014/99996626/99996626_01_mb.jpg?2"> 
+        </a> 
+       </div>
+          
+      <div class="cnt"> 
+      	<span class="nptt"> 
+        	<a href="">$!goods.goodsName</a> 
+        </span>
+        <p class="price_sc"> 
+        	<em class="ygprc15 price_no99996626  ">¥<i>$!{goods.goodsCurrentPrice}</i></em> 
+            <del>¥$!{goods.goodsPrice}</del> <span class="ico_discount"><i> 5.0</i>折</span>
+       </p>
+      </div>
+     </li>
+     #end
+  </ul>

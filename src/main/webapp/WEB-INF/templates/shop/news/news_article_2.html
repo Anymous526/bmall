@@ -1,0 +1,102 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var typeId = "$!typeId";
+	
+	//console.info("isPartner -> "+isPartner);
+	$("#myIntegral").mouseover(function(){
+		$("#ingeralBox").css("display","block");
+	}).mouseout(function(){
+		$("#ingeralBox").css("display","none");
+	});
+	
+	$("#share_a").click(function(){
+		if(typeId == "3"){
+			alert("请到会员中心去分享.");
+		}else{
+			$("#share_ar").show();	
+		}
+	});
+	
+	$("#share_b1").click(function(){
+		if(typeId == "4"){
+			alert("商家不能申请成为会员");
+			return false;
+		}
+	});
+	
+	$(".share_close").bind("click",function(){
+		$("#share_ar").hide();
+	});
+	
+	var lis = $(".share_icon ul li");
+	var length = lis.size();
+	jQuery.each(lis,function(index,val){
+		var t = (index+1)%7;
+		if(t == 0){
+			/* console.info($(this)); */
+			$(this).css("margin-right","0px");
+		}
+	});
+	
+	var appShareUrl = $("#appRegUrl").val();
+	//console.info("appShareUrl -> "+appShareUrl);
+	window._bd_share_config={
+		"share":{
+			"bdText":"天使红包分享",
+			"bdMini":"1",
+			"bdMiniList":false,
+			"bdPic":"",
+			"bdUrl":appShareUrl,
+			"bdStyle":"1",
+			"bdSize":"32",
+		}
+	};
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	
+});
+</script>  
+  
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div id="rightBody">
+	
+<!--  中央区  -->
+    <div class="news_article_box" id="">
+    	<div class="news_article_titlebox" >
+    		<span class="news_article_title" >天使红包大放送</span>
+    		<br/><span style="width: 150px;display: inline-block;">日期：2015.10.20</span>
+    		<span style="width: 150px;display: inline-block;">来源：<i style="color: #000;">Amall商城</i></span>
+    	</div>
+    	
+		<div class="news_article_img" style="width: 598px;margin:20px auto;background-color:  #f1f1f1;"><img alt="" src="$!webPath/assets/img/news_article_2.png"> </div>
+    	<div class="news_article_content" >
+    		<h1>分享链接：</h1>
+    		邀请小伙伴一起成为天使会员，还能获得每位10个礼品金的奖励哦！<br/>
+    		邀请更多小伙伴成为你的会员吧！点击分享以下链接，轻松获得1个礼品金。<br/>
+    		人脉变成钱脉，动动手指！每成功邀约一个天使会员注册获得1礼品金奖励。多劳多得哦！			    	
+    	</div>    	
+    </div>
+</div>
+</div>	
+	
+	
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

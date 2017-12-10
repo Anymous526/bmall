@@ -1,0 +1,91 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script> 
+</head> 
+<body> 
+<div class="am_top">
+  <div class="am_type w990">
+    <div class="siderNavleft">
+      <ul class="topmenu">
+        <li><strong>精品商城</strong></li>
+        <li class="webnav"> <strong class="icon_arr"><i class="phones"></i><span style="padding-left:15px;">天使WAP商城</span> </strong>
+          <div class="jq_hidebox" style="width:222px;">
+          	<img src="assets/img/public/code.jpg" alt="二维码" />
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="siderNav">
+      <ul class="topmenu">
+        <li class="weibo"> <strong> <a href="">登录</a> </strong>
+        </li>
+        <li class="weixin"> <strong> <a href="">注册</a> </strong>
+
+        </li>
+        <li class="webnav"> <strong class="icon_arr"> 我的天使 </strong>
+          <div class="jq_hidebox"> <a href="#"> 我的收藏 </a> <a href="#"> 添加收藏 </a> </div>
+        </li>
+        <li class="webnav" style="background:none"> <strong class="icon_arr"> 我的订单 </strong>
+          <div class="jq_hidebox">
+          	<a href="">已付款订单</a>
+            <a href="">未付款订单</a>
+            <a href=""></a>
+          </div>
+        </li>
+        <li class="webnav" style="background:none"> <strong class="icon_arr"> 公告 </strong>
+          <div class="jq_hidebox" style="width:156px;">
+          	<a href="">运动短装节 低至￥69</a>
+            <a href="">百搭坡跟女鞋 ￥99起</a>
+            <a href="">夏日大放价 男鞋￥129起</a>
+            <a href="">部分库房发货变动明细</a>
+            <a href="">提醒会员谨防诈骗电话</a>
+          </div> 
+        </li>
+        <li class="webnav" style="background:none"> <strong class="icon_arr"> 更多 </strong>
+          <div class="jq_hidebox" style="width:156px;">
+          	<a href="javascript:void(0)" onclick="AddFavorite(window.location,document.title)">收藏Amall商城</a>
+            <a href="">购物帮助</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div> 
+<script>
+function AddFavorite(sURL, sTitle) {
+	 
+    sURL = encodeURI(sURL); 
+try{   
+
+    window.external.addFavorite(sURL, sTitle);   
+
+}catch(e) {   
+
+    try{   
+
+        window.sidebar.addPanel(sTitle, sURL, "");   
+
+    }catch (e) {   
+
+        alert("加入收藏失败，请使用Ctrl+D进行添加,或手动在浏览器里进行设置.");
+
+    }   
+
+}
+
+}
+</script>
+</body>
+</html>

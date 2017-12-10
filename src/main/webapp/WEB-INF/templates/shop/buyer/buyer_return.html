@@ -1,0 +1,260 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>退货退款</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/detail.css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<link rel="stylesheet" href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" />
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+
+<script type="text/javascript">
+jQuery(function($){
+	 
+	 $ ("#uploadify").uploadify({
+         //指定swf文件
+         'swf': '$!webPath/resources/uploadify/uploadify.swf',
+         //后台处理的页面
+         'uploader': '$!webPath/buyer/buyer_upload_return.htm',
+         //按钮显示的文字
+         'buttonText': '点击选择图片上传',
+         'method': 'post',
+         //显示的高度和宽度，默认 height 30；width 120
+         //'height': 15,
+         //'width': 80,
+         //上传文件的类型  默认为所有文件    'All Files'  ;  '*.*'
+         //在浏览窗口底部的文件类型下拉菜单中显示的文本
+         'fileTypeDesc': 'Image Files',
+         //允许上传的文件后缀
+         'fileTypeExts': '*.jpg;*.png;*.bmp;*.gif',
+         //发送给后台的其他参数通过formData指定
+         //'formData': { 'someKey': '123', 'someOtherKey': 1 },
+         //上传文件页面中，你想要用来作为文件队列的元素的id, 默认为false  自动生成,  不带#
+         //'queueID': 'fileQueue',
+         'fileSizeLimit': '1024KB',
+         //选择文件后自动上传
+         'auto': true,
+         //设置为true将允许多文件上传
+         'multi': false,
+         'queueSizeLimit': 3,
+         onUploadStart :function(){
+         	var imgsLen = $(".re_img").children().length;
+         	if(imgsLen > 2){
+         		alert("最多只能上传3张图片");
+         		$('#uploadify').uploadify('cancel', '*');
+         	}
+         	
+         },
+         onUploadSuccess: function(event, data) {
+        	 
+        	 if(data != "null") 
+             {
+			     var dt = data.split(",");
+	       		 var imgHtml='<li><a class="rem" onclick="delImg('+ dt[0] +')"></a>'+
+					 '<img src="'+dt[1]+'" width="100" height="100" />'+
+					 '<input id="imgs" name="imgs" type="hidden" value="'+dt[0]+'">'+
+				     '</li>';
+				     $(".re_img").append(imgHtml);
+				     var imgIds = $("#imgPaths").val();
+				     var value = dt[0]+","+imgIds;
+				     $("#imgPaths").val(value);
+             }
+         }
+     });
+
+ });
+
+function btnForm(){
+	 if($("select[name='refundType']").val()=='0'){
+		 alert('请选择退款原因');
+		 return false;
+	 }
+	 
+	$("#theForm").submit();
+}
+
+function delImg(imgId){
+	var id = imgId;
+	if(confirm("删除后不可恢复，是否继续？")){
+		//删除图片
+		jQuery.post("$!webPath/buyer/buyer_return_goods_delImg.htm",{"imgId":id},function(data){
+			if(data==1){
+				//隐藏图片显示区域
+				$(".re_img").css("display","none");
+			}else{
+				alert("删除失败，重新删除！");
+			}
+		});
+	}
+	
+}
+</script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	
+	var price = $!orderFormItem.goodsPrice;
+	
+	$(".ajia").click(function(){
+		var currentCount = $(".order_number").val();
+		if(currentCount == 1)
+		{
+			return false;
+		}
+		
+		$(".order_number").val(Number(currentCount) - 1);
+		
+		var totalPrice = (Number(currentCount) - 1) * Number(price);
+		
+		$(".money").val(totalPrice);
+		$("input[name='refund']").val(totalPrice);
+	});
+	
+	$(".ajian").click(function(){
+		
+		var currentCount = $(".order_number").val();
+		var mayCount = $!orderFormItem.goodsCount;
+		
+		if(Number(mayCount) <= Number(currentCount))
+		{
+			return false;
+		}
+		
+		$(".order_number").val(Number(currentCount) + 1);
+		
+		var totalPrice = (Number(currentCount) + 1) * Number(price);
+		
+		$(".money").val(totalPrice);
+		$("input[name='refund']").val(totalPrice);
+	});
+	
+	$(".order_number").blur(function(){
+		
+		var currentCount = $(".order_number").val();
+		var mayCount = $!orderFormItem.goodsCount;
+		
+		if(!/^[1-9]\d*$/.test(currentCount)){
+			alert("请输入大于等于1的整数");
+			$(".order_number").val(1);
+		}
+		
+		if(Number(mayCount) < Number(currentCount))
+		{
+			$(".order_number").val(mayCount);
+		}
+		
+		var totalPrice = Number($(".order_number").val()) * Number(price);
+		
+		$(".money").val(totalPrice);
+		$("input[name='refund']").val(totalPrice);
+	});
+	
+});
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+
+<div class="main">
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">
+	<div class="buyer_position"><div class="buyer_p_box"><span>买家中心</span> > <span>退款</span></div></div>
+		<div class="productmain">
+			<div class="container">
+            <ul class="section" style="padding: 0;">
+	              <li class="li_this"><a href="$!webPath/buyer/order_refund.htm?id=$!obj.id&goodsId=$!orderFormItem.goodsId" >退款</a></li>
+	            </ul>
+          </div>
+          <div class="ordercon" style="border-right:none">
+        	<table class="shoptable">
+			<form action="$!webPath/buyer/order_refund_save.htm" method="post" id="theForm">  
+			<input type="hidden" value="$!obj.id" name="id"/>   	
+			<input type="hidden" value="$orderFormItem.goodsId" name="goodsId"/>   	
+			<input type="hidden" value="" name="imgPaths" id="imgPaths"/>   	
+          	<table class="returntable">
+          		<tr>
+          			<td class="taleft"> 商品名称：</td>
+          			<td>
+						<span>$!orderFormItem.goodsName</span>
+          			</td>
+          		</tr>
+          		<tr>
+          			<td class="taleft"> 商品单价：</td>
+          			<td>
+						<span>$!orderFormItem.goodsPrice</span>
+          			</td>
+          		</tr>
+          		<tr>
+          			<td class="taleft"><span class="cred">*</span> 商品数量：</td>
+          			<td>
+					<div class="detail_dd"> 
+						<span class="tb-stock" style="width:100%; overflow: hidden;"> 
+							<a href="javascript:void(0);" class="ajia">-</a>
+							<input type="text" class="order_number" value="$!orderFormItem.goodsCount" maxlength="8" name="count">
+							<a href="javascript:void(0);" class="ajian" style="float:left; margin-right: 10px;">+</a>
+						</span>  
+					</div>
+          			
+          			</td>
+          		</tr>
+          		<tr>
+          			<td class="taleft"><span class="cred">*</span> 退款原因：</td>
+          			<td>
+          				<select name="refundType"> 
+          				<option value="0">请选择退款原因</option>
+          				#foreach($refundItem in $refundItems)
+          				    <option value="$!refundItem.id" >$!refundItem.name</option>
+          				#end
+          				</select>
+          			</td>
+          		</tr>
+          		<tr>
+          			<td class="taleft"><span class="cred">*</span> 退款金额：</td>
+          			<!--  #set($refundMoney = $!orderFormItem.goodsPrice * $!orderFormItem.goodsCount)-->
+          			<td>
+          			<input name="refundValue" value="$!refundMoney" disabled="disabled" class="money" type="text" /></td>
+          			<input type="hidden" name="refund" value = "$!refundMoney"/>
+          		</tr>
+          		<tr>
+          			<td class="taleft" valign="top"> 退款说明：</td>
+          			<td> <textarea rows="8" cols="5" name="refundLog" style="width:400px"></textarea> </td>
+          		</tr>
+          		<tr>
+          			<td class="taleft" valign="top"> 上传凭证：</td>
+          			<td> 
+          				<input type="file" accept="image/jpeg/jpg/png"  style="padding:3px 10px 3px 0" name="uploadify" id="uploadify" />
+          				 <br />
+          				<span style="font-size:12px; color:#999">每张图片大小不超过1M，最多3张图片，支持GIF,JPEG,PNG，BMP格式</span>          				
+          			</td>
+          		</tr>
+          		<tr>
+          			<td class="taleft" width="100" align="right"></td>
+          			<td>
+          				<ul class="re_img">
+          					
+          					
+          				</ul>
+          			</td>
+          		</tr>
+          		
+          	</table>
+          	<div style="margin-left: 136px;padding-bottom:20px;"> <input class="submitok" type="button" onclick="btnForm()" value="提交退款申请" /> </div>
+          	</form> 
+          	
+          </div>
+       </div>
+  </div>
+   </div>
+   $!httpInclude.include("/footer.htm")
+
+</body>
+</html>

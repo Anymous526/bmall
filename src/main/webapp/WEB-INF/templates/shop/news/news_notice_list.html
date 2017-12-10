@@ -1,0 +1,211 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var typeId = "$!typeId";
+	
+	//console.info("isPartner -> "+isPartner);
+	$("#myIntegral").mouseover(function(){
+		$("#ingeralBox").css("display","block");
+	}).mouseout(function(){
+		$("#ingeralBox").css("display","none");
+	});
+	
+	$("#share_a").click(function(){
+		if(typeId == "3"){
+			alert("请到会员中心去分享.");
+		}else{
+			$("#share_ar").show();	
+		}
+	});
+	
+	$("#share_b1").click(function(){
+		if(typeId == "4"){
+			alert("商家不能申请成为会员");
+			return false;
+		}
+	});
+	
+	$(".share_close").bind("click",function(){
+		$("#share_ar").hide();
+	});
+	
+	var lis = $(".share_icon ul li");
+	var length = lis.size();
+	jQuery.each(lis,function(index,val){
+		var t = (index+1)%7;
+		if(t == 0){
+			/* console.info($(this)); */
+			$(this).css("margin-right","0px");
+		}
+	});
+	
+	var appShareUrl = $("#appRegUrl").val();
+	//console.info("appShareUrl -> "+appShareUrl);
+	window._bd_share_config={
+		"share":{
+			"bdText":"天使红包分享",
+			"bdMini":"1",
+			"bdMiniList":false,
+			"bdPic":"",
+			"bdUrl":appShareUrl,
+			"bdStyle":"1",
+			"bdSize":"32",
+		}
+	};
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	
+});
+</script>  
+ 
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top2.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div class="user_main w990">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<!--  中央区  -->
+    <!-- <div class="u_c" id="centerBody" style="width: 840px;"> -->
+    <div class="s_m">
+    	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>公告</span></div></div>
+    	<div class="news_img_lis">
+    		<ul>
+	    		<li onclick="window.location.href='$!webPath/news/news_article_1.htm'">
+	    				<span class="news_img_lis_box01">
+		    				<p class="news_img_lis_text01" >Amall商城最新上线</p>
+		    				<p class="news_img_lis_text02" >——文章来源 :&nbsp;&nbsp;<i style="color: #000;">Amall商城</i></p>
+		    				<p class="news_img_lis_text03" >2015.10.20</p>
+	    				</span>
+	    				<span class="news_img_lis_box02">
+	    					<img alt="" src="$!webPath/assets/img/news_article_small_1.png">
+	    				</span>
+	    				<span class="news_img_lis_box03">
+	    					<p>经过四年多的筹备工作之后，Amall商城终于上线了！</p>
+	    				</span>
+	    		</li>
+    		</ul>
+    		
+    		<!-- <ul>
+    		<li onclick="window.location.href='$!webPath/news/news_article_2.htm'">
+    				<span class="news_img_lis_box01">
+	    				<p class="news_img_lis_text01">天使红包大放送</p>
+	    				<p class="news_img_lis_text02">——文章来源 :&nbsp;&nbsp;<i style="color: #000;">Amall商城</i></p>
+	    				<p class="news_img_lis_text03">2015.10.20</p>
+    				</span>
+    				<span class="news_img_lis_box02">
+    					<img alt="" src="$!webPath/assets/img/news_article_small_2.png" width="100%">
+    				</span>
+    				<span class="news_img_lis_box03">
+    					<h1>分享链接：</h1>
+			    		<p>邀请小伙伴一起成为天使，还能获得每位5元礼品金的奖励哦！</p>
+			    		<p>邀请更多小伙伴成为你的会员吧！点击分享以下链接，轻松获得5元礼品金。</p>
+			    		<p>人脉变成钱脉，动动手指！每加入一位天使，立获5元礼品金，多劳多得哦！</p>
+    				</span>
+    		</li>
+    		</ul> -->
+    		
+    		<!-- <ul>
+    		<li onclick="window.location.href='$!webPath/news/news_article_3.htm'">
+    				<span class="news_img_lis_box01">
+	    				<p class="news_img_lis_text01">怎么成为会员？</p>
+	    				<p class="news_img_lis_text02">——文章来源 :&nbsp;&nbsp;<i style="color: #000;">Amall商城</i></p>
+	    				<p class="news_img_lis_text03">2015.10.20</p>
+    				</span>
+    				<span class="news_img_lis_box02">
+    					<img alt="" src="$!webPath/assets/img/news_article_small_3.png">
+    				</span>
+    				<span class="news_img_lis_box03">
+    					<span><strong>怎么成为会员？</strong></span>
+    					<p>可通过线上线下申请，提交个人信息资料，例如姓名、性别、现住地址、电话号码、身份证号（线上申请需上传身份证照片）、有公司的申请人需提供公司名称、公司营业执照（线上申请需上传营业执照照片）、银行账户、意向购买城市等资料。<br>
+  	线上申请点击提交申请资料，等待天使客服联系，或可拨打0755-25879293和4007777017进行咨询。</p>
+    				</span>
+    		</li>
+    		</ul> -->
+    		
+    		<ul>
+    		<li onclick="window.location.href='$!webPath/news/news_article_4.htm'">
+    				<span class="news_img_lis_box01">
+	    				<p class="news_img_lis_text01">天使平台规则</p>
+	    				<p class="news_img_lis_text02">——文章来源 :&nbsp;&nbsp;<i style="color: #000;">Amall商城</i></p>
+	    				<p class="news_img_lis_text03">2015.10.20</p>
+    				</span>
+    				<span class="news_img_lis_box02">
+    					<img alt="" src="$!webPath/assets/img/news_article_small_1.png">
+    				</span>
+    				<span class="news_img_lis_box03">
+    					<h1>第一章 概述</h1>
+  	  					为促进开放、透明、分享、责任、诚信的新商业文明,保障天使用户合法权益，维护天使正常经营秩序，根据《天使平台规则》及《天使服务协议》，制定本规则。 <br>
+  	  					1.1天使规则，是对天使用户增加基本义务或限制基本权利的条款。<br>
+  	  					1.2天使规则，是对天使用户增加基本义务或限制基本权利的条款。天使官方发布的其他管理内容（包括但不限于规则、规范、类目管理标准、行业标准等）中提及的天使规则包括天使规则。 <br>
+  	  					1.3违规行为的认定与处理，应基于天使认定的事实并严格依规执行。天使用户在适用规则上一律平等。关于特殊品类商品的管理，本规则未涉及的和该特殊品类管理规范中另有规定的，从其规定。<br>
+  	 					1.4用户应遵守国家法律、行政法规、部门规章等规范性文件。对任何涉嫌违反国家法律、行政法规、部门规章等规范性文件的行为，本规则已有规定的，适用本规则；本规则尚无规定的，天使有权酌情处理。但天使对用户的处理不免除其应尽的法律责任。<br>
+  				  		用户在天使的任何行为，应同时遵守与天使及其关联公司所签订的各项协议。<br>
+  	 					 天使有权随时变更本规则并在网站上予以公告。若用户不同意相关变更，应立即停止使用天使的相关服务或产品。天使有权对用户行为及应适用的规则进行单方认定，并据此处理。<br>
+    				</span>
+    		</li>
+    		</ul>
+    		
+    		<ul>
+    		<li onclick="window.location.href='$!webPath/news/news_article_5.htm'">
+    				<span class="news_img_lis_box01">
+	    				<p class="news_img_lis_text01">天使2015年招商资质细则</p>
+	    				<p class="news_img_lis_text02">——文章来源 :&nbsp;&nbsp;<i style="color: #000;">Amall商城</i></p>
+	    				<p class="news_img_lis_text03">2015.10.20</p>
+    				</span>
+    				<span class="news_img_lis_box02">
+    					<img alt="" src="$!webPath/assets/img/news_article_small_1.png">
+    				</span>
+    				<!-- <span class="news_img_lis_box03">
+    					<i>Amall商城招商类别及细则</i>
+	    				<p>工厂店(保证金10000元人民币)</p>
+     					<p><strong>含义：</strong>商家以自有品牌（商标为R或TM状态）入驻天使开设的店铺。</p>
+     					<p>旗舰店可以有以下几种类型：</p>
+    					<p>1.经营一个自有品牌商品的品牌旗舰店；</p>
+     					<p>2.经营多个自有品牌商品且各品牌归同一实际控制人的品牌旗舰店</p>
+     					<p>3.卖场型品牌（服务类商标）所有者开设的品牌旗舰店</p>
+    				</span> -->
+    		</li>
+    		</ul>
+    		
+    		<ul>
+    		<li onclick="window.location.href='$!webPath/news/news_article_6.htm'">
+    				<span class="news_img_lis_box01">
+	    				<p class="news_img_lis_text01">积分会员等级规则</p>
+	    				<p class="news_img_lis_text02">——文章来源 :&nbsp;&nbsp;<i style="color: #000;">Amall商城</i></p>
+	    				<p class="news_img_lis_text03">2015.10.20</p>
+    				</span>
+    				<span class="news_img_lis_box02">
+    					<img alt="" src="$!webPath/assets/img/news_article_small_1.png">
+    				</span>
+    				<span class="news_img_lis_box03">
+						<h1>一、会员</h1>
+						<p>凡是自己通过登录www.amall.com网址进行注册的用户或收到邀约链接注册的用户，统称为天使会员</p>
+						<h1>二、会员等级划分</h1>
+						<p>1.Amall商城会员等级分为天使会员及联盟商家</p>
+						<!-- <p>2.天使会员升级为初级会员需要充值200元</p> -->
+						<p>2.天使会员升级为联盟商家需要充值5000元</p>
+						<p>3.天使会员升级为联盟商家需要充值10000元</p>
+						<h1>三、天使会员及联盟商家享受服务：</h1>
+    				</span>
+    				
+    		</li>
+    		</ul> 
+    	</div>
+    </div>  
+</div>
+	 
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>

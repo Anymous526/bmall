@@ -1,0 +1,169 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>查看总资产</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc1.amallcdn.cn/assets/css/index.css" type="text/css" rel="stylesheet"/>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>  
+</head>
+<body class="main_t">
+$!httpInclude.include("/top.htm")
+<div>
+ $!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">   
+	<div class="buyer_position">
+		<div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>查看总资产</span></div></div>
+		<div class="productmain">
+             <div class="ordercon">
+             <div class="all_1">
+	             <div class="all_top">
+	             	<span class="sp_img">
+	             		<img src="$!webPath/assets/img/all_1.png"/>
+	             	</span>
+	             	<div class="all_txt">
+	             		<p class="all_tp">总资产</p>
+	             		<span class="all_tm">$!TotalAssets</span>
+	             	</div>
+	             </div>
+             	<p class="all_more"><a href="#">查看更多<span><img src="$!webPath/assets/img/arrow-left.png"/></span></a></p>
+             </div>
+            <div class="all_1">
+	             <div class="all_top">
+	             	<span class="sp_img">
+	             		<img src="$!webPath/assets/img/all_2.png"/>
+	             	</span>
+	             	<div class="all_txt">
+	             		<p class="all_tp">日营业额</p>
+	             		<span class="all_tm">$!totalPrice</span>
+	             	</div>
+	             </div>
+             	<p class="all_more"><a href="#">查看更多<span><img src="$!webPath/assets/img/arrow-left.png"/></span></a></p>
+             </div>
+             <div class="all_1">
+	             <div class="all_top">
+	             	<span class="sp_img">
+	             		<img src="$!webPath/assets/img/all_3.png"/>
+	             	</span>
+	             	<div class="all_txt">
+	             		<p class="all_tp">月营业额</p>
+	             		<span class="all_tm">$!monthPrice</span>
+	             	</div>
+	             </div>
+             	<p class="all_more"><a href="#">查看更多<span><img src="$!webPath/assets/img/arrow-left.png"/></span></a></p>
+             </div>
+        </div>   
+      </div>
+     <!-- 月营业额开始 --> 
+   <!--  <form action="#" method="post" id="ListForm"> -->
+
+    <div class="productmain">
+	    <div class="container" style="height:37px">
+	        <ul class="section" style="padding: 0;">
+	              <li ><a href="#">点击查看月营业额详情</a></li><!-- class="li_this" -->
+	        </ul>
+          </div>
+          <div class="xudetail" style="display:none">
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;"class="xu_table">
+            	<tr>
+            		<td width="17%">订单号</td>
+            		<td width="30%">商品名称</td>
+            		<td width="18%">结算时间</td>
+            		<td width="15%">店铺收入</td>
+            		<td width="15%">分利金额</td>
+            		<td width="10%">利率</td>
+            	</tr>
+            <!-- 	<tr>
+            		<td  width="17%"><a href="$!webPath/seller/order_view.htm?id=$!obj.orderId">0</a></td>
+            		<td  width="30%">0</td>
+            		<td  width="18%">0</td>
+            		<td width="15%">0</td>
+            		<td width="15%">0</td>
+            		<td>$!obj.order.shipPrice</td>
+            		<td width="10%">0</td>
+            	</tr> -->
+             </table>
+            </div>
+            <div class="bottom_page" style="margin-top: 25px;">
+				<input name="currentPage" type="hidden" id="currentPage" value="1">
+				<a href="javascript:void(0);">首页</a>
+				<a href="javascript:void(0);">上一页</a>
+				 第　<a class="this" href="javascript:void(0);" >1</a> 页
+				 <a href="javascript:void(0);">下一页</a>　
+				 <a href="javascript:void(0);">末页</a> 
+			</div>
+			</div>
+          </div>
+    <!-- </form>  -->
+    <!-- 月营业额结束 -->    
+</div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</div> 
+<script>
+$(function(){
+function gotoPage(n){
+	var currentPages= jQuery("#currentPage").val(n).val();
+	jQuery.ajax({
+		type:"post",
+		url:"$!webPath/store/incomeStatistics.htm",
+		data:{page:currentPages},
+		success:function(data){
+			jQuery(".container .section li").addClass("li_this");
+			jQuery(".section li a").html("月营业额详情");
+			jQuery(".tr_id").html("");
+			$(".xudetail").css("display","block");
+			var json = eval('('+data+')');
+			for(var i=0;i<json.list.length;i++){
+				jQuery(".xu_table tbody").append("<tr class='tr_id'><td width='17%'>"+json.list[i].orderId+"</td><td width='30%'>"+json.list[i].goodsName+"</td><td width='18%'>"+json.list[i].accountTime+"</td><td width='15%'>"+json.list[i].storeIncome+"</td><td width='15%'>"+json.list[i].leePrice+"</td><td width='12%'>"+json.list[i].rate+"</td></tr>");
+			}
+		} ,
+		error:function(jqXHR,textStatus,errorThrown){
+			alert("请检查内部错误！");
+		}
+	});
+} 
+$(".bottom_page a").click(function(){
+	gotoPage(1);
+});
+    var currentPage = $("#currentPage").val();
+	$(".section li a").click(function(){
+		jQuery.ajax({
+			type:"post",
+			url:"$!webPath/store/incomeStatistics.htm",
+			data:{page:currentPage},
+			success:function(data){
+				jQuery(".section li").addClass("li_this");
+				jQuery(".section li a").html("月营业额详情");
+				jQuery(".tr_id").html("");
+				$(".xudetail").css("display","block");
+				var json = eval('('+data+')');
+				for(var i=0;i<json.list.length;i++){
+					jQuery(".xu_table tbody").append("<tr class='tr_id'><td width='17%'>"+json.list[i].orderId+"</td><td width='30%'>"+json.list[i].goodsName+"</td><td width='18%'>"+json.list[i].accountTime+"</td><td width='15%'>"+json.list[i].storeIncome+"</td><td width='15%'>"+json.list[i].leePrice+"</td><td width='12%'>"+json.list[i].rate+"</td></tr>");
+				}
+					
+			} ,
+			error:function(jqXHR, textStatus, errorThrown){
+				alert("请检查内部错误！");
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

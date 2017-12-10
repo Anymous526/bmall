@@ -1,0 +1,146 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/address.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	var typeId = "$!typeId"; 
+	//console.info("isPartner -> "+isPartner);
+	$("#myIntegral").mouseover(function(){
+		$("#ingeralBox").css("display","block");
+	}).mouseout(function(){
+		$("#ingeralBox").css("display","none");
+	});
+	
+	$("#share_a").click(function(){
+		if(typeId == "3"){
+			alert("请到会员中心去分享.");
+		}else{
+			$("#share_ar").show();	
+		}
+	});
+	
+	$("#share_b1").click(function(){
+		if(typeId == "4"){
+			alert("商家不能申请成为会员");
+			return false;
+		}
+	});
+	
+	$(".share_close").bind("click",function(){
+		$("#share_ar").hide();
+	});
+	
+	var lis = $(".share_icon ul li");
+	var length = lis.size();
+	jQuery.each(lis,function(index,val){
+		var t = (index+1)%7;
+		if(t == 0){
+			/* console.info($(this)); */
+			$(this).css("margin-right","0px");
+		}
+	});
+	
+	var appShareUrl = $("#appRegUrl").val();
+	//console.info("appShareUrl -> "+appShareUrl);
+	window._bd_share_config={
+		"share":{
+			"bdText":"天使红包分享",
+			"bdMini":"1",
+			"bdMiniList":false,
+			"bdPic":"",
+			"bdUrl":appShareUrl,
+			"bdStyle":"1",
+			"bdSize":"32",
+		}
+	};
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+	
+});
+</script>  
+<style type="text/css">
+
+</style>
+</head>
+<body style="background-color:#fff">
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div id="rightBody">
+	
+<!--  中央区  -->
+    <div class="news_article_box" id="" >
+    	<div class="news_article_titlebox" >
+    		<span class="news_article_title" >积分会员等级规则</span>
+    		<br/><span style="width: 150px;display: inline-block;">日期：2015.10.20</span>
+    		<span style="width: 150px;display: inline-block;">来源：<i style="color: #000;">Amall商城</i></span>
+    	</div>
+    	
+		<div class="news_article_content">
+			  <h1>一、会员</h1>
+		      <p>1.凡是自己通过登录www.amall.com网址进行注册的用户或收到邀约链接注册的用户，统称为天使会员</p>
+		      <h1>二、会员等级划分</h1>
+		      <p>1.Amall商城会员等级分为天使会员、联盟商家</p>
+		      <!-- <p>2.天使会员升级为初级会员需要充值200元</p> -->
+		      <p>2.天使会员升级为联盟商家需要充值5000元</p>
+		      <h1>三、天使会员、联盟商家享受服务：</h1>
+		      <p>A.天使会员（免费）享有：</p>
+		      <div style="padding-left:10px;">
+		        <p>1.免费注册，天天参与抢红包，每推广1名会员注册送1个礼品金</p> 
+		        <p>天使会员得到的招商奖及其它奖励总金额可在Amall商城平台申请提现，可提现80%（提现规则见下方）</p>
+		      </div> 
+		     <!--   <p>B.联盟商家（充值5000元）享有：</p>
+		       <div style="padding-left:10px;">
+		        <p>1.大礼包：赠送5000礼品金,天天参与抢红包</p> 
+				<p>2.招商奖：直接招商1000元+间接招商1000元</p>
+				<p>3.分红奖：直接招商分红1%+间接招商分红1%</p>
+		        <p>4.推广奖：每推广1名会员注册,获得5元现金奖励(限前100名)</p>
+			    <p>5.开店资格：拥有一个免担保金开店资格</p> 
+		        <p>6.开店说明：需上传身份证或营业执照</p>
+		       </div> -->
+		       <p>C.联盟商家（充值10000元）享有：</p> 
+			    <div style="padding-left:10px;">
+			    <p>1.礼品奖：获得10000个礼品金可兑换10000元礼品，天天参与抢红包</p>
+		     	<p>2.推广奖:每推广1名会员注册，获5元现金奖励（限前100名）</p>
+		        <p>3.招商奖:直接招商1000元+间接招商1000元</p>
+		        <p>4.分红奖:直接招商分红1%+间接招商分红1%</p>
+		        <p>5.创富奖:送3000元创富金（专用于购买感恩豆）</p>
+		        <p>6.开店资格：拥有一个免担保金开店资格</p> 
+		        <p>7.开店说明：需上传身份证或营业执照</p>   
+			   </div>
+		       <p>D.城市代理商（加盟条件：特级城市代理商投资500万元，一级城市代理商投资100万元，二级城市代理商投资80万元，三级城市代理商投资50万元，四级城市代理商投资30万元）享有：</p> 
+    		   <div style="padding-left:10px;">
+        	   	<p>1.创富奖：赠送投资额10%的创富金（专用于购买感恩豆）</p>
+        		<p>2.分红奖：享受该地区消费者到天使Amall（www.Amall.com）消费总额1%的分红</p>
+        		<p>3.补助奖：该地区每产生一位联盟商家奖招商补助500元</p>
+     		   </div>
+		       <div style="padding-left:10px;">
+		       	<h3>奖金举例说明：</h3>
+			       <p>1.假如您直接招商10名联盟商家，间接招商100名会员，那么您的招商奖是：10x1000+100x1000=110000元</p>  
+			       <p>2.假如您的二级市场内有合伙店100家，每个店年营业额100万，您的年度分红奖是：100x100万x1%=100万/年</p>
+		        <p>联盟商家得到的分红奖、招商奖及其它奖励的总金额可在Amall商城平台申请提现，可提现80%（提现规则见下方）</p>	
+		       </div>
+		      <p><strong>提现规则：</strong></p>
+		      <p>每次申请提现时，Amall商城平台将会绑定同等金额作为你的可消费金额！每次提现最高额度为总额的80%，剩下20%将作为绑定可消费金额，用于在Amall商城平台进行购物等优惠活动</p>
+		      <div style="padding-left:10px;">
+		      <p>例如：你拥有10000元奖励，那么一次可提现的最高金额为8000元，另外的2000元将作为绑定可消费金额，用于在Amall商城平台进行购物等优惠活动；如果某次提现你只提现800元，那么Amall商城将绑定200元作为绑定可消费金额，用于在天使商城平台进行购物等优惠活动；其余的9000元则继续留在“我的现金”里。
+		      <br/>每次提现都将按照此规则进行！</p>
+		      </div>	
+    	</div> 
+    </div>
+</div>
+</div>
+ 
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

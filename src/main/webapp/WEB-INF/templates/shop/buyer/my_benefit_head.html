@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的奖金</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/assets/css/my_asset.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<style>
+input:-webkit-autofill {
+-webkit-box-shadow: 0 0 0px 50px white inset;
+}
+.x_tixian_p{position:relative;font-size:12px;top:-208px;left:60px;width:86%;height:446px;border:2px solid #B1E5E6;border-radius:8px;padding: 10px 0 0 20px;}
+/* .my_cash{margin: 0 auto;width:834px;height:340px;background:url("../assets/img/my_cash.png") no-repeat;} */
+.cash_tit{margin-top:-190px;}.bo_tx{font-size:15px;font-weight:bold;}
+</style>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m">  
+		<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的奖金</span></div></div>
+		<div class="productmain" style="padding-bottom: 0;">
+          	 <div style="margin:0 auto;width:100%;"class="my_cash">
+          		<img src="$!webPath/assets/img/my_cash.png" alt="我的现金" style="width:101%;"/>
+          		<div class="x_tixian_p">
+          			<p class="bo_tx">一、提现次数：</p>
+          			<p>客户不限制提现次数，到账规则详见“提现周期”规定。</p>
+          			<p class="bo_tx">二、提现金额：</p>
+          			<p>每笔提现需不少于100元。</p>
+          			<p class="bo_tx">三、提现账户：</p>
+          			<p>可以选择工商银行、农业银行、支付宝、财付通等。</p>
+          			<p class="bo_tx">四、提现周期：</p>
+          			<p>周一至周五（工作日），每天处理两次提现。</p>
+          			<p>周六、日及法定节假日，处理一次提现。</p>
+          			<p>申请提现后，工作人员会在1-7天处理完毕。</p>
+          			<p class="bo_tx">五、备注：</p> 
+ 					<p>1、工商银行提现仅支持工作日，周末及节假日请走其他通道</p>
+					<p>2、受限于银行系统规则，请所有商户仔细核对银行提现帐号，由于银行帐号原因引起的提现失败会扣除手续费，且资金返回周期为T+1，感谢配合。</p> 
+ 					<p class="bo_tx">温馨提示：如遇支付平台系统故障或网络故障，提现可能会稍有延迟，敬请谅解。</p> 
+          			
+          		</div>
+			 </div>
+		
+		<div class="cash_tit">
+			<div class="cash_person" style="width: 165px;">
+				<!-- <span><label>$!user.trueName</label>
+				#if($!user.levelAngel == 2)
+				<img src="$!webPath/assets/img/vip2.png" />
+				#end
+				</span> -->
+				<p>总额：</p><strong style="font-size:28px; color:#ea5052">¥ $!bonus</strong>
+			</div>
+			
+			<div class="cash_tool"  style="height: 90px;">
+				<!--  <input class="tool1" type="button" onclick="javasript:location.href='$!webPath/buyer/chongz.htm'" value="充值" /> -->
+				<input class="tool2" type="button" onclick="javasript:location.href='$!webPath/buyer/tixian.htm'" value="提现" />
+				<input class="tool3" type="button" onclick="javasript:location.href='$!webPath/buyer/tixian_list.htm'" value="提现记录" />
+			</div>
+			
+			<div class="asset_1">
+				<p>可提现</p>
+				<i style="color: #ea5052;">¥ $!depositCurrency</i>
+			</div>
+			<div class="asset_1">
+				<p>创富金</p>
+				<i style="color: #ea5052;">¥ $!manageMoney</i>
+			</div>
+			
+			<div class="asset_1">
+				<p>招商奖</p>
+				<i style="color: #ea5052;">¥ $!vipFee</i>
+			</div>
+			
+			<div class="asset_1">
+				<p>分红奖</p>
+				<i style="color: #ea5052;">¥ $!benefit</i>
+			</div>
+			<div class="asset_2">
+				<p>充值奖</p>
+				<i style="color: #ea5052;">¥ $!rechange</i>
+			</div> 	
+		</div>	
+	 </div> 

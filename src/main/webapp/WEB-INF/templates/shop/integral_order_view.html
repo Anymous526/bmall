@@ -1,0 +1,172 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>兑换订单详情 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+jQuery("#ship_info_a").click(	  
+				function(){
+				var dis = jQuery("#ship_info_ul").css("display");
+				if(dis=="none"){
+					jQuery("#ship_info_ul").slideDown();
+					jQuery(this).find("img").attr("src","$!webPath/resources/style/system/front/default/images/usercenter/user_up.png");
+					}else{
+					jQuery("#ship_info_ul").slideUp();
+					jQuery(this).find("img").attr("src","$!webPath/resources/style/system/front/default/images/usercenter/user_down.png");
+						}
+		});	
+//
+});
+</script>
+</head>
+<body>
+$!httpInclude.include("/top2.htm")
+<div class="wm_a_990">
+  <div style="width:100%">
+    <div class="orderdh" style="width:100%">
+      <h1>订单详情</h1>
+    </div>
+    <div class="ordersee">
+      <div class="ordersee1">
+        <table width="925" border="0" cellspacing="0" cellpadding="0" class="tablesee1">
+          <tr>
+            <td width="80" align="right" class="blue2">订单状态：</td>
+               		#if($!obj.igoStatus==0)
+               	 		#set($status="已取消")
+               	 	#end
+	                #if($!obj.igoStatus==10)
+	               		#set($status="等待支付")
+	                #end
+	                #if($!obj.igoStatus==15)
+	               		#set($status="线下支付待审核")
+	                #end
+	                #if($!obj.igoStatus==16)
+	                	#set($status="货到付款待发货")
+	                #end
+	                #if($!obj.igoStatus==20)
+	                	#set($status="已付款")
+	                #end
+	                #if($!obj.igoStatus==30)
+	                	#set($status="已发货")        
+	                #end                
+	                #if($!obj.igoStatus==40)
+	                	#set($status="已收货")
+	                #end
+	                #if($!obj.igoStatus==45)
+	               		 #set($status="买家申请退货")
+	                #end
+	                #if($!obj.igoStatus==46)
+	                	#set($status="退货中")
+	                #end
+	                #if($!obj.igoStatus==47)
+	                	#set($status="退货完成，已结束")
+	                #end
+	                #if($!obj.igoStatus==48)
+	                	#set($status="卖家拒绝退货")
+	                #end
+	                #if($!obj.igoStatus==49)
+	                	#set($status="退货失败")
+	                #end
+	                #if($!obj.igoStatus==50)
+	                	#set($status="已完成,已评价")                                              
+	                #end
+	                #if($!obj.igoStatus==60)
+	                	#set($status="已结束")                                              
+	                #end
+	                #if($!obj.igoStatus==65)
+	                	#set($status="已结束，不可评价")                                              
+	                #end
+	                	
+            <td width="220" align="left"><strong style="color:#F60">$!status</strong></td>
+            <td width="80" align="right"  class="blue2">订单编号：</td>
+            <td width="220" align="left">$!obj.id</td>
+            <td width="80" align="right"  class="blue2">下单时间：</td>
+            <td width="220" align="left">$!CommUtil.formatLongDate($!obj.addtime)</td>
+          </tr> 
+        </table>
+      </div>      
+      <div class="ordersee3">
+        <h2>订单信息</h2>
+        <div class="orderinfo">
+          <div class="orderinfo_r"> 
+          <span class="frspan">运费：到付</span>
+          </div>    
+          <div class="orderinfo_r">
+          	<span class="frspan">订单总礼品金：<strong style="color:#F90">$!{obj.igoTotalGold} 礼品金</strong></span>
+          	<span class="frspan">支付方式：礼品金  </span>  
+          	<span class="frspan">支付时间：$!CommUtil.formatLongDate($!obj.igoPayTime)</span> </div>
+          <div class="orderinfo_l">
+            <table width="923" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="119" align="center" style="background:#F9F9F9"><strong>商品图片</strong></td>
+                <td width="180" align="center" height="31" style="background:#F9F9F9"><strong>商品名称</strong></td>
+                <td width="62" align="center" style="background:#F9F9F9">商品数量</td>
+                <td width="90" align="center" style="background:#F9F9F9">商品单价</td>
+                <td width="282" align="center" style="background:#F9F9F9">备注说明</td>
+              </tr>
+              <tr style="border-bottom:1px solid #EEE;">
+               	#set($goods = $!obj.ig)
+               	#if($!goods.igGoodsImg)
+               		#set($photo = "$!{config.imagewebserver}/$!{goods.igGoodsImg.path}/$!{goods.igGoodsImg.name}")
+               	#else
+               		#set($photo = "$!{config.imagewebserver}/$!{config.goodsImage.path}/$!{config.goodsImage.name}" )
+               	#end
+                <td width="119" align="center" style="border-right:1px solid #EEE"><span class="infoimg"><a href="$!webPath/exchange/exchange_view.htm?id=$!{goods.id}" target="_blank"><img src="$!photo" width="62" height="62" /></a></span></td>
+                <td height="71"><a href="$!webPath/exchange/exchange_view.htm?id=$!{goods.id}" target="_blank">$!obj.ig.igGoodsName</a>
+                            
+                </td>
+                <td align="center">$!obj.igoTotalIntegral</td>
+                <td align="center"><strong style="color:#F90">$!obj.ig.igGoodsGoldNum</strong>&nbsp; 礼品金</td>
+                <td align="center">$!gc.igoMsg</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="ordersee4">
+        <h2>物流信息</h2>
+        <ul>
+          <li><span class="orseet">收货人:</span><span class="orseet2">$!obj.igoAddr.truename</span></li>
+          <li><span class="orseet">收货地址:</span><span class="orseet2">$!{obj.igoAddr.province} $!{obj.igoAddr.city} $!igoAddr.areaname $!obj.igoAddr.areaInfo</span></li>
+          <li><span class="orseet">邮政编码:</span><span class="orseet2">$!obj.igoAddr.zip</span></li>
+          <li><span class="orseet">电话号码:</span><span class="orseet2">$!obj.igoAddr.telephone</span></li>
+          <!-- <li><span class="orseet">配送方式:</span><span class="orseet2">$!ship.shipping_name</span></li> -->
+         
+          <li><span class="orseet">配送时间:</span><span class="orseet2">$!CommUtil.formatLongDate($!obj.igoShipTime)</span></li>
+         #if($!{obj.msg} && $!{obj.msg}!="") <li><span class="orseet">买家留言:</span><span class="orseet2">$!obj.msg</span></li>#end
+          <li><span class="orseet">发票类型:</span><span class="orseet2">#if($!obj.invoicetype==0)个人 #else 单位#end</span></li>
+          #if($!{obj.invoice} && $!{obj.invoice}!="")<li><span class="orseet">发票抬头:</span><span class="orseet2">$!obj.invoice</span></li>#end
+          </ul>
+         <h2><span>物流动态</span><a href="javascript:void(0);" id="ship_info_a"> <img src="$!webPath/resources/style/system/front/default/images/usercenter/user_down.png" /></a></h2>
+         <ul style="display:none" id="ship_info_ul">
+          <li><span class="orseet">物流公司:</span><span class="orseet2">$!obj.ec.companyName</span></li>
+          <li><span class="orseet">物流单号:</span><span class="orseet2">$!obj.igoShipCode</span></li>
+          #if($!$transInfo.size() >0)
+	       #foreach($info in $transInfo)
+	       	<li><span class="orseet"> &nbsp;</span><span class="orseet2">$!info.time $!info.context</span></li>
+	       #end
+         
+           #if($!transInfo.status==0)
+           <li><span class="orseet"></span><span class="orseet2" style=" margin-left:90px; _margin-left:0px; font-size:14px; color:#F90">$!transInfo.message</span></li>
+           #end
+          #else
+          	<li><span class="orseet"> &nbsp;</span><span class="orseet2">对不起，暂无物流信息！</span></li>
+          #end
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+ $!httpInclude.include("/footer1.htm") 
+</body>
+</html>

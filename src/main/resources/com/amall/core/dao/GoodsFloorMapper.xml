@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.GoodsFloorMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.GoodsFloor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="gf_css" property="gfCss" jdbcType="VARCHAR" />
+    <result column="gf_display" property="gfDisplay" jdbcType="BIT" />
+    <result column="gf_goods_count" property="gfGoodsCount" jdbcType="INTEGER" />
+    <result column="gf_level" property="gfLevel" jdbcType="INTEGER" />
+    <result column="gf_name" property="gfName" jdbcType="VARCHAR" />
+    <result column="gf_sequence" property="gfSequence" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+	<result column="gf_mark" property="gfMark" jdbcType="LONGVARCHAR"/> 
+	<association property="parent" column="parent_id" javaType="com.amall.core.bean.GoodsFloor"
+    		select="com.amall.core.dao.GoodsFloorMapper.selectByPrimaryKey"/>
+    <association property="parent" column="parent_id" javaType="com.amall.core.bean.GoodsFloor" 
+    		select="com.amall.core.dao.GoodsFloorMapper.selectByPrimaryKey"/>
+    <collection property="childs" column="childs_id" ofType="com.amall.core.bean.GoodsFloorWithBLOBs"
+    		select="com.amall.core.dao.GoodsFloorMapper.selectByExampleWithBLOBs"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.GoodsFloorWithBLOBs" extends="BaseResultMap" >
+    <result column="gf_gc_goods" property="gfGcGoods" jdbcType="LONGVARCHAR" />
+    <result column="gf_gc_list" property="gfGcList" jdbcType="LONGVARCHAR" />
+    <result column="gf_left_adv" property="gfLeftAdv" jdbcType="LONGVARCHAR" />
+    <result column="gf_list_goods" property="gfListGoods" jdbcType="LONGVARCHAR" />
+    <result column="gf_right_adv" property="gfRightAdv" jdbcType="LONGVARCHAR" />
+    <result column="gf_brand_list" property="gfBrandList" jdbcType="LONGVARCHAR" />
+    <result column="gf_main_photo" property="gfMainPhoto" jdbcType="LONGVARCHAR"/>
+    <association property="parent" column="parent_id" javaType="com.amall.core.bean.GoodsFloor" select="com.amall.core.dao.GoodsFloorMapper.selectByPrimaryKey"/>
+    <collection property="childs" column="childs_id" ofType="com.amall.core.bean.GoodsFloorWithBLOBs" select="com.amall.core.dao.GoodsFloorMapper.selectByExampleWithBLOBs"/>
+  	<collection property="gcs" column="gcs_id" ofType="com.amall.core.bean.GoodsClassWithBLOBs" select="com.amall.core.dao.GoodsClassMapper.selectByExampleWithBLOBs"/>
+	<collection property="brands" column="brands_id" ofType="com.amall.core.bean.GoodsBrand" select="com.amall.core.dao.GoodsBrandMapper.selectByExampleWithBLOBs"/>  	
+ 	<collection property="leftGcs" column="leftGcs_id" ofType="com.amall.core.bean.GoodsFloorWithBLOBs" 
+ 				select="com.amall.core.dao.GoodsFloorMapper.selectByExampleWithBLOBs"/>
+  </resultMap> 
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, gf_css, gf_display, gf_goods_count, gf_level, gf_name, gf_mark,
+    gf_sequence, parent_id
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    gf_gc_goods, gf_gc_list, gf_left_adv, gf_list_goods, gf_right_adv, gf_brand_list, gf_main_photo
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GoodsFloorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goods_floor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.GoodsFloorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goods_floor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.GoodsFloorExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_goods_floor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goods_floor
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_goods_floor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.GoodsFloorExample" >
+    delete from amall_goods_floor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.GoodsFloorWithBLOBs" >
+    insert into amall_goods_floor (  id, addTime, deleteStatus, 
+      gf_css, gf_display, gf_goods_count, 
+      gf_level, gf_name, gf_sequence, 
+      parent_id, gf_gc_goods, gf_gc_list, 
+      gf_left_adv, gf_list_goods, gf_right_adv, 
+      gf_brand_list,gf_mark , gf_main_photo)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{gfCss,jdbcType=VARCHAR}, #{gfDisplay,jdbcType=BIT}, #{gfGoodsCount,jdbcType=INTEGER}, 
+      #{gfLevel,jdbcType=INTEGER}, #{gfName,jdbcType=VARCHAR}, #{gfSequence,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=BIGINT}, #{gfGcGoods,jdbcType=LONGVARCHAR}, #{gfGcList,jdbcType=LONGVARCHAR}, 
+      #{gfLeftAdv,jdbcType=LONGVARCHAR}, #{gfListGoods,jdbcType=LONGVARCHAR}, #{gfRightAdv,jdbcType=LONGVARCHAR}, 
+      #{gfBrandList,jdbcType=LONGVARCHAR},#{gfMark,jdbcType=LONGVARCHAR} , #{gfMainPhoto,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.GoodsFloorWithBLOBs" >
+    insert into amall_goods_floor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="gfCss != null" >
+        gf_css,
+      </if>
+      <if test="gfDisplay != null" >
+        gf_display,
+      </if>
+      <if test="gfGoodsCount != null" >
+        gf_goods_count,
+      </if>
+      <if test="gfLevel != null" >
+        gf_level,
+      </if>
+      <if test="gfName != null" >
+        gf_name,
+      </if>
+      <if test="gfSequence != null" >
+        gf_sequence,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="gfGcGoods != null" >
+        gf_gc_goods,
+      </if>
+      <if test="gfGcList != null" >
+        gf_gc_list,
+      </if>
+      <if test="gfLeftAdv != null" >
+        gf_left_adv,
+      </if>
+      <if test="gfListGoods != null" >
+        gf_list_goods,
+      </if>
+      <if test="gfRightAdv != null" >
+        gf_right_adv,
+      </if>
+      <if test="gfBrandList != null" >
+        gf_brand_list,
+      </if>
+      <if test="gfMark != null">
+      	gf_mark,
+      </if>
+      <if test="gfMainPhoto != null">
+      	gf_main_photo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="gfCss != null" >
+        #{gfCss,jdbcType=VARCHAR},
+      </if>
+      <if test="gfDisplay != null" >
+        #{gfDisplay,jdbcType=BIT},
+      </if>
+      <if test="gfGoodsCount != null" >
+        #{gfGoodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="gfLevel != null" >
+        #{gfLevel,jdbcType=INTEGER},
+      </if>
+      <if test="gfName != null" >
+        #{gfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gfSequence != null" >
+        #{gfSequence,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="gfGcGoods != null" >
+        #{gfGcGoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfGcList != null" >
+        #{gfGcList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfLeftAdv != null" >
+        #{gfLeftAdv,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfListGoods != null" >
+        #{gfListGoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfRightAdv != null" >
+        #{gfRightAdv,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfBrandList != null" >
+        #{gfBrandList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfMark != null">
+      	#{gfMark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfMainPhoto != null">
+		#{gfMainPhoto,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.GoodsFloorExample" resultType="java.lang.Integer" >
+    select count(*) from amall_goods_floor
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_goods_floor
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.gfCss != null" >
+        gf_css = #{record.gfCss,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gfDisplay != null" >
+        gf_display = #{record.gfDisplay,jdbcType=BIT},
+      </if>
+      <if test="record.gfGoodsCount != null" >
+        gf_goods_count = #{record.gfGoodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.gfLevel != null" >
+        gf_level = #{record.gfLevel,jdbcType=INTEGER},
+      </if>
+      <if test="record.gfName != null" >
+        gf_name = #{record.gfName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gfSequence != null" >
+        gf_sequence = #{record.gfSequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gfGcGoods != null" >
+        gf_gc_goods = #{record.gfGcGoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gfGcList != null" >
+        gf_gc_list = #{record.gfGcList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gfLeftAdv != null" >
+        gf_left_adv = #{record.gfLeftAdv,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gfListGoods != null" >
+        gf_list_goods = #{record.gfListGoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gfRightAdv != null" >
+        gf_right_adv = #{record.gfRightAdv,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gfBrandList != null" >
+        gf_brand_list = #{record.gfBrandList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gfMark != null">
+      	gf_mark = #{record.gfMark,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.gfMainPhoto != null">
+        gf_main_photo = #{record.gfMainPhoto,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_goods_floor
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      gf_css = #{record.gfCss,jdbcType=VARCHAR},
+      gf_display = #{record.gfDisplay,jdbcType=BIT},
+      gf_goods_count = #{record.gfGoodsCount,jdbcType=INTEGER},
+      gf_level = #{record.gfLevel,jdbcType=INTEGER},
+      gf_name = #{record.gfName,jdbcType=VARCHAR},
+      gf_sequence = #{record.gfSequence,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      gf_gc_goods = #{record.gfGcGoods,jdbcType=LONGVARCHAR},
+      gf_gc_list = #{record.gfGcList,jdbcType=LONGVARCHAR},
+      gf_left_adv = #{record.gfLeftAdv,jdbcType=LONGVARCHAR},
+      gf_list_goods = #{record.gfListGoods,jdbcType=LONGVARCHAR},
+      gf_right_adv = #{record.gfRightAdv,jdbcType=LONGVARCHAR},
+      gf_brand_list = #{record.gfBrandList,jdbcType=LONGVARCHAR},
+      gf_mark = #{record.gfMark,jdbcType=LONGVARCHAR},
+      gf_main_photo = #{record.gfMainPhoto,jdbcType=LONGVARCHAR},
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_goods_floor
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      gf_css = #{record.gfCss,jdbcType=VARCHAR},
+      gf_display = #{record.gfDisplay,jdbcType=BIT},
+      gf_goods_count = #{record.gfGoodsCount,jdbcType=INTEGER},
+      gf_level = #{record.gfLevel,jdbcType=INTEGER},
+      gf_name = #{record.gfName,jdbcType=VARCHAR},
+      gf_sequence = #{record.gfSequence,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      gf_mark = #{record.gfMark , jdbcType=LONGVARCHAR},
+      gf_main_photo = #{record.gfMainPhoto,jdbcType=LONGVARCHAR},
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.GoodsFloorWithBLOBs" >
+    update amall_goods_floor
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="gfCss != null" >
+        gf_css = #{gfCss,jdbcType=VARCHAR},
+      </if>
+      <if test="gfDisplay != null" >
+        gf_display = #{gfDisplay,jdbcType=BIT},
+      </if>
+      <if test="gfGoodsCount != null" >
+        gf_goods_count = #{gfGoodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="gfLevel != null" >
+        gf_level = #{gfLevel,jdbcType=INTEGER},
+      </if>
+      <if test="gfName != null" >
+        gf_name = #{gfName,jdbcType=VARCHAR},
+      </if>
+      <if test="gfSequence != null" >
+        gf_sequence = #{gfSequence,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="gfGcGoods != null" >
+        gf_gc_goods = #{gfGcGoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfGcList != null" >
+        gf_gc_list = #{gfGcList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfLeftAdv != null" >
+        gf_left_adv = #{gfLeftAdv,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfListGoods != null" >
+        gf_list_goods = #{gfListGoods,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfRightAdv != null" >
+        gf_right_adv = #{gfRightAdv,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfBrandList != null" >
+        gf_brand_list = #{gfBrandList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfMark != null">
+      	gf_mark = #{gfMark , jdbcType=LONGVARCHAR},
+      </if>
+      <if test="gfMainPhoto != null">
+      	gf_main_photo = #{gfMainPhoto,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.GoodsFloorWithBLOBs" >
+    update amall_goods_floor
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      gf_css = #{gfCss,jdbcType=VARCHAR},
+      gf_display = #{gfDisplay,jdbcType=BIT},
+      gf_goods_count = #{gfGoodsCount,jdbcType=INTEGER},
+      gf_level = #{gfLevel,jdbcType=INTEGER},
+      gf_name = #{gfName,jdbcType=VARCHAR},
+      gf_sequence = #{gfSequence,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      gf_gc_goods = #{gfGcGoods,jdbcType=LONGVARCHAR},
+      gf_gc_list = #{gfGcList,jdbcType=LONGVARCHAR},
+      gf_left_adv = #{gfLeftAdv,jdbcType=LONGVARCHAR},
+      gf_list_goods = #{gfListGoods,jdbcType=LONGVARCHAR},
+      gf_right_adv = #{gfRightAdv,jdbcType=LONGVARCHAR},
+      gf_brand_list = #{gfBrandList,jdbcType=LONGVARCHAR},
+      gf_mark = #{gfMark,jdbcType=LONGVARCHAR},
+      gf_main_photo = {gfMainPhoto,jdbcType=LONGVARCHAR},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.GoodsFloor" >
+    update amall_goods_floor
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      gf_css = #{gfCss,jdbcType=VARCHAR},
+      gf_display = #{gfDisplay,jdbcType=BIT},
+      gf_goods_count = #{gfGoodsCount,jdbcType=INTEGER},
+      gf_level = #{gfLevel,jdbcType=INTEGER},
+      gf_name = #{gfName,jdbcType=VARCHAR},
+      gf_sequence = #{gfSequence,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      gf_mark = #{gfMark,jdbcType=LONGVARCHAR},
+      gf_main_photo = #{gfMainPhoto,jdbcType=LONGVARCHAR},
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select   id="selectChildsByInnerJoin" parameterType="java.lang.Long" flushCache="true"  resultMap="ResultMapWithBLOBs">
+  		SELECT a.id , b.* 
+		FROM `amall_goods_floor` a 
+		INNER JOIN `amall_goods_floor` b 
+		ON a.id = b.parent_id 
+		WHERE a.id = #{id}
+  </select>
+  
+  
+</mapper>

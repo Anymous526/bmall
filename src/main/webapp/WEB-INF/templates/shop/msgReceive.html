@@ -1,0 +1,20 @@
+<script type="text/javascript">
+	function toChatting(userId,goodsId) { 
+		jQuery.ajax({
+			type:'POST',
+			data:{"receiverId":userId,"goodsId":goodsId},
+			url:"$!webPath/chatting.htm",
+			success:function(data){
+				$("#chattingWindow").html(data);
+				$("#chattingWindow").show();
+			},
+		});
+	}
+</script> 
+	#foreach($log in $logs)
+		<li style="border-bottom:solid orange;">
+			<a href="javascript:void(0)" onclick="toChatting($!log.userId,$!log.goodsId)" style="color:orange;font-size: 16px;margin:5px 5px;">
+				$!log.user.username
+			</a>
+		</li>
+	#end 

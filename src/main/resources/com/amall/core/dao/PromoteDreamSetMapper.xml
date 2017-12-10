@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.PromoteDreamSetMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.PromoteDreamSet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="limit_number" property="limitNumber" jdbcType="INTEGER" />
+    <result column="remain_number" property="remainNumber" jdbcType="INTEGER" />
+    <result column="rate" property="rate" jdbcType="DECIMAL" />
+    <result column="promote_number" property="promoteNumber" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, limit_number, remain_number, rate, promote_number
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.PromoteDreamSetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_promote_dream_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_promote_dream_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_promote_dream_set
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.PromoteDreamSetExample" >
+    delete from amall_promote_dream_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.PromoteDreamSet" >
+    insert into amall_promote_dream_set (id, limit_number, remain_number, 
+      rate, promote_number)
+    values (#{id,jdbcType=BIGINT}, #{limitNumber,jdbcType=INTEGER}, #{remainNumber,jdbcType=INTEGER}, 
+      #{rate,jdbcType=DECIMAL}, #{promoteNumber,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.PromoteDreamSet" >
+    insert into amall_promote_dream_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="limitNumber != null" >
+        limit_number,
+      </if>
+      <if test="remainNumber != null" >
+        remain_number,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+      <if test="promoteNumber != null" >
+        promote_number,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="limitNumber != null" >
+        #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="remainNumber != null" >
+        #{remainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="promoteNumber != null" >
+        #{promoteNumber,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.PromoteDreamSetExample" resultType="java.lang.Integer" >
+    select count(*) from amall_promote_dream_set
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_promote_dream_set
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.limitNumber != null" >
+        limit_number = #{record.limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.remainNumber != null" >
+        remain_number = #{record.remainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.rate != null" >
+        rate = #{record.rate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promoteNumber != null" >
+        promote_number = #{record.promoteNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_promote_dream_set
+    set id = #{record.id,jdbcType=BIGINT},
+      limit_number = #{record.limitNumber,jdbcType=INTEGER},
+      remain_number = #{record.remainNumber,jdbcType=INTEGER},
+      rate = #{record.rate,jdbcType=DECIMAL},
+      promote_number = #{record.promoteNumber,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.PromoteDreamSet" >
+    update amall_promote_dream_set
+    <set >
+      <if test="limitNumber != null" >
+        limit_number = #{limitNumber,jdbcType=INTEGER},
+      </if>
+      <if test="remainNumber != null" >
+        remain_number = #{remainNumber,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DECIMAL},
+      </if>
+      <if test="promoteNumber != null" >
+        promote_number = #{promoteNumber,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.PromoteDreamSet" >
+    update amall_promote_dream_set
+    set limit_number = #{limitNumber,jdbcType=INTEGER},
+      remain_number = #{remainNumber,jdbcType=INTEGER},
+      rate = #{rate,jdbcType=DECIMAL},
+      promote_number = #{promoteNumber,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的礼品金</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/assets/css/my_asset.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm")  
+<div class="user_main w1200">
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m">  
+		<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的现金</span></div></div>
+		 	<div style="width: 100%;margin: 0 auto;">
+          		<img src="$!webPath/assets/img/my_cash.png" alt="我的现金" style="width:101%;"/>
+			 </div>
+		<div class="new_news">
+			<div class="new_left">最新公告：</div>
+			<div class="new_tit"><a href="#">Amall商城年度财务报表明细</a></div>
+		</div>
+		
+		<div class="cash_tit">
+			<div class="cash_person">
+				<span><label>张三丰</label><img src="$!webPath/assets/img/vip2.png" /></span>
+				<span>余额：<strong style="font-size:28px; color:#666">¥2000</strong></span>
+			</div>
+			
+			<div class="cash_tool">
+				<input class="tool1" type="button" value="充值" />
+				<input class="tool2" type="button" value="提现" onclick="javascript:location.href='$!webPath/buyer/tixian.htm'" />
+				<input class="tool3" type="button" value="代充" onclick="javascript:location.href='$!webPath/buyer/duicho.htm'" />
+			</div>
+			
+			<div class="asset_0">
+				<div style="margin-bottom: 30px; height: 30px; display: block;">
+					<div style="float:left; ">
+						<span>可提现金额：</span>
+						<span>可对冲金额：</span>
+					</div>
+					<div style="float:right; overflow: hidden; padding-right:70px; margin-top: -30px; font-size:16px ">
+						¥1000
+					</div>
+				</div>
+				<div><label style="float:left">可消费金额：</label><label style="float:left;margin-left:12px; margin-top:-3px; font-size:16px">¥1000</label></div>
+			</div>
+			
+			
+			<div class="asset_1">
+				<p>分红奖</p>
+				<i style="font-size:28px; color:#666">¥1000</i>
+			</div>
+			
+			<div class="asset_2">
+				<p>招商奖</p>
+				<i style="font-size:28px; color:#666">¥1000</i>
+			</div>	
+					
+			
+		</div>
+		
+		
+		
+		<div class="productmain">
+		
+		 <div class="ordernav container">
+            <ul class="orderul section">
+              <li class="this"><a href="$!webPath/buyer/my_cash_new.htm">招商奖</a></li>
+              <li class="btn btn-1 btn-1b"><a href="$!webPath/buyer/my_asset_fenhong.htm">分红奖</a></li>
+              <li class="btn btn-1 btn-1b"><a href="$!webPath/buyer/my_asset_history.htm">消费历史</a></li>
+            </ul>
+          </div>
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+            	<tr>
+            		<td width="20%">用户名</td>
+            		<td width="20%">收益层次</td>
+            		<td width="30%">金额</td>
+            		<td width="30%">时间</td>
+            	</tr>
+
+            	<tr>
+            		<td>张三丰</td>
+            		<td>间接</td>
+            		<td>100元</td>
+            		<td>2015-12-30</td>
+            	</tr>
+            </table>
+            
+            </div>
+            
+          </div>
+	</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

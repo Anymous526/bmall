@@ -1,0 +1,148 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>中奖记录</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="http://pc1.amallcdn.cn/assets/css/duigou.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<style>
+.orderul li{color: #333}
+p{margin: 0;padding: 0;line-height: 18px;}
+</style>
+<script type="text/javascript">
+/*弹窗 */
+$(document).ready(function(){
+	$(".receipt_btn").click(function(){
+		$(".editbg").show();
+		$(".sure_block").show();
+	  });
+	$(".goreceive_btn_no").click(function(){
+		$(".editbg").hide();
+		$(".sure_block").hide();
+	  });
+});
+
+
+</script>
+</head>
+<body>
+<!-- 弹窗  -->
+<div class="sure_block">
+	<div class="sure_block_tit">提示</div>
+	<div class="sure_block_text">是否确认收货</div>
+	<div>
+		<a class="goreceive_btn_no">取消</a>
+		<a class="goreceive_btn_ok">确定</a>
+	</div>
+</div>
+<div class="editbg"></div>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+<div class="s_m">  
+  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>中奖记录</span></div></div>
+  <div class="productmain" style="border-bottom: 0;">  
+      
+	<div class="ordercon" style="width: 833px;">
+		<table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+	#if($objs.size()>0)
+		<tbody>
+			<tr class="b_part_title">
+				<th class="b_th1">商品图片</th>
+				<th class="b_th2">商品名称</th>
+				<th class="b_th3">互助兑状态</th>
+				<th class="b_th4">购买数量</th>
+				<th class="b_th5">随机互助码</th>
+				<th class="b_th6">操作</th>
+			</tr>
+		<!-- 循环 -->	
+	
+		
+		#foreach($obj in $objs)
+		<tr style="border-bottom: 1px solid #d8d8d8;">
+			<td style="width: 110px;text-align: center;padding: 10px;">
+				<a href="#">
+					<img src="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name" alt="" width="100%" style="padding: 1px;border: 1px solid #d8d8d8;">
+				</a>
+			</td>
+			<td style="padding: 20px 0;">
+				<div class="b_goods_name">
+					<span class="b_goods_name02"><a href="#">(序号:$obj.cloudGoods.id)$obj.cloudGoods.goodsName</a></span>
+					<b class="b_all_require">总共：$obj.cloudGoods.goodsCount份</b>
+					<p>幸运星：<a href="#">$obj.user.truename</a></p>
+					<p>幸运号码：<i style="color: #dd2726" >$obj.cloudCode</i></p>
+					<p class="c_know_time">揭晓时间：<i>$CommUtil.formatLongDate($obj.addtime)</i></p>
+				</div>
+
+				
+			</td>
+			<td class="b_color">已揭晓</td>
+			<td>
+				<tt class="times0">$obj.buyCount（个）</tt>
+			</td>
+			<td>
+				<div class="b_cloud_code">
+					#foreach($code in $obj.codes)
+					    #if($code==$obj.cloudCode) 
+					    <i style="color: #dd2726;">$code</i> 
+					    #else 
+						<i>$code</i> 
+						#end
+					#end
+				</div>
+			</td>
+			<td>
+				<tt>
+				#if(!$!obj.showOrderId && $!obj.order && $!obj.order.orderStatus == 40)
+					<a href="$!webPath/my_angel_exchang_goshare.htm?id=$obj.id">晒单分享</a>
+				#end
+				
+				#if(!$!obj.orderId)
+					<a class="goreceive_btn" href="$!webPath/buyer/my_angel_exchang_goreceive.htm?id=$!obj.id">立即领取</a>
+				#end
+				#if($!obj.showOrderId)
+					<a class="goreceive_btn" href="javascript:void(0)">已晒单</a>
+				#end
+				#if($!obj.orderId && $!obj.order.orderStatus == 20)
+					<a class="goreceive_btn" href="javascript:void(0)">等待发货</a>
+				#end
+				#if($!obj.order && $!obj.order.orderStatus == 30)
+					<a class="goreceive_btn receipt_btn" href="$!webPath/my_angex_order_send_save.htm?id=$!obj.id" style="margin-bottom: 10px;">确定收货</a>
+					<a class="goreceive_btn" href="$!webPath/my_angel_exchang_orderdetails.htm?id=$!obj.id" style="background-color: #fff;border: 1px solid #d8d8d8;color: #333">查看详情</a>
+				#end
+				</tt> 
+			</td>
+		</tr>
+		
+		</tbody>
+		#end
+     #else              
+	 <tr class="opertr" style="border-bottom: 1px solid #ccc">
+	 
+	 <td colspan="9" style="height:250px;text-align:center;line-height:250px;">您现在还没有<strong style="color:red">中奖纪录</strong>哦,先去看看吧~ </td> 
+	</tr>  
+	#end       
+       </table>
+       </div>
+       #if($!objs.size()>0)
+		        <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPage"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageHTML
+				</div>
+		  #end
+     </div>
+        </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

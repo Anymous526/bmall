@@ -1,0 +1,153 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>特价 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/shop_index1.css"/>
+<!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script>
+
+</head>
+<body>
+
+  <div class="shop_top block">
+    <div class="shop_menu default_color">
+      <div class="shop_menu_nav" style="width:990px; margin:0 auto">
+        <ul>
+          <li><a href="$!webPath/index.htm">首页</a></li>
+          <!-- <li><a href="#tiantian">天天特价</a></li> -->
+          <li><a href="#xianshi">限时特价</a></li>
+          <li><a href="#zhekou">折扣特卖</a></li>
+
+        </ul>
+      </div>
+    </div>
+    
+    <!--banner-->
+    <div id="slide-index" style="overflow:hidden; height:241px;">
+      <div class="slides">
+      #if($!obj.apType=="img")  
+        <div class="slide autoMaxWidth">
+          <div id="bi_0" class="image"><A href="$!webPath/advert_redirect.htm?url=$!obj.apAccUrl&id=$!obj.advId" target='_blank'><img src="$!webPath/$!obj.apAcc.path/$!obj.apAcc.name"></A></div>
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div>
+      #end 
+      #if($!obj.apType=="slide")
+        #foreach($adv in $obj.advs)
+        <div class="slide autoMaxWidth">
+          <div id="bi_0" class="image"><A href="$!webPath/advert_redirect.htm?url=$!adv.adUrl&id=$!adv.id" target='_blank'><img src="$!{config.imagewebserver}/$!{adv.adAcc.path}/$!{adv.adAcc.name}"></A></div>
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div>
+         #end
+      #end  
+      #if($!obj.apType=="scroll")
+       #if($obj.advs.size()>0)
+       #set($i=0)
+         #foreach($adv in $obj.advs)
+	        <div class="slide autoMaxWidth">
+	          <div id="bi_0" class="image3"><A href="$!webPath/advert_redirect.htm?url=$!adv.adUrl&id=$!adv.id" target='_blank'><img src="$!{config.imagewebserver}/$!{adv.adAcc.path}/$!{adv.adAcc.name}"></A></div>
+	          <div id="bt_0" class="text"></div>
+	          <div id="bb_0" class="button"></div>
+	        </div>
+         #set($i=$i+1)
+         #end
+
+       #end
+      #end   
+      #if($!obj.apType=="text")  
+         <div class="slide autoMaxWidth">
+          <div id="bi_0" class="image"><A href="$!webPath/advert_redirect.htm?url=$!obj.apAccUrl&id=$!obj.advId" target='_blank'>$!obj.apText</A></div>
+          <div id="bt_0" class="text"></div>
+          <div id="bb_0" class="button"></div>
+        </div>
+      #end  
+      </div>
+      <div class=control> 
+      #if($!obj.apType=="img")
+      <A href="#"></A>
+      #end
+      #if($!obj.apType=="slide")
+      #foreach($adv in $obj.advs)
+      <A href="#"></A>
+      #end
+      #end
+      #if($!obj.apType=="scroll")
+       #if($obj.advs.size()>0)
+        #foreach($adv_list in $CommUtil.toRowChildList($obj.advs,4))
+        #foreach($adv in $adv_list)
+      <A href="#"></A>
+      #end
+        #end
+      #end
+    #end  
+      </div>
+    </div>
+    
+    <script type=text/javascript>
+jQuery(function(){	
+	indexSlides.ini();
+});
+var indexSlides={};
+indexSlides.timer=false;
+indexSlides.total=$('#slide-index .control a').length;
+indexSlides.current=-1;
+indexSlides.offScreenLeft=2000;
+indexSlides.leaveScreenLeft=4000;
+indexSlides.animating=false;
+indexSlides.obj=$('#slide-index .slide');
+indexSlides.style=[];
+#if($!obj.apType=="img")
+indexSlides.style[0]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+#end
+#if($!obj.apType=="slide")
+#set($i=0)	
+#foreach($adv in $obj.advs)
+indexSlides.style[$!i]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+#set($i=$i+1)
+#end
+#end	
+#if($!obj.apType=="scroll")
+#if($obj.advs.size()>0)
+#set($j=0)
+#foreach($adv_list in $CommUtil.toRowChildList($obj.advs,4))
+#foreach($adv in $adv_list)
+indexSlides.style[$!j]={
+	text:{left:'30px',top:'81px'},
+	button:{left:'30px',top:'244px'},
+	direction:'tb'
+};
+#set($j=$j+1)
+#end
+#end
+#end
+#end  
+</script> 
+    <script type=text/javascript src="assets/js/shop_banner.js"></script> 
+    <!--banner--> 
+    
+  </div> 
+</body>
+</html>

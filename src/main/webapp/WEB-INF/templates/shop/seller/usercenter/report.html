@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的举报 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200">
+$!httpInclude.include("/buyer/buyer_left.htm?op=report")
+<div class="s_m"> 
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>举报列表</span></div></div>
+        <div class="productmain">
+         	<div class="container" style="height:37px;" >
+               <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href="$!webPath/buyer/report.htm">举报列表</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <form method="post" name="ListForm" id="ListForm">
+                <div class="operation">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                    <tr id="opertitle">
+                      #if($!reportType=="reportStore")
+                      	<td width="120">店铺名称    
+                      #else
+                      	<td width="120">商品名称   
+                      #end
+                        <input name="type" type="hidden" id="type" value="$!type" /></td>
+                      <td width="100">举报类型</td>
+                      <td width="60">举报状态</td>
+                      <td width="100">举报时间</td>
+                      <td width="100">处理结果</td>
+                      <td width="241" align="left" style="padding-left:30px;">操作</td>
+                    </tr>
+                #if($objs.size() > 0)      
+                    #foreach($obj in $objs)
+                    <tr >
+                      #if($!reportType=="reportStore")
+                      	<td ><a href="$!webPath/store_$!{obj.store.id}.htm" target="_blank">$!obj.store.storeName</a></td>
+                      #else
+                      	<td ><a href="$!webPath/goods_$!{obj.goods.id}.htm" target="_blank">$!obj.goods.goodsName</a></td>
+                      #end
+                      <td>$!obj.subject.type.name</td>
+                      #if($!obj.status==0)#set($status="未处理")#end
+                      #if($!obj.status==1)#set($status="已处理")#end
+                      #if($!obj.status==-1)#set($status="已取消")#end
+                      <td>$!status</td>
+                      #set($time=$!CommUtil.formatShortDate($!obj.addtime))
+                      <td>$!time</td>
+                      #set($result="等待处理")
+                      #if($!obj.result==1)
+                        #set($result="有效举报")
+                      #end
+                      #if($!obj.result==-1)
+                        #set($result="无效举报")
+                      #end
+                      #if($!obj.result==-2)
+                        #set($result="恶意举报")
+                      #end
+                      <td align="">$!result</td>
+                      <td align=""><span >
+                      
+                       #if($!reportType=="reportStore")
+                       		<a href="$!webPath/buyer/report_view_store.htm?id=$!obj.id">查看</a>
+                       #else
+                       		<a href="$!webPath/buyer/report_view.htm?id=$!obj.id">查看</a>
+                       #end
+                      
+                      
+                      </span>
+                      #if($!{obj.status}==0)
+                      <span class="del">
+                       #if($!reportType=="reportStore")
+                       		<a href="javascript:void(0);" onclick="if(confirm('是否确定取消举报?'))window.location.href='$!webPath/buyer/report_cancel.htm?id=$!obj.id&currentPage=$!currentPage&reportType=1'">
+                       #else
+                       		<a href="javascript:void(0);" onclick="if(confirm('是否确定取消举报?'))window.location.href='$!webPath/buyer/report_cancel.htm?id=$!obj.id&currentPage=$!currentPage'">
+                       #end
+                       	取消</a></span>
+                      #end</td>
+                    </tr>
+                    #end
+                #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">举报数据</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end   
+                  </table>
+                </div>
+               
+                <div class="bottom_page">
+					<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+					<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+					$!gotoPageAjaxHTML
+				</div>
+              </form>
+            </div>
+          </div>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

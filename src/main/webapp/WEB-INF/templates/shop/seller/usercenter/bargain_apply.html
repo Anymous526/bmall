@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>特价商品申请 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+	<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+		<link
+			href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css"
+			type="text/css" rel="stylesheet" />
+		<link
+			href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css"
+			type=text/css rel=stylesheet>
+		<link href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" rel="stylesheet" />
+			
+			<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+			<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+			<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+			<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+
+		<script src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+<script>
+$(function($){
+	$("#theForm").validate({						
+        rules:{
+	  	  bg_rebate:{required :true,number:true,max:$!bargain_rebate,min:0.01}
+	  	 },
+	    messages:{
+	  	  bg_rebate:{required:"折扣率不能为空",number:"折扣率只能为数字",max:"折扣率不能高于{0}",min:"折扣率不能低于0.01"}
+	  	}
+     });
+	$("#appSave").click(function(){
+		  var gg_img_id2_val = $("#alImgId").val();
+		  if(!gg_img_id2_val){
+			  alert("图片还没有上传");
+			  return false;
+		  }
+	  });
+	
+	//天天特价
+	  $('#appUploadImg').uploadify({
+	   　　 'method': 'get',
+	      'auto ': true,
+	      'swf': '$!webPath/resources/uploadify/uploadify.swf',
+	      'uploader' : '$!webPath/seller/bargain_upload.htm',
+	      'buttonText': '图片上传',
+	      'fileTypeExts': '*.png;*.jpg;;*.gif',
+	      'width': 80,
+	      'height': 20,
+	      'formData':{"width":990,"height":300},
+	      'fileObjName' : 'Filedata',
+	      'multi': false,
+	      'auto': false,
+	      'queueSizeLimit': 1,
+	      'fileSizeLimit': '5MB',
+	      'onUploadStart': function (file) {
+	         
+	      },
+	      'onUploadSuccess': function (file, data, response) {
+			/* console.info(data);
+			console.info(response); */
+			if(response){
+				data = eval( '('+ data +')');
+				if(data.pass == 'yes'){
+					$("#alImgId").val(data.imgId);
+					$("#appUploadMsg2").empty();
+					$("#appUploadMsg2").text("上传成功");
+				}else{
+					$("#appUploadMsg2").empty();
+					$("#appUploadMsg2").text("上传的图片宽高不匹配,请重新上传");	
+				}
+			}else{
+				$("#appUploadMsg2").empty();
+				$("#appUploadMsg2").text("上传失败");
+			}
+			
+	      }
+	　});
+	  $("#appUpload2").bind("click",function(){
+		  $('#appUploadImg').uploadify('upload', '*');
+	  });
+	  $("#appCancel2").bind("click",function(){
+		  $('#appUploadImg').uploadify('cancel', '*');
+	  }); 
+});
+	 
+	 
+	 function bargain_goods(){
+	   var goods_name=jQuery("#goods_name").val();
+	   if(goods_name!=""){
+		   jQuery.ajax({type:'POST',url:'$!webPath/seller/bargain_goods.htm',data:{"goods_name":goods_name},dataType:"json",
+					   beforeSend:function(){
+						     jQuery("#wait_img").show();
+						   },
+					   success:function(data){
+						          jQuery("#wait_img").hide();
+						          jQuery("#goods_ids").empty();																			  
+		                          jQuery.each(data,function(index,item){
+				                       jQuery("#goods_ids").append("<option value='"+item.goods_id+"'>"+item.goods_name+"</option>");
+			                       });
+						   }
+					 });
+	   }else alert("请输入商品名称");
+	 }
+	   
+	
+	</script>
+</head>
+<body>
+	$!httpInclude.include("/top.htm")
+	$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=bargain") 
+<div class="s_m">   
+			<div class="buyer_position">
+				<div class="buyer_p_box1">
+					<a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>申请加入天天特价</span>
+				</div>
+			</div>
+			<div class="productmain">
+				<div class="container">
+                 <ul class="section" style="padding: 0;">
+						<li class="other"><a href="$!webPath/seller/bargain.htm">特价列表</a></li>
+						<li class="li_this"><a href="$!webPath/seller/bargain_apply.htm">申请参加特价</a></li>
+					</ul>
+				</div>
+				<div class="ordercon">
+					<div class="addnav">
+						<form action="$!webPath/seller/bargain_apply_save.htm"
+							method="post" name="theForm" id="theForm">
+							<input type="hidden" name="alImgId" id="alImgId"/>
+							<table width="100%" border="0" cellspacing="0" cellpadding="0"
+								class="addnavtable">
+								<tr>
+									<td align="right">特价名称：</td>
+									<td class="px10">$!config.bargainTitle</td>
+								</tr>
+								<tr>
+									<td align="right">特价说明：</td>
+									<td class="px10">$!bargain_state</td>
+								</tr>
+								
+								<tr>
+									<td align="right" valign="top">活动时间：</td>
+									<td class="px10" valign="top">
+										<div class="" style="display: inline-block;float: left;">
+													<span style="display:block;">开始时间：</span><input style="width: 145px;" type="text" value="" id="" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss')"/>
+										</div>
+										<div class="" style="display: inline-block;float: left;margin-left: 10px;">
+													<span style="display:block;">结束时间：</span><input style="width: 145px;" type="text" value="" id="" onclick="SelectDate(this,'yyyy-MM-dd hh:mm:ss')"/>
+										</div>
+      								</td>
+								</tr>
+								<tr>
+									<td align="right">原价：</td>
+									<td class="px10">￥998</td>
+								</tr>
+								<tr>
+									<td align="right">特价：</td>
+									<td class="px10">
+										<span class="setinput"> 
+										<input name="" type="text" id="" value=""  placeholder="请输入商品特价" style="width:310px;height: 22px;padding:0px;border: 1px solid #a9a9a9;padding-left: 4px;"/> 
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<td align="right">商品名称：</td>
+									<td class="px10">
+									<span>杰克琼斯棒球服潮夹克外套</span>
+									</td>
+								</tr>
+								<!-- <tr>
+									<td align="right" valign="top">&nbsp;</td>
+									<td class="px10">
+									<select name="goods_ids" size="10" multiple="multiple" id="goods_ids" style="width: 500px; height: 200px;">
+									</select> </td>
+								</tr> -->
+								<tr>
+									<td align="right" valign="top"> 天天特价图片：</td>
+					                    <td class="px10">
+					                    	<div style="width: 320px;height: 320px; background-color: #f2f2f2;margin-bottom: 20px;"></div>
+					                    	<input type="file" id="appUploadImg" />
+					                    	最佳尺寸：320px*320px
+					          				<a id="appUpload2" style="cursor: pointer;">上传文件</a> | 
+											<a id="appCancel2" style="cursor: pointer;">停止上传</a>
+											<span id="appUploadMsg2" style="color:red;"></span>
+					                 </td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+									<td class="px10"><span class="setsub"> 
+									<input type="submit" value="保存" id="appSave" style="cursor: pointer;height: 29px;border: 0;" /> 
+									<input name="bargain_time" type="hidden" id="bargain_time" value="$!bargain_time" />
+									</span></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+$!httpInclude.include("/footer.htm")
+</body>
+<!-- 时间控件 -->
+<script type="text/javascript" src="$!webPath/assets/js/activitytime.js" ></script>
+</html>

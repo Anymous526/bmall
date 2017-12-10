@@ -1,0 +1,55 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<style>
+.c_right { margin-top:50px;}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top.htm") 
+$!httpInclude.include("/head.htm")
+<div class="w100 bg_fff">
+  <div class="w1190">
+    <div class="root-nav"> 
+		当前位置：<a href="$!webPath/index.htm" >首页</a> > <span>支付结果</span>
+	</div>
+    <div class="shop_content">
+		<div class="c_right">
+			<div class="su_let">
+				<div class="su_let_t">
+					<img src="$!webPath/assets/img/exchange_failure_icon.png" />$!message
+				</div>
+				<div class="su_let_c">
+					<span>支付结果：<label>支付失败！</label></span>
+					<span>温馨提示：抱歉，您已支付失败，系统将在<font id="time" style="color:#f63;font-weight:bold">4</font>秒后自动跳转至<input class="jxgw" type="button" value="首 页" onclick="window.location='$!webPath/buyer/buyer_index.htm'" /></span>
+					 
+				</div> 
+			</div>
+			<div class="su_rig"></div>
+		</div>
+    </div> 
+  </div>
+</div>    
+$!httpInclude.include("/footer.htm")
+<script type="text/javascript">  
+    delayURL();   
+    function delayURL() {
+        var delay = document.getElementById("time").innerHTML;
+ var t = setTimeout("delayURL()", 1000);
+        if (delay > 1) {
+            delay--;
+            document.getElementById("time").innerHTML = delay;
+        } else {
+     clearTimeout(t); 
+            window.location.href = "$!webPath/buyer/buyer_index.htm";
+        }       
+    }
+</script>
+</body>
+</html>
+

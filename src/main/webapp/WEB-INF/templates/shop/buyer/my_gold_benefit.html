@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的礼品金</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm") 
+		<div class="s_m">  
+		  <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的礼品金</span></div></div>
+            <div class="productmain">
+		      	<div style="width: 100%;margin: 0 auto;">
+					<img src="$!webPath/assets/img/my_gold.png" alt="我的礼品金" style="width:101%;"/>
+				</div>
+			</div>
+		  <div class="productmain"> 
+			<div style="width: 100%;padding-top: 20px;">
+  				<div class="mg_iconbox">
+  					<span class="mg_iconimg"><img src="$!webPath/assets/img/mg1.png" alt="" width="100%"/></span>
+  					<br/><span style="display: inline-block;">推广礼品金：</span>
+  				</div>
+  				<div class="mg_iconbox">
+  					<span class="mg_iconimg"><img src="$!webPath/assets/img/mg3.png" alt="" width="100%"/></span>
+  					<br/><span style="display: inline-block;">分红礼品金:</span>
+  				</div>
+  				<div class="mg_iconbox">
+  					<span class="mg_iconimg"><img src="$!webPath/assets/img/mg2.png" alt="" width="100%"/></span>
+  					<br/><span style="display: inline-block;">消费礼品金：</span>
+  				</div>
+  				<div class="mg_iconbox">
+	  				<span class="mg_iconimg"><img src="$!webPath/assets/img/mg4.png" alt="" width="100%"/></span>
+	  				<br/><span style="display: inline-block;">剩余礼品金：</span>
+  				</div>
+  				
+  				 			
+  			</div>
+			<div class="container">
+            <ul class="section" style="padding: 0;">
+		          <li class=""><a href="$!webPath/buyer/my_gold.htm">推广</a></li>
+		          <li class="li_this"><a href="$!webPath/buyer/my_gold_benefit.htm">分红</a></li>
+		          <li class=""><a href="$!webPath/buyer/my_gold_consume.htm">消费记录</a></li>
+		        </ul>
+		      </div>
+		      
+		      <div class="ordercon" style="width: 833px;border-bottom: 1px solid #d8d8d8;">
+		       <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+		       	<tr style="border-bottom: 1px solid #d8d8d8;">
+		       		<td width="30%">店铺名</td>
+		       		<td width="20%">分红类型</td>
+		       		<td width="20%">分红金额</td>
+		       		<td width="30%">分红时间</td>
+		       		
+		       	</tr>
+		       #foreach($obj in $objs)
+		       	<tr>
+		       		<td>$!obj.shopName</td>
+		       		<td>$!obj.dividendType</td>
+		       		<td>$!obj.dividendGold</td>
+		       		<td>$!obj.dividendDate</td>
+		       	</tr>
+		       #end
+		       </table>
+		       
+		       </div>
+          </div>
+          </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css" />
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css" />
+<link rel="stylesheet" type="text/css"	href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css"	href="http://pc2.amallcdn.cn/assets/css/user.css">
+<link rel="stylesheet" type="text/css"	href="http://pc3.amallcdn.cn/resources/style/common/css/window.css">
+<link rel="stylesheet" type="text/css"	href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" />
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<script type="text/javascript"	src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript">
+	function switch_reason() {
+		var ck = jQuery("#reason_other").attr("checked");
+		if (ck == "checked") {
+			jQuery("#other_reason").show();
+		} else {
+			jQuery("#other_reason").hide();
+		}
+	}
+	//表单方式分页
+	function gotoPage(n) {
+		jQuery("#currentPage").val(n);
+		jQuery("#ListForm").submit();
+	}
+
+	$(document).ready(
+			function() {
+				$('.accordion').jaccordion();
+
+				var lis = jQuery(".tools ul li");
+				jQuery.each(lis, function(i, val) {
+					var obj = jQuery(val);
+					var indexVal = i * 25;
+					var y = "-" + indexVal + "px";
+					var defaultVal = "0 " + y;
+					var changeVal = "25px " + y;
+					obj.mouseover(
+							function() {
+								obj.children("i").css("backgroundImage",
+										"../img/54f681ffN84dece5f.png").css(
+										"backgroundPosition", changeVal);
+								obj.children("p").css("color", "#a90000");
+
+							}).mouseleave(
+							function() {
+								obj.children("i").css("backgroundImage",
+										"../img/54f681ffN84dece5f.png").css(
+										"backgroundPosition", defaultVal);
+								obj.children("p").css("color", "#666");
+							});
+
+				});
+
+			});
+		  
+	});
+</script>
+
+</head>
+<body style="background-color: #fff">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+	<div class="user_main w1200">
+		$!httpInclude.include("/buyer/buyer_left.htm")
+		<form action="$!webPath/buyer/report_save.htm" method="post" id="ListForm" enctype="multipart/form-data">
+			<div class="u_m" id="oBox">
+				<div class="order-top">
+					<div class="topname">我的订单</div>
+
+					<div class="sch">
+						<input class="inputtxt" type="text" value="$!choices" name="choices" placeholder="$!choices" /> 
+						<input class="inputbtn" type="submit" value="搜索" />
+					</div>
+					
+					
+
+				</div>
+				
+				<div class="report">
+				<div id="BottomBox" align="center">请客观地向Amall商城反映您所遇到的真实情况，以共同维护一个诚信和公平的购物环境。</div>
+				<div class="report_i">
+					<h3>举报提示</h3>
+					<p>1.  请提供充分的证据以确保举报成功，请珍惜您的会员权利，帮助店小二更好地管理网站；</p>
+					<p>2.  举报仅针对商品或账户本身，如需处理交易中产生的纠纷，请申请维权（如何申请维权）；</p>
+					<p>3.  同一件商品如果您已经举报，系统会提示您不必重复举报；</p>
+					<p>4.  您每天对同一店铺最多只能举报4件商品，请放心店小二会检查该店铺更多商品；为了您的投诉能够尽快核实并处理，您可以提交商品鉴定报告和旺旺聊天记录等材料；</p>
+					<p>5.  * 号为必填项。</p>
+				</div>
+				
+				<div class="repor_con" style="">
+					<h1 style="margin-left: 26px; padding-top:20px; margin-bottom: 10px; font-size:14px">举报主标题</h1>
+					<table class="report_table" width="100%" border="0" cellspacing="0" cellpadding="0">
+					  <tr>
+					    <td align="right">被举报人：</td>
+					    <td>$!store.storeOwer</td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td align="right">举报店铺：</td>
+					    
+					    <td><input type="hidden" name="storeId" value="$!store.id"/><a href="$webPath/store.htm?id=$!store.id" target="_blank">$!store.storeName</a></td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+					    <td align="right">举报类型：</td>
+					    <td>
+					    	<select name="typeId" id="typeId">
+                            	#foreach($type in $types)
+                            	<option value="$!type.id">$!type.name</option>
+                            	#end
+                          	</select>
+					    	<!-- <ul>
+					    	#foreach($type in $types)
+						    	<li><input type="radio" name="typeId" id="typeId" value="radio">$!type.name</li>
+						    #end
+						    </ul> -->
+					    </td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  <tr>
+                        <td align="right" valign="top"><span style="color:#F00">*</span>举报主题：</td>
+                        <td class="px10">
+                        	<select name="subjectId" id="subjectId">
+                            	#foreach($subject in $subjects)
+                            	<option value="$!subject.id">$!subject.title</option>
+                            	#end
+                          	</select>
+                        </td>
+                      </tr>
+					  
+					  <tr>
+					    <td align="right">描述：</td>
+					    <td><textarea rows="10" name="content" id="content" cols=""></textarea></td>
+					    <td>&nbsp;</td>
+					  </tr>
+					  
+					  
+					  <tr>
+					    <td align="right">上传凭证：</td>
+					    <td><input type="file" name="img1" id="img1" accept="image/*"/></td>
+					  </tr>
+					  <tr>
+					    <td align="right">上传凭证：</td>
+					    <td><input type="file" name="img2" id="img2" accept="image/*"/></td>
+					  </tr>
+					  <tr>
+					    <td align="right">上传凭证：</td>
+					    <td><input type="file" name="img3" id="img3" accept="image/*"/></td>
+					  </tr>
+					  
+					  <tr>
+					  
+					  <tr>
+					    <td align="right"></td>
+					    <td><input class="report_btn" name="" type="submit" value="提交举报"></td>
+					    <td></td>
+					  </tr>
+					  
+					</table>
+				</div>
+				</div>
+				
+				
+			</div>
+
+
+
+		</form>
+	</div>
+ 
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

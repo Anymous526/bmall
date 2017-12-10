@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!config.title </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />    
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+
+<link href="http://pc2.amallcdn.cn/assets/css/cart.css" type="text/css" rel="stylesheet" />
+
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+  jQuery("#theForm").validate({
+     errorPlacement:function(error, element) {  
+        error.appendTo(element.parent().parent());  
+     },
+	rules: {
+			userName: {required:true},
+			email: {required:true,email:true},
+			code:{required:true,
+			      remote:{
+		             url: "$!webPath/verify_code.htm",     //后台处理程序
+                     type: "post",               //数据发送方式
+                     dataType: "json",           //接受数据格式   
+                     data: {                     //要传递的数据
+                           "code": function(){return jQuery("#code").val();}
+		              }
+		          }
+			}
+		 },
+		messages: {
+			userName: {required:"用户名不能为空"},
+			email: {required:"邮箱不能为空",email:"邮箱格式不对"},
+			code:{required:"验证码不能为空",remote:"验证码不正确"}
+					}
+  });
+});
+ function refreshCode(){
+    jQuery("#code_img").attr("src","$!webPath/verify.htm?d"+new Date().getTime());
+ }
+</script>
+</head>
+<body style="background-color:#eaeaea">
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/exchange/exchange_search2.htm")
+$!httpInclude.include("/g_nav.htm")
+
+
+
+<div class="w990 paydiv" style="margin-top: 50px; border-top:none; padding-top:30px;">
+  <div style="width:90%;margin:40px auto;">
+    <div class="tabPanel">
+      <ul>
+        <li class="hit"><img src="$!webPath/assets/img/mobile_16px.png" /> 通过手机找回密码</li>
+        <li><img src="$!webPath/assets/img/sms_16px.png" /> 通过邮箱找回密码</li>
+      </ul>
+      <div class="panes" style="position: relative;">
+      
+      
+        <div class="pane" style="display:block;">
+          <div class="bank_list">
+            <span class="forgetsp">
+            	<p>手机号码：<input class="txtinput" type="text" style="width:200px" /></p>
+            	<p><label class="forgtxt">请填写你注册的手机号码</label></p>
+            	
+            	<p>验&nbsp;证&nbsp;&nbsp;码：<input class="txtinput" type="text" style="width:100px" />
+            	<input class="foryzm" type="button"  value="获取验证码" />
+            	</p>
+            	<p><label class="forgtxt">请输入你收到的手机短信验证码</label></p>
+            	<p><input class="forbtn" type="button"  value="确 定" /></p>
+            </span>
+          </div>
+          <div class="rightimg">
+          	<dl class="rightlist">
+				<dd class="item1">大额采购价格更优惠</dd>
+                <dd class="item2">支付方式灵活多样化</dd>
+                <dd class="item3">一对一专属顾客服务</dd>
+                <dd class="item4">完善的售后服务体系</dd>
+			</dl>
+			<p>服务电话：400-7777-017</p>
+			<p>联系邮箱：sale@amall.com</p>
+	      </div>
+        </div>
+        
+        
+        <div class="pane">
+          <div class="bank_list">
+            <span class="forgetsp">
+            	<p>用&nbsp;户&nbsp;&nbsp;名：<input class="txtinput" type="text" style="width:200px" /></p>
+            	<p><label class="forgtxt">请填写你注册的用户名</label></p>
+            	<p>注册邮箱：<input class="txtinput" type="text" style="width:200px" /></p>
+            	<p><label class="forgtxt">请填写你注册的邮箱地址</label></p>
+            	
+            	<p>验&nbsp;证&nbsp;&nbsp;码：<input class="txtinput" type="text" style="width:100px" />
+            		<img style="margin-left: 10px;" title="点击刷新验证码" src="$!webPath/assets/img/ffyzm.jpg" />
+            	</p>
+            	<p><label class="forgtxt">请填写验证码</label></p>
+            	<p><input class="forbtn" type="button"  value="下一步" /></p>
+            </span>
+          </div>
+          <div class="rightimg">
+          	<dl class="rightlist">
+				<dd class="item1">大额采购价格更优惠</dd>
+                <dd class="item2">支付方式灵活多样化</dd>
+                <dd class="item3">一对一专属顾客服务</dd>
+                <dd class="item4">完善的售后服务体系</dd>
+			</dl>
+			<p>服务电话：400-7777-017</p>
+			<p>联系邮箱：sale@amall.com</p>
+	      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+<script type="text/javascript">
+$(function(){	
+	$('.tabPanel ul li').click(function(){
+		$(this).addClass('hit').siblings().removeClass('hit');
+		$('.panes>div:eq('+$(this).index()+')').show().siblings().hide();	
+	})
+})
+</script> 
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>折扣特价活动 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script type="text/javascript">
+//向前count天 向后count天
+function before_set(count,date){
+   jQuery.post("$!webPath/admin/date_query_set.htm",{"count":count,"date":date},function(data){
+	 jQuery("#the_day").html(data);
+   });
+}
+</script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">  
+            <div class="buyer_position"><div class="buyer_p_box1"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>特价活动</span></div></div>
+           <div class="productmain">
+	       <div class="container" style="height:37px">
+             <ul class="section"  style="padding: 0;">
+                <li class="li_this"><a href="$!webPath/seller/bargain_discount.htm">特价列表</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <form method="post" name="ListForm" id="ListForm">
+                <div class="operation">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                    <tr id="opertitle">
+                      <td width="120">特价页标题</td>
+                      <td width="150">特价时间段</td>
+                      <td width="120">特价类型</td>
+                      <td width="120">申请限制</td>
+                      <td width="120">通过审核数</td>
+                      <!-- <td width="120">商品折扣率</td> -->
+                      <td width="125" align="left" style="padding-left:30px;">操作</td>
+                    </tr>
+                 #if($bargains.size()>0)  
+                    	#foreach($bargain in $bargains)
+	                    <tr >
+	                      <td>$!bargain.bargainTitle</td>
+	                      <td>$!CommUtil.formatLongDate($!bargain.bargainTime)--$!CommUtil.formatLongDate($!bargain.bargainEndTime)</td>
+	                      
+	                     #if($!bargain.mark==0)
+					        #set($mark="天天特价")
+					     #end
+					     #if($!bargain.mark==1)
+					        #set($mark="限时特价")
+					     #end
+					     #if($!bargain.mark==2)
+					        #set($mark="折扣特卖")
+					      #end
+	                      <td>$!mark</td>
+	                      <td>$!bargain.maximum</td>
+	                      <td>$!bargainSellerTools.query_bargain_audit($!CommUtil.formatLongDate($!bargain.bargainTime),$!CommUtil.formatLongDate($!bargain.bargainEndTime),2)</td>
+	                      <!-- <td>$!bargain.rebate 折</td> -->
+	                      <td align="">
+	                       #if($!goodsId!="")
+	                      	<a href="$!webPath/seller/bargain_discount_apply.htm?bargainTime=$!CommUtil.formatLongDate($!bargain.bargainTime)&bargainEndTime=$!CommUtil.formatLongDate($!bargain.bargainEndTime)&goodsId=$!goodsId">参加特价</a>
+	                       #end
+	                        <a href="$!webPath/seller/bargain_discount_goods_list.htm?bargainTime=$!CommUtil.formatLongDate($!bargain.bargainTime)&bargainEndTime=$!CommUtil.formatLongDate($!bargain.bargainEndTime)">特价商品</a></td>
+	                    </tr>
+	                    #end
+	               #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">折扣特价活动</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end   
+                  </table>
+                </div>
+              </form>
+            </div>
+          </div></td>
+      </tr>
+    </table>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

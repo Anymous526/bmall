@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Amall商城官方网站—正品低价,又省又赚—www.Amall.com</title>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>
+<script type="text/javascript">
+jQuery(function(){	
+	jQuery('.tabPanel ul li').click(function(){
+		jQuery(this).addClass('hit').siblings().removeClass('hit');
+		jQuery('.panes>div:eq('+$(this).index()+')').show().siblings().hide();	
+	})
+})
+</script>
+
+</head>
+
+
+<body style="background:#FFF">
+$!httpInclude.include("/top.htm")
+   
+
+<div id="yg_logo_tab" class="clearfix ygwrap" style="width:1200px; margin:0 auto">
+    <div class="logo fl"> <a href="$!webPath/index.htm"></a> </div>
+    <div class="step_bar"></div>
+  </div>
+
+
+<div class="w100 w100_div">
+  <div class="w990 order_num mb30">
+    <div class="order_num_left"> <span class="pt20 pl20">
+      <p class="f16"><strong>     
+      <p>您正在升级联盟商家，网络技术服务费金额 $!payment元。</p>
+      </span> </div>
+    <div class="order_num_right"> <span class="order_code"><!-- <img src="$!webPath/assets/img/code.jpg" /> --></span> <span class="order_money">
+      <p>应付金额
+        <label class="f18 fb cred">
+         $!payment</label>元</p>
+      </span> </div>
+  </div>
+</div>
+
+<div class="w990 paydiv">
+  <div style="width:90%;margin:40px auto;">
+  <form action="$!webPath/buyer/active_application_success.htm" method="post" id="theForm">
+  
+    <div class="tabPanel">
+      <ul>
+        <li class="hit">平台支付</li>
+      </ul>
+      <div class="panes">
+        <div class="pane" style="display: block">
+          <div class="bank_list">
+            <p>支持国内几乎所有银行的储蓄卡及信用卡进行支付（需开通网上银行）</p>
+            <dl>
+            
+              <!-- <dt> 
+              <label style="cursor: pointer;">
+	              <span><input type="radio" name="webbankpay" id="alipay" value="alipay" /></span> 
+	              <img src="$!webPath/assets/img/bank-img13.png" />  
+              </label>
+                </dt> -->
+                
+              <dt> 
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="Unionpay" value="Unionpay" /></span> 
+              	<img src="$!webPath/assets/img/bank-img14.png" />  
+              </label>
+              </dt>
+              <dt> 
+              
+              <label style="cursor: pointer;">
+              	<span><input type="radio" name="webbankpay" id="WXPay" value="WXPay" /></span> 
+              	<img src="$!webPath/assets/img/bank4.png" />  
+              </label>
+              </dt>
+              
+              
+              
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt25">
+      <input type="submit" value="立即支付" class="ui-button ui-button-XL">
+    </div>
+    </form>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

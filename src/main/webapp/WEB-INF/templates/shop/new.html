@@ -1,0 +1,100 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title>$!config.title</title>
+<meta charset="UTF-8"/>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>
+
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/commodity.js"></script> <!--底层切换-->
+<script type="text/javascript">
+	$(function(){		
+		var lis = $(".hotbrand ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){
+			var t = (index+1)%4;
+			if(t == 0){
+		 
+				$(this).css("margin-right","0px");
+			}
+		});
+
+	});
+</script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+  jQuery(document).ready(function($) {
+   $(".index_nav li a").click(function(event) { 
+      var index=this.name
+      var id='#'+'index_'+index
+     $("html,body").animate({scrollTop: $(id).offset().top}, 1000);
+   });
+   $(".taoba").click(function(event) { 
+      var index=this.name
+      var id='#'+'index_'+index
+     $("html,body").animate({scrollTop: $(id).offset().top}, 1000);
+   });
+   function a(x,y){
+	if($('#main').offset()){
+		l = $('#main').offset().left;
+	    w = $('#main').width();
+	    $('#tbox').css('left',(l  + x) + 'px');
+	    $('#tbox').css('top',y + 'px');
+	}else{
+		
+	}
+    
+}//获取#tbox的div距浏览器底部和页面内容区域右侧的距离函数#main为页面的可视宽度
+$(function() {   
+    $(window).scroll(function(){
+    t = $(document).scrollTop();
+    if(t>500){
+      $('#tbox').show();
+    }else{
+      $('#tbox').hide();
+    }
+    if(t > 50){
+        $('#gotop').fadeIn('slow');
+    }else{
+        $('#gotop').fadeOut('slow');
+    }       
+})   
+    a(-30,100);//#tbox的div距浏览器底部和页面内容区域右侧的距离
+    $('#gotop').click(function(){ 
+        $('body,html').animate({
+            scrollTop: 0
+        },
+        800);//点击回到顶部按钮，缓懂回到顶部,数字越小越快
+        return false;  
+    })
+});
+  });
+</script> <!--楼层循环-->
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/head.htm")
+
+  <!-- 导航   start  -->
+  	 $!httpInclude.include("/nav1.htm")
+  <!-- 导航   end  --> 
+<!-- </div>" -->
+
+$!httpInclude.include("/banner1.htm?type=new")
+$!httpInclude.include("/new_goods_floor.htm")	<!-- 新品楼层 -->
+$!httpInclude.include("/footer.htm")	<!-- 底部页脚 -->
+
+<div class="m_side_btns" id="m_side_btns"> 
+	<a class="side_btn toTopBtn" href="javascript:;" id="returnToTop" style="display:none;">回 到顶 部</a> 
+
+</div> 
+
+<script src="$!webPath/assets/js/goto_top.js" type="text/javascript"></script> <!-- 返回页面顶部 -->
+
+
+</body>
+</html>

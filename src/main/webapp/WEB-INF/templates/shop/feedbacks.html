@@ -1,0 +1,224 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>意见反馈-$!config.title </title> 
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css"> 
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/feedbacks.css">
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>  
+<script type="text/javascript" src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+#if(!$!{user.username})
+<script type="text/javascript">
+	var cookieName = getCookie('amall_username');
+	if(cookieName != null && cookieName != "")
+	{	
+		window.location.href = '$!webPath/amall_login.htm?username=' +  cookieName;  	
+	}
+	function getCookie(c_name)
+	{
+		if (document.cookie.length>0)
+		{
+		    c_start=document.cookie.indexOf(c_name + "=")
+		    if (c_start!=-1)
+		    { 
+			    c_start=c_start + c_name.length+1 
+			    c_end=document.cookie.indexOf(";",c_start)
+			    if (c_end==-1) c_end=document.cookie.length
+			    return unescape(document.cookie.substring(c_start,c_end))
+		    } 
+		 }
+		return ""
+	}
+</script>
+#end 
+<script type="text/javascript"> 
+function feedback(){ 
+	if($("#description").val() == "")
+	{
+		alert("请填写问题描述"); 
+		$("#description").focus(); 
+		return;
+	}  
+	if($("#description").val().length <10)
+	{
+		alert("问题描述不能少于10个字"); 
+		$("#description").focus(); 
+		return;
+	} 
+	if(!$(':radio[name=wtlx]:checked').length) {
+		
+		$(".field2").css("border","1px solid red");
+	    alert('请选择评价');
+	    return;
+	} 
+	if(!$(':radio[name=cfs]:checked').length) {
+		$(".field1").css("border","1px solid red");
+	    alert('请选择评价');
+	    return;
+	} 
+	if($("#cfsemail").val() == ""){
+		$("#cfsemail").focus(); 
+	    alert('请填写邮箱');
+	    return;
+	} 
+   if(!(/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/.test)($("#cfsemail").val())){
+			$("#cfsemail").focus();  
+		    alert('请填写正确的邮箱');
+		    return;
+		} 
+	if($("#file").val() == ""){ 
+	    alert('请上传截图');
+	    return;
+	} 
+}
+</script>
+</head>
+<body style="background:#FFF;"> 
+$!httpInclude.include("/top2.htm")
+<div id="feed_wei1">  
+         <div class="feed_wei2">
+            <div class="feed_wei3">
+            <div class="feed_wei4"><a href="$!webPath/index.htm"><img src="$!webPath/assets/images/logo_findpw.png"></a></div>
+            <div class="feed_wei5">意见反馈</div>
+            </div>
+         </div>
+  
+<div id="feedb">  
+  <div  class="feedback-head">亲，您好！以下是您对 <a class="app-name" href="$!webPath/index.htm" >Amall商城</a> 的意见反馈</div>
+<div class="feedback-body">
+    <div class="cols-left">
+        <div class="cols-title">提交建议</div>
+        <form class="form">
+            <div class="field">
+                <div class="field-label"><span class="required">*</span>    问题描述</div>
+                <div class="field-content">
+                    <textarea name="description" id="description" placeholder="至少10个字"></textarea>
+                    <div class="field-tip-warning">提醒：请不要输入您的隐私信息，如：支付密码等。</div>
+                </div>
+            </div>
+             
+        <div data-label="请问您是在购买以下哪类商品时遇到了问题？" data-cfs="100079" data-required="false" data-type="radio" class="field2">
+            <div class="field-label">
+                
+                请问您是在购买以下哪类商品时遇到了问题？
+                <span> 
+                </span>
+            </div>
+            <div class="field-content">
+                
+                
+                <label><input  name="wtlx" type="radio" value=" 服饰鞋包"/> <span> 服饰鞋包</span></label>
+                
+                
+                
+                <label><input  name="wtlx" type="radio" value=" 数码电器"/> <span> 数码电器</span></label>
+                
+                
+                
+                <label><input  name="wtlx" type="radio" value=" 母婴产品"/> <span> 母婴产品</span></label>
+                
+                
+                
+                <label><input  name="wtlx" type="radio" value=" 美妆"/> <span> 美妆</span></label>
+                
+                
+                
+                <label><input  name="wtlx" type="radio" value=" 家具建材"/> <span> 家具建材</span></label>
+                
+                
+                
+                <label><input  name="wtlx" type="radio" value=" 食品"/> <span> 食品</span></label>
+                
+                 
+                
+                
+                <label><input  name="wtlx" type="radio" value=" 其它"/> <span> 其它</span></label>
+                
+                
+            </div>
+        </div>
+         
+        
+        <div data-label="您使用“天猫首页”的过程中，总体的满意程度如何？" data-cfs="100080" data-required="false" data-type="radio" class="field1">
+            <div class="field-label">
+                
+                您使用“Amall商城”的过程中，总体的满意程度如何？
+                <span>
+                    
+                    
+                </span>
+            </div>
+            <div class="field-content">
+                
+                
+                <label><input  name="cfs" type="radio" value=" 很不满意"/> <span> 很不满意</span></label>
+                
+                
+                
+                <label><input  name="cfs" type="radio" value=" 不满意"/> <span> 不满意</span></label>
+                
+                
+                
+                <label><input  name="cfs" type="radio" value=" 一般"/> <span> 一般</span></label>
+                
+                
+                
+                <label><input  name="cfs" type="radio" value=" 满意"/> <span> 满意</span></label>
+                
+                
+                
+                <label><input  name="cfs" type="radio" value=" 非常满意"/> <span> 非常满意</span></label>
+                
+                
+            </div>
+        </div>
+         
+        <div data-label="您常用的电子邮箱是？（请填写）" data-cfs="100082" data-required="false" data-type="string" class="field">
+            <div class="field-label">
+                
+                您常用的电子邮箱是？（请填写）
+                <span></span>
+            </div>
+            <div class="field-content"><input value="" placeholder="" name="cfsemail" id="cfsemail" type="text"></div>
+        </div>
+        
+            
+        
+            <div class="field">
+                <div class="field-label">附件</div>
+                <div class="field-content">
+                    <input type="file" name="file" id="file" class="file">
+                    <div class="field-tip" style="color: red">请务必附上操作截图</div>
+                    <div class="feedback-attachments"><div style="clear:both"></div></div>
+                </div>
+            </div>
+            <div class="field-submit">
+                   <a class="submit-button" href="javascript:void(0)" onclick="feedback()">提  交</a>
+            </div>
+        </form>
+    </div>
+ 
+
+    <div style="clear:both;"></div>
+</div>
+</div>
+   
+</div>
+$!httpInclude.include("/footer1.htm")
+  
+<script src="$!webPath/assets/js/goto_top.js" type="text/javascript"></script> <!-- 返回页面顶部 -->
+ 
+</body>
+</html>
+

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.BargainGoodsMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.BargainGoods" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="bg_price" property="bgPrice" jdbcType="DECIMAL" />
+    <result column="bg_status" property="bgStatus" jdbcType="INTEGER" />
+    <result column="bg_time" property="bgTime" jdbcType="TIMESTAMP" />
+    <result column="bg_end_time" property="bgEndTime" jdbcType="TIMESTAMP" />
+    <result column="bg_admin_user_id" property="bgAdminUserId" jdbcType="BIGINT" />
+    <result column="bg_goods_id" property="bgGoodsId" jdbcType="BIGINT" />
+    <result column="alImg_id" property="alImgId" jdbcType="BIGINT" />
+    <result column="bg_count" property="bgCount" jdbcType="INTEGER" />
+    <result column="mark" property="mark" jdbcType="INTEGER" />
+    <result column="bg_rebate" property="bgRebate" jdbcType="DECIMAL" />
+    <result column="audit_time" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="bargain_goods_status" property="bargainGoodsStatus" jdbcType="LONGVARCHAR" />
+    <result column="close_time" property="closeTime" jdbcType="TIMESTAMP" />
+    <association property="bgAdminUser" column="bg_admin_user_id" javaType="com.amall.core.bean.User" 
+    		select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+    <association property="bgGoods" column="bg_goods_id" javaType="com.amall.core.bean.GoodsWithBLOBs" 
+    		select="com.amall.core.dao.GoodsMapper.selectByPrimaryKey"/>
+	<association property="alImg" column="alImg_id" javaType="com.amall.core.bean.Accessory" 
+	select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, bg_price, bg_status, bg_time,bg_end_time, bg_admin_user_id, bg_goods_id,alImg_id, 
+    bg_count,mark, bg_rebate, audit_time,bargain_goods_status,close_time
+  </sql>
+  <cache/>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.BargainGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_bargain_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithPage" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.BargainGoodsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_bargain_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_bargain_goods
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_bargain_goods
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.BargainGoodsExample" >
+    delete from amall_bargain_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.BargainGoods" >
+    insert into amall_bargain_goods (  id, addTime, deleteStatus, 
+      bg_price, bg_status, bg_time,bg_end_time, 
+      bg_admin_user_id, bg_goods_id,alImg_id, bg_count,mark, 
+      bg_rebate, audit_time,bargain_goods_status,close_time)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{bgPrice,jdbcType=DECIMAL}, #{bgStatus,jdbcType=INTEGER}, #{bgTime,jdbcType=TIMESTAMP},#{#bgEndTime,jdbcType=TIMESTAMP}, 
+      #{bgAdminUserId,jdbcType=BIGINT}, #{bgGoodsId,jdbcType=BIGINT},#{alImgId,jdbcType=BIGINT}, #{bgCount,jdbcType=INTEGER},#{mark,jdbcType=INTEGER},  
+      #{bgRebate,jdbcType=DECIMAL}, #{auditTime,jdbcType=TIMESTAMP},#{bargainGoodsStatus,jdbcType=LONGVARCHAR},#{closeTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.BargainGoods" >
+    
+    insert into amall_bargain_goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="bgPrice != null" >
+        bg_price,
+      </if>
+      <if test="bgStatus != null" >
+        bg_status,
+      </if>
+      <if test="bgTime != null" >
+        bg_time,
+      </if>
+      <if test="bgEndTime != null" >
+        bg_end_time,
+      </if>
+      <if test="bgAdminUserId != null" >
+        bg_admin_user_id,
+      </if>
+      <if test="bgGoodsId != null" >
+        bg_goods_id,
+      </if>
+      <if test="alImgId != null" >
+        alImg_id,
+      </if>
+      <if test="bgCount != null" >
+        bg_count,
+      </if>
+       <if test="mark != null" >
+        mark,
+      </if>
+      <if test="bgRebate != null" >
+        bg_rebate,
+      </if>
+      <if test="auditTime != null" >
+        audit_time,
+      </if>
+      <if test="bargainGoodsStatus != null" >
+        bargain_goods_status,
+      </if>
+      <if test="closeTime != null" >
+        close_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="bgPrice != null" >
+        #{bgPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bgStatus != null" >
+        #{bgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bgTime != null" >
+        #{bgTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgEndTime != null" >
+        #{bgEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgAdminUserId != null" >
+        #{bgAdminUserId,jdbcType=BIGINT},
+      </if>
+      <if test="bgGoodsId != null" >
+        #{bgGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="alImgId != null" >
+        #{alImgId,jdbcType=BIGINT},
+      </if>
+      <if test="bgCount != null" >
+        #{bgCount,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="bgRebate != null" >
+        #{bgRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="auditTime != null" >
+        #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bargainGoodsStatus != null" >
+        #{bargainGoodsStatus,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+       </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.BargainGoodsExample" resultType="java.lang.Integer" >
+    select count(*) from amall_bargain_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_bargain_goods
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.bgPrice != null" >
+        bg_price = #{record.bgPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bgStatus != null" >
+        bg_status = #{record.bgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.bgTime != null" >
+        bg_time = #{record.bgTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bgEndTime != null" >
+        bg_end_time = #{record.bgEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bgAdminUserId != null" >
+        bg_admin_user_id = #{record.bgAdminUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bgGoodsId != null" >
+        bg_goods_id = #{record.bgGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.alImgId != null" >
+        alImg_id = #{record.alImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bgCount != null" >
+        bg_count = #{record.bgCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.mark != null" >
+        mark = #{record.mark,jdbcType=INTEGER},
+      </if>
+      <if test="record.bgRebate != null" >
+        bg_rebate = #{record.bgRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.auditTime != null" >
+        audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bargainGoodsStatus != null" >
+        bargain_goods_status = #{record.bargainGoodsStatus,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.closeTime != null" >
+        close_time = #{record.closeTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_bargain_goods
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      bg_price = #{record.bgPrice,jdbcType=DECIMAL},
+      bg_status = #{record.bgStatus,jdbcType=INTEGER},
+      bg_time = #{record.bgTime,jdbcType=TIMESTAMP},
+      bg_end_time = #{record.bgEndTime,jdbcType=TIMESTAMP},
+      bg_admin_user_id = #{record.bgAdminUserId,jdbcType=BIGINT},
+      bg_goods_id = #{record.bgGoodsId,jdbcType=BIGINT},
+      alImg_id = #{record.alImgId,jdbcType=BIGINT},
+      bg_count = #{record.bgCount,jdbcType=INTEGER},
+      mark = #{record.mark,jdbcType=INTEGER},
+      bg_rebate = #{record.bgRebate,jdbcType=DECIMAL},
+      audit_time = #{record.auditTime,jdbcType=TIMESTAMP},
+      bargain_goods_status = #{record.bargainGoodsStatus,jdbcType=LONGVARCHAR},
+      close_time = #{record.closeTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.BargainGoods" >
+    update amall_bargain_goods
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="bgPrice != null" >
+        bg_price = #{bgPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="bgStatus != null" >
+        bg_status = #{bgStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bgTime != null" >
+        bg_time = #{bgTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgEndTime != null" >
+        bg_end_time = #{bgEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bgAdminUserId != null" >
+        bg_admin_user_id = #{bgAdminUserId,jdbcType=BIGINT},
+      </if>
+      <if test="bgGoodsId != null" >
+        bg_goods_id = #{bgGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="alImgId != null" >
+        alImg_id = #{alImgId,jdbcType=BIGINT},
+      </if>
+      <if test="bgCount != null" >
+        bg_count = #{bgCount,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=INTEGER},
+      </if>
+      <if test="bgRebate != null" >
+        bg_rebate = #{bgRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="auditTime != null" >
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bargainGoodsStatus != null" >
+        bargain_goods_status = #{bargainGoodsStatus,jdbcType=LONGVARCHAR},
+      </if>
+      
+        close_time = #{closeTime,jdbcType=TIMESTAMP},
+      
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.BargainGoods" >
+    update amall_bargain_goods
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      bg_price = #{bgPrice,jdbcType=DECIMAL},
+      bg_status = #{bgStatus,jdbcType=INTEGER},
+      bg_time = #{bgTime,jdbcType=TIMESTAMP},
+      bg_end_time = #{bgEndTime,jdbcType=TIMESTAMP},
+      bg_admin_user_id = #{bgAdminUserId,jdbcType=BIGINT},
+      bg_goods_id = #{bgGoodsId,jdbcType=BIGINT},
+      alImg_id = #{alImgId,jdbcType=BIGINT},
+      bg_count = #{bgCount,jdbcType=INTEGER},
+      mark = #{mark,jdbcType=INTEGER},
+      bg_rebate = #{bgRebate,jdbcType=DECIMAL},
+      audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      bargain_goods_status = #{bargainGoodsStatus,jdbcType=LONGVARCHAR},
+      close_time = #{closeTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

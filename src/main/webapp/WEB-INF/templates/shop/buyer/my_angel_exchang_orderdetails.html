@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>互助兑详情 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+jQuery("#ship_info_a").click(	  
+				function(){
+				var dis = jQuery("#ship_info_ul").css("display");
+				if(dis=="none"){
+					jQuery("#ship_info_ul").slideDown();
+					jQuery(this).find("img").attr("src","$!webPath/resources/style/system/front/default/images/usercenter/user_up.png");
+					}else{
+					jQuery("#ship_info_ul").slideUp();
+					jQuery(this).find("img").attr("src","$!webPath/resources/style/system/front/default/images/usercenter/user_down.png");
+						}
+		});	
+//
+});
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+<div class="wm_a_990">
+  <div style="width:100%">
+    <div class="orderdh" style="width:100%;text-align: center;">
+      <h1 style="background: none;font-size:24px;">互助兑详情</h1>
+    </div>
+    <div class="ordersee">
+      <div class="ordersee2" style="margin-top: 10px;">
+      	<h2>订单信息</h2>
+    	<table width="925" border="0" cellspacing="0" cellpadding="0" class="tablesee1">
+          <tr>
+            <td width="220" align="left" class="blue2">订单状态：$!obj.order.orderStatus</td>
+            <td width="120" align="left"><strong style="color:#F60"></strong></td>
+            <td width="220" align="left"  class="blue2">揭晓时间：$!CommUtil.formatLongDate($!obj.addtime)</td>
+            <td width="120" align="left"></td>
+          </tr> 
+        </table>
+      </div>      
+      <div class="ordersee3">
+        <h2>商品信息</h2>
+        <div class="orderinfo">
+          <div class="orderinfo_l">
+            <table width="923" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td width="119" align="center" style="background:#F9F9F9"><strong>商品图片</strong></td>
+                <td width="352" height="31" style="background:#F9F9F9"><strong>商品名称</strong></td>
+                <td width="62" align="center" style="background:#F9F9F9">幸运码</td>
+                <td width="62" align="center" style="background:#F9F9F9">商品价格</td>
+                <td width="90" align="center" style="background:#F9F9F9">数量</td>
+              </tr>
+              <tr style="border-bottom:1px solid #EEE;">
+                <td width="119" align="center" style="border-right:1px solid #EEE;padding: 20px 0;"><span><a href="$!webPath/angel_exchange_detail.htm?id=$obj.cloudGoods.id" target="_blank"><img src="$!{config.imagewebserver}/$!obj.cloudGoods.accessory.path/$!obj.cloudGoods.accessory.name" width="100" height="100" /></a></span></td>
+                <td height="71">$!obj.cloudGoods.goodsName <span style="color:#F00">(互助兑)</span></td>
+                <td align="center">$!obj.cloudCode</td>
+                <td align="center" style="text-decoration: line-through;">¥$!obj.cloudGoods.goodsPrice</td>
+                <td align="center">1</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="ordersee4">
+        <h2>物流信息</h2>
+        <ul>
+          <li><span class="orseet21">收货人:$!obj.order.address.truename</span></li>
+          <li><span class="orseet21">收货地址:$!obj.order.address.province $!obj.order.address.city $!obj.order.address.area $!obj.order.address.areaInfo</span></li>
+          <li><span class="orseet21">手机号码:$!obj.order.address.mobile</span></li>
+           <li><span class="orseet21">物流公司:$!obj.order.ec.companyName</span></li>
+          <li><span class="orseet21">物流单号:$!obj.order.shipCode</span></li>
+          </ul>
+         <h2><span>物流动态</span><a href="javascript:void(0);" id="ship_info_a"> <img src="$!webPath/resources/style/system/front/default/images/usercenter/user_down.png" /></a></h2>
+         <ul style="display:none" id="ship_info_ul">
+         
+		#foreach($item in $!transInfo)
+			 <li><span class="orseet21">$item.time</span></li>
+			  <li>
+			  <span class="orseet21">$item.context</span>
+			  <span class="orseet2" style="margin-left:90px;margin-left:0px;font-size:14px;color:#F90"></span>
+			  </li>
+		#end
+	     
+         
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+  </div>
+$!httpInclude.include("/footer.htm") 
+</body>
+</html>

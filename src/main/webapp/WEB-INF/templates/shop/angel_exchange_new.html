@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Amall商城官方网站—正品低价,又省又赚—www.Amall.com</title> 
+<meta name="baidu-site-verification" content="u7KaeCBGVW" />
+<meta name="keywords" content="天使Amall,amall商城,深圳市天使互助网络有限公司,Amall商城,免费开店,网上购物,网上商城,免费注册,商家联盟,海外精品,中国特产,厂家直供,店主直播" />
+<meta name="description" content="深圳市天使互助网络有限公司于2010年9月成立,坐落于繁华的华南城交易中心,公司主要从事网络平台建设与运营及软件开发等。天使Amallwww.Amall.com定位电商·精品汇。网站以精品正品购物为核心理念，以创造一个丰盛富足的电商世界为使命。让实体插上翅膀，让消费创造价值。" />
+<meta name="copyright" content="深圳市天使互助网络有限公司  版权所有" />
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/duigou.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc5.amallcdn.cn/assets/js/12vb.js"></script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/duigou_head.htm")
+
+
+
+<div style="width:100%; height:38px; background-color: #a90000">
+$!httpInclude.include("/duigou_nav.htm")
+</div>
+
+
+<div class="w1190">
+	<div class="duigou_tab">
+		<div class="tab_left">
+			<a href="" class="seleced">最新揭晓</a>
+		</div>
+		<div class="tab_right">
+			到目前为止共揭晓商品<label> $!totalOpen </label>件
+		</div>
+	</div>
+	
+	<div class="fl2">
+	<ul>
+	#foreach($obj in $!objs)
+	<li onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$!obj.id'">
+		<div class="ftu"><a href="#"><img src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name" /></a></div>
+		<div class="lenin" style="width: 200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">$obj.goodsName</div>
+		<div class="fm2">
+		<span class="fm2left">幸运星：<label class="colorh">$obj.user.truename</label></span>
+		<span class="fm2bottom"><p>幸运号码：$obj.openWinnerCode</p>
+		<p>本次兑换：$obj.WinnerBuyCodes份</p></span></div>
+		<button name="详情" type="button" class="xianqing" onclick="javascript:window.location.href='$!webPath/angel_exchange_detail.htm?id=$!obj.id'">详情</button>
+	</li>
+	#end
+	</ul>
+	<div class="bottom_page" style="clear:both">
+	<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+	$!gotoPageHTML
+    </div>
+	</div>
+
+	
+	
+</div>
+
+
+
+        
+        
+        
+      
+
+
+
+
+
+$!httpInclude.include("/footer.htm")
+</body>
+<script language="javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+	$(function(){		
+		var lis = $(".fl2 ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%5;
+			if(t == 0){ 
+				$(this).css("margin-right","0px");
+			}
+		});
+		
+		$("")
+	});
+</script>
+
+
+</html>

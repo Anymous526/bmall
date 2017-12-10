@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>天天特价活动 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script type="text/javascript">
+//向前count天 向后count天
+function before_set(count,date){
+   jQuery.post("$!webPath/admin/date_query_set.htm",{"count":count,"date":date},function(data){
+	 jQuery("#the_day").html(data);
+   });
+}
+</script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">  
+<div class="buyer_position">
+<div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>特价活动</span></div></div>
+           <div class="productmain">
+            <div class="ordernav container">
+               <ul class="orderul section">
+                <li class="this"><a href="$!webPath/seller/bargain.htm">特价列表</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+              <form method="post" name="ListForm" id="ListForm">
+                <div class="operation">
+                  <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                    <tr id="opertitle">
+                      <td width="139">特价时间</td>
+                      <td width="128">特价类型</td>
+                      <td width="128">申请限制</td>
+                      <td width="128">通过审核数</td>
+                      <td width="128">商品折扣率</td>
+                      <td width="125" align="left" style="padding-left:30px;">操作</td>
+                    </tr>
+            #if($dates.size()>0)   
+                    #foreach($date in $dates)
+                    <tr >
+                      <td>$!CommUtil.formatShortDate($!date)</td>
+                      
+                     #if($!bargainSellerTools.query_bargain_mark($!CommUtil.formatShortDate($!date))==0)
+				        #set($mark="天天特价")
+				     #end
+				     #if($!bargainSellerTools.query_bargain_mark($!CommUtil.formatShortDate($!date))==1)
+				        #set($mark="限时特价")
+				     #end
+				     #if($!bargainSellerTools.query_bargain_mark($!CommUtil.formatShortDate($!date))==2)
+				        #set($mark="折扣特卖")
+				      #end
+                      <td>$!mark</td>
+                      <td>$!bargainSellerTools.query_bargain_maximum($!CommUtil.formatShortDate($!date))</td>
+                      <td>$!bargainSellerTools.query_bargain_audit($!CommUtil.formatShortDate($!date))</td>
+                      <td>$!bargainSellerTools.query_bargain_rebate($!CommUtil.formatShortDate($!date))折</td>
+                      <td align=""><a href="$!webPath/seller/bargain_apply.htm?bargain_time=$!CommUtil.formatShortDate($!date)">参加特价</a> <a href="$!webPath/seller/bargain_goods_list.htm?bargain_time=$!CommUtil.formatShortDate($!date)">特价商品</a></td>
+                    </tr> 
+                    #end
+                       #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">特价天天活动</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end
+                  </table>
+                </div>
+              </form>
+            </div>
+          </div>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

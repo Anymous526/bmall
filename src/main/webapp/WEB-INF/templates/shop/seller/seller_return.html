@@ -1,0 +1,80 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>退款 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css">
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+
+<link rel="stylesheet" href="http://pc3.amallcdn.cn/resources/uploadify/uploadify.css" type="text/css" />
+<script type="text/javascript" src="http://pc6.amallcdn.cn/resources/uploadify/jquery.uploadify.js"></script>
+
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods")
+<div class="s_m">   
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/index.htm">卖家中心</a> > <span>退款</span></div></div>
+		<div class="productmain">
+			<div class="container">
+              <ul class="section" style="padding: 0;">
+	              <li class="li_this"><a href="$!webPath/seller/seller_confim_order_refund.htm?id=$!obj.id">退款</a></li>
+	              <li class=""><a href="$!webPath/buyer/buyer_return_goods.htm">退货</a></li>
+	            </ul>
+          </div>
+          
+          <div class="ordercon" style="border-right:none">
+          	<table class="returntable">
+          		<tr>
+          			<td class="taleft"><span class="cred">*</span> 退款原因：</td>
+          			<td>
+          				$!refund.itemRefundItem.name
+          			</td>
+          		</tr>
+          		<tr>
+          			<td class="taleft"><span class="cred">*</span> 退款金额：</td>
+          			<td><input name="refund" value="$!refund.refund" class="money" type="text" disabled="disabled"/></td>
+          		</tr>
+          		<tr>
+          			<td class="taleft" valign="top"> 退款说明：</td>
+          			<td> <textarea rows="8" cols="5" name="refundLog" style="width:400px">$!refund.refundLog</textarea> </td>
+          		</tr>
+          		<tr>
+          			<td class="taleft" valign="top"> 图片凭证：</td>
+          			<td>
+          				<ul class="re_img">
+          				#foreach($img in $refund.imgs)
+          					<li><span class="rem"></span>
+								 <img src="$!{config.imagewebserver}/$!img.path/$!img.name" width="100" height="100" />
+								 <a href="$!{config.imagewebserver}/$!img.path/$!img.name" target="_blank">查看原图</a>
+			     			</li>
+          				#end
+          				</ul>
+          			</td>
+          			
+          		</tr>
+          		
+          	</table>
+          	<div style="margin-left: 136px;">
+          		<!-- <input class="submitok" type="submit" value="同意"/> -->
+          		
+          		<a class="submitok" type="submit" href="$!webPath/seller/order_refund_save.htm?refundId=$!refund.id&refund=$!refund.refund&id=$!obj.id"">同意</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          		<a class="submitok" href="$!webPath/seller/no_order_refund.htm?refundId=$!refund.id&id=$!obj.id">拒绝 </a> 
+          	</div>
+          	
+          </div>
+       </div>
+  </div>
+   </div>
+   $!httpInclude.include("/footer.htm")
+</body>
+</html>

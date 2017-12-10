@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.amall.core.dao.KuaiDiStatusMapper">
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.KuaiDiStatus">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="kuaidiNum" jdbcType="VARCHAR" property="kuaidiNum" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="company" jdbcType="VARCHAR" property="company" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+ 
+  
+  <select   id="selectKuaiDiStatus" parameterType="java.lang.String" flushCache="true"  resultMap="BaseResultMap">
+    select id, kuaidiNum, company,status,time from  amall_kuaidi_status where kuaidiNum = #{kuaidiNum,jdbcType=VARCHAR}
+  </select>
+ 
+
+  <insert id="insertKuaiDiStatus" parameterType="com.amall.core.bean.KuaiDiStatus">
+    insert into amall_kuaidi_status (kuaidiNum, company, status,time)
+    values ( #{kuaidiNum,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{time,jdbcType=TIMESTAMP})
+  </insert>
+  
+  <update id="updateKuaiDiStatus" parameterType="com.amall.core.bean.KuaiDiStatus">
+  	 update amall_kuaidi_status
+    set company = #{company,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
+     where kuaidiNum=#{kuaidiNum,jdbcType=VARCHAR}
+  </update>
+  
+ 
+</mapper>

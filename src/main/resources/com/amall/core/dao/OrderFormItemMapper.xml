@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.OrderFormItemMapper" >
+
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.OrderFormItem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="goods_id" property="goodsId" jdbcType="BIGINT" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="add_time" property="addTime" jdbcType="TIMESTAMP" />
+    <result column="goods_count" property="goodsCount" jdbcType="INTEGER" />
+    <result column="direct_buy" property="directBuy" jdbcType="BIT" />
+    <result column="goods_price" property="goodsPrice" jdbcType="DECIMAL" />
+    <result column="refund" property="refund" jdbcType="INTEGER" />
+    <result column="goods_photo" property="goodsPhoto" jdbcType="BIGINT" />
+    <result column="order_id" jdbcType="BIGINT" property="orderId" />
+    <result column="lee_status" property="leeStatus" jdbcType="BIT" />
+    <result column="item_status" property="itemStatus" jdbcType="BIT" />
+    <result column="refund_server" property="refundServer" jdbcType="INTEGER" />
+    <result column="goods_rate" property="goodsRate" jdbcType="DECIMAL" />
+    <result column="updateOrder" property="updateorder" jdbcType="BIT" />
+    <association property="goodsMainPhoto" column="goods_photo" javaType="com.amall.core.bean.Accessory"
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+	<association property="orderForm" column="order_id" javaType="com.amall.core.bean.OrderForm"
+    		select="com.amall.core.dao.OrderFormMapper.selectByPrimaryKey"/>
+    		<association property="goods" column="goods_id" javaType="com.amall.core.bean.Goods"
+    		select="com.amall.core.dao.GoodsMapper.selectByPrimaryKey"/>
+    		
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.OrderFormItem" extends="BaseResultMap" >
+    <result column="spec_info" property="specInfo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, goods_id, goods_name, add_time, goods_count, direct_buy, goods_price, refund, 
+    goods_photo, order_id, lee_status, item_status, goods_rate, refund_server , updateOrder
+  </sql>
+  <sql id="Blob_Column_List" >
+    spec_info
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.OrderFormItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_orderform_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+   <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.OrderFormItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_goods
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.OrderFormItemExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_orderform_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_orderform_item
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_orderform_item
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.OrderFormItemExample" >
+    delete from amall_orderform_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.OrderFormItem" >
+    insert into amall_orderform_item (id, goods_id, goods_name, 
+      add_time, goods_count, direct_buy, 
+      goods_price, refund, goods_photo, 
+      order_id, lee_status, item_status, 
+      goods_rate, refund_server, spec_info,updateOrder
+      )
+    values (#{id,jdbcType=BIGINT}, #{goodsId,jdbcType=BIGINT}, #{goodsName,jdbcType=VARCHAR}, 
+      #{addTime,jdbcType=TIMESTAMP}, #{goodsCount,jdbcType=INTEGER}, #{directBuy,jdbcType=BIT}, 
+      #{goodsPrice,jdbcType=DECIMAL}, #{refund,jdbcType=INTEGER}, #{goodsPhoto,jdbcType=BIGINT}, 
+      #{orderId,jdbcType=BIGINT}, #{leeStatus,jdbcType=BIT}, #{itemStatus,jdbcType=BIT}, 
+      #{goodsRate,jdbcType=DECIMAL}, #{refundServer,jdbcType=INTEGER}, #{specInfo,jdbcType=LONGVARCHAR}
+      #{updateOrder,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.OrderFormItem" >
+    insert into amall_orderform_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="addTime != null" >
+        add_time,
+      </if>
+      <if test="goodsCount != null" >
+        goods_count,
+      </if>
+      <if test="directBuy != null" >
+        direct_buy,
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price,
+      </if>
+      <if test="refund != null" >
+        refund,
+      </if>
+      <if test="goodsPhoto != null" >
+        goods_photo,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="leeStatus != null" >
+        lee_status,
+      </if>
+      <if test="itemStatus != null" >
+        item_status,
+      </if>
+      <if test="goodsRate != null" >
+        goods_rate,
+      </if>
+      <if test="refundServer != null" >
+        refund_server,
+      </if>
+      <if test="specInfo != null" >
+        spec_info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsCount != null" >
+        #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="directBuy != null" >
+        #{directBuy,jdbcType=BIT},
+      </if>
+      <if test="goodsPrice != null" >
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refund != null" >
+        #{refund,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPhoto != null" >
+        #{goodsPhoto,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="leeStatus != null" >
+        #{leeStatus,jdbcType=BIT},
+      </if>
+      <if test="itemStatus != null" >
+        #{itemStatus,jdbcType=BIT},
+      </if>
+      <if test="goodsRate != null" >
+        #{goodsRate,jdbcType=DECIMAL},
+      </if>
+      <if test="refundServer != null" >
+        #{refundServer,jdbcType=INTEGER},
+      </if>
+      <if test="specInfo != null" >
+        #{specInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.OrderFormItemExample" resultType="java.lang.Integer" >
+    select count(*) from amall_orderform_item
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_orderform_item
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsId != null" >
+        goods_id = #{record.goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.goodsName != null" >
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addTime != null" >
+        add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.goodsCount != null" >
+        goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.directBuy != null" >
+        direct_buy = #{record.directBuy,jdbcType=BIT},
+      </if>
+      <if test="record.goodsPrice != null" >
+        goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refund != null" >
+        refund = #{record.refund,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsPhoto != null" >
+        goods_photo = #{record.goodsPhoto,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.leeStatus != null" >
+        lee_status = #{record.leeStatus,jdbcType=BIT},
+      </if>
+      <if test="record.itemStatus != null" >
+        item_status = #{record.itemStatus,jdbcType=BIT},
+      </if>
+      <if test="record.goodsRate != null" >
+        goods_rate = #{record.goodsRate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundServer != null" >
+        refund_server = #{record.refundServer,jdbcType=INTEGER},
+      </if>
+      <if test="record.specInfo != null" >
+        spec_info = #{record.specInfo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+    
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_orderform_item
+    set id = #{record.id,jdbcType=BIGINT},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      direct_buy = #{record.directBuy,jdbcType=BIT},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      refund = #{record.refund,jdbcType=INTEGER},
+      goods_photo = #{record.goodsPhoto,jdbcType=BIGINT},
+      order_id = #{record.orderId,jdbcType=BIGINT},
+      lee_status = #{record.leeStatus,jdbcType=BIT},
+      item_status = #{record.itemStatus,jdbcType=BIT},
+      goods_rate = #{record.goodsRate,jdbcType=DECIMAL},
+      refund_server = #{record.refundServer,jdbcType=INTEGER},
+      spec_info = #{record.specInfo,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_orderform_item
+    set id = #{record.id,jdbcType=BIGINT},
+      goods_id = #{record.goodsId,jdbcType=BIGINT},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      add_time = #{record.addTime,jdbcType=TIMESTAMP},
+      goods_count = #{record.goodsCount,jdbcType=INTEGER},
+      direct_buy = #{record.directBuy,jdbcType=BIT},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      refund = #{record.refund,jdbcType=INTEGER},
+      goods_photo = #{record.goodsPhoto,jdbcType=BIGINT},
+      order_id = #{record.orderId,jdbcType=BIGINT},
+      lee_status = #{record.leeStatus,jdbcType=BIT},
+      item_status = #{record.itemStatus,jdbcType=BIT},
+      goods_rate = #{record.goodsRate,jdbcType=DECIMAL},
+      refund_server = #{record.refundServer,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.OrderFormItem" >
+    update amall_orderform_item
+    <set >
+      <if test="goodsId != null" >
+        goods_id = #{goodsId,jdbcType=BIGINT},
+      </if>
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="addTime != null" >
+        add_time = #{addTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsCount != null" >
+        goods_count = #{goodsCount,jdbcType=INTEGER},
+      </if>
+      <if test="directBuy != null" >
+        direct_buy = #{directBuy,jdbcType=BIT},
+      </if>
+      <if test="goodsPrice != null" >
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="refund != null" >
+        refund = #{refund,jdbcType=INTEGER},
+      </if>
+      <if test="goodsPhoto != null" >
+        goods_photo = #{goodsPhoto,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="leeStatus != null" >
+        lee_status = #{leeStatus,jdbcType=BIT},
+      </if>
+      <if test="itemStatus != null" >
+        item_status = #{itemStatus,jdbcType=BIT},
+      </if>
+      <if test="goodsRate != null" >
+        goods_rate = #{goodsRate,jdbcType=DECIMAL},
+      </if>
+      <if test="refundServer != null" >
+        refund_server = #{refundServer,jdbcType=INTEGER},
+      </if>
+      <if test="specInfo != null" >
+        spec_info = #{specInfo,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="updateorder != null" >
+        updateOrder = #{updateorder,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.OrderFormItem" >
+    update amall_orderform_item
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      direct_buy = #{directBuy,jdbcType=BIT},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      refund = #{refund,jdbcType=INTEGER},
+      goods_photo = #{goodsPhoto,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      lee_status = #{leeStatus,jdbcType=BIT},
+      item_status = #{itemStatus,jdbcType=BIT},
+      goods_rate = #{goodsRate,jdbcType=DECIMAL},
+      refund_server = #{refundServer,jdbcType=INTEGER},
+      spec_info = #{specInfo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.OrderFormItem" >
+  update amall_orderform_item
+    set goods_id = #{goodsId,jdbcType=BIGINT},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      add_time = #{addTime,jdbcType=TIMESTAMP},
+      goods_count = #{goodsCount,jdbcType=INTEGER},
+      direct_buy = #{directBuy,jdbcType=BIT},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      refund = #{refund,jdbcType=INTEGER},
+      goods_photo = #{goodsPhoto,jdbcType=BIGINT},
+      order_id = #{orderId,jdbcType=BIGINT},
+      lee_status = #{leeStatus,jdbcType=BIT},
+      item_status = #{itemStatus,jdbcType=BIT},
+      goods_rate = #{goodsRate,jdbcType=DECIMAL},
+      updateOrder = #{updateorder,jdbcType=BIT},
+      refund_server = #{refundServer,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.CloudBuyerDetailMapper" >
+
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.CloudBuyerDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="cloud_Goods_id" property="cloudGoodsId" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_select_number" property="userSelectNumber" jdbcType="INTEGER" />
+    <result column="buy_counts" property="buyCounts" jdbcType="INTEGER" />
+    <result column="is_open" property="isOpen" jdbcType="BIT" />
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User"
+    			select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+	<association property="cloudGoods" column="cloud_Goods_id" javaType="com.amall.core.bean.CloudGoods"
+    			select="com.amall.core.dao.CloudGoodsMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.CloudBuyerDetail" extends="BaseResultMap" >
+    <result column="cloud_codes_detail" property="cloudCodesDetail" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, addTime, cloud_Goods_id, user_id, user_select_number, buy_counts, is_open
+  </sql>
+  <sql id="Blob_Column_List" >
+    cloud_codes_detail
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.CloudBuyerDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_cloud_buyer_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.CloudBuyerDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_cloud_buyer_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.CloudBuyerDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_cloud_buyer_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_cloud_buyer_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_cloud_buyer_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.CloudBuyerDetailExample" >
+    delete from amall_cloud_buyer_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.CloudBuyerDetail" >
+    insert into amall_cloud_buyer_detail (id, addTime, cloud_Goods_id, 
+      user_id, user_select_number, buy_counts, 
+      is_open, cloud_codes_detail)
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{cloudGoodsId,jdbcType=BIGINT}, 
+      #{userId,jdbcType=BIGINT}, #{userSelectNumber,jdbcType=INTEGER}, #{buyCounts,jdbcType=INTEGER}, 
+      #{isOpen,jdbcType=BIT}, #{cloudCodesDetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.CloudBuyerDetail" >
+    insert into amall_cloud_buyer_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="cloudGoodsId != null" >
+        cloud_Goods_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userSelectNumber != null" >
+        user_select_number,
+      </if>
+      <if test="buyCounts != null" >
+        buy_counts,
+      </if>
+      <if test="isOpen != null" >
+        is_open,
+      </if>
+      <if test="cloudCodesDetail != null" >
+        cloud_codes_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cloudGoodsId != null" >
+        #{cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userSelectNumber != null" >
+        #{userSelectNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyCounts != null" >
+        #{buyCounts,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null" >
+        #{isOpen,jdbcType=BIT},
+      </if>
+      <if test="cloudCodesDetail != null" >
+        #{cloudCodesDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.CloudBuyerDetailExample" resultType="java.lang.Integer" >
+    select count(*) from amall_cloud_buyer_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_cloud_buyer_detail
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cloudGoodsId != null" >
+        cloud_Goods_id = #{record.cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.userSelectNumber != null" >
+        user_select_number = #{record.userSelectNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.buyCounts != null" >
+        buy_counts = #{record.buyCounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.isOpen != null" >
+        is_open = #{record.isOpen,jdbcType=BIT},
+      </if>
+      <if test="record.cloudCodesDetail != null" >
+        cloud_codes_detail = #{record.cloudCodesDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_cloud_buyer_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      cloud_Goods_id = #{record.cloudGoodsId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      user_select_number = #{record.userSelectNumber,jdbcType=INTEGER},
+      buy_counts = #{record.buyCounts,jdbcType=INTEGER},
+      is_open = #{record.isOpen,jdbcType=BIT},
+      cloud_codes_detail = #{record.cloudCodesDetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_cloud_buyer_detail
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      cloud_Goods_id = #{record.cloudGoodsId,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      user_select_number = #{record.userSelectNumber,jdbcType=INTEGER},
+      buy_counts = #{record.buyCounts,jdbcType=INTEGER},
+      is_open = #{record.isOpen,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.CloudBuyerDetail" >
+    update amall_cloud_buyer_detail
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cloudGoodsId != null" >
+        cloud_Goods_id = #{cloudGoodsId,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userSelectNumber != null" >
+        user_select_number = #{userSelectNumber,jdbcType=INTEGER},
+      </if>
+      <if test="buyCounts != null" >
+        buy_counts = #{buyCounts,jdbcType=INTEGER},
+      </if>
+      <if test="isOpen != null" >
+        is_open = #{isOpen,jdbcType=BIT},
+      </if>
+      <if test="cloudCodesDetail != null" >
+        cloud_codes_detail = #{cloudCodesDetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.CloudBuyerDetail" >
+    update amall_cloud_buyer_detail
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      cloud_Goods_id = #{cloudGoodsId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_select_number = #{userSelectNumber,jdbcType=INTEGER},
+      buy_counts = #{buyCounts,jdbcType=INTEGER},
+      is_open = #{isOpen,jdbcType=BIT},
+      cloud_codes_detail = #{cloudCodesDetail,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.CloudBuyerDetail" >
+    update amall_cloud_buyer_detail
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      cloud_Goods_id = #{cloudGoodsId,jdbcType=BIGINT},
+      user_id = #{userId,jdbcType=BIGINT},
+      user_select_number = #{userSelectNumber,jdbcType=INTEGER},
+      buy_counts = #{buyCounts,jdbcType=INTEGER},
+      is_open = #{isOpen,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

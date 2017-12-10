@@ -1,0 +1,147 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>密码验证-$!config.title </title> 
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/pass1.css">
+ 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js" charset="UTF-8"></script>  
+<script type="text/javascript" src="http://pc5.amallcdn.cn/assets/js/index_banner_menu.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/yg.union.js"></script>
+#if(!$!{user.username})
+<script type="text/javascript">
+	
+</script>
+#end
+<script type="text/javascript">  
+$(function(){ 
+	document.getElementById("findpass_b").style.display="block";
+	var pdiv=$("#content");
+	pdiv.find(".con-center").css("color","#f14b00"); 
+	pdiv.find(".mcenters_img").css("background-image","url($!webPath/assets/images/findpass_2.png)");
+	
+}); 
+
+function strSendSms()
+{
+	var phoneNum = jQuery("#phone").val();
+	var messageArray = new Array();
+	messageArray[0] = "请输入手机号";
+	messageArray[2] = "今天短信次数超限,请明天再次尝试";
+	messageArray[3] = "两次发送间隔太短，请稍候再试";
+	messageArray[4] = "短信发送失败，请再次尝试";
+	messageArray[5] = "短信发送成功，请查收";
+	
+	jQuery.ajax({
+		type : 'POST',
+		url : "$!webPath/send_sms.htm",
+		data : {"phoneNum":phoneNum,"forgot":"true"},
+		success : function(ret) {
+				sendRemainTime(messageArray[ret]);
+		},
+		error : function(jqXHR, textStatus, errorThrown) {
+			jQuery("#getSmsYzm").html("短信验证码发送失败");
+		}
+	});
+}
+
+function sendRemainTime(str){ 
+	var number = $!config.smsSendInterval ;
+	$(".btn").css("display","none");
+	$("#remainTime").text("");
+	$("#remainTime").css("display","block");
+	
+	$("#remainTime").text(str + "," + number + "秒后可以再次发送");
+	$("#remainTime").text(str);
+    setInterval(function(){
+	    $("#remainTime").css("display", "none")
+	    $(".btn").removeAttr("style");
+	    $(".btn").css("padding-left", "10px");
+	    $(".btn").css("padding-right", "10px");
+	    $(".btn").css("margin-left", "-3px");
+  	}, number*1000);
+
+ }
+ function forgotSecond()
+ {
+	if($("#smscode").val() == "")
+	{
+		return false;
+	}
+	
+ 	$("#theForm").submit();
+	 	
+	 	
+ }
+
+</script> 
+</head>
+<body> 
+$!httpInclude.include("/top2.htm")
+<div id="forg_wei1"> 
+ <div style="height:700px;">
+         <div style="height:100px;background:#FFF;">
+            <div class="forg_wei2">
+            <div class="forg_wei3"><a href="$!webPath/index.htm"><img src="$!webPath/assets/images/logo_findpw.png"></a></div>
+            <div style="float:left;height:100px;margin-top:50px;width:200px;font-size:24px;font-family:'Microsoft YaHei';color: #303030;">找回密码</div>
+            </div>
+         </div>
+<div id="content" >
+   
+       <div class="mcenters">
+	        <div class="mcenters_img"></div>
+	        <div class="mcenters_con">
+	             <div class="con-left">填写用户名</div>
+	             <div class="con-center">输入手机验证码</div>
+	             <div class="con-right">修改密码</div>
+	        </div>
+        </div> 
+  
+   </div>      
+  	<div class="zcenterx_con" id="findpass_b" style="display:none">
+        <form action="$!webPath/password_forgot_third.htm" method="post" name="theForm" id="theForm">  
+        <input type="hidden" name="phone" id="phone" value="$!phone" />
+        <div class="item2" id="smsDiv">
+        <div style="height:50px;">
+        <span class="label1"><b class="ftx04">*</b>用 户 号 码：</span><strong></strong>
+        <div class="item-ifo2"><span  style="font-size:16px;">$!phone</span></div> 
+        </div>
+       	<span class="label1"><b class="ftx04">*</b>短信验证码：</span><strong></strong>
+        <div class="item-ifo2"><input type="text" class="reg_input text-1" name="smscode" id="smscode" style="width:140px"></div>
+        <a class="btn" href="javascript:strSendSms();" style="padding-left:10px; padding-right:10px; margin-left: -3px;"><span id="getSmsYzm">获取短信验证码</span></a>
+      	<span id="remainTime">#if($!op_title)$!op_title#end</span>
+        </div>
+        <div class="item3"  style="margin-top:20px;">
+             <input type="button" onclick="forgotSecond()" class="msub" value="下一步">
+          </div>  
+        
+          
+        </form>
+	</div> 
+     
+ </div>
+ 
+</div>
+$!httpInclude.include("/footer1.htm")
+ 
+ 
+
+
+
+<script src="$!webPath/assets/js/goto_top.js" type="text/javascript"></script> <!-- 返回页面顶部 -->
+
+ 
+</body>
+</html>
+

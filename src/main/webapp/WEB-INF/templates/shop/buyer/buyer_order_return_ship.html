@@ -1,0 +1,70 @@
+<link href="http://pc3.amallcdn.cn/resources/style/common/css/window.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script>
+jQuery(document).ready(function(){
+	 timeCount("time_down_info");							
+  jQuery("#theForm").validate({
+	   rules:{
+		   return_shipCode:{required:true},
+		   ec_id:{required:true}
+		   },
+	   messages:{
+	       return_shipCode:{required:"物流单号不能为空"},
+		   ec_id:{required:"物流公司不能为空"}
+	   }
+	});
+});
+
+</script>
+<form action="$!webPath/buyer/order_return_ship_save.htm" method="post" id="theForm">
+  
+  <table style="float:left;" width="100%" border="0" cellspacing="0" cellpadding="0" class="box_table">
+    <tr>
+      <td colspan="2" align="left" valign="top"></td>
+    </tr>
+    
+    #if($!obj.returnShipcode!="" && $!obj.returnEc!="")
+   <tr id="tr_1">
+      <td align="left" valign="top">&nbsp;&nbsp;物流公司：$!obj.returnEc.companyName</td>
+      <td align="left"></td>
+    </tr>
+    <tr id="tr_2">
+      <td align="left" valign="top">&nbsp;&nbsp;物流单号：$!obj.returnShipcode</td>
+      <td align="left"></td>
+    </tr>
+        <tr>
+  		已经提交退货物流信息，等待卖家确认
+
+    </tr>
+    #else
+    <tr id="tr_1">
+      <td align="right" valign="top">物流公司:</td>
+      <td align="left">
+      <select name="ec_id" id="ec_id">
+      #foreach($expressCompany in $expressCompanys)
+      <option value="$!expressCompany.id">$!expressCompany.companyName</option>
+      #end
+      </select></td>
+    </tr>
+    <tr id="tr_2">
+      <td align="right" valign="top">物流单号：</td>
+      <td align="left"><input name="return_shipCode" type="text" id="return_shipCode" size="30" /></td>
+    </tr>
+        <tr>
+     请输入正确退货物流信息
+      <div class="tuanlitime" id="time_down_info" endTime="$!CommUtil.formatTime('MM/dd/yyyy HH:mm:ss',$!{obj.returnShiptime})"></div>
+
+    </tr>
+     <tr>
+      <td colspan="2" align="center"><span class="inputbtn">
+       <input name="id" type="hidden" id="id" value="$!obj.id" />
+       <input name="goodsId" type="hidden" id="goodsId" value="$!goodsId" />
+       <input name="" type="submit" value="提交" style="cursor:pointer;"/>
+       <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+      </span></td>
+    </tr>
+    #end
+
+   
+  </table>
+</form>

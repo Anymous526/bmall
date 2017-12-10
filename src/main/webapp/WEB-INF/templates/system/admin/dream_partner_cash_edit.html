@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+<script>
+
+$(function($){
+	
+ 	jQuery("#display_img").click(function(){
+ 		jQuery("#approveStatus").val("true");
+ 		jQuery("#display_img").attr("src","$!webPath/resources/style/system/manage/$!{config.websitecss}/images/yes.jpg");	
+ 	});
+		 
+}); 
+
+function btnSumbit()
+{
+	var status = jQuery("#approveStatus").val();
+	
+	if(status != "true")
+	{
+		alert("请先审批通过");
+		return false;
+	}
+	
+	jQuery("#theForm").submit();
+}
+
+</script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">梦想会员提现管理</h1>
+  <form name="theForm" class="theForm2" id="theForm" action="$!webPath/admin/dream_partner_cash_save.htm" method="post">
+    <input type="hidden" name="id" value='$!obj.id' />
+    <div class="setcont">
+      <!--鼠标经过样式-->
+      <ul class="set1">
+        <li>会员名</li>
+        <li><span class="webname">
+          <input type="text" value="$!obj.applyUser.truename" size="40" disabled="disabled"/>
+          </span></li>
+      </ul>
+      <ul class="set1">
+        <li>会员手机号码</li>
+        <li><span class="webname">
+          <input type="text" disabled="disabled" value="$!obj.applyUser.username" size="40" />
+          </span></li>
+      </ul>
+      <ul class="set1">
+        <li>提现人数</li>
+        <li><span class="webname">
+          <input type="text" disabled="disabled" value="$!obj.applyFee.intValue()" size="40" />
+          </span></li>
+      </ul>
+      #if($!obj.approveStatus=="false")
+      <ul class="set1">
+        <li>已提现</li>
+		<li>
+		<input name="approveStatus" id="approveStatus" type="hidden" value="false" >
+        <img src="$!webPath/resources/style/system/manage/blue/images/no.jpg" width="61" height="23" id="display_img" style="cursor:pointer"/>
+		</li>
+      </ul>
+      #end
+    </div>
+     </form>
+    #if($!obj.approveStatus=="false")
+    <div class="submit">
+      <input type="button" value="提交" onclick="btnSumbit();" />
+    </div>
+     #end
+ 
+  
+</div>
+</body>
+</html>

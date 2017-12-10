@@ -1,0 +1,45 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的推广码海报</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link href="$!webPath/assets/css/share_lets.css" type="text/css" rel="stylesheet" />
+<script src="$!webPath/assets/js/jquery-1.10.2.min.js"></script> 
+<script type="text/javascript" src="$!webPath/assets/js/jquery-qrcode-0.14.0.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/xyqrcode.js"></script>
+<script src="$!webPath/assets/js/canvas2image.js"></script>
+<script type="text/javascript"> 
+$(document).ready(function(){
+    var options={};
+    options.url="$!codelink"; //二维码的链接
+    options.dom="#code";//二维码生成的位置 
+    options.image=$('#img-buffer')[0];//图片id
+    options.render="canvas";//设置生成的二维码是canvas格式，也有image、div格式
+    xyqrcode(options);  
+	$("#code canvas").attr("id","w21");
+});     
+</script>   
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的推广码海报</span></div></div>
+ 	<div class="productmain" style="background:#FFF;padding: 0 10px;width:933px;"> 
+    	<div class="share-body">
+		  $!httpInclude.include("/buyer/poster_back.htm")
+		</div> 
+	</div>
+</div>
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>
+ 

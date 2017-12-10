@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link  href="http://pc3.amallcdn.cn/resources/style/common/css/jquery-ui-1.8.22.custom.css" type=text/css rel=stylesheet>
+<script src="$!webPath/assets/js/jquery-1.10.2.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="$!webPath/assets/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc5.amallcdn.cn/resources/js/jquery.zh.cn.js"></script>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">兑换商城</h1>
+  <div class="settab"><span class="tab-one"></span>
+   <span class="tabs"> <a href="$!webPath/admin/cloud_goods.htm">兑换列表</a> | 
+   <a href="$!webPath/admin/cloud_goods_add.htm">新增礼品</a> |
+    <a href="$!webPath/admin/cloud_order.htm" class="this">兑换列表</a> |
+    <a href="$!webPath/admin/cloud_goods_winner.htm">开奖列表</a> |
+    <a href="$!webPath/admin/cloud_pass.htm">流拍列表</a>
+    </span> <span class="tab-two"></span></div>
+   <form method="post" id="queryForm">
+  <div class="shop_search"> <span >兑换单号</span><span class="shopn_search">
+    <input name="orderId" type="text" id="orderId" />
+    </span> <span> 会员账号</span><span class="shopn_search">
+    <input name="username" type="text" id="userName" />
+    </span> <span class="shopg_search">
+    </span> <span class="shopg_search">
+    <select name="status" id="status">
+      <option value="">状态</option>
+      <option value="20">已付款</option>
+      <option value="30">已发货</option>
+      <option value="40">已完成</option>   
+    </select>
+    </span> <span class="btn_search">
+    <input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+    </span>
+   </div>
+   </form>
+    <form method="post" id="ListForm">
+  <div class="shop_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="10%" align="center">兑换单号</td>
+        <td width="20%" align="center">商品名称</td>
+        <td width="10%" align="left">会员名称</td>
+        <td width="10%" align="center">运费</td>
+        <td width="10%" align="center">支付方式</td>
+        <td width="10%" align="center">兑换时间</td>
+        <td width="10%" align="center">状态</td>
+        <td  align="center">操作</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td align="center">$!{obj.orderId}</td>
+        <td align="center">$!{obj.cloudGoods.goodsName}</td>
+        <td align="left">$!{obj.user.username}</td>
+        <td align="center">$!{obj.shipTransFee}</td>
+
+        <td align="center">礼品金 </td>
+        <td align="center">$!CommUtil.formatLongDate($!obj.addTime)</td>
+        <td align="center">
+        	#if($!obj.orderStatus==20)
+                  	已付款，待发货
+            #elseif($!obj.orderStatus==30)
+                  	已发货      
+            #elseif($!obj.orderStatus==40)
+                	已收货完成
+            #end 
+        </td>
+        <td class="bjsc" align="center">
+         <a href="$!webPath/admin/cloud_order_view.htm?id=$!obj.id">查看</a>
+         #if($!obj.orderStatus==20)|<a href="javascript:void(0);" dialog_uri="$!webPath/admin/cloud_order_ship.htm?id=$!obj.id&currentPage=$!currentPage" dialog_title="发货" dialog_width="400" dialog_height="100" dialog_id="order_ship">发货</a>#end
+         #if($!obj.orderStatus==30)|<a href="javascript:void(0);" dialog_uri="$!webPath/admin/cloud_order_ship.htm?id=$!obj.id&currentPage=$!currentPage" dialog_title="发货" dialog_width="450" dialog_height="100" dialog_id="order_ship">修改物流</a>#end
+         </td>
+      </tr>
+      #end
+      
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="status" type="hidden" id="status" value="$!status" />
+    <input name="userName" type="hidden" id="userName" value="$!userName" />
+    <input name="orderId" type="hidden" id="orderId" value="$!orderId" />
+    <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    $!gotoPageFormHTML
+  </div>
+  </form>
+</div>
+</body>
+</html>

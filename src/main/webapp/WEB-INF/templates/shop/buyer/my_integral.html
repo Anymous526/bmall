@@ -1,0 +1,70 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的积分</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+
+</script>
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+	$!httpInclude.include("/buyer/buyer_left.htm")
+	<div class="s_m">   
+ <form action="$!webPath/buyer/my_integral.htm" method="post" id="ListForm">
+          <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>我的积分</span></div></div>
+          <div class="productmain">
+          	<div style="width: 100%;margin: 0 auto;">
+				<img src="$!webPath/assets/img/my_integral.png" alt="我的积分" style="width:101%;margin-left: -3px;"/>
+			</div>
+  		</div>
+  		<br/>
+          <div class="ordercon" style="width: 833px;border: 1px solid #d8d8d8;">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+            	<tr style="border-bottom: 1px solid #d8d8d8;"">
+            		<td width="30%">兑换时间</td>
+            		
+            		<td width="50%">积分信息</td>
+            		
+            		<td width="20%">积分数量</td>
+            		
+            	</tr>
+ 			
+ 			#foreach($obj in $objs)
+            	<tr>
+            		<td>$CommUtil.formatLongDate($!obj.addtime)</td>
+            		<td>$!obj.content</td>
+            		<td>$!obj.integral</td>
+            	</tr>
+			#end
+            </table>
+            
+            </div>
+	    
+	</div>
+	
+	<div class="bottom_page" style="margin-top: 25px;">
+                <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+                $!gotoPageFormHTML
+           </div>
+      </form>     
+	
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

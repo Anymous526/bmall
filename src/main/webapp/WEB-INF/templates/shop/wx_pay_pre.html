@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>正在支付 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link href="http://pc1.amallcdn.cn/assets/css/public.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+var jq172 = jQuery.noConflict(true);
+</script>
+<script src="$!webPath/assets/js/jquery.qrcode.min.js"></script>
+<style>
+body{background:#FFF!important;}
+#code{padding:30px;border:1px solid #ccc;margin-bottom:40px;}
+</style>
+</head>
+<body>
+<div>
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/cart/cart_pay_logo.htm")
+ 
+
+  <div class="index" style="margin:10px auto;width:990px;padding-top:10px;border-top:3px solid #181c42;">
+    #if(!$message)
+    <div class="index2" style="width:160px;padding-left:40px;float:left;font-size:18px;line-height:40px;color:#333">微信支付</div>
+   
+    <div style="width:302px;float:left;">
+    <div style="line-height:40px;text-align:center;font-size:14px">快速支付，只需微信<span style="color:#f00;font-size:14px">扫一扫</span></div>
+       <div id="code"></div>
+       <script> 
+       		jq172('#code').qrcode({width: 240,height: 240,text: "$!pre_str"});
+	   </script> 
+	   <div><img src="$!webPath/assets/img/wx1306-1.png"/></div>
+	</div> 
+	
+	<div style="width:480px;float:left;text-align:right;margin-top:15px;"><img src="$!webPath/assets/img/wx1306-2.png"/></div>
+	#else
+		 <div style="line-height:40px;text-align:center;font-size:14px">$message</div>
+	#end
+    </div>
+  
+<div id="footer_sereen_change">
+$!httpInclude.include("/footer1.htm")	<!-- 底部页脚 -->
+</div> 
+#if(!$message)
+<script>
+$(document).ready(function(){
+	
+<!-- 定时查询订单是否已经支付，支付完成则跳转到支付成功页面 间隔3秒执行一次，总计执行20次 ，因为一个支付二维码有效期2分钟 -->
+function orderTimer()
+{
+	var count = 0;
+	var order = setInterval(function(){
+		jQuery.ajax({
+			 type:'POST',
+			 url:"$webPath/query_order_status.htm",
+			 data : {"payId":"$!payId"},
+			 success :　function(ret) {
+				 if(ret != "")
+				 {
+					location.href = "$!webPath/order_pay_success.htm?payId=" + "$!payId"; 
+				 }
+				 
+				 if(count == 20)
+				 {
+					 clearInterval(order);	
+					 location.reload();
+				 }
+				 count = count + 1;
+				 
+			 }
+			});
+		
+	}, 3000);
+	
+	
+}
+
+orderTimer();
+	
+});
+
+</script>
+
+#end
+</body>
+
+</html> 

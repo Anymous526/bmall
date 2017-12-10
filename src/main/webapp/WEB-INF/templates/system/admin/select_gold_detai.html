@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+	$(function(){
+		$("#rechargeTime option[value='$!rechargeTime']").attr("selected","selected");
+	});
+</script>
+<style type="">
+.recharge_cg{color:#2dd700;font-size: 14px;}
+.recharge_cr{color:red;}
+</style>
+</head>
+<body>
+<div class="cont">
+  <h1 class="seth1">礼品金明细-系统赠送</h1>
+  <div class="settab"><span class="tab-one"></span> 
+  					<span class="tabs">
+  						| 
+	  					<a href="$!webPath/admin/recharge_info.htm"  class="this">充值列表</a>
+	  					| 
+	  					<a href="$!webPath/admin/selectGoldDetail.htm"  class="this">系统赠送</a>
+	  					|
+	  					<a href="$!webPath/admin/selectRedPackGeGoldDetail.htm"  class="this">红包大厅</a>	  					 
+  					</span>
+  					<span class="tab-two"></span>
+  </div>
+  <form method="post" id="queryForm">
+  <div class="allpro_search">
+    <ul>
+      <li> <span>用户手机号</span><span class="allpro size3">
+        <input name="telephone" type="text" id="telephone" value="$!telephone"/>
+        </span> <span>
+        <select name="rechargeTime" id="rechargeTime">
+          <option value="1">最近一周</option>
+          <option value="2">最近一个月</option>
+          <option value="3">最近一年</option>
+          <option value="">所有</option>
+        </select>
+        </span> <span class="btn_search">
+        <input name="" type="submit"  value="搜索" style="cursor:pointer;" />
+        </span> </li>
+    </ul>
+  </div>
+  </form>
+  <form method="post" id="ListForm" name="ListForm">
+  <div class="allpro_table">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr style="background: #if($!config.websitecss=='blue') #2A7AD2 #end 
+      #if($!config.websitecss=='black')#333 #end; height:30px; color:#FFF">
+        <td width="25%">用户手机号</td>
+        <td width="25%" align="center">用户姓名</td>
+        <td width="25%" align="center">时间</td>
+        <td width="25%" align="center">获得礼品金</td>
+      </tr>
+      #foreach($obj in $objs)
+      <tr>
+        <td>$!{obj.goldUser.username}</td>
+        <td>$!{obj.goldUser.truename}</td>
+        <td align="center">$!CommUtil.formatLongDate($!obj.addtime)</td>
+        <td align="center" class="recharge_cg">$!{obj.goldCount}</td>
+     <!--    <td align="center">$!{obj.payType}</td>
+        <td align="center">
+        	#foreach($rechargeBenefit in $!obj.rechargeBenefits)
+        		<p style="padding: 2px 0;">$!rechargeBenefit.getUser.username</p>
+        	#end
+        </td> -->
+        <!-- <td align="center">
+        	#foreach($rechargeBenefit in $!obj.rechargeBenefits)
+        		<p style="padding: 2px 0;">$!rechargeBenefit.getUser.truename</p>
+        	#end
+        </td> -->
+      </tr>
+      #end
+    </table>
+  </div>
+  <div class="fenye">
+    <input name="telephone" type="hidden" id="" value="$!telephone" />
+    <input name="rechargeTime" type="hidden" id="" value="$!rechargeTime" />
+	<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+    $!gotoPageFormHTML</div>
+  </form>
+</div>
+</body>
+</html>

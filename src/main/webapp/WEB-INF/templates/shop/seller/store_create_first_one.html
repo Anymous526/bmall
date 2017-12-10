@@ -1,0 +1,130 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>$!config.title </title>
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/goods.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" /><!-- 大方块样式 -->
+<!-- 买家中心模块 -->
+ 
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/> <!--基本样式-->
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/cart.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc2.amallcdn.cn/assets/css/user.css"/>
+<link rel="stylesheet" type="text/css" href="$!webPath/assets/css/seller.css"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/j-accordin.min.js"></script>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/user_botm.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	var lis = jQuery(".tools ul li");
+	jQuery.each(lis,function(i,val){
+		var obj = jQuery(val);
+		var indexVal = i * 25;
+		var y = "-"+indexVal+"px";		
+		var defaultVal = "0 "+y;
+		var changeVal = "25px "+y;
+		obj.mouseover(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",changeVal);
+				obj.children("p").css("color","#a90000");
+
+			}).mouseleave(function(){
+				obj.children("i").css("backgroundImage","../img/54f681ffN84dece5f.png").css("backgroundPosition",defaultVal);
+				obj.children("p").css("color","#666");
+			});
+	
+	});
+});
+function gotoGroupOrder(){
+	jQuery.ajax({
+		type:'POST',
+		url:"$!webPath/buyer/group_order.htm",
+		data:{"currentPage":1},
+		success:function(data){
+			$("#rightBody").html(data);
+		},
+		error:function(){
+			alert("请检查内部错误");
+		}
+		
+	});
+} 
+
+function gotoOrderCancelRecord() {
+	jQuery.ajax({
+		type:'POST',
+		url:"$!webPath/buyer/order_cancel_record.htm",
+		data:{"currentPage":1},
+		success:function(data) {
+			$("#rightBody").html(data);
+		},
+		error:function(){
+			alert("请检查内部错误");
+		}
+	});
+}
+</script>
+
+</head>
+
+<body style="background-color:#fff">
+
+<!--买家中心模块  -->
+$!httpInclude.include("/top.htm")	
+$!httpInclude.include("/buyer/buyer_header.htm")
+	<div class="user_main w1200">
+		$!httpInclude.include("/buyer/buyer_left.htm")
+		
+		<div id="rightBody">
+			<div class="seller_shop" style="margin-left: 10px;">
+				<h3>开通店铺</h3>
+				
+					<div class="create_guide_one">
+						<span class="create_guide_img_span_1">选择店铺类型</span>
+						<span class="create_guide_img_span_2" style="color: #646464">填写店主与店铺信息</span>
+						<span class="create_guide_img_span_2"  style="color: #646464">提交审核</span>
+						<span class="create_guide_img_span_2"  style="color: #646464">申请结果</span>
+					</div>
+					
+					<div class="create_first_cn_box">
+						#foreach($sg in $sgs)
+						<div class="create_first_cn_box_little">
+							<div class="create_first_img_box"><img src="$!webPath/assets/img/create_store_img.png" alt="" /></div>
+							<div class="create_first_store_name"> <span><strong>$!sg.gradename</strong></span> </div>
+							<div class="create_first_store_base">
+								<span>基本权限</span>								
+							</div>
+			            <div class="create_first_store_base_box">
+			              <ul>
+			                <li><span class="hui2">我的商品数量：</span><span>#if($!sg.goodscount==0)不限#else $!{sg.goodscount}#end</span></li>
+			                <li><span class="hui2">模板套数：</span><span>$!{CommUtil.splitLength("$!sg.templates",",")}套</span></li>
+							<li><span class="hui2">附件空间：</span><span>$!{sg.spacesize}M</span></li>
+			                <!--  <li><span class="hui2">收费标准：</span><span class="red">￥$!sg.price</span></li>-->
+			                <li><span class="hui2">需要审核：</span><span>#if($!{sg.audit}==true)是#else 否#end</span></li>
+			              </ul>
+			            </div>
+			            <div class="create_first_store_base">
+								<span>附加功能</span>								
+						</div>						
+						<div class="create_first_store_base_box">
+						 	<span>$!storeTools.genericFunction($!sg)</span>
+			            </div>			            
+			           
+			            <div class=""><span>$!sg.content</span></div>
+			            
+			            <div class="create_first_store_base_box" style="margin-left:70px!important;"> 
+			              <input name="" type="button" onclick="window.location.href='$!webPath/seller/store_create_second.htm?grade_id=$sg.id'"  value="立即开店"/>
+			            </div>
+					</div>
+						 #end
+						
+					</div>
+			
+			</div>
+		</div>
+	</div>
+$!httpInclude.include("/footer.htm")
+</body>
+
+</html>

@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>团购管理 </title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" />
+<meta name="generator" content="Amall" />
+<meta name="author" content="www.amall.com">
+<meta name="copyright" content="天使互助 Inc. All Rights Reserved">
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<script src="$!webPath/resources/js/jquery.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script> 
+</head>
+<body>
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/seller/seller_head.htm") 
+<div style="width:1200px; margin: 0 auto;">
+$!httpInclude.include("/seller/seller_nav.htm?op=goods") 
+<div class="s_m">  
+           <div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/seller/seller_index.htm">卖家中心</a> > <span>团购活动</span></div></div>
+        <div class="productmain">
+           	<div class="container" style="height:37px">
+              <ul class="section" style="padding: 0;">
+                <li class="li_this"><a href="#">团购活动列表</a></li>
+                <li class=""><a href="$!webPath/seller/group_add.htm">新增单品团购商品</a></li>
+                <li class=""><a href="$!webPath/seller/group_brand_add.htm">新增品牌团购商品</a></li>
+              </ul>
+            </div>
+            <div class="ordercon">
+           <form action="$!webPath/seller/group.htm" method="post" id="queryForm">
+            <div class="ordersear" style="float:right;margin-top: 10px;"> <span>商品名称：</span> 
+            	<span class="ordersp1 size3">
+                	<input name="gg_name" type="text" id="gg_name" style="margin-right:10px;"/>
+                </span>
+                <span class="orderbtn">
+                	<input name="" type="submit" value="搜索" style="cursor:pointer;"/>
+                </span>
+            </div>
+            </form>
+            <form action="$!webPath/seller/group.htm" method="post" id="ListForm">
+              <div class="operation">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" id="opertable" >
+                <tr id="opertitle">
+                  <td width="264" >商品名称</td>
+                  <td width="244">团购活动</td>
+                  <td width="81">团购状态</td>
+                  <td width="81">团购类型</td>
+                  <td width="113" align="center">操作</td>
+                </tr>
+              #if($objs.size()>0)     
+                #foreach($obj in $objs)
+                <tr class="opertr">
+                  <td><a href="$!webPath/groupExcessive.htm?gg_id=$!obj.id" target="_blank">$!obj.ggName</a></td>
+                  <td>$!obj.group.groupName</td>
+                  #if($!obj.ggStatus==0)
+                    #set($status="待审核")
+                  #end
+                  #if($!obj.ggStatus==1)
+                    #set($status="审核通过")
+                  #end
+                  #if($!obj.ggStatus==-1)
+                    #set($status="审核拒绝")
+                  #end
+                  <td>$!status</td>
+                  #set($type="")
+                  #if($!obj.group.isBrand==1)
+                    #set($type="品牌团")
+                  #end
+                  #if($!obj.group.isBrand==0)
+                    #set($type="单品团")
+                  #end
+                  <td>$!type</td>
+                  <td class="operajt">#if($!obj.ggStatus==0)<span class="edit"><a href="$!webPath/seller/group_edit.htm?id=$!obj.id&currentPage=$!currentPage&isBrand=$!{obj.group.isBrand}">编辑</a></span><span class="del"><a href="$!webPath/seller/group_del.htm?mulitId=$!obj.id&currentPage=$!currentPage">删除</a></span>#end</td>
+                </tr>
+                #end
+                  #else
+                  
+                  	<tr class="opertr">
+	                <td colspan="6" style="height:250px;text-align:center;line-height:250px;">您现在还没有<span style="color:red">团购活动</span>哦,先去看看吧~ </td> 
+	                </tr>  
+	                  
+                  #end   
+              </table>
+            </div>
+            <div class="bottom_page">
+				<input name="totalPages" type="hidden" id="totalPages" value="$!totalPages"/>
+				<input name="currentPage" type="hidden" id="currentPage" value="$!currentPage" />
+				$!gotoPageAjaxHTML
+			</div>
+            </form>            
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+</div>
+$!httpInclude.include("/footer.htm")
+</body>
+</html>

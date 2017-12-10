@@ -1,0 +1,101 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>城市代理商</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" /> 
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+</head>
+<body  style="background:#FFF">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+  	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>城市代理商</span></div></div>
+  	<div class="city_total">
+  		<p>分红奖：$!fh 元</p>
+  	</div>
+    <form action="$!webPath/city_partner_total.htm" method="post" id="ListForm">
+          <div class="productmain">         
+           <div class="container" style="border-top:1px solid #ccc;height:37px;">
+            <ul class="section" style="padding: 0;">
+              <!-- <li class=""><a href="$!webPath/buyer/city_partner_total.htm">月份奖金</a></li> -->
+              <form action="$!webPath/city_partner_total.htm" method="post" id="yuefen">
+			  <input type="hidden" name="identity" value="2"/>
+			  <input type="hidden" name="page" value="0"/>
+			  <li><a href="$!webPath/city_partner_total.htm" id="mo_total" class="ci_a" style="padding:0;"><button class="ci_party" id="yuefen_btn">月份奖金</button></a></li>
+		      </form>
+              <!-- <li class="li_this"><a href="$!webPath/buyer/city_partner.htm">分红明细</a></li> -->
+              <form action="$!webPath/city_partner_total.htm" method="post" id="fenhong">
+			  <input type="hidden" name="identity" value="0"/>
+			  <input type="hidden" name="page" value="0"/>
+			  <li><a href="$!webPath/city_partner_total.htm" id="fenhong_aa" class="ci_a" style="padding:0;"><button class="ci_party" id="fenhong_btn">分红明细</button></a></li>
+		   </form>
+              <!-- <li class=""><a href="$!webPath/buyer/city_partner_list.htm">补助明细</a></li> -->
+		      <form action="$!webPath/city_partner_total.htm" method="post" id="buzhu">
+			  <input type="hidden" name="identity" value="0"/>
+			  <input type="hidden" name="page" value="0"/>
+			  <li><a href="$!webPath/city_partner_total.htm" id="buzhu_aa" class="ci_a" style="padding:0;"><button class="ci_party" id="buzhu_btn">补助明细</button></a></li>
+		   </form>
+            </ul>
+          </div>
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+            	<tr class="th_tr">
+            		<td width="33.3%">用户</td>
+            		<td width="33.3%">时间</td>
+            		<td width="33.3%">金额</td>
+            	</tr>
+            	#foreach($adv in $fenghong)
+	     		<tr class="tb_tr">
+	     			<td>$!adv.getUserName</td>
+	     			<td>$CommUtil.formatLongDate($!adv.addTime)</td>
+	     			<td>$!adv.fenhongFee</td>
+	     		</tr>
+	     		#end	
+            </table>
+            
+            </div>
+            <div class="bottom_page" style="margin-top: 25px;">
+				<input name="currentPage" type="hidden" id="currentPage" value="1">
+				<a href="javascript:void(0);"onclick="return gotoPage(1)">首页</a> <a href="javascript:void(0);" onclick="return gotoPage(1)">上一页</a> 第　<a class="this" href="javascript:void(0);"onclick="return gotoPage(1)">1</a> 页  <a href="javascript:void(0);"onclick="return gotoPage(1)"> 下一页</a><a href="javascript:void(0);"onclick="return gotoPage(1)">末页</a> 
+			</div>
+		        <!--分页结束-->   
+          </div>         
+    </form>
+  </div>
+</div>
+$!httpInclude.include("/footer.htm")
+<script>
+	$("#yuefen_btn").click(function(){
+		$("#yuefen").submit();
+	});
+	$("#fenhong_btn").click(function(){
+		$("#fenhong").submit();
+	});
+	$("#buzhu_btn").click(function(){
+		$("#buzhu").submit();
+	});
+</script>
+<script>
+function gotoPage(n) {
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+</body>
+</html>

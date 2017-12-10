@@ -1,0 +1,140 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>精品在这里！</title>
+<meta charset="UTF-8"/>
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#cuntpay").blur(function(){
+		
+		var inputNumber = $("#cuntpay").val();
+		var countMax = $("#count").val();
+		
+		if(Number(countMax) <= Number(inputNumber))
+		{
+			$("#cuntpay").val(countMax);
+		}
+	});
+	
+	$("#subBtn").click(function(){
+		var countMax = $("#count").val();
+		var inputNumber = $("#cuntpay").val();
+		
+		if(isNaN(inputNumber))
+		{
+			alert("请输入数字");	
+		}
+		
+		if(Number(inputNumber) > Number(countMax))
+		{
+			alert("输入数超出最大允许输入");
+			return false;
+		}
+		
+		 #if($!obj.buyerCodeCount == 0)
+			 if(Number(inputNumber) == 0)
+			 {
+				alert("请输入大于等于1的数");	
+				$("#cuntpay").val(1);
+				return false;
+			 }
+		 #end
+		
+		 $("#theForm").submit();
+	});
+})
+</script>
+
+<style>
+	.a_pay_txt{width:100%; margin: 5px; display: block;}
+	.a_pay_txt span{width:100%; margin-bottom: 10px; display: block; font-size:14px;}
+	.a_pay_txt p{width:100%; margin:7px 0 7px 10px; display: block;}
+	
+	.a_reduce{cursor: pointer; height: 28px; width: 28px; border-top: 1px solid #ddd;border-left: 1px solid #ddd;border-bottom: 1px solid #ddd;   background: #f0f0f0; text-align: center; line-height: 28px; color: #999999; font-size: 16px; float:left}
+	.a_count-input{width:65px;height: 20px;line-height: 20px;border: 1px solid #ddd;color: #343434;text-align: center;padding: 4px 0;background-color: #fff;float:left}
+	.a_add{cursor: pointer;height: 28px;width: 28px;border-top: 1px solid #ddd;border-right: 1px solid #ddd;border-bottom: 1px solid #ddd; background: #f0f0f0;text-align: center;line-height: 28px;color: #999999;font-size: 16px;float:left}
+</style>
+</head>
+<body>
+$!httpInclude.include("/top2.htm")
+$!httpInclude.include("/cart/cart_confirm_order_logo.htm")
+
+<div class="w990" style="background-color: #fff;border: 1px solid #e8e8e8;">
+	<span class="f14 fb c3" style="padding-left: 10px;">确认订单信息</span>
+	
+    <table class="order_list" width="100%" border="0" cellspacing="0" cellpadding="0" >
+      <thead>
+        <tr>
+          <th width="40%" class="tab_th1" style="padding-left: 10px;"><img src="$!webPath/assets/img/ss.png" style="display: inline-block;margin-top:-3px;"/>店铺：$!store.storeName</th>
+          <th width="17%" class="tab_th2">单价(币)</th>
+          <th width="13%" class="tab_th2">数量</th>
+          <th width="13%" class="tab_th2">小计(元)</th>
+        </tr>
+      </thead>
+
+      <tbody width="100%" border="0" cellspacing="5" cellpadding="3">
+        <tr>
+          <td style="padding-left: 10px;">
+          	<a class="order_img1" href="$!webPath/angel_exchange_detail.htm?id=$obj.id">
+          		<img src="$!{config.imagewebserver}/$!obj.accessory.path/$!obj.accessory.name" width="50"  />
+          	</a>
+          	<span>
+          		<a id="cartgoods_goodsname" href="$!webPath/angel_exchange_detail.htm?id=$obj.id" style="width:360px;line-height: 20px;height: 40px;overflow: hidden;">$obj.goodsName</a>
+          	</span>
+		  </td>
+          <td align="center">$obj.goodsNumber</td>
+          <td align="center">
+			<div class="angle_num">
+				$count
+			</div>
+		  </td>
+
+          <td align="center"><label id="xiaoji"> #set($price=$count * $obj.goodsNumber) $!price</label></td>
+        </tr>
+        
+      </tbody>
+
+    </table>
+
+	<form action="$!webPath/angel_exchange_pay_save.htm" method="post" id="theForm">
+	<input type="hidden" value="$!obj.id" name="id">
+    <input type="hidden" value="$!count" id="count" name="count">
+
+	<div class="con_money">
+    	<p  style="padding-right: 10px" >实际支付：<span class="moeny" id="totalAmount2" style="margin-right: 10px;">$!price</span>礼品金</p>
+	</div>
+	
+	<div class="a_pay_txt">
+		<span>当前可用礼品金： <label style="color:red; font-size:20px;">$!user.gold</label>礼品金 </span>
+		<span>请选择 #if($!obj.buyerCodeCount==0) 1 #else 0 #end - $!count的数：<input type="text" id="cuntpay" name="inputOnes" value="1"/> </span>
+	</div>
+		
+    <div class="action" style="padding-right: 10px;">
+    	<div class="go-wrapper"><a class="go-btn" id="subBtn">确认支付</a></div>
+    </div>
+    </form>
+    
+    <div class="a_pay_txt" style="margin-bottom: 70px">
+     <h2 style="color:#a90000; font-size:16px">互助兑规则</h2>
+	 <p>1.每件商品参考市场价平分成相应“等份”，1份对应1个兑换码。</p>
+     <p>2.同一件商品可以兑换多次或一次兑换多份。</p>
+     <p>3.当一件商品所有“等份”全部售出后计算出“幸运码”，持有“幸运码”者即可获得此商品</p>
+     <p>4.幸运兑换码产生方式：</p>
+     <p>1）所有兑换者提交订单前系统会先让兑换者从“0”和“1”两个数字中<b>任意选择</b>一个数字，选择前无法得知将会获得的兑换码，以确保选择数字的客观公正性。</p>
+     <p>2）付款后系统通过<b>Java Random函数</b>随机分配一个兑换码。</p>
+     <p>3）所有等份售卖完毕后，把所有兑换者选择的数字<b>"0"</b>和<b>“1”</b>相加，所得的结果数字即为<b>幸运兑换码</b>。</p>
+    </div>
+</div>
+
+
+
+
+
+
+
+$!httpInclude.include("/footer1.htm")
+</body>
+</html>
+

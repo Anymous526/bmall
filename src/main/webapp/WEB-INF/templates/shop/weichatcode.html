@@ -1,0 +1,55 @@
+﻿<!DOCTYPE  html>
+<html>
+<head>
+<title></title>
+<meta charset="UTF-8"/> 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/jquery.qrcode.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/qrcode.js"></script> 
+</head>
+<body>
+<div id="output" style="width:200px; height:200px; "></div>
+	
+    <script type="text/javascript">  
+	
+		function utf16to8(str) {  
+			var out, i, len, c;  
+			out = "";  
+			len = str.length;  
+			for (i = 0; i < len; i++) {  
+				c = str.charCodeAt(i);  
+				if ((c >= 0x0001) && (c <= 0x007F)) {  
+					out += str.charAt(i);  
+				} else if (c > 0x07FF) {  
+					out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));  
+					out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));  
+					out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));  
+				} else {  
+					out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));  
+					out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));  
+				}  
+			}  
+			return out;  
+		}  
+		  
+		var host = "http://m.amall.com"; 
+
+		content = utf16to8(host);
+		
+		//生成canvas
+	   function doconvas(){
+		 jQuery("#output").qrcode({
+			render:(jQuery.browser.msie && jQuery.browser.version < 9 ? "table" : "canvas"),
+			width:200,
+			height:200,			  
+			background:"#ffffff", //背景颜色
+			foreground:"#000000", //前景色
+			text:content,		 //内容
+			typeNumber  :-1     //计算模式 
+		 });
+	   } 
+ 
+		doconvas(); 
+    </script> 
+</body>
+</html>

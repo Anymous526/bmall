@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.CityPartNerSumMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.CityPartNerSum" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="BIGINT" />
+    <result column="year" property="year" jdbcType="SMALLINT" />
+    <result column="month" property="month" jdbcType="TINYINT" />
+    <result column="fenhong" property="fenhong" jdbcType="DECIMAL" />
+    <result column="buzhu" property="buzhu" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, userid, year, month, fenhong, buzhu
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.amall.core.bean.CityPartNerSumExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_citypartner_sum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_citypartner_sum
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from amall_citypartner_sum
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.CityPartNerSumExample" >
+    delete from amall_citypartner_sum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.CityPartNerSum" >
+    insert into amall_citypartner_sum (id, userid, year, 
+      month, fenhong, buzhu
+      )
+    values (#{id,jdbcType=INTEGER}, #{userid,jdbcType=BIGINT}, #{year,jdbcType=SMALLINT}, 
+      #{month,jdbcType=TINYINT}, #{fenhong,jdbcType=DECIMAL}, #{buzhu,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.CityPartNerSum" >
+    insert into amall_citypartner_sum
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="fenhong != null" >
+        fenhong,
+      </if>
+      <if test="buzhu != null" >
+        buzhu,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=SMALLINT},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=TINYINT},
+      </if>
+      <if test="fenhong != null" >
+        #{fenhong,jdbcType=DECIMAL},
+      </if>
+      <if test="buzhu != null" >
+        #{buzhu,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.amall.core.bean.CityPartNerSumExample" resultType="java.lang.Integer" >
+    select count(*) from amall_citypartner_sum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_citypartner_sum
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.year != null" >
+        year = #{record.year,jdbcType=SMALLINT},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=TINYINT},
+      </if>
+      <if test="record.fenhong != null" >
+        fenhong = #{record.fenhong,jdbcType=DECIMAL},
+      </if>
+      <if test="record.buzhu != null" >
+        buzhu = #{record.buzhu,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_citypartner_sum
+    set id = #{record.id,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=BIGINT},
+      year = #{record.year,jdbcType=SMALLINT},
+      month = #{record.month,jdbcType=TINYINT},
+      fenhong = #{record.fenhong,jdbcType=DECIMAL},
+      buzhu = #{record.buzhu,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.CityPartNerSum" >
+    update amall_citypartner_sum
+    <set >
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=SMALLINT},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=TINYINT},
+      </if>
+      <if test="fenhong != null" >
+        fenhong = #{fenhong,jdbcType=DECIMAL},
+      </if>
+      <if test="buzhu != null" >
+        buzhu = #{buzhu,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.CityPartNerSum" >
+    update amall_citypartner_sum
+    set userid = #{userid,jdbcType=BIGINT},
+      year = #{year,jdbcType=SMALLINT},
+      month = #{month,jdbcType=TINYINT},
+      fenhong = #{fenhong,jdbcType=DECIMAL},
+      buzhu = #{buzhu,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByuserId" parameterType="com.amall.core.bean.CityPartNerSum" resultType="com.amall.core.bean.CityPartNerSum">
+  		select fenhong,buzhu from amall_citypartner_sum where 
+  		1=1
+  		<if test="userid != null">
+  		 and userid = #{userid,jdbcType=BIGINT}
+  		</if>
+  </select>
+  
+  <select id="selectyueji" parameterType="HashMap" resultType="com.amall.core.bean.CityPartNerSum">
+  	select 
+  	 <include refid="Base_Column_List" />
+    from amall_citypartner_sum where 1=1 
+    <if test="userid != null">
+  		 and userid = #{userid,jdbcType=BIGINT}
+  	</if>
+  	 limit #{pageCurr},#{pageSize}
+  </select>
+</mapper>

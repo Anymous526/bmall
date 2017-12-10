@@ -1,0 +1,2610 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.SysConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.SysConfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="deleteStatus" property="deletestatus" jdbcType="BIT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="bigHeight" property="bigheight" jdbcType="INTEGER" />
+    <result column="bigWidth" property="bigwidth" jdbcType="INTEGER" />
+    <result column="complaint_time" property="complaintTime" jdbcType="INTEGER" />
+    <result column="consumptionRatio" property="consumptionratio" jdbcType="INTEGER" />
+    <result column="copyRight" property="copyright" jdbcType="VARCHAR" />
+    <result column="deposit" property="deposit" jdbcType="BIT" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="emailEnable" property="emailenable" jdbcType="BIT" />
+    <result column="emailHost" property="emailhost" jdbcType="VARCHAR" />
+    <result column="emailPort" property="emailport" jdbcType="INTEGER" />
+    <result column="emailPws" property="emailpws" jdbcType="VARCHAR" />
+    <result column="emailTest" property="emailtest" jdbcType="VARCHAR" />
+    <result column="emailUser" property="emailuser" jdbcType="VARCHAR" />
+    <result column="emailUserName" property="emailusername" jdbcType="VARCHAR" />
+    <result column="everyIndentLimit" property="everyindentlimit" jdbcType="INTEGER" />
+    <result column="gold" property="gold" jdbcType="BIT" />
+    <result column="goldMarketValue" property="goldmarketvalue" jdbcType="INTEGER" />
+    <result column="groupBuy" property="groupbuy" jdbcType="BIT" />
+    <result column="hotSearch" property="hotsearch" jdbcType="VARCHAR" />
+    <result column="imageFilesize" property="imagefilesize" jdbcType="INTEGER" />
+    <result column="imageSaveType" property="imagesavetype" jdbcType="VARCHAR" />
+    <result column="imageSuffix" property="imagesuffix" jdbcType="VARCHAR" />
+    <result column="indentComment" property="indentcomment" jdbcType="INTEGER" />
+    <result column="integral" property="integral" jdbcType="BIT" />
+    <result column="integralRate" property="integralrate" jdbcType="INTEGER" />
+    <result column="integralStore" property="integralstore" jdbcType="BIT" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="memberDayLogin" property="memberdaylogin" jdbcType="INTEGER" />
+    <result column="memberRegister" property="memberregister" jdbcType="INTEGER" />
+    <result column="middleHeight" property="middleheight" jdbcType="INTEGER" />
+    <result column="middleWidth" property="middlewidth" jdbcType="INTEGER" />
+    <result column="securityCodeConsult" property="securitycodeconsult" jdbcType="BIT" />
+    <result column="securityCodeLogin" property="securitycodelogin" jdbcType="BIT" />
+    <result column="securityCodeRegister" property="securitycoderegister" jdbcType="BIT" />
+    <result column="securityCodeType" property="securitycodetype" jdbcType="VARCHAR" />
+    <result column="smallHeight" property="smallheight" jdbcType="INTEGER" />
+    <result column="smallWidth" property="smallwidth" jdbcType="INTEGER" />
+    <result column="smsEnbale" property="smsenbale" jdbcType="BIT" />
+    <result column="sms_auth_token" property="smsAuthToken" jdbcType="VARCHAR" />
+    <result column="sms_port" property="smsPort" jdbcType="VARCHAR" />
+    <result column="sms_url" property="smsUrl" jdbcType="VARCHAR" />
+	<result column="cart_count_max" property="cartCountMax" jdbcType="INTEGER" />
+    <result column="sms_account_sid" property="smsAccountSid" jdbcType="VARCHAR" />
+	<result column="sms_app_id" property="smsAppId" jdbcType="VARCHAR" />
+    <result column="sms_exceed_time" property="smsExceedTime" jdbcType="VARCHAR" />
+    <result column="sms_send_interval" property="smsSendInterval" jdbcType="INTEGER" />
+	<result column="verification_code_length" property="verificationCodeLength" jdbcType="VARCHAR" />
+	<result column="sms_max_number" property="smsMaxNumber" jdbcType="INTEGER" />
+	<result column="store_allow" property="storeAllow" jdbcType="BIT" />
+    <result column="sysLanguage" property="syslanguage" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="uploadFilePath" property="uploadfilepath" jdbcType="VARCHAR" />
+    <result column="visitorConsult" property="visitorconsult" jdbcType="BIT" />
+    <result column="voucher" property="voucher" jdbcType="BIT" />
+    <result column="websiteName" property="websitename" jdbcType="VARCHAR" />
+    <result column="websiteState" property="websitestate" jdbcType="BIT" />
+    <result column="ztc_price" property="ztcPrice" jdbcType="INTEGER" />
+    <result column="ztc_status" property="ztcStatus" jdbcType="BIT" />
+    <result column="goodsImage_id" property="goodsimageId" jdbcType="BIGINT" />
+    <result column="memberIcon_id" property="membericonId" jdbcType="BIGINT" />
+    <result column="storeImage_id" property="storeimageId" jdbcType="BIGINT" />
+    <result column="websiteLogo_id" property="websitelogoId" jdbcType="BIGINT" />
+    <result column="domain_allow_count" property="domainAllowCount" jdbcType="INTEGER" />
+    <result column="second_domain_open" property="secondDomainOpen" jdbcType="BIT" />
+    <result column="qq_login" property="qqLogin" jdbcType="BIT" />
+    <result column="qq_login_id" property="qqLoginId" jdbcType="VARCHAR" />
+    <result column="qq_login_key" property="qqLoginKey" jdbcType="VARCHAR" />
+    <result column="sina_login" property="sinaLogin" jdbcType="BIT" />
+    <result column="sina_login_id" property="sinaLoginId" jdbcType="VARCHAR" />
+    <result column="sina_login_key" property="sinaLoginKey" jdbcType="VARCHAR" />
+    <result column="imageWebServer" property="imagewebserver" jdbcType="VARCHAR" />
+    <result column="lucene_update" property="luceneUpdate" jdbcType="TIMESTAMP" />
+    <result column="alipay_fenrun" property="alipayFenrun" jdbcType="INTEGER" />
+    <result column="balance_fenrun" property="balanceFenrun" jdbcType="INTEGER" />
+    <result column="auto_order_confirm" property="autoOrderConfirm" jdbcType="INTEGER" />
+    <result column="auto_order_notice" property="autoOrderNotice" jdbcType="INTEGER" />
+    <result column="bargain_maximum" property="bargainMaximum" jdbcType="INTEGER" />
+    <result column="bargain_rebate" property="bargainRebate" jdbcType="DECIMAL" />
+    <result column="bargain_status" property="bargainStatus" jdbcType="INTEGER" />
+    <result column="bargain_title" property="bargainTitle" jdbcType="VARCHAR" />
+    <result column="sys_delivery_maximum" property="sysDeliveryMaximum" jdbcType="INTEGER" />
+    <result column="uc_bbs" property="ucBbs" jdbcType="BIT" />
+	<result column="upload_root_path" property="uploadRootPath" jdbcType="VARCHAR" />
+    <result column="uc_api" property="ucApi" jdbcType="VARCHAR" />
+    <result column="uc_appid" property="ucAppid" jdbcType="VARCHAR" />
+    <result column="uc_database" property="ucDatabase" jdbcType="VARCHAR" />
+    <result column="uc_database_port" property="ucDatabasePort" jdbcType="VARCHAR" />
+    <result column="uc_database_pws" property="ucDatabasePws" jdbcType="VARCHAR" />
+    <result column="uc_database_url" property="ucDatabaseUrl" jdbcType="VARCHAR" />
+    <result column="uc_database_username" property="ucDatabaseUsername" jdbcType="VARCHAR" />
+    <result column="uc_ip" property="ucIp" jdbcType="VARCHAR" />
+    <result column="uc_key" property="ucKey" jdbcType="VARCHAR" />
+    <result column="uc_table_preffix" property="ucTablePreffix" jdbcType="VARCHAR" />
+    <result column="currency_code" property="currencyCode" jdbcType="VARCHAR" />
+    <result column="bargain_validity" property="bargainValidity" jdbcType="INTEGER" />
+    <result column="delivery_amount" property="deliveryAmount" jdbcType="INTEGER" />
+    <result column="delivery_status" property="deliveryStatus" jdbcType="INTEGER" />
+    <result column="delivery_title" property="deliveryTitle" jdbcType="VARCHAR" />
+    <result column="websiteCss" property="websitecss" jdbcType="VARCHAR" />
+    <result column="combin_amount" property="combinAmount" jdbcType="INTEGER" />
+    <result column="combin_count" property="combinCount" jdbcType="INTEGER" />
+    <result column="ztc_goods_view" property="ztcGoodsView" jdbcType="INTEGER" />
+    <result column="auto_order_evaluate" property="autoOrderEvaluate" jdbcType="INTEGER" />
+    <result column="auto_order_return" property="autoOrderReturn" jdbcType="INTEGER" />
+    <result column="weixin_store" property="weixinStore" jdbcType="BIT" />
+    <result column="weixin_amount" property="weixinAmount" jdbcType="INTEGER" />
+    <result column="config_payment_type" property="configPaymentType" jdbcType="INTEGER" />
+    <result column="weixin_account" property="weixinAccount" jdbcType="VARCHAR" />
+    <result column="weixin_appId" property="weixinAppid" jdbcType="VARCHAR" />
+    <result column="weixin_appSecret" property="weixinAppsecret" jdbcType="VARCHAR" />
+    <result column="weixin_token" property="weixinToken" jdbcType="VARCHAR" />
+    <result column="store_weixin_logo_id" property="storeWeixinLogoId" jdbcType="BIGINT" />
+    <result column="weixin_qr_img_id" property="weixinQrImgId" jdbcType="BIGINT" />
+    <result column="goods_class_count" property="goodsClassCount" jdbcType="INTEGER"/>
+     <result column="max_frequency_week" property="maxFrequencyWeek" jdbcType="INTEGER" />
+    <result column="max_number_week" property="maxNumberWeek" jdbcType="INTEGER" />
+    <result column="max_price" property="maxPrice" jdbcType="DECIMAL" />
+    <result column="min_pricce" property="minPricce" jdbcType="DECIMAL" />
+    <association property="memberIcon" column="memberIcon_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="goodsImage" column="goodsImage_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="storeImage" column="storeImage_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="websiteLogo" column="websiteLogo_id" javaType="com.amall.core.bean.Accessory" select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="memberIcon" column="memberIcon_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="goodsImage" column="goodsImage_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="storeImage" column="storeImage_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <association property="websiteLogo" column="websiteLogo_id" javaType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByPrimaryKey"/>
+    <collection property="loginImgs" column="loginImgs_id" ofType="com.amall.core.bean.Accessory" 
+    		select="com.amall.core.dao.AccessoryMapper.selectByExample"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.amall.core.bean.SysConfigWithBLOBs" extends="BaseResultMap" >
+    <result column="closeReason" property="closereason" jdbcType="LONGVARCHAR" />
+    <result column="codeStat" property="codestat" jdbcType="LONGVARCHAR" />
+    <result column="creditrule" property="creditrule" jdbcType="LONGVARCHAR" />
+    <result column="share_code" property="shareCode" jdbcType="LONGVARCHAR" />
+    <result column="store_payment" property="storePayment" jdbcType="LONGVARCHAR" />
+    <result column="templates" property="templates" jdbcType="LONGVARCHAR" />
+    <result column="user_creditrule" property="userCreditrule" jdbcType="LONGVARCHAR" />
+    <result column="sys_domain" property="sysDomain" jdbcType="LONGVARCHAR" />
+    <result column="qq_domain_code" property="qqDomainCode" jdbcType="LONGVARCHAR" />
+    <result column="sina_domain_code" property="sinaDomainCode" jdbcType="LONGVARCHAR" />
+    <result column="bargain_state" property="bargainState" jdbcType="LONGVARCHAR" />
+    <result column="service_qq_list" property="serviceQqList" jdbcType="LONGVARCHAR" />
+    <result column="service_telphone_list" property="serviceTelphoneList" jdbcType="LONGVARCHAR" />
+    <result column="kuaidi_id" property="kuaidiId" jdbcType="LONGVARCHAR" />
+    <result column="weixin_welecome_content" property="weixinWelecomeContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+      id, addTime, deleteStatus, address, bigHeight, bigWidth, complaint_time, consumptionRatio, 
+    copyRight, deposit, description, emailEnable, emailHost, emailPort, emailPws, emailTest, 
+    emailUser, emailUserName, everyIndentLimit, gold, goldMarketValue, groupBuy, hotSearch, 
+    imageFilesize, imageSaveType, imageSuffix, indentComment, integral, integralRate, 
+    integralStore, keywords, memberDayLogin, memberRegister, middleHeight, middleWidth, 
+    securityCodeConsult, securityCodeLogin, securityCodeRegister, securityCodeType, smallHeight, 
+    smallWidth, smsEnbale, sms_auth_token, sms_port, sms_url, sms_app_id, sms_account_sid, store_allow, sysLanguage, 
+    sms_exceed_time, verification_code_length,sms_max_number,sms_send_interval, upload_root_path,
+	title, uploadFilePath, visitorConsult, voucher, websiteName, websiteState, ztc_price, 
+    ztc_status, goodsImage_id, memberIcon_id, storeImage_id, websiteLogo_id, domain_allow_count, 
+    second_domain_open, qq_login, qq_login_id, qq_login_key, sina_login, sina_login_id, 
+    sina_login_key, imageWebServer, lucene_update, alipay_fenrun, balance_fenrun, auto_order_confirm, 
+    auto_order_notice, bargain_maximum, bargain_rebate, bargain_status, bargain_title, 
+    sys_delivery_maximum, uc_bbs, uc_api, uc_appid, uc_database, uc_database_port, uc_database_pws, 
+    uc_database_url, uc_database_username, uc_ip, uc_key, uc_table_preffix, currency_code, 
+    bargain_validity, delivery_amount, delivery_status, delivery_title, websiteCss, combin_amount, 
+    combin_count, ztc_goods_view, auto_order_evaluate, auto_order_return, weixin_store, 
+    weixin_amount, config_payment_type, weixin_account, weixin_appId, weixin_appSecret, 
+    weixin_token, store_weixin_logo_id, weixin_qr_img_id,goods_class_count, cart_count_max, 
+    max_frequency_week, max_number_week, max_price, min_pricce
+  </sql>
+  <cache/>
+  <sql id="Blob_Column_List" >
+    closeReason, codeStat, creditrule, share_code, store_payment, templates, user_creditrule, 
+    sys_domain, qq_domain_code, sina_domain_code, bargain_state, service_qq_list, service_telphone_list, 
+    kuaidi_id, weixin_welecome_content
+  </sql>
+  <select   id="selectByExampleWithBLOBs" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.SysConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_sysconfig
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByExampleWithBLOBsAndPage" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="com.amall.core.bean.SysConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_sysconfig
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+	 limit #{startRow},#{pageSize}
+	</if>
+  </select>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.SysConfigExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_sysconfig
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from amall_sysconfig
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_sysconfig
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.SysConfigExample" >
+    delete from amall_sysconfig
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.SysConfigWithBLOBs" >
+    insert into amall_sysconfig (  id, addTime, deleteStatus, 
+      address, bigHeight, bigWidth, 
+      complaint_time, consumptionRatio, copyRight, 
+      deposit, description, emailEnable, 
+      emailHost, emailPort, emailPws, upload_root_path,
+      emailTest, emailUser, emailUserName, 
+      everyIndentLimit, gold, goldMarketValue, 
+      groupBuy, hotSearch, imageFilesize, 
+      imageSaveType, imageSuffix, indentComment, 
+      integral, integralRate, integralStore, 
+      keywords, memberDayLogin, memberRegister, 
+      middleHeight, middleWidth, securityCodeConsult, 
+      securityCodeLogin, securityCodeRegister, securityCodeType, 
+      smallHeight, smallWidth, smsEnbale, sms_max_number,
+      sms_auth_token, sms_port, sms_url, sms_app_id,
+	  sms_exceed_time, verification_code_length,
+      sms_account_sid, store_allow, sysLanguage, 
+      title, uploadFilePath, visitorConsult, 
+      voucher, websiteName, websiteState,sms_send_interval, 
+      ztc_price, ztc_status, goodsImage_id, 
+      memberIcon_id, storeImage_id, websiteLogo_id, 
+      domain_allow_count, second_domain_open, qq_login, 
+      qq_login_id, qq_login_key, sina_login, 
+      sina_login_id, sina_login_key, imageWebServer, 
+      lucene_update, alipay_fenrun, balance_fenrun, 
+      auto_order_confirm, auto_order_notice, bargain_maximum, 
+      bargain_rebate, bargain_status, bargain_title, 
+      sys_delivery_maximum, uc_bbs, uc_api, 
+      uc_appid, uc_database, uc_database_port, 
+      uc_database_pws, uc_database_url, uc_database_username, 
+      uc_ip, uc_key, uc_table_preffix, cart_count_max, 
+      currency_code, bargain_validity, delivery_amount, 
+      delivery_status, delivery_title, websiteCss, 
+      combin_amount, combin_count, ztc_goods_view, 
+      auto_order_evaluate, auto_order_return, weixin_store, 
+      weixin_amount, config_payment_type, weixin_account, 
+      weixin_appId, weixin_appSecret, weixin_token, 
+      store_weixin_logo_id, weixin_qr_img_id, closeReason, 
+      codeStat, creditrule, max_frequency_week, max_number_week, 
+      max_price, min_pricce, share_code, 
+      store_payment, templates, user_creditrule, 
+      sys_domain, qq_domain_code, sina_domain_code, 
+      bargain_state, service_qq_list, service_telphone_list, 
+      kuaidi_id, weixin_welecome_content,goods_class_count
+      )
+    values (#{id,jdbcType=BIGINT}, #{addtime,jdbcType=TIMESTAMP}, #{deletestatus,jdbcType=BIT}, 
+      #{address,jdbcType=VARCHAR}, #{bigheight,jdbcType=INTEGER}, #{bigwidth,jdbcType=INTEGER}, 
+      #{complaintTime,jdbcType=INTEGER}, #{consumptionratio,jdbcType=INTEGER}, #{copyright,jdbcType=VARCHAR}, 
+      #{deposit,jdbcType=BIT}, #{description,jdbcType=VARCHAR}, #{emailenable,jdbcType=BIT}, 
+      #{emailhost,jdbcType=VARCHAR}, #{emailport,jdbcType=INTEGER}, #{emailpws,jdbcType=VARCHAR}, 
+      #{emailtest,jdbcType=VARCHAR}, #{emailuser,jdbcType=VARCHAR}, #{emailusername,jdbcType=VARCHAR}, 
+      #{everyindentlimit,jdbcType=INTEGER}, #{gold,jdbcType=BIT}, #{goldmarketvalue,jdbcType=INTEGER}, 
+      #{groupbuy,jdbcType=BIT}, #{hotsearch,jdbcType=VARCHAR}, #{imagefilesize,jdbcType=INTEGER}, 
+      #{imagesavetype,jdbcType=VARCHAR}, #{imagesuffix,jdbcType=VARCHAR}, #{indentcomment,jdbcType=INTEGER}, 
+      #{integral,jdbcType=BIT}, #{integralrate,jdbcType=INTEGER}, #{integralstore,jdbcType=BIT}, 
+      #{keywords,jdbcType=VARCHAR}, #{memberdaylogin,jdbcType=INTEGER}, #{memberregister,jdbcType=INTEGER}, 
+      #{middleheight,jdbcType=INTEGER}, #{middlewidth,jdbcType=INTEGER}, #{securitycodeconsult,jdbcType=BIT}, 
+      #{securitycodelogin,jdbcType=BIT}, #{securitycoderegister,jdbcType=BIT}, #{securitycodetype,jdbcType=VARCHAR}, 
+      #{smallheight,jdbcType=INTEGER}, #{smallwidth,jdbcType=INTEGER}, #{smsenbale,jdbcType=BIT}, 
+      #{smsAuthToken,jdbcType=VARCHAR}, #{smsPort,jdbcType=VARCHAR}, #{smsUrl,jdbcType=VARCHAR}, 
+      #{smsAccountSid,jdbcType=VARCHAR}, #{smsAppId,jdbcType=VARCHAR}, #{smsMaxNumber,jdbcType=INTEGER},
+	  #{smsExceedTime,jdbcType=VARCHAR}, #{verificationCodeLength,jdbcType=VARCHAR}, #{cartCountMax,jdbcType=INTEGER},
+	  #{storeAllow,jdbcType=BIT}, #{syslanguage,jdbcType=VARCHAR}, #{smsSendInterval,jdbcType=INTEGER},
+      #{title,jdbcType=VARCHAR}, #{uploadfilepath,jdbcType=VARCHAR}, #{visitorconsult,jdbcType=BIT}, 
+      #{voucher,jdbcType=BIT}, #{websitename,jdbcType=VARCHAR}, #{websitestate,jdbcType=BIT}, 
+      #{ztcPrice,jdbcType=INTEGER}, #{ztcStatus,jdbcType=BIT}, #{goodsimageId,jdbcType=BIGINT}, 
+      #{membericonId,jdbcType=BIGINT}, #{storeimageId,jdbcType=BIGINT}, #{websitelogoId,jdbcType=BIGINT}, 
+      #{domainAllowCount,jdbcType=INTEGER}, #{secondDomainOpen,jdbcType=BIT}, #{qqLogin,jdbcType=BIT}, 
+      #{qqLoginId,jdbcType=VARCHAR}, #{qqLoginKey,jdbcType=VARCHAR}, #{sinaLogin,jdbcType=BIT}, 
+      #{sinaLoginId,jdbcType=VARCHAR}, #{sinaLoginKey,jdbcType=VARCHAR}, #{imagewebserver,jdbcType=VARCHAR}, 
+      #{luceneUpdate,jdbcType=TIMESTAMP}, #{alipayFenrun,jdbcType=INTEGER}, #{balanceFenrun,jdbcType=INTEGER}, 
+      #{autoOrderConfirm,jdbcType=INTEGER}, #{autoOrderNotice,jdbcType=INTEGER}, #{bargainMaximum,jdbcType=INTEGER}, 
+      #{bargainRebate,jdbcType=DECIMAL}, #{bargainStatus,jdbcType=INTEGER}, #{bargainTitle,jdbcType=VARCHAR}, 
+      #{sysDeliveryMaximum,jdbcType=INTEGER}, #{ucBbs,jdbcType=BIT}, #{ucApi,jdbcType=VARCHAR}, 
+      #{ucAppid,jdbcType=VARCHAR}, #{ucDatabase,jdbcType=VARCHAR}, #{ucDatabasePort,jdbcType=VARCHAR}, 
+      #{ucDatabasePws,jdbcType=VARCHAR}, #{ucDatabaseUrl,jdbcType=VARCHAR}, #{ucDatabaseUsername,jdbcType=VARCHAR}, 
+      #{ucIp,jdbcType=VARCHAR}, #{ucKey,jdbcType=VARCHAR}, #{ucTablePreffix,jdbcType=VARCHAR}, #{uploadRootPath,jdbcType=VARCHAR},
+      #{currencyCode,jdbcType=VARCHAR}, #{bargainValidity,jdbcType=INTEGER}, #{deliveryAmount,jdbcType=INTEGER}, 
+      #{deliveryStatus,jdbcType=INTEGER}, #{deliveryTitle,jdbcType=VARCHAR}, #{websitecss,jdbcType=VARCHAR}, 
+      #{combinAmount,jdbcType=INTEGER}, #{combinCount,jdbcType=INTEGER}, #{ztcGoodsView,jdbcType=INTEGER}, 
+      #{autoOrderEvaluate,jdbcType=INTEGER}, #{autoOrderReturn,jdbcType=INTEGER}, #{weixinStore,jdbcType=BIT}, 
+      #{weixinAmount,jdbcType=INTEGER}, #{configPaymentType,jdbcType=INTEGER}, #{weixinAccount,jdbcType=VARCHAR}, 
+      #{weixinAppid,jdbcType=VARCHAR}, #{weixinAppsecret,jdbcType=VARCHAR}, #{weixinToken,jdbcType=VARCHAR}, 
+      #{storeWeixinLogoId,jdbcType=BIGINT}, #{weixinQrImgId,jdbcType=BIGINT}, #{closereason,jdbcType=LONGVARCHAR}, 
+      #{codestat,jdbcType=LONGVARCHAR}, #{creditrule,jdbcType=LONGVARCHAR}, #{shareCode,jdbcType=LONGVARCHAR}, 
+      #{storePayment,jdbcType=LONGVARCHAR}, #{templates,jdbcType=LONGVARCHAR}, #{userCreditrule,jdbcType=LONGVARCHAR}, 
+      #{sysDomain,jdbcType=LONGVARCHAR}, #{qqDomainCode,jdbcType=LONGVARCHAR}, #{sinaDomainCode,jdbcType=LONGVARCHAR}, 
+      #{bargainState,jdbcType=LONGVARCHAR}, #{serviceQqList,jdbcType=LONGVARCHAR}, #{serviceTelphoneList,jdbcType=LONGVARCHAR}, 
+      #{kuaidiId,jdbcType=LONGVARCHAR}, #{weixinWelecomeContent,jdbcType=LONGVARCHAR}, #{maxFrequencyWeek,jdbcType=INTEGER}, #{maxNumberWeek,jdbcType=INTEGER}, 
+      #{maxPrice,jdbcType=DECIMAL}, #{minPricce,jdbcType=DECIMAL}, #{goodsClassCount,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.amall.core.bean.SysConfigWithBLOBs" >
+    
+    insert into amall_sysconfig
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="addtime != null" >
+        addTime,
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="bigheight != null" >
+        bigHeight,
+      </if>
+      <if test="bigwidth != null" >
+        bigWidth,
+      </if>
+      <if test="complaintTime != null" >
+        complaint_time,
+      </if>
+      <if test="consumptionratio != null" >
+        consumptionRatio,
+      </if>
+      <if test="copyright != null" >
+        copyRight,
+      </if>
+      <if test="deposit != null" >
+        deposit,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="emailenable != null" >
+        emailEnable,
+      </if>
+      <if test="emailhost != null" >
+        emailHost,
+      </if>
+      <if test="emailport != null" >
+        emailPort,
+      </if>
+      <if test="emailpws != null" >
+        emailPws,
+      </if>
+      <if test="emailtest != null" >
+        emailTest,
+      </if>
+      <if test="emailuser != null" >
+        emailUser,
+      </if>
+      <if test="emailusername != null" >
+        emailUserName,
+      </if>
+      <if test="everyindentlimit != null" >
+        everyIndentLimit,
+      </if>
+      <if test="gold != null" >
+        gold,
+      </if>
+      <if test="goldmarketvalue != null" >
+        goldMarketValue,
+      </if>
+      <if test="groupbuy != null" >
+        groupBuy,
+      </if>
+      <if test="hotsearch != null" >
+        hotSearch,
+      </if>
+      <if test="imagefilesize != null" >
+        imageFilesize,
+      </if>
+      <if test="imagesavetype != null" >
+        imageSaveType,
+      </if>
+      <if test="imagesuffix != null" >
+        imageSuffix,
+      </if>
+      <if test="indentcomment != null" >
+        indentComment,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="integralrate != null" >
+        integralRate,
+      </if>
+      <if test="integralstore != null" >
+        integralStore,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="memberdaylogin != null" >
+        memberDayLogin,
+      </if>
+      <if test="memberregister != null" >
+        memberRegister,
+      </if>
+      <if test="middleheight != null" >
+        middleHeight,
+      </if>
+      <if test="middlewidth != null" >
+        middleWidth,
+      </if>
+      <if test="securitycodeconsult != null" >
+        securityCodeConsult,
+      </if>
+      <if test="securitycodelogin != null" >
+        securityCodeLogin,
+      </if>
+      <if test="securitycoderegister != null" >
+        securityCodeRegister,
+      </if>
+      <if test="securitycodetype != null" >
+        securityCodeType,
+      </if>
+      <if test="smallheight != null" >
+        smallHeight,
+      </if>
+      <if test="smallwidth != null" >
+        smallWidth,
+      </if>
+      <if test="smsenbale != null" >
+        smsEnbale,
+      </if>
+      <if test="smsAuthToken != null" >
+        sms_auth_token,
+      </if>
+      <if test="smsPort != null" >
+        sms_port,
+      </if>
+      <if test="smsUrl != null" >
+        sms_url,
+      </if>
+      <if test="smsAccountSid != null" >
+        sms_account_sid,
+      </if>
+	  <if test="smsAppId != null" >
+         sms_app_id,
+      </if>
+	  <if test="smsExceedTime != null" >
+        sms_exceed_time,
+      </if>
+      <if test="verificationCodeLength != null" >
+        verification_code_length,
+      </if>
+	  <if test="smsMaxNumber != null" >
+        sms_max_number,
+      </if>
+	  <if test="smsSendInterval != null" >
+        sms_send_interval,
+      </if>
+	  <if test="cartCountMax != null" >
+        cart_count_max,
+      </if>
+      <if test="storeAllow != null" >
+        store_allow,
+      </if>
+      <if test="syslanguage != null" >
+        sysLanguage,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="uploadfilepath != null" >
+        uploadFilePath,
+      </if>
+      <if test="visitorconsult != null" >
+        visitorConsult,
+      </if>
+      <if test="voucher != null" >
+        voucher,
+      </if>
+      <if test="websitename != null" >
+        websiteName,
+      </if>
+      <if test="websitestate != null" >
+        websiteState,
+      </if>
+      <if test="ztcPrice != null" >
+        ztc_price,
+      </if>
+      <if test="ztcStatus != null" >
+        ztc_status,
+      </if>
+      <if test="goodsimageId != null" >
+        goodsImage_id,
+      </if>
+      <if test="membericonId != null" >
+        memberIcon_id,
+      </if>
+      <if test="storeimageId != null" >
+        storeImage_id,
+      </if>
+      <if test="websitelogoId != null" >
+        websiteLogo_id,
+      </if>
+      <if test="domainAllowCount != null" >
+        domain_allow_count,
+      </if>
+      <if test="secondDomainOpen != null" >
+        second_domain_open,
+      </if>
+      <if test="qqLogin != null" >
+        qq_login,
+      </if>
+      <if test="qqLoginId != null" >
+        qq_login_id,
+      </if>
+      <if test="qqLoginKey != null" >
+        qq_login_key,
+      </if>
+      <if test="sinaLogin != null" >
+        sina_login,
+      </if>
+      <if test="sinaLoginId != null" >
+        sina_login_id,
+      </if>
+      <if test="sinaLoginKey != null" >
+        sina_login_key,
+      </if>
+      <if test="imagewebserver != null" >
+        imageWebServer,
+      </if>
+      <if test="luceneUpdate != null" >
+        lucene_update,
+      </if>
+      <if test="alipayFenrun != null" >
+        alipay_fenrun,
+      </if>
+      <if test="balanceFenrun != null" >
+        balance_fenrun,
+      </if>
+      <if test="autoOrderConfirm != null" >
+        auto_order_confirm,
+      </if>
+      <if test="autoOrderNotice != null" >
+        auto_order_notice,
+      </if>
+      <if test="bargainMaximum != null" >
+        bargain_maximum,
+      </if>
+      <if test="bargainRebate != null" >
+        bargain_rebate,
+      </if>
+      <if test="bargainStatus != null" >
+        bargain_status,
+      </if>
+      <if test="bargainTitle != null" >
+        bargain_title,
+      </if>
+      <if test="sysDeliveryMaximum != null" >
+        sys_delivery_maximum,
+      </if>
+	  <if test="uploadRootPath != null" >
+        upload_root_path,
+      </if>
+      <if test="ucBbs != null" >
+        uc_bbs,
+      </if>
+      <if test="ucApi != null" >
+        uc_api,
+      </if>
+      <if test="ucAppid != null" >
+        uc_appid,
+      </if>
+      <if test="ucDatabase != null" >
+        uc_database,
+      </if>
+      <if test="ucDatabasePort != null" >
+        uc_database_port,
+      </if>
+      <if test="ucDatabasePws != null" >
+        uc_database_pws,
+      </if>
+      <if test="ucDatabaseUrl != null" >
+        uc_database_url,
+      </if>
+      <if test="ucDatabaseUsername != null" >
+        uc_database_username,
+      </if>
+      <if test="ucIp != null" >
+        uc_ip,
+      </if>
+      <if test="ucKey != null" >
+        uc_key,
+      </if>
+      <if test="ucTablePreffix != null" >
+        uc_table_preffix,
+      </if>
+      <if test="currencyCode != null" >
+        currency_code,
+      </if>
+      <if test="bargainValidity != null" >
+        bargain_validity,
+      </if>
+      <if test="deliveryAmount != null" >
+        delivery_amount,
+      </if>
+      <if test="deliveryStatus != null" >
+        delivery_status,
+      </if>
+      <if test="deliveryTitle != null" >
+        delivery_title,
+      </if>
+      <if test="websitecss != null" >
+        websiteCss,
+      </if>
+      <if test="combinAmount != null" >
+        combin_amount,
+      </if>
+      <if test="combinCount != null" >
+        combin_count,
+      </if>
+       <if test="maxFrequencyWeek != null" >
+        max_frequency_week,
+      </if>
+      <if test="maxNumberWeek != null" >
+        max_number_week,
+      </if>
+      <if test="maxPrice != null" >
+        max_price,
+      </if>
+      <if test="minPricce != null" >
+        min_pricce,
+      </if>
+      <if test="ztcGoodsView != null" >
+        ztc_goods_view,
+      </if>
+      <if test="autoOrderEvaluate != null" >
+        auto_order_evaluate,
+      </if>
+      <if test="autoOrderReturn != null" >
+        auto_order_return,
+      </if>
+      <if test="weixinStore != null" >
+        weixin_store,
+      </if>
+      <if test="weixinAmount != null" >
+        weixin_amount,
+      </if>
+      <if test="configPaymentType != null" >
+        config_payment_type,
+      </if>
+      <if test="weixinAccount != null" >
+        weixin_account,
+      </if>
+      <if test="weixinAppid != null" >
+        weixin_appId,
+      </if>
+      <if test="weixinAppsecret != null" >
+        weixin_appSecret,
+      </if>
+      <if test="weixinToken != null" >
+        weixin_token,
+      </if>
+      <if test="storeWeixinLogoId != null" >
+        store_weixin_logo_id,
+      </if>
+      <if test="weixinQrImgId != null" >
+        weixin_qr_img_id,
+      </if>
+      <if test="closereason != null" >
+        closeReason,
+      </if>
+      <if test="codestat != null" >
+        codeStat,
+      </if>
+      <if test="creditrule != null" >
+        creditrule,
+      </if>
+      <if test="shareCode != null" >
+        share_code,
+      </if>
+      <if test="storePayment != null" >
+        store_payment,
+      </if>
+      <if test="templates != null" >
+        templates,
+      </if>
+      <if test="userCreditrule != null" >
+        user_creditrule,
+      </if>
+      <if test="sysDomain != null" >
+        sys_domain,
+      </if>
+      <if test="qqDomainCode != null" >
+        qq_domain_code,
+      </if>
+      <if test="sinaDomainCode != null" >
+        sina_domain_code,
+      </if>
+      <if test="bargainState != null" >
+        bargain_state,
+      </if>
+      <if test="serviceQqList != null" >
+        service_qq_list,
+      </if>
+      <if test="serviceTelphoneList != null" >
+        service_telphone_list,
+      </if>
+      <if test="kuaidiId != null" >
+        kuaidi_id,
+      </if>
+      <if test="weixinWelecomeContent != null" >
+        weixin_welecome_content,
+      </if>
+      <if test="goodsClassCount != null">
+      	goods_class_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="bigheight != null" >
+        #{bigheight,jdbcType=INTEGER},
+      </if>
+      <if test="bigwidth != null" >
+        #{bigwidth,jdbcType=INTEGER},
+      </if>
+      <if test="complaintTime != null" >
+        #{complaintTime,jdbcType=INTEGER},
+      </if>
+      <if test="consumptionratio != null" >
+        #{consumptionratio,jdbcType=INTEGER},
+      </if>
+      <if test="copyright != null" >
+        #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="deposit != null" >
+        #{deposit,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="emailenable != null" >
+        #{emailenable,jdbcType=BIT},
+      </if>
+      <if test="emailhost != null" >
+        #{emailhost,jdbcType=VARCHAR},
+      </if>
+      <if test="emailport != null" >
+        #{emailport,jdbcType=INTEGER},
+      </if>
+      <if test="emailpws != null" >
+        #{emailpws,jdbcType=VARCHAR},
+      </if>
+      <if test="emailtest != null" >
+        #{emailtest,jdbcType=VARCHAR},
+      </if>
+      <if test="emailuser != null" >
+        #{emailuser,jdbcType=VARCHAR},
+      </if>
+      <if test="emailusername != null" >
+        #{emailusername,jdbcType=VARCHAR},
+      </if>
+      <if test="everyindentlimit != null" >
+        #{everyindentlimit,jdbcType=INTEGER},
+      </if>
+      <if test="gold != null" >
+        #{gold,jdbcType=BIT},
+      </if>
+      <if test="goldmarketvalue != null" >
+        #{goldmarketvalue,jdbcType=INTEGER},
+      </if>
+      <if test="groupbuy != null" >
+        #{groupbuy,jdbcType=BIT},
+      </if>
+      <if test="hotsearch != null" >
+        #{hotsearch,jdbcType=VARCHAR},
+      </if>
+      <if test="imagefilesize != null" >
+        #{imagefilesize,jdbcType=INTEGER},
+      </if>
+      <if test="imagesavetype != null" >
+        #{imagesavetype,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesuffix != null" >
+        #{imagesuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="indentcomment != null" >
+        #{indentcomment,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        #{integral,jdbcType=BIT},
+      </if>
+      <if test="integralrate != null" >
+        #{integralrate,jdbcType=INTEGER},
+      </if>
+      <if test="integralstore != null" >
+        #{integralstore,jdbcType=BIT},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="memberdaylogin != null" >
+        #{memberdaylogin,jdbcType=INTEGER},
+      </if>
+      <if test="memberregister != null" >
+        #{memberregister,jdbcType=INTEGER},
+      </if>
+      <if test="middleheight != null" >
+        #{middleheight,jdbcType=INTEGER},
+      </if>
+      <if test="middlewidth != null" >
+        #{middlewidth,jdbcType=INTEGER},
+      </if>
+      <if test="securitycodeconsult != null" >
+        #{securitycodeconsult,jdbcType=BIT},
+      </if>
+      <if test="securitycodelogin != null" >
+        #{securitycodelogin,jdbcType=BIT},
+      </if>
+      <if test="securitycoderegister != null" >
+        #{securitycoderegister,jdbcType=BIT},
+      </if>
+      <if test="securitycodetype != null" >
+        #{securitycodetype,jdbcType=VARCHAR},
+      </if>
+      <if test="smallheight != null" >
+        #{smallheight,jdbcType=INTEGER},
+      </if>
+      <if test="smallwidth != null" >
+        #{smallwidth,jdbcType=INTEGER},
+      </if>
+      <if test="smsenbale != null" >
+        #{smsenbale,jdbcType=BIT},
+      </if>
+      <if test="smsAuthToken != null" >
+        #{smsAuthToken,jdbcType=VARCHAR},
+      </if>
+      <if test="smsPort != null" >
+        #{smsPort,jdbcType=VARCHAR},
+      </if>
+      <if test="smsUrl != null" >
+        #{smsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="smsAccountSid != null" >
+        #{smsAccountSid,jdbcType=VARCHAR},
+      </if>	
+	  <if test="smsAppId != null" >
+        #{smsAppId,jdbcType=VARCHAR},
+      </if>
+	  <if test="smsExceedTime != null" >
+        #{smsExceedTime,jdbcType=VARCHAR},
+      </if>
+	  <if test="smsMaxNumber != null" >
+        #{smsMaxNumber,jdbcType=INTEGER},
+      </if>
+	  <if test="smsSendInterval != null" >
+        #{smsSendInterval,jdbcType=INTEGER},
+      </if>
+      <if test="verificationCodeLength != null" >
+        #{verificationCodeLength,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAllow != null" >
+        #{storeAllow,jdbcType=BIT},
+      </if>
+      <if test="syslanguage != null" >
+        #{syslanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadfilepath != null" >
+        #{uploadfilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorconsult != null" >
+        #{visitorconsult,jdbcType=BIT},
+      </if>
+      <if test="voucher != null" >
+        #{voucher,jdbcType=BIT},
+      </if>
+      <if test="websitename != null" >
+        #{websitename,jdbcType=VARCHAR},
+      </if>
+      <if test="websitestate != null" >
+        #{websitestate,jdbcType=BIT},
+      </if>
+      <if test="ztcPrice != null" >
+        #{ztcPrice,jdbcType=INTEGER},
+      </if>
+      <if test="ztcStatus != null" >
+        #{ztcStatus,jdbcType=BIT},
+      </if>
+      <if test="goodsimageId != null" >
+        #{goodsimageId,jdbcType=BIGINT},
+      </if>
+      <if test="membericonId != null" >
+        #{membericonId,jdbcType=BIGINT},
+      </if>
+      <if test="storeimageId != null" >
+        #{storeimageId,jdbcType=BIGINT},
+      </if>
+      <if test="websitelogoId != null" >
+        #{websitelogoId,jdbcType=BIGINT},
+      </if>
+      <if test="domainAllowCount != null" >
+        #{domainAllowCount,jdbcType=INTEGER},
+      </if>
+      <if test="secondDomainOpen != null" >
+        #{secondDomainOpen,jdbcType=BIT},
+      </if>
+      <if test="qqLogin != null" >
+        #{qqLogin,jdbcType=BIT},
+      </if>
+      <if test="qqLoginId != null" >
+        #{qqLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="qqLoginKey != null" >
+        #{qqLoginKey,jdbcType=VARCHAR},
+      </if>
+      <if test="sinaLogin != null" >
+        #{sinaLogin,jdbcType=BIT},
+      </if>
+      <if test="sinaLoginId != null" >
+        #{sinaLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="sinaLoginKey != null" >
+        #{sinaLoginKey,jdbcType=VARCHAR},
+      </if>
+      <if test="imagewebserver != null" >
+        #{imagewebserver,jdbcType=VARCHAR},
+      </if>
+      <if test="luceneUpdate != null" >
+        #{luceneUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alipayFenrun != null" >
+        #{alipayFenrun,jdbcType=INTEGER},
+      </if>
+      <if test="balanceFenrun != null" >
+        #{balanceFenrun,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderConfirm != null" >
+        #{autoOrderConfirm,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderNotice != null" >
+        #{autoOrderNotice,jdbcType=INTEGER},
+      </if>
+      <if test="bargainMaximum != null" >
+        #{bargainMaximum,jdbcType=INTEGER},
+      </if>
+      <if test="bargainRebate != null" >
+        #{bargainRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="bargainStatus != null" >
+        #{bargainStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bargainTitle != null" >
+        #{bargainTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDeliveryMaximum != null" >
+        #{sysDeliveryMaximum,jdbcType=INTEGER},
+      </if>
+      <if test="ucBbs != null" >
+        #{ucBbs,jdbcType=BIT},
+      </if>
+      <if test="ucApi != null" >
+        #{ucApi,jdbcType=VARCHAR},
+      </if>
+      <if test="ucAppid != null" >
+        #{ucAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabase != null" >
+        #{ucDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabasePort != null" >
+        #{ucDatabasePort,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabasePws != null" >
+        #{ucDatabasePws,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabaseUrl != null" >
+        #{ucDatabaseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabaseUsername != null" >
+        #{ucDatabaseUsername,jdbcType=VARCHAR},
+      </if>
+	  <if test="uploadRootPath != null" >
+        #{uploadRootPath,jdbcType=VARCHAR},
+      </if>
+      <if test="ucIp != null" >
+        #{ucIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ucKey != null" >
+        #{ucKey,jdbcType=VARCHAR},
+      </if>
+      <if test="ucTablePreffix != null" >
+        #{ucTablePreffix,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyCode != null" >
+        #{currencyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bargainValidity != null" >
+        #{bargainValidity,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryAmount != null" >
+        #{deliveryAmount,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryStatus != null" >
+        #{deliveryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryTitle != null" >
+        #{deliveryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="websitecss != null" >
+        #{websitecss,jdbcType=VARCHAR},
+      </if>
+      <if test="combinAmount != null" >
+        #{combinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="combinCount != null" >
+        #{combinCount,jdbcType=INTEGER},
+      </if>
+      <if test="ztcGoodsView != null" >
+        #{ztcGoodsView,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderEvaluate != null" >
+        #{autoOrderEvaluate,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderReturn != null" >
+        #{autoOrderReturn,jdbcType=INTEGER},
+      </if>
+      <if test="weixinStore != null" >
+        #{weixinStore,jdbcType=BIT},
+      </if>
+      <if test="weixinAmount != null" >
+        #{weixinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="configPaymentType != null" >
+        #{configPaymentType,jdbcType=INTEGER},
+      </if>
+      <if test="weixinAccount != null" >
+        #{weixinAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAppid != null" >
+        #{weixinAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAppsecret != null" >
+        #{weixinAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinToken != null" >
+        #{weixinToken,jdbcType=VARCHAR},
+      </if>
+      <if test="storeWeixinLogoId != null" >
+        #{storeWeixinLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinQrImgId != null" >
+        #{weixinQrImgId,jdbcType=BIGINT},
+      </if>
+      <if test="maxFrequencyWeek != null" >
+        #{maxFrequencyWeek,jdbcType=INTEGER},
+      </if>
+      <if test="maxNumberWeek != null" >
+        #{maxNumberWeek,jdbcType=INTEGER},
+      </if>
+      <if test="maxPrice != null" >
+        #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPricce != null" >
+        #{minPricce,jdbcType=DECIMAL},
+      </if>
+      <if test="closereason != null" >
+        #{closereason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="codestat != null" >
+        #{codestat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="creditrule != null" >
+        #{creditrule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shareCode != null" >
+        #{shareCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="storePayment != null" >
+        #{storePayment,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="templates != null" >
+        #{templates,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userCreditrule != null" >
+        #{userCreditrule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sysDomain != null" >
+        #{sysDomain,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="qqDomainCode != null" >
+        #{qqDomainCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sinaDomainCode != null" >
+        #{sinaDomainCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bargainState != null" >
+        #{bargainState,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceQqList != null" >
+        #{serviceQqList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceTelphoneList != null" >
+        #{serviceTelphoneList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="kuaidiId != null" >
+        #{kuaidiId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weixinWelecomeContent != null" >
+        #{weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      </if>
+	  <if test="cartCountMax != null" >
+        #{cartCountMax,jdbcType=INTEGER},
+      </if>
+      <if test="goodsClassCount != null">
+      	#{goodsClassCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.SysConfigExample" resultType="java.lang.Integer" >
+    select count(*) from amall_sysconfig
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_sysconfig
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.addtime != null" >
+        addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletestatus != null" >
+        deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bigheight != null" >
+        bigHeight = #{record.bigheight,jdbcType=INTEGER},
+      </if>
+      <if test="record.bigwidth != null" >
+        bigWidth = #{record.bigwidth,jdbcType=INTEGER},
+      </if>
+      <if test="record.complaintTime != null" >
+        complaint_time = #{record.complaintTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.consumptionratio != null" >
+        consumptionRatio = #{record.consumptionratio,jdbcType=INTEGER},
+      </if>
+      <if test="record.copyright != null" >
+        copyRight = #{record.copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deposit != null" >
+        deposit = #{record.deposit,jdbcType=BIT},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailenable != null" >
+        emailEnable = #{record.emailenable,jdbcType=BIT},
+      </if>
+      <if test="record.emailhost != null" >
+        emailHost = #{record.emailhost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailport != null" >
+        emailPort = #{record.emailport,jdbcType=INTEGER},
+      </if>
+      <if test="record.emailpws != null" >
+        emailPws = #{record.emailpws,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailtest != null" >
+        emailTest = #{record.emailtest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailuser != null" >
+        emailUser = #{record.emailuser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emailusername != null" >
+        emailUserName = #{record.emailusername,jdbcType=VARCHAR},
+      </if>
+	  <if test="record.uploadRootPath != null" >
+        upload_root_path = #{record.uploadRootPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.everyindentlimit != null" >
+        everyIndentLimit = #{record.everyindentlimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.gold != null" >
+        gold = #{record.gold,jdbcType=BIT},
+      </if>
+      <if test="record.goldmarketvalue != null" >
+        goldMarketValue = #{record.goldmarketvalue,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupbuy != null" >
+        groupBuy = #{record.groupbuy,jdbcType=BIT},
+      </if>
+      <if test="record.hotsearch != null" >
+        hotSearch = #{record.hotsearch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagefilesize != null" >
+        imageFilesize = #{record.imagefilesize,jdbcType=INTEGER},
+      </if>
+      <if test="record.imagesavetype != null" >
+        imageSaveType = #{record.imagesavetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagesuffix != null" >
+        imageSuffix = #{record.imagesuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.indentcomment != null" >
+        indentComment = #{record.indentcomment,jdbcType=INTEGER},
+      </if>
+      <if test="record.integral != null" >
+        integral = #{record.integral,jdbcType=BIT},
+      </if>
+      <if test="record.integralrate != null" >
+        integralRate = #{record.integralrate,jdbcType=INTEGER},
+      </if>
+      <if test="record.integralstore != null" >
+        integralStore = #{record.integralstore,jdbcType=BIT},
+      </if>
+      <if test="record.keywords != null" >
+        keywords = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberdaylogin != null" >
+        memberDayLogin = #{record.memberdaylogin,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberregister != null" >
+        memberRegister = #{record.memberregister,jdbcType=INTEGER},
+      </if>
+      <if test="record.middleheight != null" >
+        middleHeight = #{record.middleheight,jdbcType=INTEGER},
+      </if>
+      <if test="record.middlewidth != null" >
+        middleWidth = #{record.middlewidth,jdbcType=INTEGER},
+      </if>
+      <if test="record.securitycodeconsult != null" >
+        securityCodeConsult = #{record.securitycodeconsult,jdbcType=BIT},
+      </if>
+      <if test="record.securitycodelogin != null" >
+        securityCodeLogin = #{record.securitycodelogin,jdbcType=BIT},
+      </if>
+      <if test="record.securitycoderegister != null" >
+        securityCodeRegister = #{record.securitycoderegister,jdbcType=BIT},
+      </if>
+      <if test="record.securitycodetype != null" >
+        securityCodeType = #{record.securitycodetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smallheight != null" >
+        smallHeight = #{record.smallheight,jdbcType=INTEGER},
+      </if>
+      <if test="record.smallwidth != null" >
+        smallWidth = #{record.smallwidth,jdbcType=INTEGER},
+      </if>
+      <if test="record.smsenbale != null" >
+        smsEnbale = #{record.smsenbale,jdbcType=BIT},
+      </if>
+      <if test="record.smsAuthToken != null" >
+        sms_auth_token = #{record.smsAuthToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsPort != null" >
+        sms_port = #{record.smsPort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsUrl != null" >
+        sms_url = #{record.smsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.smsAccountSid != null" >
+        sms_account_sid = #{record.smsAccountSid,jdbcType=VARCHAR},
+      </if>
+	  <if test="record.smsAppId != null" >
+        sms_app_id = #{record.smsAppId,jdbcType=VARCHAR},
+      </if>
+	  <if test="record.smsExceedTime != null" >
+        sms_exceed_time = #{record.smsExceedTime,jdbcType=VARCHAR},
+      </if>
+	  <if test="record.smsMaxNumber != null" >
+        sms_max_number = #{record.smsMaxNumber,jdbcType=INTEGER},
+      </if>
+	  <if test="record.smsSendInterval != null" >
+        sms_send_interval = #{record.smsSendInterval,jdbcType=INTEGER},
+      </if>
+	  <if test="record.cartCountMax != null" >
+        cart_count_max = #{record.cartCountMax,jdbcType=INTEGER},
+      </if>
+      <if test="record.verificationCodeLength != null" >
+        verification_code_length = #{record.verificationCodeLength,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeAllow != null" >
+        store_allow = #{record.storeAllow,jdbcType=BIT},
+      </if>
+      <if test="record.syslanguage != null" >
+        sysLanguage = #{record.syslanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadfilepath != null" >
+        uploadFilePath = #{record.uploadfilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.visitorconsult != null" >
+        visitorConsult = #{record.visitorconsult,jdbcType=BIT},
+      </if>
+      <if test="record.voucher != null" >
+        voucher = #{record.voucher,jdbcType=BIT},
+      </if>
+      <if test="record.websitename != null" >
+        websiteName = #{record.websitename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.websitestate != null" >
+        websiteState = #{record.websitestate,jdbcType=BIT},
+      </if>
+      <if test="record.ztcPrice != null" >
+        ztc_price = #{record.ztcPrice,jdbcType=INTEGER},
+      </if>
+      <if test="record.ztcStatus != null" >
+        ztc_status = #{record.ztcStatus,jdbcType=BIT},
+      </if>
+      <if test="record.goodsimageId != null" >
+        goodsImage_id = #{record.goodsimageId,jdbcType=BIGINT},
+      </if>
+      <if test="record.membericonId != null" >
+        memberIcon_id = #{record.membericonId,jdbcType=BIGINT},
+      </if>
+      <if test="record.storeimageId != null" >
+        storeImage_id = #{record.storeimageId,jdbcType=BIGINT},
+      </if>
+      <if test="record.websitelogoId != null" >
+        websiteLogo_id = #{record.websitelogoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.domainAllowCount != null" >
+        domain_allow_count = #{record.domainAllowCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.secondDomainOpen != null" >
+        second_domain_open = #{record.secondDomainOpen,jdbcType=BIT},
+      </if>
+      <if test="record.qqLogin != null" >
+        qq_login = #{record.qqLogin,jdbcType=BIT},
+      </if>
+      <if test="record.qqLoginId != null" >
+        qq_login_id = #{record.qqLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qqLoginKey != null" >
+        qq_login_key = #{record.qqLoginKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sinaLogin != null" >
+        sina_login = #{record.sinaLogin,jdbcType=BIT},
+      </if>
+      <if test="record.sinaLoginId != null" >
+        sina_login_id = #{record.sinaLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sinaLoginKey != null" >
+        sina_login_key = #{record.sinaLoginKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imagewebserver != null" >
+        imageWebServer = #{record.imagewebserver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.luceneUpdate != null" >
+        lucene_update = #{record.luceneUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.alipayFenrun != null" >
+        alipay_fenrun = #{record.alipayFenrun,jdbcType=INTEGER},
+      </if>
+      <if test="record.balanceFenrun != null" >
+        balance_fenrun = #{record.balanceFenrun,jdbcType=INTEGER},
+      </if>
+      <if test="record.autoOrderConfirm != null" >
+        auto_order_confirm = #{record.autoOrderConfirm,jdbcType=INTEGER},
+      </if>
+      <if test="record.autoOrderNotice != null" >
+        auto_order_notice = #{record.autoOrderNotice,jdbcType=INTEGER},
+      </if>
+      <if test="record.bargainMaximum != null" >
+        bargain_maximum = #{record.bargainMaximum,jdbcType=INTEGER},
+      </if>
+      <if test="record.bargainRebate != null" >
+        bargain_rebate = #{record.bargainRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bargainStatus != null" >
+        bargain_status = #{record.bargainStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.bargainTitle != null" >
+        bargain_title = #{record.bargainTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysDeliveryMaximum != null" >
+        sys_delivery_maximum = #{record.sysDeliveryMaximum,jdbcType=INTEGER},
+      </if>
+      <if test="record.ucBbs != null" >
+        uc_bbs = #{record.ucBbs,jdbcType=BIT},
+      </if>
+      <if test="record.ucApi != null" >
+        uc_api = #{record.ucApi,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucAppid != null" >
+        uc_appid = #{record.ucAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucDatabase != null" >
+        uc_database = #{record.ucDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucDatabasePort != null" >
+        uc_database_port = #{record.ucDatabasePort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucDatabasePws != null" >
+        uc_database_pws = #{record.ucDatabasePws,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucDatabaseUrl != null" >
+        uc_database_url = #{record.ucDatabaseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucDatabaseUsername != null" >
+        uc_database_username = #{record.ucDatabaseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucIp != null" >
+        uc_ip = #{record.ucIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucKey != null" >
+        uc_key = #{record.ucKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ucTablePreffix != null" >
+        uc_table_preffix = #{record.ucTablePreffix,jdbcType=VARCHAR},
+      </if>
+      <if test="record.currencyCode != null" >
+        currency_code = #{record.currencyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bargainValidity != null" >
+        bargain_validity = #{record.bargainValidity,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliveryAmount != null" >
+        delivery_amount = #{record.deliveryAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliveryStatus != null" >
+        delivery_status = #{record.deliveryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.deliveryTitle != null" >
+        delivery_title = #{record.deliveryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.websitecss != null" >
+        websiteCss = #{record.websitecss,jdbcType=VARCHAR},
+      </if>
+      <if test="record.combinAmount != null" >
+        combin_amount = #{record.combinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.combinCount != null" >
+        combin_count = #{record.combinCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.ztcGoodsView != null" >
+        ztc_goods_view = #{record.ztcGoodsView,jdbcType=INTEGER},
+      </if>
+      <if test="record.autoOrderEvaluate != null" >
+        auto_order_evaluate = #{record.autoOrderEvaluate,jdbcType=INTEGER},
+      </if>
+      <if test="record.autoOrderReturn != null" >
+        auto_order_return = #{record.autoOrderReturn,jdbcType=INTEGER},
+      </if>
+      <if test="record.weixinStore != null" >
+        weixin_store = #{record.weixinStore,jdbcType=BIT},
+      </if>
+      <if test="record.maxFrequencyWeek != null" >
+        max_frequency_week = #{record.maxFrequencyWeek,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxNumberWeek != null" >
+        max_number_week = #{record.maxNumberWeek,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxPrice != null" >
+        max_price = #{record.maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.minPricce != null" >
+        min_pricce = #{record.minPricce,jdbcType=DECIMAL},
+      </if>
+      <if test="record.weixinAmount != null" >
+        weixin_amount = #{record.weixinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="record.configPaymentType != null" >
+        config_payment_type = #{record.configPaymentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.weixinAccount != null" >
+        weixin_account = #{record.weixinAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinAppid != null" >
+        weixin_appId = #{record.weixinAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinAppsecret != null" >
+        weixin_appSecret = #{record.weixinAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinToken != null" >
+        weixin_token = #{record.weixinToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storeWeixinLogoId != null" >
+        store_weixin_logo_id = #{record.storeWeixinLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.weixinQrImgId != null" >
+        weixin_qr_img_id = #{record.weixinQrImgId,jdbcType=BIGINT},
+      </if>
+      <if test="record.closereason != null" >
+        closeReason = #{record.closereason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.codestat != null" >
+        codeStat = #{record.codestat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.creditrule != null" >
+        creditrule = #{record.creditrule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.shareCode != null" >
+        share_code = #{record.shareCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.storePayment != null" >
+        store_payment = #{record.storePayment,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.templates != null" >
+        templates = #{record.templates,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.userCreditrule != null" >
+        user_creditrule = #{record.userCreditrule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.sysDomain != null" >
+        sys_domain = #{record.sysDomain,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.qqDomainCode != null" >
+        qq_domain_code = #{record.qqDomainCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.sinaDomainCode != null" >
+        sina_domain_code = #{record.sinaDomainCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.bargainState != null" >
+        bargain_state = #{record.bargainState,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.serviceQqList != null" >
+        service_qq_list = #{record.serviceQqList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.serviceTelphoneList != null" >
+        service_telphone_list = #{record.serviceTelphoneList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.kuaidiId != null" >
+        kuaidi_id = #{record.kuaidiId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.weixinWelecomeContent != null" >
+        weixin_welecome_content = #{record.weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.goodsClassCount != null">
+      	goods_class_count = #{record.goodsClassCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update amall_sysconfig
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      address = #{record.address,jdbcType=VARCHAR},
+      bigHeight = #{record.bigheight,jdbcType=INTEGER},
+      bigWidth = #{record.bigwidth,jdbcType=INTEGER},
+      complaint_time = #{record.complaintTime,jdbcType=INTEGER},
+      consumptionRatio = #{record.consumptionratio,jdbcType=INTEGER},
+      copyRight = #{record.copyright,jdbcType=VARCHAR},
+      deposit = #{record.deposit,jdbcType=BIT},
+      description = #{record.description,jdbcType=VARCHAR},
+      emailEnable = #{record.emailenable,jdbcType=BIT},
+      emailHost = #{record.emailhost,jdbcType=VARCHAR},
+      emailPort = #{record.emailport,jdbcType=INTEGER},
+      emailPws = #{record.emailpws,jdbcType=VARCHAR},
+      emailTest = #{record.emailtest,jdbcType=VARCHAR},
+      emailUser = #{record.emailuser,jdbcType=VARCHAR},
+      emailUserName = #{record.emailusername,jdbcType=VARCHAR},
+	  cart_count_max = #{record.cartCountMax,jdbcType=INTEGER},
+      everyIndentLimit = #{record.everyindentlimit,jdbcType=INTEGER},
+	  upload_root_path = #{record.uploadRootPath,jdbcType=VARCHAR},
+      gold = #{record.gold,jdbcType=BIT},
+      goldMarketValue = #{record.goldmarketvalue,jdbcType=INTEGER},
+      groupBuy = #{record.groupbuy,jdbcType=BIT},
+      hotSearch = #{record.hotsearch,jdbcType=VARCHAR},
+      imageFilesize = #{record.imagefilesize,jdbcType=INTEGER},
+      imageSaveType = #{record.imagesavetype,jdbcType=VARCHAR},
+      imageSuffix = #{record.imagesuffix,jdbcType=VARCHAR},
+      indentComment = #{record.indentcomment,jdbcType=INTEGER},
+      integral = #{record.integral,jdbcType=BIT},
+      integralRate = #{record.integralrate,jdbcType=INTEGER},
+      integralStore = #{record.integralstore,jdbcType=BIT},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      memberDayLogin = #{record.memberdaylogin,jdbcType=INTEGER},
+      memberRegister = #{record.memberregister,jdbcType=INTEGER},
+      middleHeight = #{record.middleheight,jdbcType=INTEGER},
+      middleWidth = #{record.middlewidth,jdbcType=INTEGER},
+      securityCodeConsult = #{record.securitycodeconsult,jdbcType=BIT},
+      securityCodeLogin = #{record.securitycodelogin,jdbcType=BIT},
+      securityCodeRegister = #{record.securitycoderegister,jdbcType=BIT},
+      securityCodeType = #{record.securitycodetype,jdbcType=VARCHAR},
+      smallHeight = #{record.smallheight,jdbcType=INTEGER},
+      smallWidth = #{record.smallwidth,jdbcType=INTEGER},
+      smsEnbale = #{record.smsenbale,jdbcType=BIT},
+      sms_auth_token = #{record.smsAuthToken,jdbcType=VARCHAR},
+      sms_port = #{record.smsPort,jdbcType=VARCHAR},
+      sms_url = #{record.smsUrl,jdbcType=VARCHAR},
+      sms_account_sid = #{record.smsAccountSid,jdbcType=VARCHAR},
+	  sms_app_id = #{record.smsAppId,jdbcType=VARCHAR},
+	  sms_exceed_time = #{record.smsExceedTime,jdbcType=VARCHAR},
+	  sms_max_number = #{record.smsMaxNumber,jdbcType=INTEGER},
+	  sms_send_interval = #{record.smsSendInterval,jdbcType=INTEGER},
+      verification_code_length = #{record.verificationCodeLength,jdbcType=VARCHAR},
+      store_allow = #{record.storeAllow,jdbcType=BIT},
+      sysLanguage = #{record.syslanguage,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      uploadFilePath = #{record.uploadfilepath,jdbcType=VARCHAR},
+      visitorConsult = #{record.visitorconsult,jdbcType=BIT},
+      voucher = #{record.voucher,jdbcType=BIT},
+      websiteName = #{record.websitename,jdbcType=VARCHAR},
+      websiteState = #{record.websitestate,jdbcType=BIT},
+      ztc_price = #{record.ztcPrice,jdbcType=INTEGER},
+      ztc_status = #{record.ztcStatus,jdbcType=BIT},
+      goodsImage_id = #{record.goodsimageId,jdbcType=BIGINT},
+      memberIcon_id = #{record.membericonId,jdbcType=BIGINT},
+      storeImage_id = #{record.storeimageId,jdbcType=BIGINT},
+      websiteLogo_id = #{record.websitelogoId,jdbcType=BIGINT},
+      domain_allow_count = #{record.domainAllowCount,jdbcType=INTEGER},
+      second_domain_open = #{record.secondDomainOpen,jdbcType=BIT},
+      qq_login = #{record.qqLogin,jdbcType=BIT},
+      qq_login_id = #{record.qqLoginId,jdbcType=VARCHAR},
+      qq_login_key = #{record.qqLoginKey,jdbcType=VARCHAR},
+      sina_login = #{record.sinaLogin,jdbcType=BIT},
+      sina_login_id = #{record.sinaLoginId,jdbcType=VARCHAR},
+      sina_login_key = #{record.sinaLoginKey,jdbcType=VARCHAR},
+      imageWebServer = #{record.imagewebserver,jdbcType=VARCHAR},
+      lucene_update = #{record.luceneUpdate,jdbcType=TIMESTAMP},
+      alipay_fenrun = #{record.alipayFenrun,jdbcType=INTEGER},
+      balance_fenrun = #{record.balanceFenrun,jdbcType=INTEGER},
+      auto_order_confirm = #{record.autoOrderConfirm,jdbcType=INTEGER},
+      auto_order_notice = #{record.autoOrderNotice,jdbcType=INTEGER},
+      bargain_maximum = #{record.bargainMaximum,jdbcType=INTEGER},
+      bargain_rebate = #{record.bargainRebate,jdbcType=DECIMAL},
+      bargain_status = #{record.bargainStatus,jdbcType=INTEGER},
+      bargain_title = #{record.bargainTitle,jdbcType=VARCHAR},
+      sys_delivery_maximum = #{record.sysDeliveryMaximum,jdbcType=INTEGER},
+      uc_bbs = #{record.ucBbs,jdbcType=BIT},
+      uc_api = #{record.ucApi,jdbcType=VARCHAR},
+      uc_appid = #{record.ucAppid,jdbcType=VARCHAR},
+      uc_database = #{record.ucDatabase,jdbcType=VARCHAR},
+      uc_database_port = #{record.ucDatabasePort,jdbcType=VARCHAR},
+      uc_database_pws = #{record.ucDatabasePws,jdbcType=VARCHAR},
+      uc_database_url = #{record.ucDatabaseUrl,jdbcType=VARCHAR},
+      uc_database_username = #{record.ucDatabaseUsername,jdbcType=VARCHAR},
+      uc_ip = #{record.ucIp,jdbcType=VARCHAR},
+      uc_key = #{record.ucKey,jdbcType=VARCHAR},
+      max_frequency_week = #{record.maxFrequencyWeek,jdbcType=INTEGER},
+      max_number_week = #{record.maxNumberWeek,jdbcType=INTEGER},
+      max_price = #{record.maxPrice,jdbcType=DECIMAL},
+      min_pricce = #{record.minPricce,jdbcType=DECIMAL},
+      uc_table_preffix = #{record.ucTablePreffix,jdbcType=VARCHAR},
+      currency_code = #{record.currencyCode,jdbcType=VARCHAR},
+      bargain_validity = #{record.bargainValidity,jdbcType=INTEGER},
+      delivery_amount = #{record.deliveryAmount,jdbcType=INTEGER},
+      delivery_status = #{record.deliveryStatus,jdbcType=INTEGER},
+      delivery_title = #{record.deliveryTitle,jdbcType=VARCHAR},
+      websiteCss = #{record.websitecss,jdbcType=VARCHAR},
+      combin_amount = #{record.combinAmount,jdbcType=INTEGER},
+      combin_count = #{record.combinCount,jdbcType=INTEGER},
+      ztc_goods_view = #{record.ztcGoodsView,jdbcType=INTEGER},
+      auto_order_evaluate = #{record.autoOrderEvaluate,jdbcType=INTEGER},
+      auto_order_return = #{record.autoOrderReturn,jdbcType=INTEGER},
+      weixin_store = #{record.weixinStore,jdbcType=BIT},
+      weixin_amount = #{record.weixinAmount,jdbcType=INTEGER},
+      config_payment_type = #{record.configPaymentType,jdbcType=INTEGER},
+      weixin_account = #{record.weixinAccount,jdbcType=VARCHAR},
+      weixin_appId = #{record.weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{record.weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{record.weixinToken,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{record.storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_qr_img_id = #{record.weixinQrImgId,jdbcType=BIGINT},
+      closeReason = #{record.closereason,jdbcType=LONGVARCHAR},
+      codeStat = #{record.codestat,jdbcType=LONGVARCHAR},
+      creditrule = #{record.creditrule,jdbcType=LONGVARCHAR},
+      share_code = #{record.shareCode,jdbcType=LONGVARCHAR},
+      store_payment = #{record.storePayment,jdbcType=LONGVARCHAR},
+      templates = #{record.templates,jdbcType=LONGVARCHAR},
+      user_creditrule = #{record.userCreditrule,jdbcType=LONGVARCHAR},
+      sys_domain = #{record.sysDomain,jdbcType=LONGVARCHAR},
+      qq_domain_code = #{record.qqDomainCode,jdbcType=LONGVARCHAR},
+      sina_domain_code = #{record.sinaDomainCode,jdbcType=LONGVARCHAR},
+      bargain_state = #{record.bargainState,jdbcType=LONGVARCHAR},
+      service_qq_list = #{record.serviceQqList,jdbcType=LONGVARCHAR},
+      service_telphone_list = #{record.serviceTelphoneList,jdbcType=LONGVARCHAR},
+      kuaidi_id = #{record.kuaidiId,jdbcType=LONGVARCHAR},
+      weixin_welecome_content = #{record.weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      goods_class_count = #{record.goodsClassCount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_sysconfig
+    set id = #{record.id,jdbcType=BIGINT},
+      addTime = #{record.addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{record.deletestatus,jdbcType=BIT},
+      address = #{record.address,jdbcType=VARCHAR},
+      bigHeight = #{record.bigheight,jdbcType=INTEGER},
+      bigWidth = #{record.bigwidth,jdbcType=INTEGER},
+      complaint_time = #{record.complaintTime,jdbcType=INTEGER},
+      consumptionRatio = #{record.consumptionratio,jdbcType=INTEGER},
+      copyRight = #{record.copyright,jdbcType=VARCHAR},
+      deposit = #{record.deposit,jdbcType=BIT},
+      description = #{record.description,jdbcType=VARCHAR},
+      emailEnable = #{record.emailenable,jdbcType=BIT},
+      emailHost = #{record.emailhost,jdbcType=VARCHAR},
+      emailPort = #{record.emailport,jdbcType=INTEGER},
+      emailPws = #{record.emailpws,jdbcType=VARCHAR},
+      emailTest = #{record.emailtest,jdbcType=VARCHAR},
+      emailUser = #{record.emailuser,jdbcType=VARCHAR},
+      emailUserName = #{record.emailusername,jdbcType=VARCHAR},
+	  cart_count_max = #{record.cartCountMax,jdbcType=INTEGER},
+      everyIndentLimit = #{record.everyindentlimit,jdbcType=INTEGER},
+      gold = #{record.gold,jdbcType=BIT},
+      goldMarketValue = #{record.goldmarketvalue,jdbcType=INTEGER},
+      groupBuy = #{record.groupbuy,jdbcType=BIT},
+      hotSearch = #{record.hotsearch,jdbcType=VARCHAR},
+      imageFilesize = #{record.imagefilesize,jdbcType=INTEGER},
+      imageSaveType = #{record.imagesavetype,jdbcType=VARCHAR},
+      imageSuffix = #{record.imagesuffix,jdbcType=VARCHAR},
+      indentComment = #{record.indentcomment,jdbcType=INTEGER},
+      integral = #{record.integral,jdbcType=BIT},
+      integralRate = #{record.integralrate,jdbcType=INTEGER},
+      integralStore = #{record.integralstore,jdbcType=BIT},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      memberDayLogin = #{record.memberdaylogin,jdbcType=INTEGER},
+      memberRegister = #{record.memberregister,jdbcType=INTEGER},
+      middleHeight = #{record.middleheight,jdbcType=INTEGER},
+      middleWidth = #{record.middlewidth,jdbcType=INTEGER},
+      securityCodeConsult = #{record.securitycodeconsult,jdbcType=BIT},
+      securityCodeLogin = #{record.securitycodelogin,jdbcType=BIT},
+      securityCodeRegister = #{record.securitycoderegister,jdbcType=BIT},
+      securityCodeType = #{record.securitycodetype,jdbcType=VARCHAR},
+      smallHeight = #{record.smallheight,jdbcType=INTEGER},
+      smallWidth = #{record.smallwidth,jdbcType=INTEGER},
+      smsEnbale = #{record.smsenbale,jdbcType=BIT},
+      sms_auth_token = #{record.smsAuthToken,jdbcType=VARCHAR},
+      sms_port = #{record.smsPort,jdbcType=VARCHAR},
+      sms_url = #{record.smsUrl,jdbcType=VARCHAR},
+      sms_account_sid = #{record.smsAccountSid,jdbcType=VARCHAR},
+	  sms_exceed_time = #{record.smsExceedTime,jdbcType=VARCHAR},
+	  sms_max_number = #{record.smsMaxNumber,jdbcType=INTEGER},
+	  sms_send_interval = #{record.smsSendInterval,jdbcType=INTEGER},
+      verification_code_length = #{record.verificationCodeLength,jdbcType=VARCHAR},
+	  sms_app_id = #{record.smsAppId,jdbcType=VARCHAR},
+      store_allow = #{record.storeAllow,jdbcType=BIT},
+      sysLanguage = #{record.syslanguage,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      uploadFilePath = #{record.uploadfilepath,jdbcType=VARCHAR},
+      visitorConsult = #{record.visitorconsult,jdbcType=BIT},
+      voucher = #{record.voucher,jdbcType=BIT},
+      websiteName = #{record.websitename,jdbcType=VARCHAR},
+      websiteState = #{record.websitestate,jdbcType=BIT},
+      ztc_price = #{record.ztcPrice,jdbcType=INTEGER},
+      ztc_status = #{record.ztcStatus,jdbcType=BIT},
+      goodsImage_id = #{record.goodsimageId,jdbcType=BIGINT},
+      memberIcon_id = #{record.membericonId,jdbcType=BIGINT},
+      storeImage_id = #{record.storeimageId,jdbcType=BIGINT},
+      websiteLogo_id = #{record.websitelogoId,jdbcType=BIGINT},
+      domain_allow_count = #{record.domainAllowCount,jdbcType=INTEGER},
+      second_domain_open = #{record.secondDomainOpen,jdbcType=BIT},
+      qq_login = #{record.qqLogin,jdbcType=BIT},
+      qq_login_id = #{record.qqLoginId,jdbcType=VARCHAR},
+      qq_login_key = #{record.qqLoginKey,jdbcType=VARCHAR},
+      sina_login = #{record.sinaLogin,jdbcType=BIT},
+      sina_login_id = #{record.sinaLoginId,jdbcType=VARCHAR},
+      sina_login_key = #{record.sinaLoginKey,jdbcType=VARCHAR},
+      imageWebServer = #{record.imagewebserver,jdbcType=VARCHAR},
+      lucene_update = #{record.luceneUpdate,jdbcType=TIMESTAMP},
+      alipay_fenrun = #{record.alipayFenrun,jdbcType=INTEGER},
+      balance_fenrun = #{record.balanceFenrun,jdbcType=INTEGER},
+      auto_order_confirm = #{record.autoOrderConfirm,jdbcType=INTEGER},
+      auto_order_notice = #{record.autoOrderNotice,jdbcType=INTEGER},
+      bargain_maximum = #{record.bargainMaximum,jdbcType=INTEGER},
+      bargain_rebate = #{record.bargainRebate,jdbcType=DECIMAL},
+      bargain_status = #{record.bargainStatus,jdbcType=INTEGER},
+      bargain_title = #{record.bargainTitle,jdbcType=VARCHAR},
+      sys_delivery_maximum = #{record.sysDeliveryMaximum,jdbcType=INTEGER},
+      uc_bbs = #{record.ucBbs,jdbcType=BIT},
+      uc_api = #{record.ucApi,jdbcType=VARCHAR},
+      uc_appid = #{record.ucAppid,jdbcType=VARCHAR},
+      uc_database = #{record.ucDatabase,jdbcType=VARCHAR},
+      uc_database_port = #{record.ucDatabasePort,jdbcType=VARCHAR},
+      uc_database_pws = #{record.ucDatabasePws,jdbcType=VARCHAR},
+      uc_database_url = #{record.ucDatabaseUrl,jdbcType=VARCHAR},
+      uc_database_username = #{record.ucDatabaseUsername,jdbcType=VARCHAR},
+      uc_ip = #{record.ucIp,jdbcType=VARCHAR},
+      uc_key = #{record.ucKey,jdbcType=VARCHAR},
+      uc_table_preffix = #{record.ucTablePreffix,jdbcType=VARCHAR},
+      currency_code = #{record.currencyCode,jdbcType=VARCHAR},
+      bargain_validity = #{record.bargainValidity,jdbcType=INTEGER},
+      delivery_amount = #{record.deliveryAmount,jdbcType=INTEGER},
+      delivery_status = #{record.deliveryStatus,jdbcType=INTEGER},
+      delivery_title = #{record.deliveryTitle,jdbcType=VARCHAR},
+      websiteCss = #{record.websitecss,jdbcType=VARCHAR},
+      combin_amount = #{record.combinAmount,jdbcType=INTEGER},
+      combin_count = #{record.combinCount,jdbcType=INTEGER},
+      ztc_goods_view = #{record.ztcGoodsView,jdbcType=INTEGER},
+      auto_order_evaluate = #{record.autoOrderEvaluate,jdbcType=INTEGER},
+      auto_order_return = #{record.autoOrderReturn,jdbcType=INTEGER},
+      weixin_store = #{record.weixinStore,jdbcType=BIT},
+      weixin_amount = #{record.weixinAmount,jdbcType=INTEGER},
+      config_payment_type = #{record.configPaymentType,jdbcType=INTEGER},
+      weixin_account = #{record.weixinAccount,jdbcType=VARCHAR},
+      weixin_appId = #{record.weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{record.weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{record.weixinToken,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{record.storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_qr_img_id = #{record.weixinQrImgId,jdbcType=BIGINT},
+	  upload_root_path = #{record.uploadRootPath,jdbcType=VARCHAR},
+      goods_class_count = #{record.goodsClassCount,jdbcType=INTEGER},
+      max_frequency_week = #{record.maxFrequencyWeek,jdbcType=INTEGER},
+      max_number_week = #{record.maxNumberWeek,jdbcType=INTEGER},
+      max_price = #{record.maxPrice,jdbcType=DECIMAL},
+      min_pricce = #{record.minPricce,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.SysConfigWithBLOBs" >
+    update amall_sysconfig
+    <set >
+      <if test="addtime != null" >
+        addTime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletestatus != null" >
+        deleteStatus = #{deletestatus,jdbcType=BIT},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="bigheight != null" >
+        bigHeight = #{bigheight,jdbcType=INTEGER},
+      </if>
+      <if test="bigwidth != null" >
+        bigWidth = #{bigwidth,jdbcType=INTEGER},
+      </if>
+      <if test="complaintTime != null" >
+        complaint_time = #{complaintTime,jdbcType=INTEGER},
+      </if>
+      <if test="consumptionratio != null" >
+        consumptionRatio = #{consumptionratio,jdbcType=INTEGER},
+      </if>
+      <if test="copyright != null" >
+        copyRight = #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="deposit != null" >
+        deposit = #{deposit,jdbcType=BIT},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="emailenable != null" >
+        emailEnable = #{emailenable,jdbcType=BIT},
+      </if>
+      <if test="emailhost != null" >
+        emailHost = #{emailhost,jdbcType=VARCHAR},
+      </if>
+      <if test="emailport != null" >
+        emailPort = #{emailport,jdbcType=INTEGER},
+      </if>
+      <if test="emailpws != null" >
+        emailPws = #{emailpws,jdbcType=VARCHAR},
+      </if>
+      <if test="emailtest != null" >
+        emailTest = #{emailtest,jdbcType=VARCHAR},
+      </if>
+      <if test="emailuser != null" >
+        emailUser = #{emailuser,jdbcType=VARCHAR},
+      </if>
+      <if test="emailusername != null" >
+        emailUserName = #{emailusername,jdbcType=VARCHAR},
+      </if>
+	  <if test="cartCountMax != null" >
+        cart_count_max = #{cartCountMax,jdbcType=INTEGER},
+      </if>
+      <if test="everyindentlimit != null" >
+        everyIndentLimit = #{everyindentlimit,jdbcType=INTEGER},
+      </if>
+      <if test="gold != null" >
+        gold = #{gold,jdbcType=BIT},
+      </if>
+      <if test="goldmarketvalue != null" >
+        goldMarketValue = #{goldmarketvalue,jdbcType=INTEGER},
+      </if>
+      <if test="groupbuy != null" >
+        groupBuy = #{groupbuy,jdbcType=BIT},
+      </if>
+      <if test="hotsearch != null" >
+        hotSearch = #{hotsearch,jdbcType=VARCHAR},
+      </if>
+      <if test="imagefilesize != null" >
+        imageFilesize = #{imagefilesize,jdbcType=INTEGER},
+      </if>
+      <if test="imagesavetype != null" >
+        imageSaveType = #{imagesavetype,jdbcType=VARCHAR},
+      </if>
+      <if test="imagesuffix != null" >
+        imageSuffix = #{imagesuffix,jdbcType=VARCHAR},
+      </if>
+      <if test="indentcomment != null" >
+        indentComment = #{indentcomment,jdbcType=INTEGER},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral,jdbcType=BIT},
+      </if>
+      <if test="integralrate != null" >
+        integralRate = #{integralrate,jdbcType=INTEGER},
+      </if>
+      <if test="integralstore != null" >
+        integralStore = #{integralstore,jdbcType=BIT},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="memberdaylogin != null" >
+        memberDayLogin = #{memberdaylogin,jdbcType=INTEGER},
+      </if>
+      <if test="memberregister != null" >
+        memberRegister = #{memberregister,jdbcType=INTEGER},
+      </if>
+      <if test="middleheight != null" >
+        middleHeight = #{middleheight,jdbcType=INTEGER},
+      </if>
+      <if test="middlewidth != null" >
+        middleWidth = #{middlewidth,jdbcType=INTEGER},
+      </if>
+      <if test="securitycodeconsult != null" >
+        securityCodeConsult = #{securitycodeconsult,jdbcType=BIT},
+      </if>
+      <if test="securitycodelogin != null" >
+        securityCodeLogin = #{securitycodelogin,jdbcType=BIT},
+      </if>
+      <if test="securitycoderegister != null" >
+        securityCodeRegister = #{securitycoderegister,jdbcType=BIT},
+      </if>
+      <if test="securitycodetype != null" >
+        securityCodeType = #{securitycodetype,jdbcType=VARCHAR},
+      </if>
+      <if test="smallheight != null" >
+        smallHeight = #{smallheight,jdbcType=INTEGER},
+      </if>
+      <if test="smallwidth != null" >
+        smallWidth = #{smallwidth,jdbcType=INTEGER},
+      </if>
+      <if test="smsenbale != null" >
+        smsEnbale = #{smsenbale,jdbcType=BIT},
+      </if>
+      <if test="smsAuthToken != null" >
+        sms_auth_token = #{smsAuthToken,jdbcType=VARCHAR},
+      </if>
+      <if test="smsPort != null" >
+        sms_port = #{smsPort,jdbcType=VARCHAR},
+      </if>
+      <if test="smsUrl != null" >
+        sms_url = #{smsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="smsAccountSid != null" >
+        sms_account_sid = #{smsAccountSid,jdbcType=VARCHAR},
+      </if>
+	  <if test="smsAppId != null" >
+        sms_app_id = #{smsAppId,jdbcType=VARCHAR},
+      </if>
+	  <if test="smsExceedTime != null" >
+        sms_exceed_time = #{smsExceedTime,jdbcType=VARCHAR},
+      </if>
+	  <if test="smsMaxNumber != null" >
+        sms_max_number = #{smsMaxNumber,jdbcType=INTEGER},
+      </if>
+	  <if test="smsSendInterval != null" >
+        sms_send_interval = #{smsSendInterval,jdbcType=INTEGER},
+      </if>
+	  <if test="uploadRootPath != null" >
+        upload_root_path = #{uploadRootPath,jdbcType=VARCHAR},
+      </if>
+      <if test="verificationCodeLength != null" >
+        verification_code_length = #{verificationCodeLength,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAllow != null" >
+        store_allow = #{storeAllow,jdbcType=BIT},
+      </if>
+      <if test="syslanguage != null" >
+        sysLanguage = #{syslanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadfilepath != null" >
+        uploadFilePath = #{uploadfilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="visitorconsult != null" >
+        visitorConsult = #{visitorconsult,jdbcType=BIT},
+      </if>
+      <if test="voucher != null" >
+        voucher = #{voucher,jdbcType=BIT},
+      </if>
+      <if test="websitename != null" >
+        websiteName = #{websitename,jdbcType=VARCHAR},
+      </if>
+      <if test="websitestate != null" >
+        websiteState = #{websitestate,jdbcType=BIT},
+      </if>
+      <if test="ztcPrice != null" >
+        ztc_price = #{ztcPrice,jdbcType=INTEGER},
+      </if>
+      <if test="ztcStatus != null" >
+        ztc_status = #{ztcStatus,jdbcType=BIT},
+      </if>
+      <if test="goodsimageId != null" >
+        goodsImage_id = #{goodsimageId,jdbcType=BIGINT},
+      </if>
+      <if test="membericonId != null" >
+        memberIcon_id = #{membericonId,jdbcType=BIGINT},
+      </if>
+      <if test="storeimageId != null" >
+        storeImage_id = #{storeimageId,jdbcType=BIGINT},
+      </if>
+      <if test="maxFrequencyWeek != null" >
+        max_frequency_week = #{maxFrequencyWeek,jdbcType=INTEGER},
+      </if>
+      <if test="maxNumberWeek != null" >
+        max_number_week = #{maxNumberWeek,jdbcType=INTEGER},
+      </if>
+      <if test="maxPrice != null" >
+        max_price = #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPricce != null" >
+        min_pricce = #{minPricce,jdbcType=DECIMAL},
+      </if>
+      <if test="websitelogoId != null" >
+        websiteLogo_id = #{websitelogoId,jdbcType=BIGINT},
+      </if>
+      <if test="domainAllowCount != null" >
+        domain_allow_count = #{domainAllowCount,jdbcType=INTEGER},
+      </if>
+      <if test="secondDomainOpen != null" >
+        second_domain_open = #{secondDomainOpen,jdbcType=BIT},
+      </if>
+      <if test="qqLogin != null" >
+        qq_login = #{qqLogin,jdbcType=BIT},
+      </if>
+      <if test="qqLoginId != null" >
+        qq_login_id = #{qqLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="qqLoginKey != null" >
+        qq_login_key = #{qqLoginKey,jdbcType=VARCHAR},
+      </if>
+      <if test="sinaLogin != null" >
+        sina_login = #{sinaLogin,jdbcType=BIT},
+      </if>
+      <if test="sinaLoginId != null" >
+        sina_login_id = #{sinaLoginId,jdbcType=VARCHAR},
+      </if>
+      <if test="sinaLoginKey != null" >
+        sina_login_key = #{sinaLoginKey,jdbcType=VARCHAR},
+      </if>
+      <if test="imagewebserver != null" >
+        imageWebServer = #{imagewebserver,jdbcType=VARCHAR},
+      </if>
+      <if test="luceneUpdate != null" >
+        lucene_update = #{luceneUpdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alipayFenrun != null" >
+        alipay_fenrun = #{alipayFenrun,jdbcType=INTEGER},
+      </if>
+      <if test="balanceFenrun != null" >
+        balance_fenrun = #{balanceFenrun,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderConfirm != null" >
+        auto_order_confirm = #{autoOrderConfirm,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderNotice != null" >
+        auto_order_notice = #{autoOrderNotice,jdbcType=INTEGER},
+      </if>
+      <if test="bargainMaximum != null" >
+        bargain_maximum = #{bargainMaximum,jdbcType=INTEGER},
+      </if>
+      <if test="bargainRebate != null" >
+        bargain_rebate = #{bargainRebate,jdbcType=DECIMAL},
+      </if>
+      <if test="bargainStatus != null" >
+        bargain_status = #{bargainStatus,jdbcType=INTEGER},
+      </if>
+      <if test="bargainTitle != null" >
+        bargain_title = #{bargainTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="sysDeliveryMaximum != null" >
+        sys_delivery_maximum = #{sysDeliveryMaximum,jdbcType=INTEGER},
+      </if>
+      <if test="ucBbs != null" >
+        uc_bbs = #{ucBbs,jdbcType=BIT},
+      </if>
+      <if test="ucApi != null" >
+        uc_api = #{ucApi,jdbcType=VARCHAR},
+      </if>
+      <if test="ucAppid != null" >
+        uc_appid = #{ucAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabase != null" >
+        uc_database = #{ucDatabase,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabasePort != null" >
+        uc_database_port = #{ucDatabasePort,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabasePws != null" >
+        uc_database_pws = #{ucDatabasePws,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabaseUrl != null" >
+        uc_database_url = #{ucDatabaseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="ucDatabaseUsername != null" >
+        uc_database_username = #{ucDatabaseUsername,jdbcType=VARCHAR},
+      </if>
+      <if test="ucIp != null" >
+        uc_ip = #{ucIp,jdbcType=VARCHAR},
+      </if>
+      <if test="ucKey != null" >
+        uc_key = #{ucKey,jdbcType=VARCHAR},
+      </if>
+      <if test="ucTablePreffix != null" >
+        uc_table_preffix = #{ucTablePreffix,jdbcType=VARCHAR},
+      </if>
+      <if test="currencyCode != null" >
+        currency_code = #{currencyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bargainValidity != null" >
+        bargain_validity = #{bargainValidity,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryAmount != null" >
+        delivery_amount = #{deliveryAmount,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryStatus != null" >
+        delivery_status = #{deliveryStatus,jdbcType=INTEGER},
+      </if>
+      <if test="deliveryTitle != null" >
+        delivery_title = #{deliveryTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="websitecss != null" >
+        websiteCss = #{websitecss,jdbcType=VARCHAR},
+      </if>
+      <if test="combinAmount != null" >
+        combin_amount = #{combinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="combinCount != null" >
+        combin_count = #{combinCount,jdbcType=INTEGER},
+      </if>
+      <if test="ztcGoodsView != null" >
+        ztc_goods_view = #{ztcGoodsView,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderEvaluate != null" >
+        auto_order_evaluate = #{autoOrderEvaluate,jdbcType=INTEGER},
+      </if>
+      <if test="autoOrderReturn != null" >
+        auto_order_return = #{autoOrderReturn,jdbcType=INTEGER},
+      </if>
+      <if test="weixinStore != null" >
+        weixin_store = #{weixinStore,jdbcType=BIT},
+      </if>
+      <if test="weixinAmount != null" >
+        weixin_amount = #{weixinAmount,jdbcType=INTEGER},
+      </if>
+      <if test="configPaymentType != null" >
+        config_payment_type = #{configPaymentType,jdbcType=INTEGER},
+      </if>
+      <if test="weixinAccount != null" >
+        weixin_account = #{weixinAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAppid != null" >
+        weixin_appId = #{weixinAppid,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinAppsecret != null" >
+        weixin_appSecret = #{weixinAppsecret,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinToken != null" >
+        weixin_token = #{weixinToken,jdbcType=VARCHAR},
+      </if>
+      <if test="storeWeixinLogoId != null" >
+        store_weixin_logo_id = #{storeWeixinLogoId,jdbcType=BIGINT},
+      </if>
+      <if test="weixinQrImgId != null" >
+        weixin_qr_img_id = #{weixinQrImgId,jdbcType=BIGINT},
+      </if>
+      <if test="closereason != null" >
+        closeReason = #{closereason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="codestat != null" >
+        codeStat = #{codestat,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="creditrule != null" >
+        creditrule = #{creditrule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="shareCode != null" >
+        share_code = #{shareCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="storePayment != null" >
+        store_payment = #{storePayment,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="templates != null" >
+        templates = #{templates,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userCreditrule != null" >
+        user_creditrule = #{userCreditrule,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sysDomain != null" >
+        sys_domain = #{sysDomain,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="qqDomainCode != null" >
+        qq_domain_code = #{qqDomainCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sinaDomainCode != null" >
+        sina_domain_code = #{sinaDomainCode,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="bargainState != null" >
+        bargain_state = #{bargainState,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceQqList != null" >
+        service_qq_list = #{serviceQqList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="serviceTelphoneList != null" >
+        service_telphone_list = #{serviceTelphoneList,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="kuaidiId != null" >
+        kuaidi_id = #{kuaidiId,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="weixinWelecomeContent != null" >
+        weixin_welecome_content = #{weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="goodsClassCount != null">
+      	goods_class_count = #{goodsClassCount,jdbcType=INTEGER}
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.amall.core.bean.SysConfigWithBLOBs" >
+    update amall_sysconfig
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      address = #{address,jdbcType=VARCHAR},
+      bigHeight = #{bigheight,jdbcType=INTEGER},
+      bigWidth = #{bigwidth,jdbcType=INTEGER},
+      complaint_time = #{complaintTime,jdbcType=INTEGER},
+      consumptionRatio = #{consumptionratio,jdbcType=INTEGER},
+      copyRight = #{copyright,jdbcType=VARCHAR},
+      deposit = #{deposit,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR},
+      emailEnable = #{emailenable,jdbcType=BIT},
+      emailHost = #{emailhost,jdbcType=VARCHAR},
+      emailPort = #{emailport,jdbcType=INTEGER},
+      emailPws = #{emailpws,jdbcType=VARCHAR},
+      emailTest = #{emailtest,jdbcType=VARCHAR},
+      emailUser = #{emailuser,jdbcType=VARCHAR},
+      emailUserName = #{emailusername,jdbcType=VARCHAR},
+      everyIndentLimit = #{everyindentlimit,jdbcType=INTEGER},
+      gold = #{gold,jdbcType=BIT},
+      goldMarketValue = #{goldmarketvalue,jdbcType=INTEGER},
+      groupBuy = #{groupbuy,jdbcType=BIT},
+      hotSearch = #{hotsearch,jdbcType=VARCHAR},
+      imageFilesize = #{imagefilesize,jdbcType=INTEGER},
+      imageSaveType = #{imagesavetype,jdbcType=VARCHAR},
+      imageSuffix = #{imagesuffix,jdbcType=VARCHAR},
+      indentComment = #{indentcomment,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=BIT},
+      integralRate = #{integralrate,jdbcType=INTEGER},
+      integralStore = #{integralstore,jdbcType=BIT},
+      keywords = #{keywords,jdbcType=VARCHAR},
+	  upload_root_path = #{uploadRootPath,jdbcType=VARCHAR},
+      memberDayLogin = #{memberdaylogin,jdbcType=INTEGER},
+      memberRegister = #{memberregister,jdbcType=INTEGER},
+      middleHeight = #{middleheight,jdbcType=INTEGER},
+      middleWidth = #{middlewidth,jdbcType=INTEGER},
+      securityCodeConsult = #{securitycodeconsult,jdbcType=BIT},
+      securityCodeLogin = #{securitycodelogin,jdbcType=BIT},
+      securityCodeRegister = #{securitycoderegister,jdbcType=BIT},
+      securityCodeType = #{securitycodetype,jdbcType=VARCHAR},
+      smallHeight = #{smallheight,jdbcType=INTEGER},
+      smallWidth = #{smallwidth,jdbcType=INTEGER},
+      smsEnbale = #{smsenbale,jdbcType=BIT},
+      sms_auth_token = #{smsAuthToken,jdbcType=VARCHAR},
+      sms_port = #{smsPort,jdbcType=VARCHAR},
+      sms_url = #{smsUrl,jdbcType=VARCHAR},
+      sms_account_sid = #{smsAccountSid,jdbcType=VARCHAR},
+	  sms_app_id = #{smsAppId,jdbcType=VARCHAR},
+	  sms_exceed_time = #{smsExceedTime,jdbcType=VARCHAR},
+	  sms_max_number = #{smsMaxNumber,jdbcType=INTEGER},
+	  sms_send_interval = #{smsSendInterval,jdbcType=INTEGER},
+	  cart_count_max = #{cartCountMax,jdbcType=INTEGER},
+      verification_code_length = #{verificationCodeLength,jdbcType=VARCHAR},
+      store_allow = #{storeAllow,jdbcType=BIT},
+      sysLanguage = #{syslanguage,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      uploadFilePath = #{uploadfilepath,jdbcType=VARCHAR},
+      visitorConsult = #{visitorconsult,jdbcType=BIT},
+      voucher = #{voucher,jdbcType=BIT},
+      websiteName = #{websitename,jdbcType=VARCHAR},
+      websiteState = #{websitestate,jdbcType=BIT},
+      ztc_price = #{ztcPrice,jdbcType=INTEGER},
+      ztc_status = #{ztcStatus,jdbcType=BIT},
+      goodsImage_id = #{goodsimageId,jdbcType=BIGINT},
+      memberIcon_id = #{membericonId,jdbcType=BIGINT},
+      storeImage_id = #{storeimageId,jdbcType=BIGINT},
+      websiteLogo_id = #{websitelogoId,jdbcType=BIGINT},
+      domain_allow_count = #{domainAllowCount,jdbcType=INTEGER},
+      second_domain_open = #{secondDomainOpen,jdbcType=BIT},
+      qq_login = #{qqLogin,jdbcType=BIT},
+      qq_login_id = #{qqLoginId,jdbcType=VARCHAR},
+      qq_login_key = #{qqLoginKey,jdbcType=VARCHAR},
+      sina_login = #{sinaLogin,jdbcType=BIT},
+      sina_login_id = #{sinaLoginId,jdbcType=VARCHAR},
+      sina_login_key = #{sinaLoginKey,jdbcType=VARCHAR},
+      imageWebServer = #{imagewebserver,jdbcType=VARCHAR},
+      lucene_update = #{luceneUpdate,jdbcType=TIMESTAMP},
+      alipay_fenrun = #{alipayFenrun,jdbcType=INTEGER},
+      balance_fenrun = #{balanceFenrun,jdbcType=INTEGER},
+      auto_order_confirm = #{autoOrderConfirm,jdbcType=INTEGER},
+      auto_order_notice = #{autoOrderNotice,jdbcType=INTEGER},
+      bargain_maximum = #{bargainMaximum,jdbcType=INTEGER},
+      bargain_rebate = #{bargainRebate,jdbcType=DECIMAL},
+      bargain_status = #{bargainStatus,jdbcType=INTEGER},
+      bargain_title = #{bargainTitle,jdbcType=VARCHAR},
+      sys_delivery_maximum = #{sysDeliveryMaximum,jdbcType=INTEGER},
+      uc_bbs = #{ucBbs,jdbcType=BIT},
+      uc_api = #{ucApi,jdbcType=VARCHAR},
+      uc_appid = #{ucAppid,jdbcType=VARCHAR},
+      uc_database = #{ucDatabase,jdbcType=VARCHAR},
+      uc_database_port = #{ucDatabasePort,jdbcType=VARCHAR},
+      uc_database_pws = #{ucDatabasePws,jdbcType=VARCHAR},
+      uc_database_url = #{ucDatabaseUrl,jdbcType=VARCHAR},
+      uc_database_username = #{ucDatabaseUsername,jdbcType=VARCHAR},
+      uc_ip = #{ucIp,jdbcType=VARCHAR},
+      uc_key = #{ucKey,jdbcType=VARCHAR},
+      uc_table_preffix = #{ucTablePreffix,jdbcType=VARCHAR},
+      currency_code = #{currencyCode,jdbcType=VARCHAR},
+      bargain_validity = #{bargainValidity,jdbcType=INTEGER},
+      delivery_amount = #{deliveryAmount,jdbcType=INTEGER},
+      delivery_status = #{deliveryStatus,jdbcType=INTEGER},
+      delivery_title = #{deliveryTitle,jdbcType=VARCHAR},
+      websiteCss = #{websitecss,jdbcType=VARCHAR},
+      combin_amount = #{combinAmount,jdbcType=INTEGER},
+      combin_count = #{combinCount,jdbcType=INTEGER},
+      ztc_goods_view = #{ztcGoodsView,jdbcType=INTEGER},
+      auto_order_evaluate = #{autoOrderEvaluate,jdbcType=INTEGER},
+      auto_order_return = #{autoOrderReturn,jdbcType=INTEGER},
+      weixin_store = #{weixinStore,jdbcType=BIT},
+      weixin_amount = #{weixinAmount,jdbcType=INTEGER},
+      config_payment_type = #{configPaymentType,jdbcType=INTEGER},
+      weixin_account = #{weixinAccount,jdbcType=VARCHAR},
+      weixin_appId = #{weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{weixinToken,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_qr_img_id = #{weixinQrImgId,jdbcType=BIGINT},
+      closeReason = #{closereason,jdbcType=LONGVARCHAR},
+      codeStat = #{codestat,jdbcType=LONGVARCHAR},
+      creditrule = #{creditrule,jdbcType=LONGVARCHAR},
+      share_code = #{shareCode,jdbcType=LONGVARCHAR},
+      store_payment = #{storePayment,jdbcType=LONGVARCHAR},
+      templates = #{templates,jdbcType=LONGVARCHAR},
+      max_frequency_week = #{maxFrequencyWeek,jdbcType=INTEGER},
+      max_number_week = #{maxNumberWeek,jdbcType=INTEGER},
+      max_price = #{maxPrice,jdbcType=DECIMAL},
+      min_pricce = #{minPricce,jdbcType=DECIMAL},
+      user_creditrule = #{userCreditrule,jdbcType=LONGVARCHAR},
+      sys_domain = #{sysDomain,jdbcType=LONGVARCHAR},
+      qq_domain_code = #{qqDomainCode,jdbcType=LONGVARCHAR},
+      sina_domain_code = #{sinaDomainCode,jdbcType=LONGVARCHAR},
+      bargain_state = #{bargainState,jdbcType=LONGVARCHAR},
+      service_qq_list = #{serviceQqList,jdbcType=LONGVARCHAR},
+      service_telphone_list = #{serviceTelphoneList,jdbcType=LONGVARCHAR},
+      kuaidi_id = #{kuaidiId,jdbcType=LONGVARCHAR},
+      weixin_welecome_content = #{weixinWelecomeContent,jdbcType=LONGVARCHAR},
+      goods_class_count = #{goodsClassCount,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.SysConfig" >
+    update amall_sysconfig
+    set addTime = #{addtime,jdbcType=TIMESTAMP},
+      deleteStatus = #{deletestatus,jdbcType=BIT},
+      address = #{address,jdbcType=VARCHAR},
+      bigHeight = #{bigheight,jdbcType=INTEGER},
+      bigWidth = #{bigwidth,jdbcType=INTEGER},
+      complaint_time = #{complaintTime,jdbcType=INTEGER},
+      consumptionRatio = #{consumptionratio,jdbcType=INTEGER},
+      copyRight = #{copyright,jdbcType=VARCHAR},
+      deposit = #{deposit,jdbcType=BIT},
+      description = #{description,jdbcType=VARCHAR},
+      emailEnable = #{emailenable,jdbcType=BIT},
+      emailHost = #{emailhost,jdbcType=VARCHAR},
+      emailPort = #{emailport,jdbcType=INTEGER},
+      emailPws = #{emailpws,jdbcType=VARCHAR},
+      emailTest = #{emailtest,jdbcType=VARCHAR},
+      emailUser = #{emailuser,jdbcType=VARCHAR},
+      emailUserName = #{emailusername,jdbcType=VARCHAR},
+      everyIndentLimit = #{everyindentlimit,jdbcType=INTEGER},
+      gold = #{gold,jdbcType=BIT},
+      goldMarketValue = #{goldmarketvalue,jdbcType=INTEGER},
+      groupBuy = #{groupbuy,jdbcType=BIT},
+      hotSearch = #{hotsearch,jdbcType=VARCHAR},
+      imageFilesize = #{imagefilesize,jdbcType=INTEGER},
+      imageSaveType = #{imagesavetype,jdbcType=VARCHAR},
+      imageSuffix = #{imagesuffix,jdbcType=VARCHAR},
+      indentComment = #{indentcomment,jdbcType=INTEGER},
+      integral = #{integral,jdbcType=BIT},
+      integralRate = #{integralrate,jdbcType=INTEGER},
+      integralStore = #{integralstore,jdbcType=BIT},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      memberDayLogin = #{memberdaylogin,jdbcType=INTEGER},
+      memberRegister = #{memberregister,jdbcType=INTEGER},
+      middleHeight = #{middleheight,jdbcType=INTEGER},
+      middleWidth = #{middlewidth,jdbcType=INTEGER},
+      securityCodeConsult = #{securitycodeconsult,jdbcType=BIT},
+      securityCodeLogin = #{securitycodelogin,jdbcType=BIT},
+      securityCodeRegister = #{securitycoderegister,jdbcType=BIT},
+      securityCodeType = #{securitycodetype,jdbcType=VARCHAR},
+      smallHeight = #{smallheight,jdbcType=INTEGER},
+      smallWidth = #{smallwidth,jdbcType=INTEGER},
+      smsEnbale = #{smsenbale,jdbcType=BIT},
+      sms_auth_token = #{smsAuthToken,jdbcType=VARCHAR},
+      sms_port = #{smsPort,jdbcType=VARCHAR},
+      sms_url = #{smsUrl,jdbcType=VARCHAR},
+      sms_account_sid = #{smsAccountSid,jdbcType=VARCHAR},
+	  sms_app_id = #{smsAppId,jdbcType=VARCHAR},
+	  sms_exceed_time = #{smsExceedTime,jdbcType=VARCHAR},
+	  sms_max_number = #{smsMaxNumber,jdbcType=INTEGER},
+	  sms_send_interval = #{smsSendInterval,jdbcType=INTEGER},
+	  cart_count_max = #{cartCountMax,jdbcType=INTEGER},
+      verification_code_length = #{verificationCodeLength,jdbcType=VARCHAR},
+      store_allow = #{storeAllow,jdbcType=BIT},
+      sysLanguage = #{syslanguage,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      uploadFilePath = #{uploadfilepath,jdbcType=VARCHAR},
+      visitorConsult = #{visitorconsult,jdbcType=BIT},
+      voucher = #{voucher,jdbcType=BIT},
+      websiteName = #{websitename,jdbcType=VARCHAR},
+      websiteState = #{websitestate,jdbcType=BIT},
+      ztc_price = #{ztcPrice,jdbcType=INTEGER},
+      ztc_status = #{ztcStatus,jdbcType=BIT},
+      goodsImage_id = #{goodsimageId,jdbcType=BIGINT},
+      memberIcon_id = #{membericonId,jdbcType=BIGINT},
+      storeImage_id = #{storeimageId,jdbcType=BIGINT},
+      websiteLogo_id = #{websitelogoId,jdbcType=BIGINT},
+      domain_allow_count = #{domainAllowCount,jdbcType=INTEGER},
+      second_domain_open = #{secondDomainOpen,jdbcType=BIT},
+      qq_login = #{qqLogin,jdbcType=BIT},
+      qq_login_id = #{qqLoginId,jdbcType=VARCHAR},
+      qq_login_key = #{qqLoginKey,jdbcType=VARCHAR},
+      sina_login = #{sinaLogin,jdbcType=BIT},
+      sina_login_id = #{sinaLoginId,jdbcType=VARCHAR},
+      sina_login_key = #{sinaLoginKey,jdbcType=VARCHAR},
+      imageWebServer = #{imagewebserver,jdbcType=VARCHAR},
+      lucene_update = #{luceneUpdate,jdbcType=TIMESTAMP},
+      alipay_fenrun = #{alipayFenrun,jdbcType=INTEGER},
+      balance_fenrun = #{balanceFenrun,jdbcType=INTEGER},
+      auto_order_confirm = #{autoOrderConfirm,jdbcType=INTEGER},
+      auto_order_notice = #{autoOrderNotice,jdbcType=INTEGER},
+      bargain_maximum = #{bargainMaximum,jdbcType=INTEGER},
+      bargain_rebate = #{bargainRebate,jdbcType=DECIMAL},
+      bargain_status = #{bargainStatus,jdbcType=INTEGER},
+      bargain_title = #{bargainTitle,jdbcType=VARCHAR},
+      sys_delivery_maximum = #{sysDeliveryMaximum,jdbcType=INTEGER},
+      uc_bbs = #{ucBbs,jdbcType=BIT},
+      uc_api = #{ucApi,jdbcType=VARCHAR},
+      uc_appid = #{ucAppid,jdbcType=VARCHAR},
+      uc_database = #{ucDatabase,jdbcType=VARCHAR},
+      uc_database_port = #{ucDatabasePort,jdbcType=VARCHAR},
+      uc_database_pws = #{ucDatabasePws,jdbcType=VARCHAR},
+      uc_database_url = #{ucDatabaseUrl,jdbcType=VARCHAR},
+      uc_database_username = #{ucDatabaseUsername,jdbcType=VARCHAR},
+      uc_ip = #{ucIp,jdbcType=VARCHAR},
+      uc_key = #{ucKey,jdbcType=VARCHAR},
+      uc_table_preffix = #{ucTablePreffix,jdbcType=VARCHAR},
+      currency_code = #{currencyCode,jdbcType=VARCHAR},
+      bargain_validity = #{bargainValidity,jdbcType=INTEGER},
+      delivery_amount = #{deliveryAmount,jdbcType=INTEGER},
+      delivery_status = #{deliveryStatus,jdbcType=INTEGER},
+      delivery_title = #{deliveryTitle,jdbcType=VARCHAR},
+      websiteCss = #{websitecss,jdbcType=VARCHAR},
+      combin_amount = #{combinAmount,jdbcType=INTEGER},
+      combin_count = #{combinCount,jdbcType=INTEGER},
+      ztc_goods_view = #{ztcGoodsView,jdbcType=INTEGER},
+      auto_order_evaluate = #{autoOrderEvaluate,jdbcType=INTEGER},
+      auto_order_return = #{autoOrderReturn,jdbcType=INTEGER},
+      weixin_store = #{weixinStore,jdbcType=BIT},
+      weixin_amount = #{weixinAmount,jdbcType=INTEGER},
+      config_payment_type = #{configPaymentType,jdbcType=INTEGER},
+      weixin_account = #{weixinAccount,jdbcType=VARCHAR},
+      weixin_appId = #{weixinAppid,jdbcType=VARCHAR},
+      weixin_appSecret = #{weixinAppsecret,jdbcType=VARCHAR},
+      weixin_token = #{weixinToken,jdbcType=VARCHAR},
+      store_weixin_logo_id = #{storeWeixinLogoId,jdbcType=BIGINT},
+      weixin_qr_img_id = #{weixinQrImgId,jdbcType=BIGINT},
+	  upload_root_path = #{uploadRootPath,jdbcType=VARCHAR},
+      goods_class_count = #{goodsClassCount,jdbcType=INTEGER},
+      max_frequency_week = #{maxFrequencyWeek,jdbcType=INTEGER},
+      max_number_week = #{maxNumberWeek,jdbcType=INTEGER},
+      max_price = #{maxPrice,jdbcType=DECIMAL},
+      min_pricce = #{minPricce,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

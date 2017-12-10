@@ -1,0 +1,72 @@
+<!DOCTYPE  html>
+<html>
+<head>
+<title>单品团  </title>
+<meta charset="UTF-8"/>
+<link rel="shortcut icon" href="http://pc3.amallcdn.cn/assets/img/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/base.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/channel.vs.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="http://pc1.amallcdn.cn/assets/css/public.css">
+<link rel="stylesheet" type="text/css" href="http://pc3.amallcdn.cn/assets/css/tuangou.css"> 
+</head>
+<body> 
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/bulkitem_head.htm")
+<div id="bulk_wei">
+$!httpInclude.include("/bulkitem_nav.htm")
+</div>
+$!httpInclude.include("/bulkitembody.htm")
+$!httpInclude.include("/footer.htm") 
+<script type="text/javascript" src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script type="text/javascript" src="$!webPath/assets/js/yg.index.js"></script>
+<script type="text/javascript" src="http://pc6.amallcdn.cn/assets/js/am_top_menu.js"></script> 
+<script type="text/javascript">
+	jQuery(function(){		
+		var lis = jQuery(".hotbrand ul li");
+		var length = lis.size();
+		jQuery.each(lis,function(index,val){			
+			var t = (index+1)%4;
+			if(t == 0){
+				jQuery(this).css("margin-right","0px");
+			}
+		});
+	});
+</script> 
+<script type="text/javascript">
+jQuery.fn.fixedDiv = function(actCls){
+        var pos = 0,
+            that = jQuery(this),
+            topVal;
+
+        if(that.length > 0){
+            topVal = that.offset().top;
+        }
+        function fix(){
+            pos = jQuery(document).scrollTop();
+
+            if (pos > topVal) {
+                that.addClass(actCls);
+                if (!window.XMLHttpRequest) {
+                    that.css({
+                        position: 'absolute',
+                        top: pos
+                    });
+                }
+            } else {
+                that.removeClass(actCls);
+                if (!window.XMLHttpRequest) {
+                    that.css({
+                        position: 'static',
+                        top     : 'auto'
+                    });
+                }
+            }
+        }
+        fix();
+        jQuery(window).scroll(fix);
+    }
+jQuery('#mydiv').fixedDiv('fix-tuandiv');
+</script> 
+</body>
+</html>

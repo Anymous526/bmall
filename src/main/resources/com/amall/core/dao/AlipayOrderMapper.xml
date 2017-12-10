@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amall.core.dao.AlipayOrderMapper" >
+<!--  -->
+  <resultMap id="BaseResultMap" type="com.amall.core.bean.AlipayOrder" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_id" property="orderId" jdbcType="VARCHAR" />
+    <result column="total_fee" property="totalFee" jdbcType="DECIMAL" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="payment_id" property="paymentId" jdbcType="BIGINT" />
+    <result column="pay_type" property="payType" jdbcType="VARCHAR" />
+    <result column="pay_card_id" property="payCardId" jdbcType="VARCHAR" />
+    <result column="card_type" property="cardType" jdbcType="VARCHAR" />
+    <result column="bank_serial_num" property="bankSerialNum" jdbcType="VARCHAR" />
+    <result column="pay_code" property="payCode" jdbcType="INTEGER" />
+    <result column="is_refund" property="isRefund" jdbcType="BIT" />
+    <result column="refund_fee" property="refundFee" jdbcType="DECIMAL" />
+    <result column="seller_user_id" property="sellerUserId" jdbcType="BIGINT" />
+    <result column="txn_time" property="txnTime" jdbcType="TIMESTAMP" />
+    <result column="app_pay" property="appPay" jdbcType="BIT" />
+    <association property="user" column="user_id" javaType="com.amall.core.bean.User" 
+     	select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+   	<association property="sellerUser" column="seller_user_id" javaType="com.amall.core.bean.User" 
+     	select="com.amall.core.dao.UserMapper.selectByPrimaryKey"/>
+   	<association property="payment" column="payment_id" javaType="com.amall.core.bean.Payment" 
+     	select="com.amall.core.dao.PaymentMapper.selectByPrimaryKey"/>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_id, total_fee, user_id, payment_id, pay_type, pay_card_id, card_type, bank_serial_num, 
+    pay_code, is_refund, refund_fee, seller_user_id, txn_time, app_pay
+  </sql>
+  <select   id="selectByExample" flushCache="true"  resultMap="BaseResultMap" parameterType="com.amall.core.bean.AlipayOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from amall_alipayorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select   id="selectByPrimaryKey" flushCache="true"  resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from amall_alipayorder
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from amall_alipayorder
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.amall.core.bean.AlipayOrderExample" >
+    delete from amall_alipayorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.amall.core.bean.AlipayOrder" >
+    insert into amall_alipayorder (id, order_id, total_fee, 
+      user_id, payment_id, pay_type, 
+      pay_card_id, card_type, bank_serial_num, 
+      pay_code, is_refund, refund_fee, 
+      seller_user_id, txn_time, app_pay
+      )
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=VARCHAR}, #{totalFee,jdbcType=DECIMAL}, 
+      #{userId,jdbcType=BIGINT}, #{paymentId,jdbcType=BIGINT}, #{payType,jdbcType=VARCHAR}, 
+      #{payCardId,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR}, #{bankSerialNum,jdbcType=VARCHAR}, 
+      #{payCode,jdbcType=INTEGER}, #{isRefund,jdbcType=BIT}, #{refundFee,jdbcType=DECIMAL}, 
+      #{sellerUserId,jdbcType=BIGINT}, #{txnTime,jdbcType=TIMESTAMP}, #{appPay,jdbcType=BIT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.amall.core.bean.AlipayOrder" >
+    insert into amall_alipayorder
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="totalFee != null" >
+        total_fee,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="paymentId != null" >
+        payment_id,
+      </if>
+      <if test="payType != null" >
+        pay_type,
+      </if>
+      <if test="payCardId != null" >
+        pay_card_id,
+      </if>
+      <if test="cardType != null" >
+        card_type,
+      </if>
+      <if test="bankSerialNum != null" >
+        bank_serial_num,
+      </if>
+      <if test="payCode != null" >
+        pay_code,
+      </if>
+      <if test="isRefund != null" >
+        is_refund,
+      </if>
+      <if test="refundFee != null" >
+        refund_fee,
+      </if>
+      <if test="sellerUserId != null" >
+        seller_user_id,
+      </if>
+      <if test="txnTime != null" >
+        txn_time,
+      </if>
+      <if test="appPay != null" >
+        app_pay,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentId != null" >
+        #{paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payCardId != null" >
+        #{payCardId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankSerialNum != null" >
+        #{bankSerialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payCode != null" >
+        #{payCode,jdbcType=INTEGER},
+      </if>
+      <if test="isRefund != null" >
+        #{isRefund,jdbcType=BIT},
+      </if>
+      <if test="refundFee != null" >
+        #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerUserId != null" >
+        #{sellerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="txnTime != null" >
+        #{txnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appPay != null" >
+        #{appPay,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select   id="countByExample" parameterType="com.amall.core.bean.AlipayOrderExample" resultType="java.lang.Integer" >
+    select count(*) from amall_alipayorder
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update amall_alipayorder
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalFee != null" >
+        total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.paymentId != null" >
+        payment_id = #{record.paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.payType != null" >
+        pay_type = #{record.payType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payCardId != null" >
+        pay_card_id = #{record.payCardId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        card_type = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankSerialNum != null" >
+        bank_serial_num = #{record.bankSerialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payCode != null" >
+        pay_code = #{record.payCode,jdbcType=INTEGER},
+      </if>
+      <if test="record.isRefund != null" >
+        is_refund = #{record.isRefund,jdbcType=BIT},
+      </if>
+      <if test="record.refundFee != null" >
+        refund_fee = #{record.refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sellerUserId != null" >
+        seller_user_id = #{record.sellerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="record.txnTime != null" >
+        txn_time = #{record.txnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.appPay != null" >
+        app_pay = #{record.appPay,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update amall_alipayorder
+    set id = #{record.id,jdbcType=BIGINT},
+      order_id = #{record.orderId,jdbcType=VARCHAR},
+      total_fee = #{record.totalFee,jdbcType=DECIMAL},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      payment_id = #{record.paymentId,jdbcType=BIGINT},
+      pay_type = #{record.payType,jdbcType=VARCHAR},
+      pay_card_id = #{record.payCardId,jdbcType=VARCHAR},
+      card_type = #{record.cardType,jdbcType=VARCHAR},
+      bank_serial_num = #{record.bankSerialNum,jdbcType=VARCHAR},
+      pay_code = #{record.payCode,jdbcType=INTEGER},
+      is_refund = #{record.isRefund,jdbcType=BIT},
+      refund_fee = #{record.refundFee,jdbcType=DECIMAL},
+      seller_user_id = #{record.sellerUserId,jdbcType=BIGINT},
+      txn_time = #{record.txnTime,jdbcType=TIMESTAMP},
+      app_pay = #{record.appPay,jdbcType=BIT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.amall.core.bean.AlipayOrder" >
+    update amall_alipayorder
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="totalFee != null" >
+        total_fee = #{totalFee,jdbcType=DECIMAL},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentId != null" >
+        payment_id = #{paymentId,jdbcType=BIGINT},
+      </if>
+      <if test="payType != null" >
+        pay_type = #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="payCardId != null" >
+        pay_card_id = #{payCardId,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        card_type = #{cardType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankSerialNum != null" >
+        bank_serial_num = #{bankSerialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="payCode != null" >
+        pay_code = #{payCode,jdbcType=INTEGER},
+      </if>
+      <if test="isRefund != null" >
+        is_refund = #{isRefund,jdbcType=BIT},
+      </if>
+      <if test="refundFee != null" >
+        refund_fee = #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="sellerUserId != null" >
+        seller_user_id = #{sellerUserId,jdbcType=BIGINT},
+      </if>
+      <if test="txnTime != null" >
+        txn_time = #{txnTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="appPay != null" >
+        app_pay = #{appPay,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.amall.core.bean.AlipayOrder" >
+    update amall_alipayorder
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      total_fee = #{totalFee,jdbcType=DECIMAL},
+      user_id = #{userId,jdbcType=BIGINT},
+      payment_id = #{paymentId,jdbcType=BIGINT},
+      pay_type = #{payType,jdbcType=VARCHAR},
+      pay_card_id = #{payCardId,jdbcType=VARCHAR},
+      card_type = #{cardType,jdbcType=VARCHAR},
+      bank_serial_num = #{bankSerialNum,jdbcType=VARCHAR},
+      pay_code = #{payCode,jdbcType=INTEGER},
+      is_refund = #{isRefund,jdbcType=BIT},
+      refund_fee = #{refundFee,jdbcType=DECIMAL},
+      seller_user_id = #{sellerUserId,jdbcType=BIGINT},
+      txn_time = #{txnTime,jdbcType=TIMESTAMP},
+      app_pay = #{appPay,jdbcType=BIT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

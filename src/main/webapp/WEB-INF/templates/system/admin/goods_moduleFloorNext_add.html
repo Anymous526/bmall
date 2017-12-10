@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<link href="$!webPath/resources/style/system/manage/$!{config.websitecss}/template.css"  rel="stylesheet" type="text/css"/>
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.validate.min.js"></script>
+<script src="http://pc4.amallcdn.cn/resources/js/jquery.poshytip.min.js"></script>
+<script>
+function saveForm(){
+	//进行ajax判断
+	var name = $("#name").val();
+	jQuery.ajax({
+		type:"POST",
+		data:{"name":name},
+		url:"$!webPath/admin/goods_moduleFloorNext_verify.htm",
+		success:function(data){
+			if(data=="true"){
+				$("#theForm").submit(); 
+			}else if(data=="nameNull"){
+				$("#moduleFloor_name_span").html("名称不能为空").css("color","red");
+			}else if(data=="false"){
+				$("#moduleFloor_name_span").html("名称不合法,请更换").css("color","red");
+			}
+		}
+	}); 
+}
+</script>
+</head>
+<body>
+<form action="$!webPath/admin/goods_moduleFloorNext_save.htm" method="post" enctype="multipart/form-data" name="theForm" id="theForm">
+  <input name="id" id="id" type="hidden" value="$!obj.id"/>
+  <input name="add_url" type="hidden" id="add_url" value="$!webPath/admin/goods_moduleFloor_add.htm"/>
+  <input name="list_url" type="hidden" id="list_url" value="$!webPath/admin/goods_moduleFloor_list.htm" />
+  <input name="count" type="hidden" id="count" />
+  <input name="moduleId" type="hidden" id="moduleId" value="$!moduleId"/>
+  <input name="floorId" type="hidden" id="floorId" value="$!floorId"/>
+  <input name="currentPage" type="hidden" id="currentPage" value="$!currentPage"/>
+  <div class="cont">
+    <h1 class="seth1">模块楼层管理</h1>
+    <div class="settab"><span class="tab-one"></span> <span class="tabs"> <a href="$!webPath/admin/goods_moduleFloorNext_list.htm?floorId=$!floorId&moduleId=$!moduleId">管理</a> | <a href="$!webPath/admin/goods_moduleFloorNext_add.htm?floorId=$!floorId&moduleId=$!moduleId" #if(!$!edit)class="this"#end>新增</a> 
+	   </span> <span class="tab-two"></span></div>
+    <div class="edit">
+      <div class="editul ">
+        <ul class="set3">
+          <li><strong class="sred">*</strong>省份名称</li>
+          <li><span class="pxnum">
+           		 <input name="areaname" type="text" id="name" value=""/>
+              </span>
+              <span id="nothis">
+              	<strong class="q"></strong>
+              	<strong class="w"  id="moduleFloor_name_span">请填写常用省份的名称；例如：浙江省，广东省等。</strong>
+              	<strong class="c"></strong>
+              </span>
+         </li>
+        </ul>
+      </div>
+	</div>
+    <div class="submit">
+      <input name="" type="button" value="提交" onclick="saveForm();"/>
+    </div>
+  </div>
+</form>
+</body>
+</html>

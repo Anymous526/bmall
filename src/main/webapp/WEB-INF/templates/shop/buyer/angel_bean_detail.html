@@ -1,0 +1,139 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>感恩豆交易明细</title>
+<meta name="keywords" content="$!config.keywords" />
+<meta name="description" content="$!config.description" /> 
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/public.css" type="text/css" rel="stylesheet" />
+<link href="http://pc3.amallcdn.cn/resources/style/system/front/default/css/user.css" type="text/css" rel="stylesheet" />
+<link href="http://pc2.amallcdn.cn/resources/style/common/css/overlay.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="$!webPath/resources/style/system/front/default/css/briberymoney.css">
+<script src="http://pc4.amallcdn.cn/assets/js/jquery.min.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery-ui-1.8.21.js"></script>
+<script src="http://pc6.amallcdn.cn/resources/js/jquery.shop.common.js"></script>
+<script>
+
+function gotoPage(n){
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+<style>
+.angel_bean_comment{
+	height:30px;
+	line-height:30px;
+	background:#FBF7B3;
+	padding-left:5px;
+	font-size:15px;
+	border: 1px solid #ddd;
+    border-top: none;
+    width: 948px;
+}
+</style>
+</head>
+<body  style="background:#FFF">
+$!httpInclude.include("/top.htm")
+$!httpInclude.include("/buyer/buyer_header.htm") 
+<div class="user_main w1200"> 
+$!httpInclude.include("/buyer/buyer_left.htm")
+<div class="s_m">  
+  	<div class="buyer_position"><div class="buyer_p_box"><a href="$!webPath/buyer/buyer_index.htm">个人中心</a> > <span>感恩豆交易明细</span></div></div>
+          <form action="$!webPath/buyer/buy_dou_list.htm" method="post" id="ListForm">
+          <div class="productmain">         
+          <div class="ordercon">
+            <table border="0" cellpadding="0" cellspacing="0" style="text-align: center;line-height: 24px;font-size: 24px;width: 100%;height: auto;border:none;">
+            	<tr class="th_tr">
+            		<td width="25%">数量</td>
+            		<td width="25%">单价</td>
+            		<td width="25%">类型</td>
+            		<td width="25%">日期</td>        		
+            	</tr>       
+            	#foreach($obj in $!objs)     	
+	     		<tr class="tb_tr">
+	     			<td>$!obj.totalDouNum颗</td>
+	     			<td>$!obj.price元</td>
+	     		
+	     			<td>$!obj.userName</td>
+	     			<td>$CommUtil.formatLongDate($!obj.addtime)</td>
+	     		</tr>
+	     		#end
+            </table>
+            
+            </div>
+            <div class="bottom_page" style="margin-top: 25px;">
+				<input name="currentPage" type="hidden" id="currentPage" value=$!currentPage>
+				<a href="javascript:void(0);" id="first_page"onclick="return gotoPage(1)">首页</a><a href="javascript:void(0);" onclick="return gotoPage(1)">上一页</a> 第　<a class="this" href="javascript:void(0);" id="current" onclick="return gotoPage(1)">1</a> 页 <a href="javascript:void(0);" id="next_page"onclick="return gotoPage(1)">下一页</a>　<a href="javascript:void(0);" style="margin-left:-10px" id="last_page" onclick="return gotoPage(1)">末页</a> 
+			</div>
+		        <!--分页结束-->   
+          </div>
+         </form>         
+  </div>
+</div>
+<div class="mb_bg" style="opacity: 0.4;filter:alpha(opacity=40);"></div>
+<div class="mb_dioalog02" style="width:400px;">
+	<!-- <div class="mb_tit02"></div> -->
+	<a class="xu_an_close" href="javascript:void(0);">&times;</a>
+	<form action="$!webPath/" method="post" name="payPassword" id="form_paypsw">
+		<div class="xu_an_btnbox">
+			<p style="font-size:22px;position:relative;top:-22px;padding-bottom:10px;border-bottom:1px solid #ddd;color:#ea5052;">买入</p>
+		</div>
+		<ul class="ul_wrap" style="margin-top:5px">
+			<li><span>数量</span><input type="text" name="angel_count" class="angel_count"/>&nbsp;颗</li>
+			<li><span>单价</span><input type="text" name="angel_price" class="angel_price"/>&nbsp;元</li>
+		</ul>
+    </form>
+	<div class="xu_an_okwrap">
+		<!-- <span class="mb_nobtn02" style="cursor:pointer;margin-top:40px;">取消</span> -->
+		<span class="xu_an_okbtn" style="cursor:pointer;margin-top:36px;">确定</span>
+	</div>
+</div>
+$!httpInclude.include("/footer.htm")
+<!-- <script>
+	$("#fenhong_btn").click(function(){
+		$("#fenhong").submit();
+	});
+	$("#yuefen_btn").click(function(){
+		$("#mo_total").submit();
+	});
+</script> -->
+<script>
+function gotoPage(n) {
+	jQuery("#currentPage").val(n);
+	jQuery("#ListForm").submit();
+}
+</script>
+<script>
+$(function(){
+	$(".an_btn").click(function(){
+		$(".mb_bg").fadeIn(500);
+		$(".mb_dioalog02").fadeIn(500);
+	});
+	$(".xu_an_close").click(function(){
+		$(".mb_bg").fadeOut(500);
+		$(".mb_dioalog02").fadeOut(500);
+	});
+	$(".xu_an_okbtn").click(function(){
+		var angel_count=$(".angel_count").val();
+		var angel_price=$(".angel_price").val();
+		var reg=/^[0-9]+$/;
+		if(angel_count==""){
+		   $(".angel_count").attr("placeholder","数量不能为空");
+		   $(".angel_count").focus();
+		}else if(reg.test(angel_count)==false){
+				$(".angel_count").val("");
+				$(".angel_count").attr("placeholder","数量只能输入数字");
+				$(".angel_count").focus();
+			}else if(angel_price==""){
+				$(".angel_price").attr("placeholder","单价不能为空");
+			}else if(reg.test(angel_price)==false){
+				$(".angel_price").val("");
+				$(".angel_price").attr("placeholder","单价只能输入数字");
+				$(".angel_price").focus();
+			}
+	});
+});
+
+</script>
+</body>
+</html>

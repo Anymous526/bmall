@@ -1,0 +1,128 @@
+﻿<script type="text/javascript">
+$(document).ready(function(){
+	$('.accordion').jaccordion();	
+	
+	$("#appGoods").hide();
+	$("#appOrder").hide();
+	$("#appSets").hide();
+	$("#appServer").hide();
+	$("#appActivity").hide();
+	$("#appAccount").hide();
+	
+	
+	var res;
+	#if($!res)
+		res = $!res; 
+	#end
+	
+	//如果权限资源大于0,则表示是子账号登录,否则是商家自己登录.不设资源权限
+	if(res){
+		ids_Array = res[0].value.split("|");
+		
+		if(ids_Array.length > 0){
+			jQuery.each(ids_Array,function(i,v){
+				$("#"+v).show();
+			});
+		}
+	}else{
+		$("#appGoods").show();
+		$("#appOrder").show();
+		$("#appSets").show();
+		$("#appServer").show();
+		$("#appActivity").show();
+		$("#appAccount").show();
+	}
+	
+	
+});
+</script>
+<link rel="stylesheet" href="$!webPath/assets/css/font-awesome.min.css">
+<div class="clear"></div>
+<div class="user_main" style="float: left; width:235px;">
+  <div class="s_l box_sha">
+    <div class="ny_zb">
+      <div class="ny_zblb1">
+      
+        <ul class="clearfix">
+        
+          <li id="appGoods"> <a href="javascript:void(0)"><i class="fa fa-desktop" aria-hidden="true"></i>商品管理</a>
+            <ul>
+              <li ><a href="$!webPath/seller/add_goods_first.htm">商品发布</a></li>
+              <li  op="goods"><a href="$!webPath/seller/seller_goods.htm">出售中的商品</a></li>
+              <li  op="goods_out"><a href='$!webPath/seller/goods_out.htm'>违规下架的商品</a></li>
+              <li  op="goods_out"><a href='$!webPath/seller/chekedFailing.htm' style="padding-left:10px;">审核未通过的商品</a></li>
+              <li  op="goods_storage"><a href="$!webPath/seller/seller_goods_storage.htm">仓库中的商品</a></li>
+              <li  op="usergoodsclass"><a href="$!webPath/seller/usergoodsclass_list.htm">商品分类管理</a></li>
+              <li  op="usergoodsbrand"><a href='$!webPath/seller/usergoodsbrand_list.htm'>品牌申请</a></li>
+              <li><a href="$!webPath/seller/seller_goods_count.htm">商品统计排行</a></li> 
+              <li  op="goods_report"><a href='$!webPath/seller/goods_report.htm'>被举报禁售</a></li>
+              <li  op="chekedunder_review"><a href='$!webPath/seller/chekedunder_review.htm' style="padding-left:24px;">正在审核的商品</a></li>
+             </ul>
+          </li>
+          
+          <li id="appOrder"> <a href="javascript:void(0)"><i class="fa fa-tasks" aria-hidden="true"></i>交易管理</a>
+            <ul>
+              <li op="order"><a href="$!webPath/seller/order.htm">查看所有订单</a></li>
+              <li><a href="$!webPath/seller/order.htm?order_status=20">待发货</a></li>
+              <li><a href="$!webPath/seller/order.htm?order_status=65">已完成订单</a></li> 
+              <li><a href="$!webPath/seller/order.htm?order_status=0">已取消订单</a></li>  
+              <li  op="refund"><a href='$!webPath/seller/return_view.htm'>退款管理</a></li>
+              <li  op="goods_return"><a href='$!webPath/seller/goods_return.htm'>退货管理</a></li>
+              <li op="consult"><a href='$!webPath/seller/consult.htm'>咨询管理</a></li>
+              <li  op="complaint"><a href='$!webPath/seller/complaint.htm'>投诉管理</a></li>
+              <li><a href="$!webPath/seller/evaluate_manage.htm">评价管理</a></li>
+              <!-- <li><a href="">发货地址</a></li> --> 
+              #if($!{config.configPaymentType}==0)
+            	<li op="payment"><a href="$!webPath/seller/payment.htm">账户设置</a></li>
+              #end
+             <!--  <li><a href="$!webPath/seller/seller_order_evaluate.htm?id=$!obj.id">我的评论</a></li> -->
+            </ul>
+          </li> 
+          <li id="appSets"> <a href="javascript:void(0)"><i class="fa fa-trophy"></i>店铺管理</a>
+            <ul>
+              <li ><a href="$!webPath/store_$!{user.store.id}.htm" target="_blank">我的店铺</a></li>
+              <li  op="store_set"><a href="$!webPath/seller/store_set.htm">店铺设置</a></li>
+              <li  op="store_nav"><a href="$!webPath/seller/store_nav.htm">导航管理</a></li>
+              <li  op="store_theme"><a href="$!webPath/seller/store_theme.htm">主题设置</a></li>
+              <li  op="mvert"><a href="$!webPath/seller/advert_list.htm">广告管理</a></li>
+              <li id="appAccount_4"><a href='$!webPath/seller/seller_account_list.htm'>我的子账号</a></li>
+              <!-- <li op="store_partner"><a href="$!webPath/seller/store_partner.htm">友情链接管理</a></li> -->
+            </ul>
+          </li>
+           <li id="appOrder"> <a href="javascript:void(0)"><i class="fa fa-money"></i>资金管理</a>
+            <ul>
+              <li><a href="$!webPath/seller/property.htm">查看总资产</a></li>
+               <li ><a href="$!webPath/seller/seller_store_fee_detail.htm">店铺收入详情</a></li> 
+              <li op="buyer_cash"><a href="$!webPath/seller/seller_cash.htm">提现申请</a></li>
+              <li><a href='$!webPath/seller/seller_cash_list.htm'>提现申请列表</a></li>
+              
+              <!-- <li op="predeposit_log"><a href="$!webPath/buyer/predeposit_log.htm">收支明细</a></li> -->
+            </ul>
+          </li>
+           <li id="appOrder"> <a href="javascript:void(0)"><i class="fa fa-edit"></i>物流管理</a>
+            <ul> 
+              <li><a href="$!webPath/seller/logistics_tool.htm">物流工具</a></li> 
+              <li  op="transport"><a href="$!webPath/seller/transport_list.htm">运费模板管理</a></li>
+              </ul>
+          </li>  
+          <li  op="activity" id="appActivity"> <a href="javascript:void(0)"><i class="fa fa-bullhorn" aria-hidden="true"></i>促销管理</a>
+            <ul>
+              <!-- <li><a href="$!webPath/seller/activity.htm">促销活动</a></li> -->
+              <!-- <li><a href="$!webPath/seller/bargain.htm">天天特价活动</a></li> -->
+              <li ><a href="$!webPath/seller/bargain_time.htm">限时特价活动</a></li>
+              <li ><a href="$!webPath/seller/bargain_discount.htm">折扣特价活动</a></li>
+              <li ><a href="$!webPath/seller/group.htm">团购活动管理</a></li>
+            </ul>
+          </li>  
+           <li id="appAccount"> <a href="javascript:void(0)"><i class="fa fa-group" aria-hidden="true"></i>客服管理</a>
+            <ul> 
+              <li><a href='$!webPath/seller/customer_service.htm'>客服管理</a></li> 
+              <li><a href="$!webPath/seller/customer_service_add.htm">新增客服</a></li> 
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  
+</div>
